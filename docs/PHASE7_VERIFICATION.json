@@ -408,11 +408,13 @@
   "base_commit": "b549e555f103035ba79846f6953c03491afc45d5",
   "ci": {
     "host_downloaded": false,
+    "initial_packaging_failure": "Python 3.13 runner omitted setuptools.build_meta; tests and CLI passed; CI-only builder selection fixed without downloads",
     "python": [
       "3.11",
       "3.13"
     ],
     "remote_result": "checked after release push; see final Actions result",
+    "wheel_builder": "Runner-image cached Python 3.11 setuptools/wheel; --no-index --no-build-isolation; wheel installed and run under target 3.11/3.13",
     "workflow": ".github/workflows/test.yml"
   },
   "club_professional_quality_established": false,

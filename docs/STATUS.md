@@ -17,7 +17,7 @@ Final checks are recorded in [PHASE7_VERIFICATION.json](PHASE7_VERIFICATION.json
 | Determinism | Independent repeat has identical canonical/MIDI and full old-pad, corrected-pad and 64-bar PCM hashes; source motifs/IDs retained exactly in the main drop |
 | Preservation | **3,555** pre-existing artifact/example files byte-identical; all old code/tests/fixtures unchanged; only requested README/status/CI updates modify existing tracked files |
 | Packaging | Wheel built without dependency downloads, installed in a fresh `.local/phase7/` venv; installed CLI/resources and 64-bar canonical hash checked from outside the checkout import root |
-| CI | Python **3.11/3.13** matrix preserves prior checks and adds the pad/64-bar symbolic CLI and installed song smoke. Final remote outcome is checked after push and reported with that commit |
+| CI | Python **3.11/3.13** matrix preserves prior checks and adds the pad/64-bar symbolic CLI and installed song smoke. Initial CI passed tests/CLI but 3.13 lacked the wheel build backend; universal wheels now use the image's cached 3.11 builder without package downloads and install/run under each selected version. Final remote outcome is checked after push and reported with that commit |
 
 Successful fixtures are at `artifacts/phase7-house/proof/verified-suite/`; relocation preserves their bytes, and the relocated native bundle imports and equals its saved clone. **77** recorded pad/song asset hashes verify, plus ZIP integrity, embedded native bytes and full C PCM. Raw test/build/development logs remain under `.local/phase7/`.
 

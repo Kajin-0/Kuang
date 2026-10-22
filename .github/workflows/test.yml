@@ -6,6 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       matrix:
         python: ["3.11", "3.13"]
     steps:
@@ -81,9 +82,14 @@ jobs:
           mkdir -p .local/phase7/build-src
           cp pyproject.toml LICENSE .local/phase7/build-src/
           cp -r kuang .local/phase7/build-src/
-          python -m pip wheel --no-deps --no-build-isolation .local/phase7/build-src --wheel-dir .local/phase7/wheels
+          # The image's cached 3.11 has setuptools/wheel; 3.13 omits them.
+          # Build the universal wheel without fetching packages, then install
+          # and run it with the selected matrix interpreter below.
+          phase7_builder=("$RUNNER_TOOL_CACHE"/Python/3.11.*/x64/bin/python)
+          test -x "${phase7_builder[0]}"
+          "${phase7_builder[0]}" -m pip wheel --no-index --no-deps --no-build-isolation .local/phase7/build-src --wheel-dir .local/phase7/wheels
           python -m venv .local/phase7/install
-          .local/phase7/install/bin/pip install --no-deps .local/phase7/wheels/*.whl
+          .local/phase7/install/bin/pip install --no-index --no-deps .local/phase7/wheels/*.whl
           mkdir -p .local/phase7/away
           cd .local/phase7/away
           ../install/bin/python -c 'from kuang.depth import depth_house; from kuang.schema import validate; validate(depth_house())'
