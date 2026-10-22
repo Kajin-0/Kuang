@@ -1,6 +1,55 @@
 # Kuang delivery status
 
+## Phase 2 — local prompt to editable instrumental sketches
+
+Implemented and checked on 2026-10-22, Python **3.13.7**, existing headless Linux VPS, SoundCraft CLI **0.11.0**. `python3 -m kuang create "..." --out-dir NEW --soundcraft /absolute/path/to/soundcraft-cli --render` now produces a typed song plan, canonical project, MIDI, native editable session, measured full WAV preview and JSON provenance/capability/validation report. It uses conservative free built-in synthesis, EQ, room reverb, mixer and supported automation. Rules mode is explicitly heuristic; optional actual local LLM planning is explicitly selected. See [PHASE2.md](PHASE2.md), [README quick start](../README.md) and [machine-readable measurements](phase2-verification.json).
+
+The original Phase 0/1 **77 tests** remain, including the 20-edit/full-state/undo-redo regression. The unchanged Phase 0 generator, demo JSON/MIDI hashes, canonical schema 0.1 and exact transaction/host boundaries are preserved. Phase 2 adds SongSpec v1, three distinct deterministic composition templates and strict local Ollama planning, with no runtime dependency or schema migration. The original Kuang code is now explicitly **MIT**, after the authorized [repository/dependency provenance review](LICENSING.md). Historical license deferral statements below describe earlier deliveries.
+
+Actual checks:
+
+| Check | Result |
+| --- | --- |
+| Baseline before changes | 77 discovered, 74 passed, 3 real-host tests explicitly skipped; 20.202 s |
+| Final offline suite | 99 discovered, 95 passed, 4 real-host methods explicitly skipped; 21.569 s |
+| Real SoundCraft integration suite | **99 passed, zero skips/failures/errors**, final release run 31.470 s; includes legacy 32-bar renders/edits and two varied 8-bar prompt workflows |
+| Additional production CLI runs | Full 16-bar trap and house sessions/render, different notes beyond velocities, tempo and instrumentation; hashes/metrics below |
+| Legacy public CLI smoke | generate → propose → apply → undo → redo; `cmp` confirms exact original/restored and edited/redone bytes |
+| Ollama actual inference | Installed **qwen3.5:4b**, Ollama **0.32.15**; final one-command validated ambient D-minor/72 BPM → native/reopen/render, 118 generated tokens, 31.082 s reported generation time |
+| Fixtures and code checks | Original demo/SoundCraft example unchanged; compileall, Python 3.11 syntax and relative documentation links/whitespace checked |
+| Packaging | Wheel built with no dependencies/build isolation/downloads; all new modules, Lua template and MIT license verified in wheel |
+| CI | Python 3.11/3.13 offline test + legacy CLI + three-style create jobs configured; remote results must be read per pushed commit, never inferred from local runs |
+
+The added tests check style content independent of velocity, scale/chord/bass membership, seed reproduction and melodic/rhythmic variation, key transposition without changing drums, instruments/FX/markers, corruption/injection/schema/range/model rejection, HTTP loopback/response bounds/timeouts, provenance hashes, existing-path/race handling and failure cleanup. The real prompt integration independently compares every native note pitch/start/duration/velocity/channel, invokes full mapped state validation and another native save/reopen, and checks actual WAV format, duration, RMS, non-silence and clipping. Existing full-native preservation checks for edits remain intact.
+
+Full additional preview results, **48,000 Hz / 24-bit integer PCM / stereo**, one-second tail included:
+
+| Prompt/profile | Tracks / notes | Seconds | Sample peak dBFS | RMS dBFS | Clipped samples |
+| --- | --- | --- | --- | --- | --- |
+| Dark atmospheric trap, 140 BPM, A minor, seed 17 | 6 / 266 | 28.428563 | -16.4671 | -32.9061 | 0 |
+| Uplifting house, 126 BPM, C major, seed 29 | 7 / 512 | 31.476188 | -17.1733 | -36.9684 | 0 |
+| Local LLM ambient cinematic, 72 BPM, D minor, seed 7 | 3 / 80 | 54.333333 | -25.3119 | -39.9169 | 0 |
+
+All are measured non-silent offline renders. No listening, native GUI, mastering or professional composition evaluation was performed. Trap's 808-style sound is a filtered built-in sub/bass recipe without pitch slides. House gain pulses are explicit automation, not sidechain compression. Ambient's model chose bass/pad/arp without lead; the rules default has four voices. Rules/model interpretation and subsequent template-based composition are reported separately.
+
+Persistent artifacts are in ignored `/home/User/Kuang/artifacts/` (not committed or downloaded):
+
+- `phase2-trap-final/` and `phase2-house-final/`: full command reports, SongSpec/canonical/MIDI, `native/session.scraft`, manifest/inspection and `preview.wav`.
+- `phase2-integration-release/verification-results.json`: complete final legacy and new prompt integration results; `phase2-0/`, `phase2-1/` and separately saved clones contain the two 8-bar test sessions. Earlier `phase2-integration-final/` is retained too.
+- `phase2-ollama-final/`: final one-command actual model plan, canonical/MIDI, native session, report and preview. Earlier `phase2-ollama/`, `phase2-ollama-native/`, `phase2-ollama-preview.wav` and `phase2-ollama-render.json` are retained from separate public export/render verification of the same model-planned project.
+- `phase2-legacy-smoke/`: generated, edited, restored and redone canonical states plus receipt/request.
+- Earlier exploratory Phase 2 runs and all Phase 1 evaluation files were retained. `/tmp/kuang-phase2-unit-final.log` and `/tmp/kuang-phase2-integration-release.log` are temporary test logs. Wheel: `/tmp/kuang-phase2-wheel/kuang-0.1.0-py3-none-any.whl`.
+
+Final trap/house canonical hashes are `8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a` and `2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015`. WAV hashes are `b49e33f67033a72a17b4129dcd53d0f768853bacb7a446fcc8880d25b2541807` and `907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041`. Model-planned canonical hash: `b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9`; its WAV: `ea6a37501cc7ab11687653c518bda1ff136a11ca4d97ccbe8b4b0fe3009e3710`. General cross-build audio determinism is not claimed.
+
+The real local model digest was `d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04`, installed Q4_K_M. No model was downloaded or FIRM/cloud model run. Installed `qwen2.5:3b-instruct` was **not** used for inference because its metadata and official license say Qwen Research, contrary to the initial permissive-license assumption. The reviewed Apache-2.0 `qwen3.5:4b` is allowlisted instead. One initial HTTP-reader error was fixed and covered by a closed-response test. One subsequent model response changed explicit key and was rejected without output/fallback; grammar constraints for explicit key/tempo/bars were then added alongside post-decoding checks, and the recorded final model run succeeded.
+
+Current limits: finite English rules vocabulary and three template families; instrumental synth sketches rather than audio/music model generation; constant integer tempo, 4/4, diatonic major/minor and 8/16/32 bars. No vocals, external assets/plugins, acoustic instrument emulation, 808 slides, compressor sidechain or proprietary requirement. Ollama is optional and may vary despite sampler seed; saved SongSpec reproduces composition with this code. Native manual edits are intentionally not reconciled; canonical edits/IDs/locks/undo remain authoritative. Single-writer publication is staged with cleanup and no clobber, not crash-atomic across files. No independent GUI or listening-quality claim. Native editable notes/FX/mixer/automation are verified through the headless CLI. Future work can improve composition through listening and extend native note edits/reconciliation under the same exactness requirements.
+
 ## Phase 1 — verified SoundCraft backend
+
+Historical delivery record below; Phase 2 resolves the model-inference and Kuang-license items stated as outstanding here.
+
 
 Implemented and checked on 2026-10-22, headless Linux VPS, Python 3.13.7, against the already installed SoundCraft CLI **0.11.0**. The original Phase 0 schema, generator fixtures, transaction engine and REAPER adapter remain intact. SoundCraft is now the primary optional executable backend; no proprietary DAW is required for this slice.
 

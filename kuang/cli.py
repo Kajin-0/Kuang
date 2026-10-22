@@ -13,6 +13,7 @@ from .generator import generate
 from .schema import ValidationError, atomic_write, decode, load, save, state_hash, strict_json
 from .transactions import Engine, Scope, parse_operations, receipt_from_dict, replay
 from .soundcraft_cli import add_parser as add_soundcraft_parser, run as run_soundcraft
+from .create import add_parser as add_create_parser, run as run_create
 
 
 def _json_write(path, data):
@@ -34,6 +35,7 @@ def parser():
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command", required=True)
     add_soundcraft_parser(commands)
+    add_create_parser(commands)
     demo = commands.add_parser("demo", help="write seeded session, type-1 MIDI and REAPER importer")
     demo.add_argument("--seed", type=int, default=7)
     demo.add_argument("--out-dir", default="out")
@@ -75,6 +77,8 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "create":
+            return run_create(args)
         if args.command == "soundcraft":
             return run_soundcraft(args)
         if args.command == "demo":
@@ -148,5 +152,8 @@ def main(argv=None):
             print(state_hash(result))
         return 0
     except (ValidationError, OSError, UnicodeError) as exc:
+        if args.command == "create":
+            print(json.dumps({"action": "create", "success": False, "error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+            return 2
         print(f"kuang: {exc}", file=sys.stderr)
         return 2

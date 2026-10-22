@@ -1,6 +1,6 @@
 # Phase 0 architecture and exact semantics
 
-The canonical project is the source of truth. MIDI, REAPER objects and future audio renders are derived views. A render cannot replace the structured project. All state is local; the CLI opens only paths supplied by the user and performs no network access.
+The canonical project is the source of truth. MIDI, REAPER objects and audio renders are derived views. A render cannot replace the structured project. All state is local. Phase 0/1 commands perform no network access; Phase 2's explicitly selected Ollama planner uses only `127.0.0.1:11434`, without proxies, redirects or cloud fallback.
 
 ```text
 Human edits / model request

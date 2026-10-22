@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "kuang"
 version = "0.1.0"
 description = "Local-first structured music projects and exact symbolic edits"
+license = {file = "LICENSE"}
 requires-python = ">=3.11"
 dependencies = []
 

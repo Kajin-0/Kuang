@@ -1,0 +1,391 @@
+{
+  "baseline_head": "efdb71036392abc222d44cd7d056b720c97eda96",
+  "claims": {
+    "listening_test": false,
+    "model_downloads": false,
+    "native_gui_test": false,
+    "paid_runtime_services": false,
+    "professional_quality": false
+  },
+  "date": "2026-10-22",
+  "different_content": {
+    "instrumentation": true,
+    "notes_excluding_velocity": true,
+    "tempo": true
+  },
+  "integration": {
+    "artifacts": "/home/User/Kuang/artifacts/phase2-integration-release",
+    "discovered": 99,
+    "log": "/tmp/kuang-phase2-integration-release.log",
+    "passed": 99,
+    "seconds": 31.47,
+    "skipped": 0
+  },
+  "offline_suite": {
+    "discovered": 99,
+    "log": "/tmp/kuang-phase2-unit-final.log",
+    "passed": 95,
+    "seconds": 21.569,
+    "skipped": 4
+  },
+  "ollama": {
+    "action": "create",
+    "artifact_sha256": {
+      "native/inspection.json": "0133c55f8196ae5d6bd295e828c83ac44c0426f449e0048959d7901728684100",
+      "native/manifest.json": "4900338c79ff78dd3918cea3241a55d678b0314bdb464cd4e5b353347b332174",
+      "native/project.kuang.json": "b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9",
+      "native/report.json": "9fe827e2893d488316e10367af992775a94b5a3804679a09b155a4918472abbf",
+      "native/session.scraft": "e213230bce6ea489fc6e3923c63f9c5e0a45c755527296cbd717c1b3f1352cc3",
+      "preview.wav": "ea6a37501cc7ab11687653c518bda1ff136a11ca4d97ccbe8b4b0fe3009e3710",
+      "project.kuang.json": "b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9",
+      "song-spec.json": "4d9c1d1300c0d1e418cb3190541761215c85b4775c20bac77fc5eed9323a1f1c",
+      "song.mid": "574263c33f65b879dd9cf53c881141512996172a509f220073fac90c43498d82"
+    },
+    "artifacts": {
+      "canonical": "/home/User/Kuang/artifacts/phase2-ollama-final/project.kuang.json",
+      "midi": "/home/User/Kuang/artifacts/phase2-ollama-final/song.mid",
+      "native": "/home/User/Kuang/artifacts/phase2-ollama-final/native/session.scraft",
+      "native_manifest": "/home/User/Kuang/artifacts/phase2-ollama-final/native/manifest.json",
+      "preview": "/home/User/Kuang/artifacts/phase2-ollama-final/preview.wav",
+      "report": "/home/User/Kuang/artifacts/phase2-ollama-final/report.json",
+      "song_spec": "/home/User/Kuang/artifacts/phase2-ollama-final/song-spec.json"
+    },
+    "capabilities": {
+      "adapter": "soundcraft",
+      "apply_targets": {
+        "automation": "existing canonical track/effect lanes; instrument and bypass automation unsupported",
+        "notes": "edit canonical JSON through Kuang transactions, then create a fresh export",
+        "set_parameter": "standard track mixer controls and mapped effect parameters"
+      },
+      "contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+      "executable_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+      "notes": [
+        "MIDI clips merge per track; original clip/note/point IDs are retained in the companion canonical snapshot and identity map.",
+        "Native import restores a verified snapshot only; external host edits require explicit reconciliation and are rejected.",
+        "One canonical pan drives both native stereo panners; audio panning laws are host-defined.",
+        "Key, locks and other canonical-only intent remain in the snapshot; native save names the session from its filename."
+      ],
+      "operations": [
+        "set_parameter",
+        "add_automation_points",
+        "delete_automation_points"
+      ],
+      "supported": true,
+      "unsupported": [],
+      "version": "0.11.0"
+    },
+    "engine": {
+      "ai_plan": true,
+      "composer": "song-composer-v1",
+      "composition": "deterministic musical templates, not model-generated audio",
+      "endpoint": "http://127.0.0.1:11434",
+      "eval_count": 118,
+      "model": "qwen3.5:4b",
+      "model_digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+      "model_license": "Apache-2.0",
+      "ollama_version": "0.32.15",
+      "planner": "ollama-local",
+      "reproducibility": "Saved SongSpec + composer version + seed reproduce notes/controls; canonical snapshot preserves complete state. Model inference may vary.",
+      "response_sha256": "d12df1b01320bfc9869786ae444b6d3dfea7a85d6b98c0497b77eee1365e5666",
+      "sampler": {
+        "num_ctx": 4096,
+        "num_predict": 768,
+        "seed": 7,
+        "temperature": 0
+      },
+      "total_duration_ns": 31082358121
+    },
+    "interpretation_notes": [
+      "Rules planner understands a limited vocabulary; other descriptions remain annotations, not promises."
+    ],
+    "limitations": [
+      "Template-based instrumental sketches: trap, house and ambient; no quality or artist imitation guarantee.",
+      "Constant 40\u2013200 BPM, major/natural minor, 4/4, 8/16/32 bars, diatonic triads only.",
+      "Free built-in subtractive/drum synths, EQ and room reverb; no vocals, samples, external plugins, glides or sidechain compressor.",
+      "SoundCraft notes are editable; native changes are not automatically reconciled into the canonical snapshot."
+    ],
+    "native_export": {
+      "action": "export",
+      "canonical_hash": "b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9",
+      "capabilities": {
+        "adapter": "soundcraft",
+        "apply_targets": {
+          "automation": "existing canonical track/effect lanes; instrument and bypass automation unsupported",
+          "notes": "edit canonical JSON through Kuang transactions, then create a fresh export",
+          "set_parameter": "standard track mixer controls and mapped effect parameters"
+        },
+        "contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+        "executable_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+        "notes": [
+          "MIDI clips merge per track; original clip/note/point IDs are retained in the companion canonical snapshot and identity map.",
+          "Native import restores a verified snapshot only; external host edits require explicit reconciliation and are rejected.",
+          "One canonical pan drives both native stereo panners; audio panning laws are host-defined.",
+          "Key, locks and other canonical-only intent remain in the snapshot; native save names the session from its filename."
+        ],
+        "operations": [
+          "set_parameter",
+          "add_automation_points",
+          "delete_automation_points"
+        ],
+        "supported": true,
+        "unsupported": [],
+        "version": "0.11.0"
+      },
+      "native_hash": "786c491b8bb671d3962114c6699a01e0f13715533b50c0a5eae780921cac7a36",
+      "note_count": 80,
+      "output": "/home/User/Kuang/artifacts/phase2-ollama-final/native",
+      "tracks": 3,
+      "verified": true
+    },
+    "note_count": 80,
+    "prompt": "ambient cinematic, 72 bpm, D minor, gentle spacious pads",
+    "render": {
+      "action": "render",
+      "analysis": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 54.333333333333336,
+        "frames": 2608000,
+        "non_silent": true,
+        "peak": 0.05425083637237549,
+        "peak_dbfs": -25.311871240240254,
+        "rms": 0.010096157759069002,
+        "rms_dbfs": -39.91687743823129,
+        "sample_rate": 48000
+      },
+      "canonical_hash": "b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9",
+      "native_unchanged": true,
+      "output": "/home/User/Kuang/artifacts/phase2-ollama-final/preview.wav",
+      "wav_sha256": "ea6a37501cc7ab11687653c518bda1ff136a11ca4d97ccbe8b4b0fe3009e3710"
+    },
+    "song_spec": {
+      "arrangement": "evolving",
+      "automation": "fade",
+      "bars": 16,
+      "bpm": 72,
+      "energy": "low",
+      "genre": "ambient",
+      "instruments": [
+        "bass",
+        "harmony",
+        "arp"
+      ],
+      "mode": "minor",
+      "mood": "dreamy",
+      "palette": "warm",
+      "progression": [
+        0,
+        3,
+        5,
+        2
+      ],
+      "seed": 7,
+      "space": "wide",
+      "tonic": 2,
+      "version": "1"
+    },
+    "tracks": 3,
+    "validation": {
+      "audio_verified": true,
+      "canonical": true,
+      "canonical_hash": "b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9",
+      "native_mapped_state": true,
+      "save_reopen_equal": true
+    },
+    "version": "1"
+  },
+  "ollama_render": {
+    "action": "render",
+    "analysis": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "duration_seconds": 54.333333333333336,
+      "frames": 2608000,
+      "non_silent": true,
+      "peak": 0.05425083637237549,
+      "peak_dbfs": -25.311871240240254,
+      "rms": 0.010096157759069002,
+      "rms_dbfs": -39.91687743823129,
+      "sample_rate": 48000
+    },
+    "canonical_hash": "b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9",
+    "native_unchanged": true,
+    "output": "/home/User/Kuang/artifacts/phase2-ollama-final/preview.wav",
+    "wav_sha256": "ea6a37501cc7ab11687653c518bda1ff136a11ca4d97ccbe8b4b0fe3009e3710"
+  },
+  "python": "3.13.7",
+  "runs": [
+    {
+      "artifacts": {
+        "canonical": "/home/User/Kuang/artifacts/phase2-trap-final/project.kuang.json",
+        "midi": "/home/User/Kuang/artifacts/phase2-trap-final/song.mid",
+        "native": "/home/User/Kuang/artifacts/phase2-trap-final/native/session.scraft",
+        "native_manifest": "/home/User/Kuang/artifacts/phase2-trap-final/native/manifest.json",
+        "preview": "/home/User/Kuang/artifacts/phase2-trap-final/preview.wav",
+        "report": "/home/User/Kuang/artifacts/phase2-trap-final/report.json",
+        "song_spec": "/home/User/Kuang/artifacts/phase2-trap-final/song-spec.json"
+      },
+      "note_count": 266,
+      "prompt": "dark atmospheric trap, 140 bpm, A minor, heavy 808, spacious pads, haunting lead",
+      "render": {
+        "action": "render",
+        "analysis": {
+          "bits_per_sample": 24,
+          "channels": 2,
+          "clipped_samples": 0,
+          "duration_seconds": 28.4285625,
+          "frames": 1364571,
+          "non_silent": true,
+          "peak": 0.15019190311431885,
+          "peak_dbfs": -16.46706959264981,
+          "rms": 0.022630467015408173,
+          "rms_dbfs": -32.90612967201286,
+          "sample_rate": 48000
+        },
+        "canonical_hash": "8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a",
+        "native_unchanged": true,
+        "output": "/home/User/Kuang/artifacts/phase2-trap-final/preview.wav",
+        "wav_sha256": "b49e33f67033a72a17b4129dcd53d0f768853bacb7a446fcc8880d25b2541807"
+      },
+      "song_spec": {
+        "arrangement": "song",
+        "automation": "fade",
+        "bars": 16,
+        "bpm": 140,
+        "energy": "high",
+        "genre": "trap",
+        "instruments": [
+          "kick",
+          "snare",
+          "hats",
+          "bass",
+          "harmony",
+          "lead"
+        ],
+        "mode": "minor",
+        "mood": "dark",
+        "palette": "dark",
+        "progression": [
+          0,
+          5,
+          3,
+          4
+        ],
+        "seed": 17,
+        "space": "wide",
+        "tonic": 9,
+        "version": "1"
+      },
+      "tracks": 6,
+      "validation": {
+        "audio_verified": true,
+        "canonical": true,
+        "canonical_hash": "8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a",
+        "native_mapped_state": true,
+        "save_reopen_equal": true
+      }
+    },
+    {
+      "artifacts": {
+        "canonical": "/home/User/Kuang/artifacts/phase2-house-final/project.kuang.json",
+        "midi": "/home/User/Kuang/artifacts/phase2-house-final/song.mid",
+        "native": "/home/User/Kuang/artifacts/phase2-house-final/native/session.scraft",
+        "native_manifest": "/home/User/Kuang/artifacts/phase2-house-final/native/manifest.json",
+        "preview": "/home/User/Kuang/artifacts/phase2-house-final/preview.wav",
+        "report": "/home/User/Kuang/artifacts/phase2-house-final/report.json",
+        "song_spec": "/home/User/Kuang/artifacts/phase2-house-final/song-spec.json"
+      },
+      "note_count": 512,
+      "prompt": "uplifting house, 126 bpm, C major, bright chord stabs, driving bass",
+      "render": {
+        "action": "render",
+        "analysis": {
+          "bits_per_sample": 24,
+          "channels": 2,
+          "clipped_samples": 0,
+          "duration_seconds": 31.4761875,
+          "frames": 1510857,
+          "non_silent": true,
+          "peak": 0.13846397399902344,
+          "peak_dbfs": -17.173264160676865,
+          "rms": 0.014176929658302135,
+          "rms_dbfs": -36.968356309489685,
+          "sample_rate": 48000
+        },
+        "canonical_hash": "2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015",
+        "native_unchanged": true,
+        "output": "/home/User/Kuang/artifacts/phase2-house-final/preview.wav",
+        "wav_sha256": "907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041"
+      },
+      "song_spec": {
+        "arrangement": "song",
+        "automation": "pulse",
+        "bars": 16,
+        "bpm": 126,
+        "energy": "high",
+        "genre": "house",
+        "instruments": [
+          "kick",
+          "snare",
+          "hats",
+          "bass",
+          "harmony",
+          "arp",
+          "lead"
+        ],
+        "mode": "major",
+        "mood": "uplifting",
+        "palette": "bright",
+        "progression": [
+          0,
+          4,
+          5,
+          3
+        ],
+        "seed": 29,
+        "space": "room",
+        "tonic": 0,
+        "version": "1"
+      },
+      "tracks": 7,
+      "validation": {
+        "audio_verified": true,
+        "canonical": true,
+        "canonical_hash": "2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015",
+        "native_mapped_state": true,
+        "save_reopen_equal": true
+      }
+    }
+  ],
+  "soundcraft": {
+    "adapter": "soundcraft",
+    "apply_targets": {
+      "automation": "existing canonical track/effect lanes; instrument and bypass automation unsupported",
+      "notes": "edit canonical JSON through Kuang transactions, then create a fresh export",
+      "set_parameter": "standard track mixer controls and mapped effect parameters"
+    },
+    "contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+    "executable_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+    "notes": [
+      "MIDI clips merge per track; original clip/note/point IDs are retained in the companion canonical snapshot and identity map.",
+      "Native import restores a verified snapshot only; external host edits require explicit reconciliation and are rejected.",
+      "One canonical pan drives both native stereo panners; audio panning laws are host-defined.",
+      "Key, locks and other canonical-only intent remain in the snapshot; native save names the session from its filename."
+    ],
+    "operations": [
+      "set_parameter",
+      "add_automation_points",
+      "delete_automation_points"
+    ],
+    "supported": true,
+    "unsupported": [],
+    "version": "0.11.0"
+  },
+  "wheel": {
+    "modules_lua_license_verified": true,
+    "path": "/tmp/kuang-phase2-wheel/kuang-0.1.0-py3-none-any.whl",
+    "sha256": "285f58e17bad7670aba8cd2c10c4f71d5452191364b0472f7a30d7c0cf05d7fa"
+  }
+}

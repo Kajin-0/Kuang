@@ -25,3 +25,11 @@ jobs:
           cmp out/demo.kuang.json out/restored.kuang.json
           python -m kuang redo out/restored.kuang.json out/receipt.json out/redone.kuang.json
           cmp out/edited.kuang.json out/redone.kuang.json
+      - name: Offline prompt workflow (no models or host downloads)
+        run: |
+          python -m kuang create "dark trap, 140 bpm, A minor" --out-dir out/trap --seed 17
+          python -m kuang create "uplifting house, 126 bpm, C major" --out-dir out/house --seed 29
+          python -m kuang create "ambient cinematic, 72 bpm, D minor" --out-dir out/ambient
+          python -m kuang validate out/trap/project.kuang.json
+          python -m kuang validate out/house/project.kuang.json
+          python -m kuang validate out/ambient/project.kuang.json

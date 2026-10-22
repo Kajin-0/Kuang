@@ -1,6 +1,8 @@
 """Opt-in, real SoundCraft 0.11.0 execution. Never downloads a backend."""
 
 import json
+import contextlib
+import io
 import os
 import tempfile
 import unittest
@@ -13,6 +15,8 @@ from kuang.generator import generate
 from kuang.schema import AutomationPoint, dumps, load, state_hash
 from kuang.soundcraft import AdapterError, SoundCraftAdapter
 from kuang.transactions import AddAutomationPoints, ScopeError, SetParameter
+from kuang.cli import main
+from test_song import PROMPTS, content
 from helpers import full_scope, small_project
 
 
@@ -32,7 +36,7 @@ class SoundCraftIntegrationTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        (cls.root/"verification-results.json").write_text(json.dumps({"complete": set(cls.results) == {"demo7", "demo8", "negative"},
+        (cls.root/"verification-results.json").write_text(json.dumps({"complete": set(cls.results) == {"demo7", "demo8", "negative", "phase2"},
             "soundcraft": cls.adapter.capabilities(), "results": cls.results}, indent=2, sort_keys=True)+"\n")
         if cls.temporary:
             cls.temporary.cleanup()
@@ -135,3 +139,41 @@ class SoundCraftIntegrationTests(unittest.TestCase):
         self.assertEqual(self.adapter.inspect(bundle)["native"], drift)
         self.assertEqual((bundle/"session.scraft").read_bytes(), changed)
         self.results["negative"] = {"scope_rejected": True, "same_count_note_drift_rejected": True, "inspection_read_only": True}
+
+    def test_real_phase2_cli_varied_prompts_full_notes_fx_reopen_and_audio(self):
+        reports, projects, natives = [], [], []
+        for index, prompt in enumerate(PROMPTS[:2]):
+            output = self.root/f"phase2-{index}"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                self.assertEqual(main(["create", prompt + ", 8 bars", "--out-dir", str(output),
+                                       "--soundcraft", str(self.adapter.executable), "--render"]), 0)
+            report = json.loads(stdout.getvalue())
+            self.assertEqual(report, json.loads((output/"report.json").read_text()))
+            self.assertTrue(report["validation"]["audio_verified"])
+            self.assertTrue(report["validation"]["save_reopen_equal"])
+            audio = report["render"]["analysis"]
+            self.assertEqual((audio["sample_rate"], audio["bits_per_sample"], audio["channels"]), (48000, 24, 2))
+            self.assertTrue(audio["non_silent"])
+            self.assertGreater(audio["rms"], 1e-6)
+            self.assertLess(audio["peak"], 1)
+            self.assertEqual(audio["clipped_samples"], 0)
+            project = self.adapter.import_project(output/"native")
+            self.assertEqual(dumps(project), (output/"project.kuang.json").read_text())
+            native = self.adapter.inspect(output/"native")["native"]
+            # Independent exact-field check, rather than trusting adapter report flags.
+            for track, host in zip(project.tracks, native["tracks"]):
+                observed = [(n["start"], n["length"], n["pitch"], n["velocity"], n["channel"])
+                            for c in host["playlists"][0]["clips"] for n in c["content"]["Midi"]["sequence"]["notes"]]
+                expected = [(c.start+n.start, n.duration, n.pitch, n.velocity, n.channel) for c in track.clips for n in c.notes]
+                self.assertEqual(Counter(observed), Counter(expected))
+            saved = self.root/f"phase2-{index}-saved"
+            self.adapter.save(output/"native", saved)
+            self.assertEqual(self.adapter.inspect(saved)["native"], native)
+            for artifact in report["artifacts"].values():
+                self.assertTrue(Path(artifact).is_file())
+            reports.append(report); projects.append(project); natives.append(native)
+        self.assertNotEqual(content(projects[0]), content(projects[1]))
+        self.assertNotEqual(natives[0]["tempo"], natives[1]["tempo"])
+        self.assertNotEqual([t["instrument"] for t in natives[0]["tracks"]], [t["instrument"] for t in natives[1]["tracks"]])
+        self.results["phase2"] = reports

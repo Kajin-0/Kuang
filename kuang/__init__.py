@@ -1,3 +1,3 @@
-"""Kuang Phase 0: structured music, deterministic generation, exact edits."""
+"""Local structured music, prompt planning and exact edits."""
 
 __version__ = "0.1.0"
