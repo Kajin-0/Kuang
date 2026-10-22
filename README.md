@@ -6,7 +6,7 @@ Kuang turns a musical description into a short editable instrumental sketch. Its
 
 **Working today:** one-command creation and iterative revision/audition of existing songs; distinct trap, house and ambient composition templates; opt-in refined house production with oscillator/filter-envelope sound design, seventh voicings, call/response, swing, EQ/dynamics/modulation FX and evolving automation; native SoundCraft 0.11.0 export/save/reopen and measured A/B WAV checks. Phase 0/1 strict canonical JSON, MIDI, scoped atomic transactions, locks, exact undo/redo and the optional REAPER Lua adapter remain available. Rules need no model; local Ollama creation is an optional experiment.
 
-**Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor, 8/16/32 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI/listening tests or professional composition/mastering claim. SoundCraft is the human editor; Kuang does not implement another DAW UI.
+**Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor. `create` supports 8/16/32 bars; the separate authored house expansion supports 64 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI verification or professional composition/mastering claim; new-candidate listening quality requires human audition. SoundCraft is the human editor; Kuang does not implement another DAW UI.
 
 ## Quick start
 
@@ -51,6 +51,18 @@ python3 tools/phase6_house.py --out-dir artifacts/my-house-depth \
 ```
 
 The source must match the released Phase 5 fingerprint and contain its verified `native/` and `candidate.wav`. The new directory contains aligned 16-bar A/B WAVs with four seconds of tail, equal-RMS listening copies, isolated stems, same-MIDI reverb/modulation controls, complete editable native/canonical/MIDI bundles and **`phase6-house-listening.zip`**. Use a new destination each time. `--symbolic` without `--source` reproduces the exact notes/layers offline; it does not claim audio proof. No new plugin or model is needed. Movement comes from native effects and EQ automation, with distinct ADSRs on separate instruments; it is not oscillator LFO or ADSR automation. [Phase 6 measurements, reproduction and limitations](docs/PHASE6.md) document the verified release at `artifacts/phase6-house/`. Human listening remains the quality gate.
+
+Phase 7 first corrects that pad mix, then expands the pocket into an editable **64-bar house song**: 8-bar DJ intro, 8-bar groove, 8-bar build, 8-bar breakdown, 16-bar main drop and 16-bar DJ outro. The drop preserves the original 16-bar MIDI motifs and IDs. Pads are quieter, softer and less heavily modulated, with longer reverb. Song structure lives in canonical sections and native markers; the original 16-bar SongSpec remains valid source provenance.
+
+```bash
+python3 tools/phase7_house.py pads --out-dir artifacts/my-phase7/pad-fix \
+  --source artifacts/phase6-house --soundcraft /absolute/path/to/soundcraft-cli
+python3 tools/phase7_house.py song --out-dir artifacts/my-phase7/song \
+  --source artifacts/my-phase7/pad-fix --soundcraft /absolute/path/to/soundcraft-cli
+python3 tools/phase7_house.py package --out-dir artifacts/my-phase7
+```
+
+`phase7-house-listening.zip` contains matched A/B pad excerpts, the full song at its native level and both editable bundles. The full 64-bar song is **not** RMS matched to the 16-bar comparison. Use new output paths; `--symbolic` instead of `--soundcraft` generates editable canonical/MIDI without audio claims (packaging requires real proof). No downloads or new plugin are required. See [Phase 7 controls, section measurements, limitations and reproduction](docs/PHASE7.md). Width is still modest; technical tests do not establish musical preference or club readiness.
 
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 

@@ -15,9 +15,9 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Project-local test scratch
         run: |
-          mkdir -p .local/phase6/tmp
-          echo "TMPDIR=$PWD/.local/phase6/tmp" >> "$GITHUB_ENV"
-          echo "PIP_CACHE_DIR=$PWD/.local/phase6/pip-cache" >> "$GITHUB_ENV"
+          mkdir -p .local/phase7/tmp
+          echo "TMPDIR=$PWD/.local/phase7/tmp" >> "$GITHUB_ENV"
+          echo "PIP_CACHE_DIR=$PWD/.local/phase7/pip-cache" >> "$GITHUB_ENV"
       - name: Unit and adapter contract tests (stdlib only)
         run: python -m unittest discover -s tests -v
       - name: CLI vertical slice
@@ -68,15 +68,24 @@ jobs:
           python -m kuang validate artifacts/phase6-house/ci-a/project.kuang.json
           cmp artifacts/phase6-house/ci-a/project.kuang.json artifacts/phase6-house/ci-b/project.kuang.json
           cmp artifacts/phase6-house/ci-a/song.mid artifacts/phase6-house/ci-b/song.mid
-      - name: Wheel install and installed depth smoke
+      - name: Authored 64-bar song and separate source SongSpec
         run: |
-          mkdir -p .local/phase6/build-src
-          cp pyproject.toml LICENSE .local/phase6/build-src/
-          cp -r kuang .local/phase6/build-src/
-          python -m pip wheel --no-deps .local/phase6/build-src --wheel-dir .local/phase6/wheels
-          python -m venv .local/phase6/install
-          .local/phase6/install/bin/pip install --no-deps .local/phase6/wheels/*.whl
-          mkdir -p .local/phase6/away
-          cd .local/phase6/away
+          python tools/phase7_house.py pads --symbolic --out-dir artifacts/phase7-house/pad-fix
+          python tools/phase7_house.py song --symbolic --source artifacts/phase7-house/pad-fix --out-dir artifacts/phase7-house/song-a
+          python tools/phase7_house.py song --symbolic --out-dir artifacts/phase7-house/song-b
+          python -m kuang validate artifacts/phase7-house/song-a/project.kuang.json
+          cmp artifacts/phase7-house/song-a/project.kuang.json artifacts/phase7-house/song-b/project.kuang.json
+          cmp artifacts/phase7-house/song-a/song.mid artifacts/phase7-house/song-b/song.mid
+      - name: Wheel install and installed depth/song smoke
+        run: |
+          mkdir -p .local/phase7/build-src
+          cp pyproject.toml LICENSE .local/phase7/build-src/
+          cp -r kuang .local/phase7/build-src/
+          python -m pip wheel --no-deps --no-build-isolation .local/phase7/build-src --wheel-dir .local/phase7/wheels
+          python -m venv .local/phase7/install
+          .local/phase7/install/bin/pip install --no-deps .local/phase7/wheels/*.whl
+          mkdir -p .local/phase7/away
+          cd .local/phase7/away
           ../install/bin/python -c 'from kuang.depth import depth_house; from kuang.schema import validate; validate(depth_house())'
+          ../install/bin/python -c 'from kuang.house_song import arrange_house; from kuang.schema import validate; p=arrange_house(); validate(p); assert p.bars==64'
           ../install/bin/kuang --help

@@ -1,0 +1,1335 @@
+{
+  "arrangement": {
+    "activity_file": "artifacts/phase7-house/song/activity.json",
+    "automation_lanes": 17,
+    "automation_points": 4327,
+    "bars": 64,
+    "form": [
+      {
+        "bars": 8,
+        "id": "intro",
+        "name": "DJ Intro",
+        "start_bar": 1
+      },
+      {
+        "bars": 8,
+        "id": "groove",
+        "name": "Groove",
+        "start_bar": 9
+      },
+      {
+        "bars": 8,
+        "id": "build",
+        "name": "Build",
+        "start_bar": 17
+      },
+      {
+        "bars": 8,
+        "id": "break",
+        "name": "Breakdown",
+        "start_bar": 25
+      },
+      {
+        "bars": 16,
+        "id": "drop",
+        "name": "Main Drop",
+        "start_bar": 33
+      },
+      {
+        "bars": 16,
+        "id": "outro",
+        "name": "DJ Outro",
+        "start_bar": 49
+      }
+    ],
+    "full_song_rms_matched_against_16bar": false,
+    "main_drop_start_bar": 33,
+    "metrics": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 20.21770688851384,
+      "duration_seconds": 126.90477083333333,
+      "frames": 6091429,
+      "non_silent": true,
+      "peak": 0.4573441743850708,
+      "peak_dbfs": -6.795136971068477,
+      "rms": 0.044602356745604615,
+      "rms_dbfs": -27.012843859582315,
+      "sample_rate": 48000,
+      "sections": {
+        "Breakdown": {
+          "crest_db": 28.105331828776173,
+          "end_frame": 2925714,
+          "peak": 0.4526594877243042,
+          "rms": 0.017803485539789998,
+          "rms_dbfs": -34.989899276847225,
+          "side_rms": 0.004105497975118683,
+          "start_frame": 2194286,
+          "stereo_correlation": 0.9089429089831785
+        },
+        "Build": {
+          "crest_db": 19.542936465895096,
+          "end_frame": 2194286,
+          "peak": 0.4465080499649048,
+          "rms": 0.04706331017123531,
+          "rms_dbfs": -26.54635060459202,
+          "side_rms": 0.005049252304151447,
+          "start_frame": 1462857,
+          "stereo_correlation": 0.9773814519740981
+        },
+        "DJ Intro": {
+          "crest_db": 20.525318374227815,
+          "end_frame": 731429,
+          "peak": 0.42620694637298584,
+          "rms": 0.040119416216254734,
+          "rms_dbfs": -27.932907901817927,
+          "side_rms": 0.0010857114960805376,
+          "start_frame": 0,
+          "stereo_correlation": 0.9985360783937507
+        },
+        "DJ Outro": {
+          "crest_db": 19.749473510116246,
+          "end_frame": 5851429,
+          "peak": 0.447310209274292,
+          "rms": 0.046039980921141324,
+          "rms_dbfs": -26.737297300256195,
+          "side_rms": 0.003165448772743021,
+          "start_frame": 4388571,
+          "stereo_correlation": 0.9907103231519027
+        },
+        "Groove": {
+          "crest_db": 18.72744630772448,
+          "end_frame": 1462857,
+          "peak": 0.4337066411972046,
+          "rms": 0.050213877298590226,
+          "rms_dbfs": -25.98352485975886,
+          "side_rms": 0.0036868179231721115,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9892733899659948
+        },
+        "Main Drop": {
+          "crest_db": 18.682824129767464,
+          "end_frame": 4388571,
+          "peak": 0.4573441743850708,
+          "rms": 0.05322331793929999,
+          "rms_dbfs": -25.47796110083594,
+          "side_rms": 0.005419430812071211,
+          "start_frame": 2925714,
+          "stereo_correlation": 0.9794662489977585
+        },
+        "full": {
+          "crest_db": 20.217706888486482,
+          "end_frame": 6091429,
+          "peak": 0.4573441743850708,
+          "rms": 0.044602356745745086,
+          "rms_dbfs": -27.012843859554962,
+          "side_rms": 0.004039609352391041,
+          "start_frame": 0,
+          "stereo_correlation": 0.9838047058982108
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.0167114434982068,
+          "body_120_500": 0.11580898702767041,
+          "mid_500_2000": 0.08847515651741174,
+          "presence_2000_8000": 0.021872608465660835,
+          "sub_20_120": 0.7571318044910502
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    },
+    "native_markers": [
+      {
+        "color": null,
+        "comments": "",
+        "end": 731429,
+        "id": 21,
+        "kind": "Selection",
+        "name": "DJ Intro",
+        "number": 1,
+        "ruler": 1,
+        "start": 0,
+        "track": null
+      },
+      {
+        "color": null,
+        "comments": "",
+        "end": 1462857,
+        "id": 22,
+        "kind": "Selection",
+        "name": "Groove",
+        "number": 2,
+        "ruler": 1,
+        "start": 731429,
+        "track": null
+      },
+      {
+        "color": null,
+        "comments": "",
+        "end": 2194286,
+        "id": 23,
+        "kind": "Selection",
+        "name": "Build",
+        "number": 3,
+        "ruler": 1,
+        "start": 1462857,
+        "track": null
+      },
+      {
+        "color": null,
+        "comments": "",
+        "end": 2925714,
+        "id": 24,
+        "kind": "Selection",
+        "name": "Breakdown",
+        "number": 4,
+        "ruler": 1,
+        "start": 2194286,
+        "track": null
+      },
+      {
+        "color": null,
+        "comments": "",
+        "end": 4388571,
+        "id": 25,
+        "kind": "Selection",
+        "name": "Main Drop",
+        "number": 5,
+        "ruler": 1,
+        "start": 2925714,
+        "track": null
+      },
+      {
+        "color": null,
+        "comments": "",
+        "end": 5851429,
+        "id": 26,
+        "kind": "Selection",
+        "name": "DJ Outro",
+        "number": 6,
+        "ruler": 1,
+        "start": 4388571,
+        "track": null
+      }
+    ],
+    "notes": 1451,
+    "per_section_onsets": {
+      "Breakdown": {
+        "track-arp": 2,
+        "track-bass": 0,
+        "track-depth-air": 12,
+        "track-depth-pad": 21,
+        "track-harmony": 8,
+        "track-hats": 16,
+        "track-kick": 0,
+        "track-lead": 2,
+        "track-percussion": 4,
+        "track-snare": 8
+      },
+      "Build": {
+        "track-arp": 8,
+        "track-bass": 24,
+        "track-depth-air": 6,
+        "track-depth-pad": 21,
+        "track-harmony": 40,
+        "track-hats": 50,
+        "track-kick": 24,
+        "track-lead": 8,
+        "track-percussion": 31,
+        "track-snare": 25
+      },
+      "DJ Intro": {
+        "track-arp": 0,
+        "track-bass": 0,
+        "track-depth-air": 0,
+        "track-depth-pad": 0,
+        "track-harmony": 8,
+        "track-hats": 20,
+        "track-kick": 32,
+        "track-lead": 0,
+        "track-percussion": 4,
+        "track-snare": 8
+      },
+      "DJ Outro": {
+        "track-arp": 4,
+        "track-bass": 34,
+        "track-depth-air": 2,
+        "track-depth-pad": 16,
+        "track-harmony": 40,
+        "track-hats": 74,
+        "track-kick": 64,
+        "track-lead": 2,
+        "track-percussion": 39,
+        "track-snare": 29
+      },
+      "Groove": {
+        "track-arp": 8,
+        "track-bass": 37,
+        "track-depth-air": 0,
+        "track-depth-pad": 7,
+        "track-harmony": 40,
+        "track-hats": 41,
+        "track-kick": 32,
+        "track-lead": 7,
+        "track-percussion": 24,
+        "track-snare": 21
+      },
+      "Main Drop": {
+        "track-arp": 16,
+        "track-bass": 74,
+        "track-depth-air": 18,
+        "track-depth-pad": 42,
+        "track-harmony": 96,
+        "track-hats": 108,
+        "track-kick": 64,
+        "track-lead": 25,
+        "track-percussion": 63,
+        "track-snare": 42
+      }
+    },
+    "section_spectrum": {
+      "bin_hz": 23.4375,
+      "method": "32 or fewer equally spaced 2048-frame Hann FFTs per region; sum stereo powers, exclude <20 Hz",
+      "sections": {
+        "Breakdown": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.029127585699946588,
+            "body_120_500": 0.4169918253903434,
+            "mid_500_2000": 0.48413675888852387,
+            "presence_2000_8000": 0.069737844837738,
+            "sub_20_120": 5.985183448132187e-06
+          },
+          "end_frame": 2925714,
+          "start_frame": 2194286,
+          "windows": 32
+        },
+        "Build": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.050388159743183746,
+            "body_120_500": 0.11789720389430776,
+            "mid_500_2000": 0.09688648317713963,
+            "presence_2000_8000": 0.02869028931841915,
+            "sub_20_120": 0.7061378638669497
+          },
+          "end_frame": 2194286,
+          "start_frame": 1462857,
+          "windows": 32
+        },
+        "DJ Intro": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.008986301756371114,
+            "body_120_500": 0.02200647276551655,
+            "mid_500_2000": 0.006132539860376421,
+            "presence_2000_8000": 0.006149664857740819,
+            "sub_20_120": 0.9567250207599951
+          },
+          "end_frame": 731429,
+          "start_frame": 0,
+          "windows": 32
+        },
+        "DJ Outro": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.005474621727132878,
+            "body_120_500": 0.09135755406002834,
+            "mid_500_2000": 0.10323828387589166,
+            "presence_2000_8000": 0.021922152839340646,
+            "sub_20_120": 0.7780073874976065
+          },
+          "end_frame": 5851429,
+          "start_frame": 4388571,
+          "windows": 32
+        },
+        "Groove": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.02112273936012374,
+            "body_120_500": 0.11497363393598117,
+            "mid_500_2000": 0.1080273685870908,
+            "presence_2000_8000": 0.02417155253971412,
+            "sub_20_120": 0.7317047055770902
+          },
+          "end_frame": 1462857,
+          "start_frame": 731429,
+          "windows": 32
+        },
+        "Main Drop": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.04317888047251259,
+            "body_120_500": 0.16574926883787774,
+            "mid_500_2000": 0.11424374350594725,
+            "presence_2000_8000": 0.02985395083686661,
+            "sub_20_120": 0.6469741563467959
+          },
+          "end_frame": 4388571,
+          "start_frame": 2925714,
+          "windows": 32
+        }
+      }
+    },
+    "source_note_ids_preserved_in_main_drop": 548,
+    "spatial": {
+      "bands": {
+        "high_over_500": {
+          "mid": 192246.8382402839,
+          "mono_energy_retention": 0.9748638570210307,
+          "side": 4956.942426842176,
+          "side_to_mid_db": -15.886453312155805,
+          "side_to_mid_power_ratio": 0.025784259820422296
+        },
+        "low_20_120": {
+          "mid": 783799.360285203,
+          "mono_energy_retention": 0.9999996310696968,
+          "side": 0.28916744231801467,
+          "side_to_mid_db": -64.33055511004186,
+          "side_to_mid_power_ratio": 3.6893043930629724e-07
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.4560471773147583,
+        "rms": 0.044419047530962555,
+        "rms_loss_db": -0.035771304021820625
+      },
+      "windows": 96
+    },
+    "tracks": 10
+  },
+  "asset_hashes_checked": 77,
+  "base_commit": "b549e555f103035ba79846f6953c03491afc45d5",
+  "ci": {
+    "host_downloaded": false,
+    "python": [
+      "3.11",
+      "3.13"
+    ],
+    "remote_result": "checked after release push; see final Actions result",
+    "workflow": ".github/workflows/test.yml"
+  },
+  "club_professional_quality_established": false,
+  "corrected_pad_hash": "92386dbe362c3285292e7977dfc794c07dcbeef8a194068fac309c0768dd8629",
+  "download": {
+    "bytes": 33700762,
+    "levels": {
+      "A_B_excerpt_rms_matching": {
+        "A-phase6-old-pads-4bars.wav": {
+          "audio": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 7.619041666666667,
+            "frames": 365714,
+            "non_silent": true,
+            "peak": 0.39818716049194336,
+            "peak_dbfs": -7.998254957362504,
+            "rms": 0.05337190672185738,
+            "rms_dbfs": -25.453745633270813,
+            "sample_rate": 48000
+          },
+          "gain_from_full_matched_excerpt_db": -0.0235664970279846
+        },
+        "B-phase7-corrected-pads-4bars.wav": {
+          "audio": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 7.619041666666667,
+            "frames": 365714,
+            "non_silent": true,
+            "peak": 0.4115562438964844,
+            "peak_dbfs": -7.711416101149289,
+            "rms": 0.053371906771171915,
+            "rms_dbfs": -25.453745625245233,
+            "sample_rate": 48000
+          },
+          "gain_from_full_matched_excerpt_db": 0.0
+        }
+      },
+      "A_B_full16_rms_matching": {
+        "A-phase6-old-pads": {
+          "audio": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 35.4761875,
+            "frames": 1702857,
+            "non_silent": true,
+            "peak": 0.43538832664489746,
+            "peak_dbfs": -7.222464383329274,
+            "rms": 0.04952920270604185,
+            "rms_dbfs": -26.10277325991616,
+            "sample_rate": 48000
+          },
+          "gain_db": -0.8534493728064767
+        },
+        "B-phase7-corrected-pads": {
+          "audio": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 35.4761875,
+            "frames": 1702857,
+            "non_silent": true,
+            "peak": 0.4526944160461426,
+            "peak_dbfs": -6.883897249273396,
+            "rms": 0.04952920271013515,
+            "rms_dbfs": -26.10277325919832,
+            "sample_rate": 48000
+          },
+          "gain_db": 0.0
+        }
+      },
+      "C_matched_to_A_B": false,
+      "C_native_level": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 20.21770688851384,
+        "duration_seconds": 126.90477083333333,
+        "frames": 6091429,
+        "non_silent": true,
+        "peak": 0.4573441743850708,
+        "peak_dbfs": -6.795136971068477,
+        "rms": 0.044602356745604615,
+        "rms_dbfs": -27.012843859582315,
+        "sample_rate": 48000,
+        "sections": {
+          "Breakdown": {
+            "crest_db": 28.105331828776173,
+            "end_frame": 2925714,
+            "peak": 0.4526594877243042,
+            "rms": 0.017803485539789998,
+            "rms_dbfs": -34.989899276847225,
+            "side_rms": 0.004105497975118683,
+            "start_frame": 2194286,
+            "stereo_correlation": 0.9089429089831785
+          },
+          "Build": {
+            "crest_db": 19.542936465895096,
+            "end_frame": 2194286,
+            "peak": 0.4465080499649048,
+            "rms": 0.04706331017123531,
+            "rms_dbfs": -26.54635060459202,
+            "side_rms": 0.005049252304151447,
+            "start_frame": 1462857,
+            "stereo_correlation": 0.9773814519740981
+          },
+          "DJ Intro": {
+            "crest_db": 20.525318374227815,
+            "end_frame": 731429,
+            "peak": 0.42620694637298584,
+            "rms": 0.040119416216254734,
+            "rms_dbfs": -27.932907901817927,
+            "side_rms": 0.0010857114960805376,
+            "start_frame": 0,
+            "stereo_correlation": 0.9985360783937507
+          },
+          "DJ Outro": {
+            "crest_db": 19.749473510116246,
+            "end_frame": 5851429,
+            "peak": 0.447310209274292,
+            "rms": 0.046039980921141324,
+            "rms_dbfs": -26.737297300256195,
+            "side_rms": 0.003165448772743021,
+            "start_frame": 4388571,
+            "stereo_correlation": 0.9907103231519027
+          },
+          "Groove": {
+            "crest_db": 18.72744630772448,
+            "end_frame": 1462857,
+            "peak": 0.4337066411972046,
+            "rms": 0.050213877298590226,
+            "rms_dbfs": -25.98352485975886,
+            "side_rms": 0.0036868179231721115,
+            "start_frame": 731429,
+            "stereo_correlation": 0.9892733899659948
+          },
+          "Main Drop": {
+            "crest_db": 18.682824129767464,
+            "end_frame": 4388571,
+            "peak": 0.4573441743850708,
+            "rms": 0.05322331793929999,
+            "rms_dbfs": -25.47796110083594,
+            "side_rms": 0.005419430812071211,
+            "start_frame": 2925714,
+            "stereo_correlation": 0.9794662489977585
+          },
+          "full": {
+            "crest_db": 20.217706888486482,
+            "end_frame": 6091429,
+            "peak": 0.4573441743850708,
+            "rms": 0.044602356745745086,
+            "rms_dbfs": -27.012843859554962,
+            "side_rms": 0.004039609352391041,
+            "start_frame": 0,
+            "stereo_correlation": 0.9838047058982108
+          }
+        },
+        "spectrum": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.0167114434982068,
+            "body_120_500": 0.11580898702767041,
+            "mid_500_2000": 0.08847515651741174,
+            "presence_2000_8000": 0.021872608465660835,
+            "sub_20_120": 0.7571318044910502
+          },
+          "bin_hz": 23.4375,
+          "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+          "windows": 64
+        }
+      }
+    },
+    "path": "artifacts/phase7-house/phase7-house-listening.zip",
+    "sha256": "774941aae61c42c40daf1eb72abe931d68e69bb490c52a49af0dcc64be8f6cc5",
+    "zip_members": 24
+  },
+  "human_listening_performed": false,
+  "independent_repeat_sha256": {
+    "pad-fix/A-phase6-old-pads.wav": "4da07ac714abb15544116ff3b28512ef757243e416cedb04e9387ffa463251fd",
+    "pad-fix/B-phase7-corrected-pads.wav": "2c8fca66d6307b9d3c08ae03e15cc28640da80b2136d7282f000f7beaefeea81",
+    "pad-fix/project.kuang.json": "92386dbe362c3285292e7977dfc794c07dcbeef8a194068fac309c0768dd8629",
+    "pad-fix/song.mid": "0223909a366d9a6a3a10d2b73992b3496d30d37e10e2e14dc54516f91abc04f4",
+    "song/C-phase7-house-64bars.wav": "eed192494c229bf7e9f2ff3eb54a7cd06de838d52dd4265e91f7b742ec51837f",
+    "song/project.kuang.json": "6e22ce487c5fd3453b8d26d4e8387e1238284248fa7335a9dfc3528e68e3f88a",
+    "song/song.mid": "c1bb32587b486e92b62b961fbe14b76f485e5b373eb653dac14c775c2e5c2d21"
+  },
+  "limits": [
+    "Calmer/quieter pads narrow the same-loop stereo image; thin stereo is not solved",
+    "Existing linked native stereo panners",
+    "Basic subtractive/drum palette, static ADSR, no oscillator LFO or wavetable",
+    "No audio-triggered sidechain, master-bus mapping or LUFS/true-peak certification",
+    "No independently licensed professional reference",
+    "Human listening required for preference and mix integration"
+  ],
+  "native": {
+    "all_note_fields_checked": true,
+    "exact_scoped_decay_and_pan_edit_and_replay": true,
+    "full_save_reopen": true,
+    "native_fx_units_and_lane_points_checked": true,
+    "proof_directory": "artifacts/phase7-house/proof/verified-suite/real-host-phase7",
+    "proof_relocated_without_byte_changes": true,
+    "six_section_markers_checked": true
+  },
+  "new_plugins_models_samples_downloads": false,
+  "pad_correction": {
+    "automation_change_rules": {
+      "depth-air-breath": {
+        "changed_points": 257,
+        "exact_records_sha256": "9d255d543b88ab35ba06fa738052167756eec0fb28f600de20c74f9ae98662f5",
+        "first_change": {
+          "after": -7.0,
+          "before": -1.0,
+          "tick": 0
+        },
+        "last_change": {
+          "after": -7.0,
+          "before": -1.0,
+          "tick": 61440
+        },
+        "rule": "after=before-6 dB"
+      },
+      "depth-air-filter": {
+        "changed_points": 17,
+        "exact_records_sha256": "c814301c6bac89939f77fb09896153b26f97825645f1220fb8543195d4cbae2c",
+        "first_change": {
+          "after": 2500,
+          "before": 2400.0,
+          "tick": 0
+        },
+        "last_change": {
+          "after": 2500,
+          "before": 2400.0,
+          "tick": 61440
+        },
+        "rule": "after=clamp(before*0.65,2500,9000) Hz"
+      },
+      "depth-pad-breath": {
+        "changed_points": 257,
+        "exact_records_sha256": "da4ef532740bd0356d87f021b9e53d63c0b8c007b8e3cee72813164954432cb8",
+        "first_change": {
+          "after": -5.0,
+          "before": 1.0,
+          "tick": 0
+        },
+        "last_change": {
+          "after": -5.0,
+          "before": 1.0,
+          "tick": 61440
+        },
+        "rule": "after=before-6 dB"
+      },
+      "depth-pad-filter": {
+        "changed_points": 17,
+        "exact_records_sha256": "58039cbbb1b09aa3aabb9799221a8d78e154c0cae55460a4e02928e5cccf223a",
+        "first_change": {
+          "after": 1600,
+          "before": 1200.0,
+          "tick": 0
+        },
+        "last_change": {
+          "after": 1600,
+          "before": 1200.0,
+          "tick": 61440
+        },
+        "rule": "after=clamp(before*0.65,1600,4200) Hz"
+      }
+    },
+    "control_scalars": {
+      "track-depth-air": {
+        "effect-depth-air-chorus/effect.wet": {
+          "after": 0.3,
+          "before": 0.44
+        },
+        "effect-depth-air-chorus/soundcraft.depth": {
+          "after": 0.26,
+          "before": 0.58
+        },
+        "effect-depth-air-chorus/soundcraft.rate": {
+          "after": 0.24,
+          "before": 0.63
+        },
+        "effect-depth-air-plate/effect.wet": {
+          "after": 0.34,
+          "before": 0.24
+        },
+        "effect-depth-air-plate/soundcraft.damping": {
+          "after": 7000,
+          "before": 9000.0
+        },
+        "effect-depth-air-plate/soundcraft.decay_ms": {
+          "after": 2400,
+          "before": 1300.0
+        },
+        "effect-depth-air-plate/soundcraft.pre_delay": {
+          "after": 28,
+          "before": 32.0
+        },
+        "effect-depth-air-plate/soundcraft.width": {
+          "after": 0.75,
+          "before": 1.0
+        },
+        "instrument/soundcraft.amp_attack": {
+          "after": 500,
+          "before": 260.0
+        },
+        "instrument/soundcraft.amp_release": {
+          "after": 1100,
+          "before": 650.0
+        },
+        "instrument/soundcraft.amp_sustain": {
+          "after": 0.32,
+          "before": 0.38
+        },
+        "instrument/soundcraft.filter_attack": {
+          "after": 900,
+          "before": 450.0
+        },
+        "instrument/soundcraft.filter_decay": {
+          "after": 1400,
+          "before": 1200.0
+        },
+        "instrument/soundcraft.filter_env_amount": {
+          "after": 0.08,
+          "before": 0.16
+        },
+        "instrument/soundcraft.filter_release": {
+          "after": 1100,
+          "before": 650.0
+        },
+        "instrument/soundcraft.osc_mix": {
+          "after": 0.18,
+          "before": 0.24
+        },
+        "instrument/synth.cutoff_hz": {
+          "after": 5500,
+          "before": 8500.0
+        },
+        "instrument/synth.resonance": {
+          "after": 0.08,
+          "before": 0.12
+        },
+        "mixer/mixer.gain_db": {
+          "after": -4.0,
+          "before": 2.0
+        },
+        "mixer/mixer.pan": {
+          "after": 0.48,
+          "before": 0.62
+        }
+      },
+      "track-depth-pad": {
+        "effect-depth-pad-chorus/effect.wet": {
+          "after": 0.28,
+          "before": 0.4
+        },
+        "effect-depth-pad-chorus/soundcraft.depth": {
+          "after": 0.24,
+          "before": 0.65
+        },
+        "effect-depth-pad-chorus/soundcraft.rate": {
+          "after": 0.17,
+          "before": 0.32
+        },
+        "effect-depth-pad-phaser/effect.wet": {
+          "after": 0.1,
+          "before": 0.38
+        },
+        "effect-depth-pad-phaser/soundcraft.depth": {
+          "after": 0.22,
+          "before": 0.72
+        },
+        "effect-depth-pad-phaser/soundcraft.feedback": {
+          "after": 0.12,
+          "before": 0.28
+        },
+        "effect-depth-pad-phaser/soundcraft.rate": {
+          "after": 0.09,
+          "before": 0.126
+        },
+        "effect-depth-pad-plate/effect.wet": {
+          "after": 0.38,
+          "before": 0.28
+        },
+        "effect-depth-pad-plate/soundcraft.damping": {
+          "after": 5500,
+          "before": 6500.0
+        },
+        "effect-depth-pad-plate/soundcraft.decay_ms": {
+          "after": 2800,
+          "before": 1800.0
+        },
+        "effect-depth-pad-plate/soundcraft.pre_delay": {
+          "after": 28,
+          "before": 38.0
+        },
+        "effect-depth-pad-plate/soundcraft.width": {
+          "after": 0.75,
+          "before": 1.0
+        },
+        "instrument/soundcraft.amp_attack": {
+          "after": 850,
+          "before": 650.0
+        },
+        "instrument/soundcraft.amp_release": {
+          "after": 1250,
+          "before": 1000.0
+        },
+        "instrument/soundcraft.amp_sustain": {
+          "after": 0.55,
+          "before": 0.7
+        },
+        "instrument/soundcraft.filter_attack": {
+          "after": 1400,
+          "before": 1100.0
+        },
+        "instrument/soundcraft.filter_decay": {
+          "after": 1900,
+          "before": 1600.0
+        },
+        "instrument/soundcraft.filter_env_amount": {
+          "after": 0.1,
+          "before": 0.24
+        },
+        "instrument/soundcraft.filter_release": {
+          "after": 1250,
+          "before": 1000.0
+        },
+        "instrument/soundcraft.level": {
+          "after": -9,
+          "before": -6.0
+        },
+        "instrument/soundcraft.osc2_wave": {
+          "after": 0.6666666666666666,
+          "before": 0.0
+        },
+        "instrument/soundcraft.osc_mix": {
+          "after": 0.2,
+          "before": 0.34
+        },
+        "instrument/synth.cutoff_hz": {
+          "after": 2800,
+          "before": 3400.0
+        },
+        "instrument/synth.resonance": {
+          "after": 0.08,
+          "before": 0.16
+        },
+        "mixer/mixer.gain_db": {
+          "after": -2.0,
+          "before": 4.0
+        },
+        "mixer/mixer.pan": {
+          "after": -0.44,
+          "before": -0.58
+        }
+      }
+    },
+    "full_exact_point_changes": "artifacts/phase7-house/pad-fix/verification.json#/control_changes/automation",
+    "lead_active_balance": {
+      "B-drums": {
+        "frames": 238096,
+        "peak_dbfs": -8.259067739597,
+        "rms": 0.04858542853167171,
+        "rms_dbfs": -26.269879247333826
+      },
+      "B-lead": {
+        "frames": 238096,
+        "peak_dbfs": -12.542209613444573,
+        "rms": 0.022934967063989557,
+        "rms_dbfs": -32.79003758409789
+      },
+      "B-pads": {
+        "frames": 238096,
+        "peak_dbfs": -20.420797184055562,
+        "rms": 0.014361924576084381,
+        "rms_dbfs": -36.85574716737872
+      },
+      "intervals": [
+        [
+          0,
+          10505
+        ],
+        [
+          17857,
+          25148
+        ],
+        [
+          34286,
+          45267
+        ],
+        [
+          182857,
+          193362
+        ],
+        [
+          200714,
+          208005
+        ],
+        [
+          217143,
+          228124
+        ],
+        [
+          365714,
+          376219
+        ],
+        [
+          383571,
+          390862
+        ],
+        [
+          400000,
+          410981
+        ],
+        [
+          548571,
+          559076
+        ],
+        [
+          566429,
+          573719
+        ],
+        [
+          582857,
+          593838
+        ],
+        [
+          731429,
+          741933
+        ],
+        [
+          749286,
+          756576
+        ],
+        [
+          765714,
+          776695
+        ],
+        [
+          914286,
+          924790
+        ],
+        [
+          932143,
+          939433
+        ],
+        [
+          948571,
+          959552
+        ],
+        [
+          1097143,
+          1107648
+        ],
+        [
+          1115000,
+          1122290
+        ],
+        [
+          1131429,
+          1142410
+        ],
+        [
+          1280000,
+          1290505
+        ],
+        [
+          1297857,
+          1305148
+        ],
+        [
+          1314286,
+          1325267
+        ],
+        [
+          1360000,
+          1367886
+        ]
+      ],
+      "method": "Union of exact lead MIDI note spans plus its 75 ms native release, same sample windows for every stem; not a perceptual score",
+      "pad_minus_lead_active_db": -4.065709583280835
+    },
+    "metrics": {
+      "A-phase6-old-pads": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 18.880309810998487,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.4803406000137329,
+        "peak_dbfs": -6.36901407539336,
+        "rms": 0.05464290825152795,
+        "rms_dbfs": -25.249323886391846,
+        "sample_rate": 48000,
+        "sections": {
+          "full": {
+            "crest_db": 18.88030981098853,
+            "end_frame": 1702857,
+            "peak": 0.4803406000137329,
+            "rms": 0.05464290825159057,
+            "rms_dbfs": -25.249323886381887,
+            "side_rms": 0.010585407660117426,
+            "start_frame": 0,
+            "stereo_correlation": 0.930404768685575
+          }
+        },
+        "spectrum": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.02327122474724799,
+            "body_120_500": 0.18683044270001475,
+            "mid_500_2000": 0.17472510762208493,
+            "presence_2000_8000": 0.03464008576362643,
+            "sub_20_120": 0.5805331391670259
+          },
+          "bin_hz": 23.4375,
+          "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+          "windows": 64
+        }
+      },
+      "B-phase7-corrected-pads": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 19.218876009924923,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.4526944160461426,
+        "peak_dbfs": -6.883897249273396,
+        "rms": 0.04952920271013515,
+        "rms_dbfs": -26.10277325919832,
+        "sample_rate": 48000,
+        "sections": {
+          "full": {
+            "crest_db": 19.21887600991429,
+            "end_frame": 1702857,
+            "peak": 0.4526944160461426,
+            "rms": 0.049529202710195806,
+            "rms_dbfs": -26.102773259187686,
+            "side_rms": 0.00465683179285988,
+            "start_frame": 0,
+            "stereo_correlation": 0.982436634428947
+          }
+        },
+        "spectrum": {
+          "band_power_fraction": {
+            "air_8000_nyquist": 0.02704489956755075,
+            "body_120_500": 0.16329102240614346,
+            "mid_500_2000": 0.09793348132834341,
+            "presence_2000_8000": 0.02469838800003662,
+            "sub_20_120": 0.6870322086979258
+          },
+          "bin_hz": 23.4375,
+          "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+          "windows": 64
+        }
+      }
+    },
+    "original_notes": 548,
+    "pad_stem_change_db": -5.548620234700863,
+    "rms_matching_full16": {
+      "A-phase6-old-pads": {
+        "audio": {
+          "bits_per_sample": 24,
+          "channels": 2,
+          "clipped_samples": 0,
+          "duration_seconds": 35.4761875,
+          "frames": 1702857,
+          "non_silent": true,
+          "peak": 0.43538832664489746,
+          "peak_dbfs": -7.222464383329274,
+          "rms": 0.04952920270604185,
+          "rms_dbfs": -26.10277325991616,
+          "sample_rate": 48000
+        },
+        "gain_db": -0.8534493728064767
+      },
+      "B-phase7-corrected-pads": {
+        "audio": {
+          "bits_per_sample": 24,
+          "channels": 2,
+          "clipped_samples": 0,
+          "duration_seconds": 35.4761875,
+          "frames": 1702857,
+          "non_silent": true,
+          "peak": 0.4526944160461426,
+          "peak_dbfs": -6.883897249273396,
+          "rms": 0.04952920271013515,
+          "rms_dbfs": -26.10277325919832,
+          "sample_rate": 48000
+        },
+        "gain_db": 0.0
+      }
+    },
+    "same_midi": true,
+    "spatial": {
+      "A-phase6-old-pads": {
+        "bands": {
+          "high_over_500": {
+            "mid": 428581.9876823073,
+            "mono_energy_retention": 0.9076706918896783,
+            "side": 43595.85336932245,
+            "side_to_mid_db": -9.925887314857263,
+            "side_to_mid_power_ratio": 0.10172115166360775
+          },
+          "low_20_120": {
+            "mid": 944115.9920032517,
+            "mono_energy_retention": 0.9999952796969058,
+            "side": 4.456534674488887,
+            "side_to_mid_db": -53.26028064094028,
+            "side_to_mid_power_ratio": 4.720325375521802e-06
+          }
+        },
+        "bin_hz": 11.71875,
+        "last_250ms": {
+          "peak": 0,
+          "rms": 0.0,
+          "rms_dbfs": null
+        },
+        "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+        "mono_sum": {
+          "clipped": false,
+          "peak": 0.41960740089416504,
+          "rms": 0.05360780322732693,
+          "rms_loss_db": -0.16611589739800586
+        },
+        "windows": 96
+      },
+      "B-phase7-corrected-pads": {
+        "bands": {
+          "high_over_500": {
+            "mid": 260412.06937963728,
+            "mono_energy_retention": 0.972196656859047,
+            "side": 7447.388418717269,
+            "side_to_mid_db": -15.43657103638533,
+            "side_to_mid_power_ratio": 0.028598476393427913
+          },
+          "low_20_120": {
+            "mid": 944111.1510556369,
+            "mono_energy_retention": 0.9999952816767808,
+            "side": 4.454642583913132,
+            "side_to_mid_db": -53.26210262824732,
+            "side_to_mid_power_ratio": 4.718345481813526e-06
+          }
+        },
+        "bin_hz": 11.71875,
+        "last_250ms": {
+          "peak": 0,
+          "rms": 0.0,
+          "rms_dbfs": null
+        },
+        "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+        "mono_sum": {
+          "clipped": false,
+          "peak": 0.42008209228515625,
+          "rms": 0.049309794551998076,
+          "rms_loss_db": -0.03856287964127657
+        },
+        "windows": 96
+      }
+    },
+    "stem_balance": {
+      "A-pads": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.2737003564834595,
+        "peak_dbfs": -11.25449273877608,
+        "rms": 0.027086189231881608,
+        "rms_dbfs": -31.345041835092417,
+        "sample_rate": 48000
+      },
+      "B-drums": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.4004770517349243,
+        "peak_dbfs": -7.948447298982256,
+        "rms": 0.039428941033716476,
+        "rms_dbfs": -28.08369773745481,
+        "sample_rate": 48000
+      },
+      "B-lead": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.23598778247833252,
+        "peak_dbfs": -12.542209613444573,
+        "rms": 0.008850345041441157,
+        "rms_dbfs": -41.060795949494675,
+        "sample_rate": 48000
+      },
+      "B-music": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.4554053544998169,
+        "peak_dbfs": -6.832037348108651,
+        "rms": 0.013314742593213023,
+        "rms_dbfs": -37.51334450252975,
+        "sample_rate": 48000
+      },
+      "B-pads": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 35.4761875,
+        "frames": 1702857,
+        "non_silent": true,
+        "peak": 0.1661900281906128,
+        "peak_dbfs": -15.587900770089327,
+        "rms": 0.014299369760307242,
+        "rms_dbfs": -36.89366206979328,
+        "sample_rate": 48000
+      }
+    },
+    "wet_dry": {
+      "wet-dry-context": {
+        "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+        "changed_fraction": 0.9561469342405147,
+        "changed_samples": 3256363,
+        "channels": 2,
+        "difference_peak": 0.09415841102600098,
+        "difference_rms": 0.009728696170338492,
+        "difference_rms_dbfs": -40.238907190459244,
+        "difference_to_original_rms_ratio": 0.19642343583188165,
+        "frames": 1702857,
+        "measurable_change": true,
+        "offset_frames": 0,
+        "sample_rate": 48000
+      },
+      "wet-dry-pads": {
+        "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+        "changed_fraction": 0.956149576858186,
+        "changed_samples": 3256372,
+        "channels": 2,
+        "difference_peak": 0.09415853023529053,
+        "difference_rms": 0.009728696221466266,
+        "difference_rms_dbfs": -40.2389071448118,
+        "difference_to_original_rms_ratio": 0.6803583923307983,
+        "frames": 1702857,
+        "measurable_change": true,
+        "offset_frames": 0,
+        "sample_rate": 48000
+      }
+    }
+  },
+  "paths": {
+    "full_song": "artifacts/phase7-house/song/C-phase7-house-64bars.wav",
+    "matched16_A": "artifacts/phase7-house/pad-fix/listening/A-phase6-old-pads-16bars-matched.wav",
+    "matched16_B": "artifacts/phase7-house/pad-fix/listening/B-phase7-corrected-pads-16bars-matched.wav",
+    "pad_session": "artifacts/phase7-house/pad-fix/native/session.scraft",
+    "song_session": "artifacts/phase7-house/song/native/session.scraft"
+  },
+  "phase": 7,
+  "preservation": {
+    "all_historical_artifact_examples_unchanged": true,
+    "authorized_existing_file_changes": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/STATUS.md"
+    ],
+    "historical_artifact_example_files": 3555,
+    "original_code_tests_fixtures_unchanged": true,
+    "original_files_checked": 3638,
+    "phase6_baseline_pcm_prefix_exact": true
+  },
+  "previous_attempt": {
+    "errors": 1,
+    "log": ".local/phase7/real-suite-protected-source-path.log",
+    "passed": 209,
+    "reason": "Legacy Phase 6 preserved-source guard rejected test outputs nested inside artifacts/phase7-house; unchanged suite rerun in isolated project-local staging"
+  },
+  "runtime_dependencies": [],
+  "schema": "0.1",
+  "song_hash": "6e22ce487c5fd3453b8d26d4e8387e1238284248fa7335a9dfc3528e68e3f88a",
+  "source_phase6_hash": "6d5aba34cdc0dbf6401b3d1e4f6526e716dfcddaee192f7c12a7b0283e933e3b",
+  "source_songspec_bars": 16,
+  "source_songspec_role": "unchanged provenance; separate authored arrangement is 64 bars",
+  "source_songspec_version": "1",
+  "tests": {
+    "discovered": 210,
+    "errors": 0,
+    "failures": 0,
+    "log": ".local/phase7/real-suite.log",
+    "new_methods": 16,
+    "passed": 210,
+    "previous_methods_retained": 194,
+    "python": "3.13.7",
+    "real_soundcraft": "0.11.0",
+    "seconds": 503.007,
+    "skips": 0
+  },
+  "wheel_install": {
+    "bars": 64,
+    "installed_cli_help": true,
+    "installed_module": "/home/User/Kuang/.local/phase7/venv/lib/python3.13/site-packages/kuang/__init__.py",
+    "lua_resource": true,
+    "pad_hash": "92386dbe362c3285292e7977dfc794c07dcbeef8a194068fac309c0768dd8629",
+    "runtime_dependencies": [],
+    "song_hash": "6e22ce487c5fd3453b8d26d4e8387e1238284248fa7335a9dfc3528e68e3f88a"
+  }
+}
