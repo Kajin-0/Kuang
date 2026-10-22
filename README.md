@@ -1,3 +1,5 @@
+![Kuang — Prompt to Editable Music](docs/assets/kuang-banner.webp)
+
 # Kuang — local prompt to editable music
 
 Kuang turns a musical description into a short editable instrumental sketch. Its source of truth is a DAW-agnostic structured project, with MIDI and optional native SoundCraft sessions and measured WAV previews. Everything runs locally. Python 3.11+, standard library only; no subscriptions, API keys, required proprietary components or bundled model/audio downloads.
