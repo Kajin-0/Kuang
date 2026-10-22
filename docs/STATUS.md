@@ -11,8 +11,8 @@ Actual checks:
 | Check | Result |
 | --- | --- |
 | Baseline before changes | 77 discovered, 74 passed, 3 real-host tests explicitly skipped; 20.202 s |
-| Final offline suite | 99 discovered, 95 passed, 4 real-host methods explicitly skipped; 21.569 s |
-| Real SoundCraft integration suite | **99 passed, zero skips/failures/errors**, final release run 31.470 s; includes legacy 32-bar renders/edits and two varied 8-bar prompt workflows |
+| Final offline suite | 100 discovered, 96 passed, 4 real-host methods explicitly skipped; 19.985 s |
+| Real SoundCraft integration suite | **100 passed, zero skips/failures/errors**, final run 33.774 s; includes legacy 32-bar renders/edits and two varied 8-bar prompt workflows |
 | Additional production CLI runs | Full 16-bar trap and house sessions/render, different notes beyond velocities, tempo and instrumentation; hashes/metrics below |
 | Legacy public CLI smoke | generate → propose → apply → undo → redo; `cmp` confirms exact original/restored and edited/redone bytes |
 | Ollama actual inference | Installed **qwen3.5:4b**, Ollama **0.32.15**; final one-command validated ambient D-minor/72 BPM → native/reopen/render, 118 generated tokens, 31.082 s reported generation time |
@@ -35,10 +35,10 @@ All are measured non-silent offline renders. No listening, native GUI, mastering
 Persistent artifacts are in ignored `/home/User/Kuang/artifacts/` (not committed or downloaded):
 
 - `phase2-trap-final/` and `phase2-house-final/`: full command reports, SongSpec/canonical/MIDI, `native/session.scraft`, manifest/inspection and `preview.wav`.
-- `phase2-integration-release/verification-results.json`: complete final legacy and new prompt integration results; `phase2-0/`, `phase2-1/` and separately saved clones contain the two 8-bar test sessions. Earlier `phase2-integration-final/` is retained too.
+- `phase2-verification-100/verification-results.json`: complete final legacy and new prompt integration results; `phase2-0/`, `phase2-1/` and separately saved clones contain the two 8-bar test sessions. Earlier `phase2-integration-final/` and `phase2-integration-release/` are retained too.
 - `phase2-ollama-final/`: final one-command actual model plan, canonical/MIDI, native session, report and preview. Earlier `phase2-ollama/`, `phase2-ollama-native/`, `phase2-ollama-preview.wav` and `phase2-ollama-render.json` are retained from separate public export/render verification of the same model-planned project.
 - `phase2-legacy-smoke/`: generated, edited, restored and redone canonical states plus receipt/request.
-- Earlier exploratory Phase 2 runs and all Phase 1 evaluation files were retained. `/tmp/kuang-phase2-unit-final.log` and `/tmp/kuang-phase2-integration-release.log` are temporary test logs. Wheel: `/tmp/kuang-phase2-wheel/kuang-0.1.0-py3-none-any.whl`.
+- Earlier exploratory Phase 2 runs and all Phase 1 evaluation files were retained. `/tmp/kuang-phase2-unit-100.log` and `/tmp/kuang-phase2-verification-100.log` are temporary test logs. Final wheel: `/tmp/kuang-phase2-wheel-release/kuang-0.1.0-py3-none-any.whl`.
 
 Final trap/house canonical hashes are `8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a` and `2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015`. WAV hashes are `b49e33f67033a72a17b4129dcd53d0f768853bacb7a446fcc8880d25b2541807` and `907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041`. Model-planned canonical hash: `b083c83390dc44f0b869fe70a928403f6c45ae6dbd794bb845e0d52d21a74bf9`; its WAV: `ea6a37501cc7ab11687653c518bda1ff136a11ca4d97ccbe8b4b0fe3009e3710`. General cross-build audio determinism is not claimed.
 
@@ -47,6 +47,8 @@ The real local model digest was `d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7
 Current limits: finite English rules vocabulary and three template families; instrumental synth sketches rather than audio/music model generation; constant integer tempo, 4/4, diatonic major/minor and 8/16/32 bars. No vocals, external assets/plugins, acoustic instrument emulation, 808 slides, compressor sidechain or proprietary requirement. Ollama is optional and may vary despite sampler seed; saved SongSpec reproduces composition with this code. Native manual edits are intentionally not reconciled; canonical edits/IDs/locks/undo remain authoritative. Single-writer publication is staged with cleanup and no clobber, not crash-atomic across files. No independent GUI or listening-quality claim. Native editable notes/FX/mixer/automation are verified through the headless CLI. Future work can improve composition through listening and extend native note edits/reconciliation under the same exactness requirements.
 
 Architecture clarification: rules remain the complete no-model baseline. Small local Ollama models are an optional experiment, not assumed primary musical intelligence. Future stronger planning through Codex CLI (`codex exec`) or another provider is proposed only, through the same validated SongSpec/typed operations. An eventual A/B benchmark must measure intent, musical quality, latency, cost and licensing alongside exactness. No Codex backend, recursive Codex invocation or commercial inference benchmark was added/run in Phase 2. Hosted provider accounts, charges, usage limits and terms stay separate from Kuang's MIT local core; see [future benchmark and provider notes](PHASE2.md#future-planner-benchmark-not-implemented).
+
+Final review added an ambient low/medium/high-energy density regression and made the sparse arpeggio/lead density respond to that option. All three recorded full production projects still reproduce their complete canonical bytes with the final composer; their reported audio/native evidence remains unchanged.
 
 ## Phase 1 — verified SoundCraft backend
 

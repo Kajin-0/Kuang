@@ -89,6 +89,13 @@ class SongTests(unittest.TestCase):
         self.assertEqual(rules_plan("ambient F# minor")[0].tonic, 6)
         self.assertTrue(any("unspecified/unsupported" in m for m in rules_plan("jazz quartet")[1]))
 
+    def test_ambient_energy_changes_note_density_beyond_metadata_and_velocity(self):
+        projects = [compose(rules_plan(f"ambient {energy} energy")[0]) for energy in ("low", "medium", "high")]
+        counts = [sum(len(c.notes) for t in p.tracks for c in t.clips) for p in projects]
+        self.assertLess(counts[0], counts[1])
+        self.assertLess(counts[1], counts[2])
+        self.assertEqual(len({json.dumps(content(p)) for p in projects}), 3)
+
     def test_strict_schema_corruptions_ranges_and_injection(self):
         original = asdict(rules_plan(PROMPTS[0])[0])
         for key, value in (("genre", "jazz"), ("bpm", 201), ("bpm", True), ("tonic", -1),

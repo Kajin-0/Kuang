@@ -13,19 +13,23 @@
     "notes_excluding_velocity": true,
     "tempo": true
   },
+  "final_review": {
+    "ambient_energy_density_regression": true,
+    "three_recorded_projects_reproduce_full_canonical_bytes": true
+  },
   "integration": {
-    "artifacts": "/home/User/Kuang/artifacts/phase2-integration-release",
-    "discovered": 99,
-    "log": "/tmp/kuang-phase2-integration-release.log",
-    "passed": 99,
-    "seconds": 31.47,
+    "artifacts": "/home/User/Kuang/artifacts/phase2-verification-100",
+    "discovered": 100,
+    "log": "/tmp/kuang-phase2-verification-100.log",
+    "passed": 100,
+    "seconds": 33.774,
     "skipped": 0
   },
   "offline_suite": {
-    "discovered": 99,
-    "log": "/tmp/kuang-phase2-unit-final.log",
-    "passed": 95,
-    "seconds": 21.569,
+    "discovered": 100,
+    "log": "/tmp/kuang-phase2-unit-100.log",
+    "passed": 96,
+    "seconds": 19.985,
     "skipped": 4
   },
   "ollama": {
@@ -385,7 +389,7 @@
   },
   "wheel": {
     "modules_lua_license_verified": true,
-    "path": "/tmp/kuang-phase2-wheel/kuang-0.1.0-py3-none-any.whl",
-    "sha256": "285f58e17bad7670aba8cd2c10c4f71d5452191364b0472f7a30d7c0cf05d7fa"
+    "path": "/tmp/kuang-phase2-wheel-release/kuang-0.1.0-py3-none-any.whl",
+    "sha256": "51bf94aaaf61bbe01b61b6e5b5baf323aeaab197b00f8bfc3c39431b07d33ded"
   }
 }

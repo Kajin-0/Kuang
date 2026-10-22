@@ -130,12 +130,14 @@ def compose(spec):
                         for n in triad:
                             add(base, BAR - 120, n, 55 if spec.genre == "ambient" else 49)
                 elif role == "arp":
-                    spacing = 2 * PPQ if spec.genre == "ambient" else PPQ if energy == 0 else PPQ // 2
+                    spacing = (2 * PPQ, PPQ, PPQ // 2)[energy] if spec.genre == "ambient" else PPQ if energy == 0 else PPQ // 2
                     for step in range(BAR // spacing):
                         add(base + step * spacing, spacing // 2, triad[(step + bar + spec.seed) % 3] + 12, 54)
                 elif role == "lead":
                     if spec.genre == "ambient":
-                        add(base + PPQ, PPQ * 2, pitch(degree + motif[bar % 4], 5), 58)
+                        for step in range(1 + energy):
+                            add(base + (step + 1) * PPQ, PPQ * 2 if energy == 0 else PPQ * 3 // 4,
+                                pitch(degree + motif[(bar + step) % 4], 5), 58)
                     elif spec.genre == "house":
                         for step in range(2 if energy == 0 else 4):
                             add(base + step * PPQ, PPQ // 2, pitch(degree + motif[step], 5), 75)
