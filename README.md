@@ -33,6 +33,15 @@ python3 -m kuang create "uplifting house, 126 bpm, C major, 16 bars" \
 
 This adds Intro/Groove/Breakdown/Drop sections, distinct bass/stab/pluck/pad voices, shaped envelopes, ghost fills, beat gain ducking, filter sweeps, delay throws and pan movement. It uses the installed free built-ins. The default `--production sketch` preserves the original composer. Refined currently supports house only; gain ducking is programmed rather than audio-triggered sidechaining. MIDI contains notes; sound design and automation live in canonical/native sessions. See [Phase 4 capabilities, listening files and reproducible A/B](docs/PHASE4.md). New output has measured balance changes; human preference is still unverified.
 
+Phase 5 is a separate **16-bar house groove experiment**, with a continuous pocket, a small call/response hook and a downloadable equal-RMS listening ZIP. It is not certified as club-ready. Run from this checkout with the installed free host:
+
+```bash
+python3 tools/phase5_house.py --out-dir artifacts/my-house-pocket \
+  --soundcraft /absolute/path/to/soundcraft-cli
+```
+
+This compares against the existing `artifacts/phase4-house-reference/B-refined` bundle; use `--baseline PATH` for another Phase 4 16-bar/126 BPM bundle. `--symbolic` instead of `--soundcraft` creates canonical/MIDI without a host. Surge XT was sandbox-tested but did not pass the render/control gate; it is optional and absent from the candidate. See [Phase 5 evidence and private user-reference comparison interface](docs/PHASE5.md).
+
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash

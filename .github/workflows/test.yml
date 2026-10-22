@@ -49,3 +49,10 @@ jobs:
           python -m kuang validate out/refined-a/project.kuang.json
           cmp out/refined-a/project.kuang.json out/refined-b/project.kuang.json
           cmp out/refined-a/song.mid out/refined-b/song.mid
+      - name: House pocket experiment (no external plugin or host required)
+        run: |
+          python tools/phase5_house.py --symbolic --seed 29 --out-dir out/pocket-a
+          python tools/phase5_house.py --symbolic --seed 29 --out-dir out/pocket-b
+          python -m kuang validate out/pocket-a/project.kuang.json
+          cmp out/pocket-a/project.kuang.json out/pocket-b/project.kuang.json
+          cmp out/pocket-a/song.mid out/pocket-b/song.mid

@@ -1,0 +1,315 @@
+{
+  "base_commit": "4389b36439cff6c1fa36434f7f59813be6c290bb",
+  "builtin_gate_control": {
+    "bits_per_sample": 24,
+    "channels": 2,
+    "clipped_samples": 0,
+    "duration_seconds": 2.0,
+    "frames": 96000,
+    "non_silent": true,
+    "peak": 0.07188296318054199,
+    "peak_dbfs": -22.867480571596953,
+    "rms": 0.016656791744776134,
+    "rms_dbfs": -35.568172881772696,
+    "sample_rate": 48000
+  },
+  "canonical_hash": "3fe734a568b0d715890a382159fcacea58a1c770b8b50d0dda8bbeb3e6c0d311",
+  "chorus_pcm_delta": {
+    "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+    "changed_fraction": 0.6053322716842163,
+    "changed_samples": 1829141,
+    "channels": 2,
+    "difference_peak": 0.07193660736083984,
+    "difference_rms": 0.001500707786881936,
+    "difference_rms_dbfs": -56.47407727970935,
+    "difference_to_original_rms_ratio": 0.02950464963660688,
+    "frames": 1510857,
+    "measurable_change": true,
+    "offset_frames": 0,
+    "sample_rate": 48000
+  },
+  "club_quality_established": false,
+  "date": "2026-10-22",
+  "listening_performed": false,
+  "loop_segment": {
+    "audio": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "duration_seconds": 7.619041666666667,
+      "frames": 365714,
+      "non_silent": true,
+      "peak": 0.29837167263031006,
+      "peak_dbfs": -10.504848222132138,
+      "rms": 0.03352313170377252,
+      "rms_dbfs": -29.493108334166656,
+      "sample_rate": 48000
+    },
+    "boundary_sample_jump_peak": 0.0016467571258544922,
+    "crossfade": false,
+    "end_beat": 48,
+    "start_beat": 32
+  },
+  "low_end": {
+    "bass_band_rms": 0.019820526732395104,
+    "correlation": -0.015968488500403923,
+    "interference_db": -0.06420538512387405,
+    "kick_band_rms": 0.030070375596620274,
+    "method": "mono stems, one-pole 20 Hz HP then 120 Hz LP; not phase calibration",
+    "summed_to_independent_energy_ratio": 0.9853249080939446
+  },
+  "metrics": {
+    "candidate": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 19.21806430515955,
+      "duration_seconds": 31.4761875,
+      "frames": 1510857,
+      "non_silent": true,
+      "peak": 0.46484577655792236,
+      "peak_dbfs": -6.653822210995262,
+      "rms": 0.050863433572855735,
+      "rms_dbfs": -25.871886516154813,
+      "sample_rate": 48000,
+      "sections": {
+        "answer": {
+          "crest_db": 18.95178486561509,
+          "end_frame": 731429,
+          "peak": 0.45847415924072266,
+          "rms": 0.0517279919263619,
+          "rms_dbfs": -25.7254876103327,
+          "side_rms": 0.0028052017109218203,
+          "start_frame": 365714,
+          "stereo_correlation": 0.9942284362086087
+        },
+        "full": {
+          "crest_db": 19.218064305147937,
+          "end_frame": 1510857,
+          "peak": 0.46484577655792236,
+          "rms": 0.05086343357292374,
+          "rms_dbfs": -25.871886516143196,
+          "side_rms": 0.002775304113596414,
+          "start_frame": 0,
+          "stereo_correlation": 0.9941645170600405
+        },
+        "lift": {
+          "crest_db": 18.98826051380832,
+          "end_frame": 1097143,
+          "peak": 0.45916175842285156,
+          "rms": 0.05158847437913689,
+          "rms_dbfs": -25.748946305693078,
+          "side_rms": 0.0028479506296349745,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9940332570651575
+        },
+        "pocket": {
+          "crest_db": 18.97110029340692,
+          "end_frame": 365714,
+          "peak": 0.45950233936309814,
+          "rms": 0.051728836719622154,
+          "rms_dbfs": -25.72534575829409,
+          "side_rms": 0.0028109585961246866,
+          "start_frame": 0,
+          "stereo_correlation": 0.994206148968457
+        },
+        "return": {
+          "crest_db": 19.073176469591473,
+          "end_frame": 1462857,
+          "peak": 0.46484577655792236,
+          "rms": 0.051718993673509926,
+          "rms_dbfs": -25.726998680586735,
+          "side_rms": 0.0028173435883403724,
+          "start_frame": 1097143,
+          "stereo_correlation": 0.99419091404084
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.036182083598959525,
+          "body_120_500": 0.16467144515819757,
+          "mid_500_2000": 0.09020713823931331,
+          "presence_2000_8000": 0.024039243628175656,
+          "sub_20_120": 0.684900089375354
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    },
+    "phase4-baseline": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 20.91360326303252,
+      "duration_seconds": 31.4761875,
+      "frames": 1510857,
+      "non_silent": true,
+      "peak": 0.36717891693115234,
+      "peak_dbfs": -8.702445270730122,
+      "rms": 0.03305198700335125,
+      "rms_dbfs": -29.616048533762644,
+      "sample_rate": 48000,
+      "sections": {
+        "answer": {
+          "crest_db": 19.554096949301453,
+          "end_frame": 731429,
+          "peak": 0.3531759977340698,
+          "rms": 0.037178026553626384,
+          "rms_dbfs": -28.594273334648037,
+          "side_rms": 0.002052162509869567,
+          "start_frame": 365714,
+          "stereo_correlation": 0.9949885760023814
+        },
+        "full": {
+          "crest_db": 20.91360326302212,
+          "end_frame": 1510857,
+          "peak": 0.36717891693115234,
+          "rms": 0.033051987003390806,
+          "rms_dbfs": -29.61604853375224,
+          "side_rms": 0.0016700475073919958,
+          "start_frame": 0,
+          "stereo_correlation": 0.9952348306378904
+        },
+        "lift": {
+          "crest_db": 18.645650956725543,
+          "end_frame": 1097143,
+          "peak": 0.2309577465057373,
+          "rms": 0.026992927334758936,
+          "rms_dbfs": -31.375000288570654,
+          "side_rms": 0.0016071709296521738,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9929421730740627
+        },
+        "pocket": {
+          "crest_db": 16.59917245030971,
+          "end_frame": 365714,
+          "peak": 0.1815485954284668,
+          "rms": 0.026855563582583467,
+          "rms_dbfs": -31.419314584453048,
+          "side_rms": 0.0007777996884858128,
+          "start_frame": 0,
+          "stereo_correlation": 0.9983481863864869
+        },
+        "return": {
+          "crest_db": 19.04297441240956,
+          "end_frame": 1462857,
+          "peak": 0.36717891693115234,
+          "rms": 0.04099482301967643,
+          "rms_dbfs": -27.745419683139684,
+          "side_rms": 0.0020290896284480852,
+          "start_frame": 1097143,
+          "stereo_correlation": 0.9956193902562174
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.007170757958056914,
+          "body_120_500": 0.48054944853072323,
+          "mid_500_2000": 0.22979172498538472,
+          "presence_2000_8000": 0.03894553060349331,
+          "sub_20_120": 0.2435425379223418
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    }
+  },
+  "original_files_preserved": 78,
+  "real_tests": {
+    "count": 180,
+    "errors": 0,
+    "failures": 0,
+    "python": "3.13.7",
+    "seconds": 143.627,
+    "skipped": 0
+  },
+  "rms_matching": {
+    "candidate": {
+      "audio": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 31.4761875,
+        "frames": 1510857,
+        "non_silent": true,
+        "peak": 0.30206525325775146,
+        "peak_dbfs": -10.397984580023529,
+        "rms": 0.03305198698596001,
+        "rms_dbfs": -29.61604853833297,
+        "sample_rate": 48000
+      },
+      "gain_db": -3.744162017607826
+    },
+    "phase4-baseline": {
+      "audio": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 31.4761875,
+        "frames": 1510857,
+        "non_silent": true,
+        "peak": 0.36717891693115234,
+        "peak_dbfs": -8.702445270730122,
+        "rms": 0.03305198700335125,
+        "rms_dbfs": -29.616048533762644,
+        "sample_rate": 48000
+      },
+      "gain_db": 0.0
+    }
+  },
+  "sha256": {
+    "candidate.wav": "000e559e934b38770ca6fe23335ed947e7415d12b0d7e838db1a34afe50bf031",
+    "native/session.scraft": "18dfb89220bc63dae3c2f411cb59780c8167698203086e403c1a5dd0070f33a4",
+    "phase4-baseline.wav": "539f9b7794ad13fd9ef779434212ef875a2a93383a054a93461c2b1c4b95afe4",
+    "phase5-house-listening.zip": "3522c4c3ee49f61a17b218f749e0bade1df706e5b6bcdcf99cc04c6b5803a960"
+  },
+  "sources_unchanged": true,
+  "stem_recombination": {
+    "error_rms": 7.203347454748429e-08,
+    "error_rms_dbfs": -142.84931272892655,
+    "method": "sum independent native stem PCM without gain changes; quantization differences expected",
+    "peak_error_lsb": 2
+  },
+  "surge_audio": {
+    "clap": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "duration_seconds": 2.0,
+      "frames": 96000,
+      "non_silent": false,
+      "peak": 0.0,
+      "peak_dbfs": null,
+      "rms": 0.0,
+      "rms_dbfs": null,
+      "sample_rate": 48000
+    },
+    "vst3": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "duration_seconds": 2.0,
+      "frames": 96000,
+      "non_silent": false,
+      "peak": 0.0,
+      "peak_dbfs": null,
+      "rms": 0.0,
+      "rms_dbfs": null,
+      "sample_rate": 48000
+    }
+  },
+  "surge_gate": {
+    "asset": "surge-xt-linux-1.3.4-pluginsonly.tar.gz",
+    "bytes": 97294804,
+    "decision": "Stop: both default Surge renders silent; tested named parameter paths rejected. No meaningful patch capture/restoration verified. Use proven built-ins; do not claim general external plugin incompatibility.",
+    "gate_passed": false,
+    "license": "GPL-3.0",
+    "local_sha256": "dd431b75f5fa197c4bffa6ca27ca46970f0a94c834119bb1db7decdeec4c28db",
+    "md5_matches": true,
+    "official_md5": "0180f06ec7a8445b1c749471e29c702b",
+    "patch_state_verified": false,
+    "release_url": "https://github.com/surge-synthesizer/releases-xt/releases/tag/1.3.4"
+  }
+}
