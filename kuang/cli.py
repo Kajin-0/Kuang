@@ -1,4 +1,4 @@
-"""Local files only; no network, credentials, model download or audio claims."""
+"""Local project files and optional explicitly selected native DAW execution."""
 
 import argparse
 import json
@@ -12,6 +12,7 @@ from .engines import SeededVelocityEngine
 from .generator import generate
 from .schema import ValidationError, atomic_write, decode, load, save, state_hash, strict_json
 from .transactions import Engine, Scope, parse_operations, receipt_from_dict, replay
+from .soundcraft_cli import add_parser as add_soundcraft_parser, run as run_soundcraft
 
 
 def _json_write(path, data):
@@ -32,6 +33,7 @@ def parser():
     root = argparse.ArgumentParser(prog="kuang", description="Structured local music projects and exact edits")
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command", required=True)
+    add_soundcraft_parser(commands)
     demo = commands.add_parser("demo", help="write seeded session, type-1 MIDI and REAPER importer")
     demo.add_argument("--seed", type=int, default=7)
     demo.add_argument("--out-dir", default="out")
@@ -73,6 +75,8 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "soundcraft":
+            return run_soundcraft(args)
         if args.command == "demo":
             directory = Path(args.out_dir)
             paths = [directory / name for name in ("demo.kuang.json", "demo.mid", "import_demo.lua", "import_demo.plan.json")]

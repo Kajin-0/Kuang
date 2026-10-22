@@ -1,0 +1,762 @@
+{
+  "format_version": 1,
+  "name": "session",
+  "sample_rate": 48000,
+  "bit_depth": "Int24",
+  "frame_rate": "Fps30",
+  "timecode_start": 0,
+  "tempo": {
+    "tempos": [
+      {
+        "tick": 0,
+        "bpm": 124.0
+      }
+    ],
+    "meters": [
+      {
+        "tick": 0,
+        "numerator": 4,
+        "denominator": 4
+      }
+    ]
+  },
+  "key_signatures": [],
+  "tracks": [
+    {
+      "id": 1,
+      "name": "Kick",
+      "kind": "Instrument",
+      "format": "Stereo",
+      "color": [
+        86,
+        132,
+        214
+      ],
+      "height": "Medium",
+      "playlists": [
+        {
+          "name": "Kick",
+          "clips": [
+            {
+              "id": 2,
+              "name": "Kick",
+              "start": 0,
+              "length": 58065,
+              "content": {
+                "Midi": {
+                  "sequence": {
+                    "notes": [
+                      {
+                        "pitch": 36,
+                        "velocity": 100,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 0,
+                        "length": 240
+                      },
+                      {
+                        "pitch": 36,
+                        "velocity": 90,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 960,
+                        "length": 240
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 80,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 1920,
+                        "length": 480
+                      }
+                    ],
+                    "ctrls": []
+                  }
+                }
+              },
+              "gain_db": 0.0,
+              "gain_env": [],
+              "fade_in": {
+                "len": 0,
+                "shape": "EqualPower",
+                "curvature": 0.0
+              },
+              "fade_out": {
+                "len": 0,
+                "shape": "EqualPower",
+                "curvature": 0.0
+              },
+              "muted": false,
+              "edit_locked": false,
+              "time_locked": false,
+              "rating": 0,
+              "sync_point": 0,
+              "color": null,
+              "stretch": 1.0,
+              "group": null,
+              "loop_id": null
+            }
+          ]
+        }
+      ],
+      "active_playlist": 0,
+      "mixer": {
+        "volume_db": -9.0,
+        "pan": [
+          0.0,
+          0.0
+        ],
+        "mute": false,
+        "solo": false,
+        "solo_safe": false,
+        "record_arm": false,
+        "input_monitor": false,
+        "phase_invert": false,
+        "input": "None",
+        "output": "Main",
+        "inserts": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "sends": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "automation_mode": "Read",
+        "trim_db": 0.0,
+        "vca": null,
+        "surround": null
+      },
+      "automation": [
+        {
+          "param": {
+            "Pan": 0
+          },
+          "points": [
+            {
+              "at": 0,
+              "value": 0.0
+            },
+            {
+              "at": 92903,
+              "value": 0.5
+            }
+          ],
+          "enabled": true
+        },
+        {
+          "param": {
+            "Pan": 1
+          },
+          "points": [
+            {
+              "at": 0,
+              "value": 0.0
+            },
+            {
+              "at": 92903,
+              "value": 0.5
+            }
+          ],
+          "enabled": true
+        }
+      ],
+      "view": "notes",
+      "hidden": false,
+      "inactive": false,
+      "frozen": false,
+      "comments": "{\"kuang_track_id\":\"track-kick\"}",
+      "folder": null,
+      "folder_open": true,
+      "instrument": {
+        "plugin": "drum_synth",
+        "params": {
+          "cymbal_decay": 2000.0,
+          "hat_decay": 80.0,
+          "kick_decay": 450.0,
+          "kick_tune": 0.0,
+          "level": -6.0,
+          "open_hat_decay": 600.0,
+          "snare_decay": 220.0,
+          "snare_snappy": 60.0,
+          "snare_tune": 0.0,
+          "tom_decay": 500.0,
+          "tom_tune": 0.0
+        },
+        "bypass": false,
+        "active": true,
+        "preset": "<factory default>"
+      },
+      "ticks_timebase": true,
+      "elastic": null,
+      "pinned": false
+    },
+    {
+      "id": 3,
+      "name": "Snare / Clap",
+      "kind": "Instrument",
+      "format": "Stereo",
+      "color": [
+        94,
+        170,
+        214
+      ],
+      "height": "Medium",
+      "playlists": [
+        {
+          "name": "Snare / Clap",
+          "clips": [
+            {
+              "id": 4,
+              "name": "Snare / Clap",
+              "start": 0,
+              "length": 1111936,
+              "content": {
+                "Midi": {
+                  "sequence": {
+                    "notes": [
+                      {
+                        "pitch": 38,
+                        "velocity": 108,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 16320,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 71,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 16332,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 110,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 18240,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 68,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 18252,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 102,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 20160,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 75,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 20172,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 107,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 22080,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 69,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 22092,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 106,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 24000,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 69,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 24012,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 108,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 25920,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 73,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 25932,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 101,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 27840,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 77,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 27852,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 102,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 29760,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 75,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 29772,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 110,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 31680,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 72,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 31692,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 106,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 33600,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 72,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 33612,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 110,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 35520,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 74,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 35532,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 110,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 37440,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 74,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 37452,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 102,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 39360,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 68,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 39372,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 105,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 41280,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 74,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 41292,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 111,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 43200,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 68,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 43212,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 101,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 45120,
+                        "length": 160
+                      },
+                      {
+                        "pitch": 39,
+                        "velocity": 71,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 45132,
+                        "length": 120
+                      },
+                      {
+                        "pitch": 38,
+                        "velocity": 67,
+                        "release_velocity": 0,
+                        "channel": 9,
+                        "start": 45840,
+                        "length": 120
+                      }
+                    ],
+                    "ctrls": []
+                  }
+                }
+              },
+              "gain_db": 0.0,
+              "gain_env": [],
+              "fade_in": {
+                "len": 0,
+                "shape": "EqualPower",
+                "curvature": 0.0
+              },
+              "fade_out": {
+                "len": 0,
+                "shape": "EqualPower",
+                "curvature": 0.0
+              },
+              "muted": false,
+              "edit_locked": false,
+              "time_locked": false,
+              "rating": 0,
+              "sync_point": 0,
+              "color": null,
+              "stretch": 1.0,
+              "group": null,
+              "loop_id": null
+            }
+          ]
+        }
+      ],
+      "active_playlist": 0,
+      "mixer": {
+        "volume_db": -13.0,
+        "pan": [
+          0.0,
+          0.0
+        ],
+        "mute": false,
+        "solo": false,
+        "solo_safe": false,
+        "record_arm": false,
+        "input_monitor": false,
+        "phase_invert": false,
+        "input": "None",
+        "output": "Main",
+        "inserts": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "sends": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "automation_mode": "Read",
+        "trim_db": 0.0,
+        "vca": null,
+        "surround": null
+      },
+      "automation": [],
+      "view": "notes",
+      "hidden": false,
+      "inactive": false,
+      "frozen": false,
+      "comments": "{\"kuang_track_id\":\"track-snare\"}",
+      "folder": null,
+      "folder_open": true,
+      "instrument": {
+        "plugin": "drum_synth",
+        "params": {
+          "cymbal_decay": 2000.0,
+          "hat_decay": 80.0,
+          "kick_decay": 450.0,
+          "kick_tune": 0.0,
+          "level": -6.0,
+          "open_hat_decay": 600.0,
+          "snare_decay": 220.0,
+          "snare_snappy": 60.0,
+          "snare_tune": 0.0,
+          "tom_decay": 500.0,
+          "tom_tune": 0.0
+        },
+        "bypass": false,
+        "active": true,
+        "preset": "<factory default>"
+      },
+      "ticks_timebase": true,
+      "elastic": null,
+      "pinned": false
+    }
+  ],
+  "sources": [],
+  "videos": [],
+  "busses": [],
+  "outputs": [
+    {
+      "name": "Out 1-2",
+      "first_channel": 0,
+      "format": "Stereo"
+    }
+  ],
+  "markers": [
+    {
+      "id": 5,
+      "number": 1,
+      "name": "Intro",
+      "kind": "Selection",
+      "start": 0,
+      "end": 371613,
+      "comments": "",
+      "color": null,
+      "ruler": 1,
+      "track": null
+    },
+    {
+      "id": 6,
+      "number": 2,
+      "name": "Verse",
+      "kind": "Selection",
+      "start": 371613,
+      "end": 1114839,
+      "comments": "",
+      "color": null,
+      "ruler": 1,
+      "track": null
+    },
+    {
+      "id": 7,
+      "number": 3,
+      "name": "Hook A",
+      "kind": "Selection",
+      "start": 1114839,
+      "end": 1858065,
+      "comments": "",
+      "color": null,
+      "ruler": 1,
+      "track": null
+    },
+    {
+      "id": 8,
+      "number": 4,
+      "name": "Break",
+      "kind": "Selection",
+      "start": 1858065,
+      "end": 2229677,
+      "comments": "",
+      "color": null,
+      "ruler": 1,
+      "track": null
+    },
+    {
+      "id": 9,
+      "number": 5,
+      "name": "Hook B",
+      "kind": "Selection",
+      "start": 2229677,
+      "end": 2972903,
+      "comments": "",
+      "color": null,
+      "ruler": 1,
+      "track": null
+    }
+  ],
+  "groups": [],
+  "edit": {
+    "tool": "Smart",
+    "edit_mode": "Slip",
+    "selection": {
+      "start": 0,
+      "end": 0
+    },
+    "selected_tracks": [],
+    "selected_clips": [],
+    "selected_sources": [],
+    "playhead": 0,
+    "grid": {
+      "Note": {
+        "value": "Sixteenth",
+        "dotted": false,
+        "triplet": false
+      }
+    },
+    "nudge": {
+      "Seconds": 1.0
+    },
+    "grid_lines": true,
+    "main_counter": "MinSecs",
+    "sub_counter": "Samples",
+    "zoom": {
+      "samples_per_px": 1024.0,
+      "scroll": 0,
+      "waveform_zoom": 1.0,
+      "presets": [
+        64.0,
+        256.0,
+        1024.0,
+        4096.0,
+        16384.0
+      ]
+    },
+    "zoom_toggle": null,
+    "rulers": [
+      "bars_beats",
+      "min_secs",
+      "tempo",
+      "meter",
+      "markers"
+    ],
+    "link_timeline_edit": true,
+    "link_track_edit": false,
+    "insertion_follows_playback": false,
+    "loop_playback": false,
+    "pre_post_roll": false,
+    "pre_roll": 96000,
+    "post_roll": 96000,
+    "tab_to_transient": false,
+    "automation_follows_edit": true,
+    "markers_follow_edit": false,
+    "layered_editing": false,
+    "mirrored_midi": false,
+    "click": false,
+    "countoff": false,
+    "countoff_bars": 2,
+    "midi_merge": false,
+    "record_mode": "normal",
+    "loop_record": false,
+    "quickpunch": false,
+    "scrolling": "page",
+    "solo_mode": "sip",
+    "pre_fader_metering": false,
+    "delay_compensation": true,
+    "keyboard_focus": "commands",
+    "timeline_selection": {
+      "start": 0,
+      "end": 0
+    },
+    "flags": [
+      "view.clip.gain_line",
+      "view.clip.name",
+      "view.clip.overlap_shadows",
+      "view.marker.ruler_lines",
+      "waveform.peak"
+    ],
+    "values": {}
+  },
+  "next_id": 10,
+  "comments": "",
+  "midi_originals": {}
+}

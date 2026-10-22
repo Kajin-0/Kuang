@@ -1,0 +1,20 @@
+{
+  "expected_before_hash": "611d19e956c21c1863bbf1a428db28073a9436f398811b1bc610dea9fb7384de",
+  "scope": {
+    "track_ids": ["track-kick", "track-hats", "track-bass", "track-pad"],
+    "clip_ids": [],
+    "parameter_ids": ["mixer.gain_db", "mixer.pan", "soundcraft.hpf_freq"],
+    "start": null,
+    "end": null
+  },
+  "operations": [
+    {"op": "set_parameter", "target_id": "track-kick", "parameter_id": "mixer.gain_db", "value": -6},
+    {"op": "set_parameter", "target_id": "track-hats", "parameter_id": "mixer.pan", "value": -0.25},
+    {"op": "set_parameter", "target_id": "effect-bass-eq", "parameter_id": "soundcraft.hpf_freq", "value": 45},
+    {
+      "op": "add_automation_points",
+      "lane_id": "automation-pad-gain",
+      "points": [{"id": "point-pad-phase1", "tick": 4800, "value": -24, "shape": "linear"}]
+    }
+  ]
+}

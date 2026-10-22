@@ -10,11 +10,18 @@ Kuang is an audio engineering / desktop DAW project. Preserve local-first operat
 - `kuang/transactions.py`: typed operations, scope/locks, atomic candidate apply, inverse receipts/history.
 - `kuang/generator.py`, `midi.py`, `engines.py`: seeded symbolic arrangement, type-1 writer, model proposal boundary.
 - `kuang/reaper.py`, `reaper_adapter.lua`: data-only import plan and native editable host objects.
+- `kuang/adapters.py`: DAWAdapter Protocol. `kuang/soundcraft.py` is the primary optional SoundCraft 0.11.0 backend; `soundcraft_cli.py` exposes native bundles, explicit snapshot import, staged edits, inspection/save and WAV export. `audio.py` measures integer PCM WAVs.
+- SoundCraft CLI has real headless save/reopen/render coverage. It remains an external user-installed executable: discover with `describe` and `engine.plugins`, use subprocess argv, enforce the version/build/contract pin and reject unsupported mappings. Never edit native JSON directly to synthesize host support.
+- `examples/soundcraft-demo.kuang.json` explicitly selects built-ins. Preserve the original Phase 0 demo and its hashes. Native notes have no IDs and MIDI clips merge; retain canonical IDs in the bundle manifest. Import is verified snapshot recovery, never automatic reconciliation of host edits.
 - No REAPER process or Vital installation was available for Phase 0. Mock/API-contract tests do not establish real host compatibility or audio quality.
 
 ## Required checks and preservation
 
 Run `python3 -m unittest discover -s tests -v` after code changes. Exercise CLI generation, proposal, apply, undo and redo when changing those paths. Compare full canonical state after scoped edits. Keep the 20-edit regression and exact undo/redo checks meaningful.
+
+For SoundCraft changes, also opt in to real tests with `KUANG_SOUNDCRAFT_INTEGRATION=1 KUANG_SOUNDCRAFT=/absolute/path/to/soundcraft-cli KUANG_SOUNDCRAFT_ARTIFACTS=/new/empty/directory python3 -m unittest discover -s tests -v`. No binary is downloaded by the tests. The current VPS executable is `/home/User/kuang-eval/soundcraft-0.11.0/soundcraft-0.11.0-linux-x86_64/bin/soundcraft-cli`. Preserve prior evaluation artifacts. Require full native before/after equality outside explicit edits, save/reopen equality, exact note field checks and real WAV format/peak/RMS checks. Note counts alone are insufficient.
+
+SoundCraft outputs are new bundles/files only; there is no overwrite flag. Stage all native edits in isolated temporary sessions, publish only verified bundles, and leave original native/canonical files unchanged. Keep unsupported operations, preset/GM limitations, automation shape restrictions and external drift errors explicit in capability reports and docs.
 
 Update the committed `examples/demo.kuang.json` and `examples/demo.mid` deliberately if generator/schema changes require it; tests detect fixture drift. Do not silently migrate versions, regenerate IDs on load, clear automation during parameter edits, weaken locks, accept unknown operations, or discard unknown fields silently.
 

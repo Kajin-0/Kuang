@@ -4,10 +4,15 @@ License decision deferred
 No software license has been selected for this repository. This file records
 the pending decision and does not grant a software license.
 
-Phase 0 contains original Python/Lua source and generated symbolic music data.
-It bundles no REAPER or Vital binaries, source, presets, samples, model weights,
+Phases 0 and 1 contain original Python/Lua source and generated symbolic music data.
+They bundle no SoundCraft, REAPER or Vital binaries, source, presets, samples, model weights,
 or other third-party assets. REAPER and any installed user plugins remain
 separate, user-supplied applications with their own terms.
+
+SoundCraft 0.11.0 is used only as an optional installed executable. Its upstream
+code is dual-licensed MIT OR Apache-2.0; it is not linked or redistributed here.
+The adapter adds no Python dependencies. This observation does not select a
+license for Kuang or supersede review of any future distributed assets.
 
 Rationale: the intended desktop audio integration and future dependencies are
 not settled. Maintainers should inventory actual distributed dependencies and

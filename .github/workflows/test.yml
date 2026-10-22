@@ -1,4 +1,4 @@
-name: Phase 0 checks
+name: Kuang checks
 on: [push, pull_request]
 permissions:
   contents: read

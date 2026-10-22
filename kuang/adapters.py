@@ -1,0 +1,16 @@
+"""Optional local DAW boundary. Canonical edits remain owned by Kuang."""
+
+from pathlib import Path
+from typing import Protocol
+
+from .schema import Project
+from .transactions import Operation, Scope
+
+
+class DAWAdapter(Protocol):
+    def capabilities(self, project: Project | None = None) -> dict: ...
+    def inspect(self, source: str | Path) -> dict: ...
+    def apply(self, source: str | Path, destination: str | Path, operations: list[Operation],
+              scope: Scope, expected_before_hash: str) -> dict: ...
+    def save(self, source: str | Path, destination: str | Path) -> dict: ...
+    def export(self, project: Project, destination: str | Path) -> dict: ...

@@ -11,7 +11,9 @@ strict decode → scope / lock checks → candidate copy → invariant checks
           ↓                                      failure → discard candidate
 atomic in-memory commit → canonical JSON + inverse receipt
           ↓
-type-1 MIDI / generated REAPER Lua → native editable host objects
+type-1 MIDI / SoundCraft native bundle / optional REAPER Lua
+          ↓
+native editable host objects and optional offline WAV
 ```
 
 ## Project version 0.1
@@ -102,5 +104,7 @@ Saving uses a flushed/fsynced same-directory temporary file and `os.replace`. Ea
 The seeded composer separately constructs a full validated arrangement: Am–F–C–G harmony, rhythmic bass/kick relationships, backbeats, hat accents/fills, pad/chord voices, arp and lead motifs, intro/verse/hooks/break. Seed changes vary velocities; arrangement and note identities remain stable. This proves reproducible symbolic orchestration, not professional AI composition.
 
 The MIDI writer emits type 1, a conductor track plus one track per MIDI track, tempo/signature/key/section metadata, names, optional program changes, note-on/off and end-of-track. Note-offs sort before same-tick note-ons. Audio tracks, FX, mixer state and automation are outside this MIDI export; use canonical JSON and the REAPER importer for those fields.
+
+Phase 1 adds `DAWAdapter` (capabilities, apply, inspect, save, export) and an actual optional SoundCraft 0.11.0 implementation. Canonical schema/transactions are unchanged. Native bundle publication stages a new `.scraft`, canonical snapshot, hashes/identity map, inspection and optional receipt; full persistent native state is compared before/after permitted edits and another save/reopen. Native imports recover only a hash-verified snapshot. Human host changes are inspectable but are never silently reconciled into canonical state. Built-in synths/FX and offline WAV rendering are real executable capabilities, not part of the Python core. See [SOUNDCRAFT.md](SOUNDCRAFT.md).
 
 REAPER import is one way. Native edits remain editable in `.RPP`, but reverse reconciliation into canonical JSON is not implemented. The imported canonical manifest/hash is provenance, not a live sync mechanism. See [REAPER.md](REAPER.md) for installed-user-plugin contracts and host validation.
