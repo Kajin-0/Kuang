@@ -1,0 +1,19 @@
+License decision deferred
+=========================
+
+No software license has been selected for this repository. This file records
+the pending decision and does not grant a software license.
+
+Phase 0 contains original Python/Lua source and generated symbolic music data.
+It bundles no REAPER or Vital binaries, source, presets, samples, model weights,
+or other third-party assets. REAPER and any installed user plugins remain
+separate, user-supplied applications with their own terms.
+
+Rationale: the intended desktop audio integration and future dependencies are
+not settled. Maintainers should inventory actual distributed dependencies and
+assets, review their terms and any linking/distribution requirements, and then
+make an explicit project license decision. Choosing a permissive or copyleft
+license now without that review would pre-empt that decision.
+
+This pending decision does not prevent development of the authorized Phase 0
+implementation. Public reuse/distribution licensing remains a maintainer task.

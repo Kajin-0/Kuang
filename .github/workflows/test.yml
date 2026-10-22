@@ -1,0 +1,27 @@
+name: Phase 0 checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit and adapter contract tests (stdlib only)
+        run: python -m unittest discover -s tests -v
+      - name: CLI vertical slice
+        run: |
+          python -m kuang demo --seed 7 --out-dir out
+          python -m kuang validate out/demo.kuang.json
+          python -m kuang propose out/demo.kuang.json out/request.json --track track-arp --clip clip-arp-hook-a
+          python -m kuang apply out/demo.kuang.json out/request.json out/edited.kuang.json --receipt out/receipt.json
+          python -m kuang undo out/edited.kuang.json out/receipt.json out/restored.kuang.json
+          cmp out/demo.kuang.json out/restored.kuang.json
+          python -m kuang redo out/restored.kuang.json out/receipt.json out/redone.kuang.json
+          cmp out/edited.kuang.json out/redone.kuang.json

@@ -1,0 +1,111 @@
+"""Generate a self-contained ReaScript from validated, inert project data."""
+
+from dataclasses import asdict, dataclass
+from pathlib import Path
+
+from .schema import Project, ValidationError, atomic_write, decode, dumps, state_hash, validate
+
+
+@dataclass
+class CalibrationPoint:
+    value: float
+    normalized: float
+
+
+@dataclass
+class ParameterBinding:
+    ident: str
+    name: str
+    calibration: list[CalibrationPoint]
+
+
+@dataclass
+class PluginBinding:
+    fx_name: str
+    presets: dict[str, str]
+    parameters: dict[str, ParameterBinding]
+
+
+@dataclass
+class Bindings:
+    version: str
+    plugins: dict[str, PluginBinding]
+
+
+def import_plan(project: Project, bindings: Bindings | None = None) -> dict:
+    validate(project)
+    bindings = decode(Bindings, asdict(bindings or Bindings("0.1", {})))
+    if bindings.version != "0.1":
+        raise ValidationError("unsupported plugin binding version")
+    specs = {s.id: s for s in project.parameters}
+    for ref, binding in bindings.plugins.items():
+        if not ref or not binding.fx_name:
+            raise ValidationError("empty plugin reference/name")
+        if any(not k or not v for k, v in binding.presets.items()):
+            raise ValidationError("empty preset reference/name")
+        for parameter, mapping in binding.parameters.items():
+            if parameter not in specs or not mapping.ident or not mapping.name:
+                raise ValidationError("binding needs a registered parameter, host identifier and exact name")
+            points = mapping.calibration
+            spec = specs[parameter]
+            if (len(points) < 2 or points[0].value != spec.minimum or points[-1].value != spec.maximum or
+                    any(not 0 <= p.normalized <= 1 for p in points) or
+                    any(a.value >= b.value for a, b in zip(points, points[1:]))):
+                raise ValidationError("calibration must cover the parameter range with increasing values and normalized 0..1")
+    plugins = asdict(bindings)["plugins"]
+    # REAPER wrapper controls are addressed by documented identifiers, never guessed indices.
+    plugins.setdefault("reaper:ReaVerbate", {"fx_name": "ReaVerbate (Cockos)", "presets": {}, "parameters": {}})
+    warnings = []
+    for track in project.tracks:
+        if track.kind == "audio":
+            raise ValidationError("Phase 0 REAPER adapter does not import audio tracks")
+        unsupported = set(track.controls) - {"mixer.gain_db", "mixer.pan", "mixer.mute"}
+        if unsupported:
+            raise ValidationError(f"unsupported REAPER track controls: {sorted(unsupported)}")
+        if track.instrument and track.instrument.kind == "midi":
+            if track.instrument.parameters or track.instrument.preset_ref:
+                raise ValidationError("MIDI placeholder parameters/presets require a plugin instrument binding")
+            warnings.append(f"{track.name}: editable MIDI only; assign a local instrument or MIDI output")
+        devices = track.effects + ([track.instrument] if track.instrument and track.instrument.kind == "plugin" else [])
+        for device in devices:
+            if device.plugin_ref not in plugins:
+                raise ValidationError(f"missing local plugin binding: {device.plugin_ref}")
+            binding = plugins[device.plugin_ref]
+            if device.preset_ref and device.preset_ref not in binding["presets"]:
+                raise ValidationError(f"missing local host preset binding: {device.preset_ref}")
+            for parameter in device.parameters:
+                if parameter not in ("effect.wet", "effect.bypass") and parameter not in binding["parameters"]:
+                    raise ValidationError(f"missing calibrated parameter binding: {device.id}/{parameter}")
+    return {"contract_version": "0.1", "project": asdict(project), "project_hash": state_hash(project),
+            "canonical_json": dumps(project), "plugins": plugins, "warnings": warnings}
+
+
+def _lua(value):
+    """Serialize inert data without allowing strings to terminate Lua literals."""
+    if value is None:
+        return "nil"
+    if value is True:
+        return "true"
+    if value is False:
+        return "false"
+    if isinstance(value, str):
+        # Decimal byte escapes work for UTF-8, quotes, newlines, NUL and Lua syntax.
+        return '"' + "".join(chr(b) if 32 <= b < 127 and b not in (34, 92) else f"\\{b:03d}"
+                             for b in value.encode("utf-8")) + '"'
+    if isinstance(value, (int, float)):
+        return repr(value)
+    if isinstance(value, list):
+        return "{" + ",".join(_lua(v) for v in value) + "}"
+    if isinstance(value, dict):
+        return "{" + ",".join(f"[{_lua(k)}]={_lua(v)}" for k, v in sorted(value.items())) + "}"
+    raise TypeError(type(value))
+
+
+def script(project: Project, bindings: Bindings | None = None) -> str:
+    plan = import_plan(project, bindings)
+    template = Path(__file__).with_name("reaper_adapter.lua").read_text(encoding="utf-8")
+    return "-- Generated by Kuang 0.1. Data is embedded; no external JSON library.\nlocal plan = " + _lua(plan) + "\n" + template
+
+
+def export(project: Project, path, bindings: Bindings | None = None):
+    atomic_write(path, script(project, bindings).encode("utf-8"))

@@ -1,0 +1,21 @@
+{
+  "version": "0.1",
+  "plugins": {
+    "user:vital": {
+      "fx_name": "COPY_EXACT_INSTALLED_FX_NAME",
+      "presets": {
+        "user:my-vital-preset": "COPY_YOUR_REAPER_HOST_PRESET_NAME"
+      },
+      "parameters": {
+        "user.vital.macro1": {
+          "ident": "COPY_HOST_IDENTIFIER_FROM_INSPECTION",
+          "name": "COPY_EXACT_PARAMETER_NAME",
+          "calibration": [
+            {"value": 0, "normalized": 0},
+            {"value": 1, "normalized": 1}
+          ]
+        }
+      }
+    }
+  }
+}

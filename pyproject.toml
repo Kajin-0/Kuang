@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kuang"
+version = "0.1.0"
+description = "Local-first structured music projects and exact symbolic edits"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+kuang = "kuang.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["kuang*"]
+
+[tool.setuptools.package-data]
+kuang = ["*.lua"]

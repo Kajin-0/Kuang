@@ -1,0 +1,13 @@
+{
+  "expected_before_hash": "ad69af4e634f7e5d7ac6e0a0e05963c3373e9fd52f0e5fde0249ca07831d234c",
+  "scope": {
+    "track_ids": ["track-arp"],
+    "clip_ids": [],
+    "parameter_ids": ["mixer.pan"],
+    "start": null,
+    "end": null
+  },
+  "operations": [
+    {"op": "set_parameter", "target_id": "track-arp", "parameter_id": "mixer.pan", "value": -0.1}
+  ]
+}
