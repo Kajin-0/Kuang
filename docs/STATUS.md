@@ -1,6 +1,57 @@
 # Kuang delivery status
 
+## Phase 3 — exact iterative revision and A/B audition
+
+Implemented and verified on 2026-10-22, Python **3.13.7**, existing headless VPS and installed SoundCraft CLI **0.11.0**. `python3 -m kuang revise EXISTING_DIRECTORY "..." --out-dir NEW_DIRECTORY --soundcraft /absolute/path/to/soundcraft-cli --render` now performs useful scoped editing of an existing song, exports a fresh editable native session, and publishes measured original/revised WAVs. No model/provider, new audio engine or UI framework is required. See [PHASE3.md](PHASE3.md), [README](../README.md) and [machine-readable verification](phase3-verification.json).
+
+Working intents: bass cutoff/resonance aggression; drum thinning within an actual named section or inclusive bar range; existing reverb wetter/drier; explicit track gain deltas; explicit track preservation. Compound clauses are fully matched or rejected together. `--plan-only` provides a validated machine-readable plan without any writes/host execution; `--plan` recompiles the reviewed data with its complete state-hash precondition. All unchanged canonical state and incoming metadata remain exact. No SongSpec, stable IDs or project are regenerated. Parameter automation, locks, missing controls/effects, ambiguous sections/tracks, no-ops and unsupported prose fail explicitly.
+
+Global parameter and regional note edits retain **separate narrow scopes**, each through the unchanged public transaction engine on a private candidate. The strict `revision-1` wrapper preserves ordinary scoped receipt semantics; existing `undo`/`redo` replay the whole chain exactly. Fresh native export handles instrument/note edits without exceeding native in-place apply capabilities. Full native comparison allows only replayed mapped scalars/note removals, with f32 tolerance only on the explicitly changed scalar paths; every other persistent native field is compared exactly. The original sources are inventoried before/after and never modified. Publication is new-path-only, staged, with failure cleanup.
+
+Actual checks:
+
+| Check | Result |
+| --- | --- |
+| Phase 2 baseline | 100 discovered, 96 passed, four real-host methods skipped; 19.824 s |
+| Final offline suite | **149 discovered, 144 passed, five opt-in host methods skipped**, 37.287 s |
+| Final real SoundCraft suite | **149 passed, zero skips/failures/errors**, 65.261 s; all original 100 retained |
+| Real revision integration | Two distinct existing 8-bar native songs without source WAVs → compound revisions → fresh measured A/B → exact notes/full native comparison → another native save/reopen → exact CLI undo/redo → second native revision of each result; copied-source drift rejected |
+| Full existing user-song CLI runs | Separate 16-bar trap and house revisions from the supplied Phase 2 directories; original files unchanged, all mapped state verified, exact compound replay, measured A/B difference |
+| Legacy public CLI regression | generate → propose → apply → undo → redo; original/restored and edited/redone `cmp` equality |
+| Public revision replay | Full trap wrapper undo/redo; `cmp` equality to Phase 2 original and Phase 3 revised canonical bytes |
+| Packaging/static checks | Wheel built with no dependencies/build isolation/downloads; new modules, Lua and MIT license verified; Python 3.11 syntax, documentation links and whitespace checked |
+| CI | Python 3.11/3.13 offline suite, original CLI/create workflows and reviewed-plan/compound undo-redo/iteration workflow configured; remote status is checked per pushed commit, not inferred from local tests |
+
+The 49 new tests cover per-intent scope and hash chains, late lock failure without collateral edits, surviving note IDs/order/values, region boundaries and bar conversion, exact full-project comparison, automation conflicts, units/ranges, explicit preservation, unsupported/partial/injected prose, raw-plan/receipt corruption, stale state, iteration/provenance, source/report/native drift, collisions/symlinks/races/failure cleanup, PCM math and real native A/B. Original fixtures and the original 20-edit/full undo-redo regression remain unchanged. No canonical schema or public operation extension was required; runtime dependencies remain standard library only. MIT remains unchanged and SoundCraft remains an external separately licensed executable.
+
+Full additional A/B results are **48,000 Hz / 24-bit integer PCM / stereo**, same start/frame count/tempo/length within each pair, one-second tail, all non-silent and **zero clipped samples**:
+
+| Existing style / bounce | Duration | Peak dBFS | RMS dBFS |
+| --- | --- | --- | --- |
+| Trap original | 28.428563 s | -16.4671 | -32.9061 |
+| Trap revised | 28.428563 s | -16.3810 | -33.1983 |
+| House original | 31.476188 s | -17.1733 | -36.9684 |
+| House revised | 31.476188 s | -17.2209 | -37.6933 |
+
+Trap revision raises existing bass cutoff **220→880 Hz** and resonance **0.08→0.28**, and removes **33** drum notes only within Main/bars 5–8, retaining **233** notes. All surviving fields/IDs/order are exact. House revision removes **16** drum notes in bars 5–8, lowers lead gain **−22→−25 dB**, and dries existing harmony reverb **0.12→0**, retaining **496** notes and preserving bass completely. Every unrelated track and field, all automation, sections, locks and original provenance remain exact.
+
+Both fresh original bounces are byte-identical to the already measured Phase 2 previews. At sample-zero alignment without shift, resampling or normalization, trap changes **1,343,870 samples** (49.24%), delta RMS **0.008152714 / −41.7740 dBFS**, **36.03%** of the original RMS. House changes **2,992,080 samples** (99.02%), delta RMS **0.005595918 / −45.0426 dBFS**, **39.47%** of the original RMS. These are substantial measured PCM differences, not preset/JSON-only changes or rounding artifacts. No human listening, subjective audibility/quality, native GUI or studio-quality evaluation is claimed.
+
+Persistent artifacts (ignored, outside Git content) under `/home/User/Kuang/artifacts/`:
+
+- `phase3-trap-release/` and `phase3-house-release/`: `original.wav`, `preview.wav`, `original-native/session.scraft`, `native/session.scraft`, original/revised canonical JSON, MIDI, `change-plan.json`, `revision-receipt.json`, individual receipts, source provenance copy/archive and full `report.json`.
+- `phase3-verification-release/phase3/revision-results.json`: final real integration evidence, two source/result/iteration bundles, A/Bs, additional saved clones and exact replay outputs. Parent `phase3-verification-release/verification-results.json` records preserved Phase 1/2 real tests.
+- `phase3-replay/`: full 16-bar trap canonical undo/redo files.
+- `phase3-legacy-smoke/`: Phase 0 generation/proposal/apply/undo/redo evidence.
+- Earlier `phase3-*-first/`, `phase3-*-final/`, `phase3-integration-final/` and `phase3-release/` checks are retained. No Phase 1/2 evaluation artifact was replaced. Temporary logs: `/tmp/kuang-phase3-verification-release.log` and `/tmp/kuang-phase3-offline-release.log`. Wheel: `/tmp/kuang-phase3-wheel-release/kuang-0.1.0-py3-none-any.whl`.
+
+Trap WAV SHA-256 A/B: `b49e33f67033a72a17b4129dcd53d0f768853bacb7a446fcc8880d25b2541807` → `bced58f1ccb425ebe8d523473acafc0e42749a3196e67dd74b8f5faa1d6ad79b`. House A/B: `907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041` → `9f64aa85e9dc35508b811f26d34dde08e4b7be8221c619afb5c3e7e6d8754299`. Revised canonical hashes: trap `af1222aeeff3552292b4b87968473a0ee265fe59db64aad72c40ad482c1c30f7`, house `951639bcea6db185ce09160a758249ddff58c8dbda5416777f495c5c7079ae16`. These identify these actual files; general cross-build audio determinism is not claimed.
+
+Current limits: finite strict rules grammar, four semantic edit families, existing objects only; no parameter changes restricted to a section, automation rewriting, FX insertion, arbitrary generated note replacement or tempo/key/form edits. Missing Verse is not mapped silently to Main. Nonempty automation overrides are rejected. Native unknown state/derived bounds that cannot survive a full re-export cause failure; host edits are not reconciled. Final publication is single-writer and not multi-file crash-atomic. Original SongSpec/metadata remain historical provenance; sidecar plans/receipts describe revisions, and exact incoming/ancestor report bytes are carried forward in a content-addressed provenance archive. `RevisionPlanner`/`ChangeIntent` support a future optional stronger provider through the same strict compiler/typed operations; Codex/BYO inference, costs/licensing review and model-quality A/B remain proposed. **No Phase 3 inference, paid service, model download or recursive Codex call occurred.** The CLI and native SoundCraft editor provide the complete local interaction for this milestone.
+
 ## Phase 2 — local prompt to editable instrumental sketches
+
+Historical Phase 2 delivery record; Phase 3 adds the standalone revision workflow above.
 
 Implemented and checked on 2026-10-22, Python **3.13.7**, existing headless Linux VPS, SoundCraft CLI **0.11.0**. `python3 -m kuang create "..." --out-dir NEW --soundcraft /absolute/path/to/soundcraft-cli --render` now produces a typed song plan, canonical project, MIDI, native editable session, measured full WAV preview and JSON provenance/capability/validation report. It uses conservative free built-in synthesis, EQ, room reverb, mixer and supported automation. Rules mode is explicitly heuristic; optional actual local LLM planning is explicitly selected. See [PHASE2.md](PHASE2.md), [README quick start](../README.md) and [machine-readable measurements](phase2-verification.json).
 

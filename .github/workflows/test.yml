@@ -33,3 +33,12 @@ jobs:
           python -m kuang validate out/trap/project.kuang.json
           python -m kuang validate out/house/project.kuang.json
           python -m kuang validate out/ambient/project.kuang.json
+      - name: Iterative revision and exact compound replay
+        run: |
+          python -m kuang revise out/trap "make the bass more aggressive, simplify the drums in Main, keep everything else unchanged" --plan-only > out/revision-plan.json
+          python -m kuang revise out/trap --plan out/revision-plan.json --out-dir out/trap-revised
+          python -m kuang undo out/trap-revised/project.kuang.json out/trap-revised/revision-receipt.json out/revision-undone.kuang.json
+          cmp out/trap/project.kuang.json out/revision-undone.kuang.json
+          python -m kuang redo out/revision-undone.kuang.json out/trap-revised/revision-receipt.json out/revision-redone.kuang.json
+          cmp out/trap-revised/project.kuang.json out/revision-redone.kuang.json
+          python -m kuang revise out/trap-revised "make the lead reverb wetter, turn the lead down by 2 dB" --out-dir out/trap-revised-again

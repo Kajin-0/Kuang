@@ -14,6 +14,8 @@ from .schema import ValidationError, atomic_write, decode, load, save, state_has
 from .transactions import Engine, Scope, parse_operations, receipt_from_dict, replay
 from .soundcraft_cli import add_parser as add_soundcraft_parser, run as run_soundcraft
 from .create import add_parser as add_create_parser, run as run_create
+from .revise import add_parser as add_revise_parser, run as run_revise
+from .revision import replay_revision
 
 
 def _json_write(path, data):
@@ -36,6 +38,7 @@ def parser():
     commands = root.add_subparsers(dest="command", required=True)
     add_soundcraft_parser(commands)
     add_create_parser(commands)
+    add_revise_parser(commands)
     demo = commands.add_parser("demo", help="write seeded session, type-1 MIDI and REAPER importer")
     demo.add_argument("--seed", type=int, default=7)
     demo.add_argument("--out-dir", default="out")
@@ -79,6 +82,8 @@ def main(argv=None):
     try:
         if args.command == "create":
             return run_create(args)
+        if args.command == "revise":
+            return run_revise(args)
         if args.command == "soundcraft":
             return run_soundcraft(args)
         if args.command == "demo":
@@ -146,14 +151,17 @@ def main(argv=None):
             save(engine.project, args.output)
             print(f"Applied {len(receipt.operations)} operations: {receipt.before_hash} -> {receipt.after_hash}")
         elif args.command in ("undo", "redo"):
-            receipt = receipt_from_dict(strict_json(Path(args.receipt).read_text(encoding="utf-8")))
-            result = replay(project, receipt, undo=args.command == "undo")
+            data = strict_json(Path(args.receipt).read_text(encoding="utf-8"))
+            if type(data) is dict and data.get("version") == "revision-1":
+                result = replay_revision(project, data, undo=args.command == "undo")
+            else:
+                result = replay(project, receipt_from_dict(data), undo=args.command == "undo")
             save(result, args.output)
             print(state_hash(result))
         return 0
     except (ValidationError, OSError, UnicodeError) as exc:
-        if args.command == "create":
-            print(json.dumps({"action": "create", "success": False, "error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+        if args.command in ("create", "revise"):
+            print(json.dumps({"action": args.command, "success": False, "error": str(exc)}, ensure_ascii=False), file=sys.stderr)
             return 2
         print(f"kuang: {exc}", file=sys.stderr)
         return 2

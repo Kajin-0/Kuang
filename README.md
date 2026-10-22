@@ -2,7 +2,7 @@
 
 Kuang turns a musical description into a short editable instrumental sketch. Its source of truth is a DAW-agnostic structured project, with MIDI and optional native SoundCraft sessions and measured WAV previews. Everything runs locally. Python 3.11+, standard library only; no subscriptions, API keys, required proprietary components or bundled model/audio downloads.
 
-**Working today:** one-command rules or optional local Ollama planning; distinct trap, house and ambient composition templates; key/tempo/seed controls; free built-in synths, EQ, reverb, mixer and gain automation; native SoundCraft 0.11.0 export/save/reopen and non-silent WAV checks. Phase 0/1 strict canonical JSON, MIDI, scoped atomic transactions, locks, exact undo/redo and the optional REAPER Lua adapter remain available.
+**Working today:** one-command creation and iterative revision/audition of existing songs; distinct trap, house and ambient composition templates; key/tempo/seed controls; free built-in synths, EQ, reverb, mixer and gain automation; native SoundCraft 0.11.0 export/save/reopen and measured A/B WAV checks. Phase 0/1 strict canonical JSON, MIDI, scoped atomic transactions, locks, exact undo/redo and the optional REAPER Lua adapter remain available. Rules need no model; local Ollama creation is an optional experiment.
 
 **Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor, 8/16/32 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI/listening tests or professional composition/mastering claim. SoundCraft is the human editor; Kuang does not implement another DAW UI.
 
@@ -33,6 +33,34 @@ python3 -m kuang create "ambient cinematic, 72 bpm, D minor, spacious pads" \
 Only loopback Ollama is contacted; no model is downloaded. Invalid/unavailable model results fail with an actionable error, without silent rules fallback. The composer remains deterministic templates. `qwen2.5:3b-instruct` is rejected because its license is Qwen Research, not unrestricted Apache; FIRM/cloud models are also rejected. See [workflow and plan contract](docs/PHASE2.md), [recorded verification](docs/STATUS.md) and [license review](docs/LICENSING.md).
 
 Future optional stronger planners (for example Codex CLI `codex exec` or another provider) must use the same strict SongSpec/typed-operation validation. They are not implemented in Phase 2. Provider accounts, inference costs and terms remain separate from the MIT core and are never required for local use. See the [proposed benchmark](docs/PHASE2.md#future-planner-benchmark-not-implemented).
+
+## Revise and audition an existing song
+
+```bash
+python3 -m kuang revise out/my-trap \
+  "make the bass more aggressive, simplify the drums in Main, keep everything else unchanged" \
+  --out-dir out/my-trap-revised \
+  --soundcraft /absolute/path/to/soundcraft-cli --render
+```
+
+The new directory contains `change-plan.json`, scoped receipts, the revised canonical/MIDI/native session, `original.wav`, `preview.wav` and an exact comparison/A/B report. Listen to both WAVs in any player or open `native/session.scraft` in SoundCraft. Every source file stays unchanged. Revise the resulting directory again to continue; no paid model, new DAW UI or model inference is required.
+
+The rules grammar fully matches each clause: bass aggression, drum thinning in an existing section or inclusive bar range, existing-track reverb wetter/drier, and gain up/down by an explicit 0–6 dB delta (nonzero). Combine intents; `keep the lead unchanged` enforces preservation. Unsupported clauses, missing/ambiguous targets, locked edits, stale hashes and automated base-parameter edits fail the entire request. Phase 2 has `Main`; requesting `verse` on that song returns available section names. See [revision grammar, artifacts and limitations](docs/PHASE3.md).
+
+Review a machine-readable plan before publishing, then apply that exact validated plan:
+
+```bash
+python3 -m kuang revise out/my-trap "make the bass more aggressive" \
+  --plan-only > out/bass-plan.json
+python3 -m kuang revise out/my-trap --plan out/bass-plan.json \
+  --out-dir out/bass-revised --soundcraft /absolute/path/to/soundcraft-cli --render
+python3 -m kuang undo out/bass-revised/project.kuang.json \
+  out/bass-revised/revision-receipt.json out/bass-undone.kuang.json
+python3 -m kuang redo out/bass-undone.kuang.json \
+  out/bass-revised/revision-receipt.json out/bass-redone.kuang.json
+```
+
+Omit the backend/render flags (and unset `KUANG_SOUNDCRAFT`) for canonical/MIDI revisions. Existing SongSpec and canonical metadata remain original provenance; the revision plan/receipts describe current edits. Native manual changes still require explicit reconciliation and are rejected as drift. Audio metrics prove a measured signal difference, not human listening quality.
 
 ## Original demo and exact edits
 

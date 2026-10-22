@@ -1,0 +1,341 @@
+{
+  "baseline_head": "4e79bf0fe9f3f095246007dd623895f5721e5cfe",
+  "checks": {
+    "integration": {
+      "discovered": 149,
+      "log": "/tmp/kuang-phase3-verification-release.log",
+      "passed": 149,
+      "seconds": 65.261,
+      "skipped": 0
+    },
+    "offline": {
+      "discovered": 149,
+      "log": "/tmp/kuang-phase3-offline-release.log",
+      "passed": 144,
+      "seconds": 37.287,
+      "skipped": 5
+    }
+  },
+  "claims": {
+    "human_listening": false,
+    "inference_performed": false,
+    "model_downloads": false,
+    "native_gui_test": false,
+    "paid_runtime_services": false,
+    "professional_quality": false
+  },
+  "date": "2026-10-22",
+  "integration_artifacts": "/home/User/Kuang/artifacts/phase3-verification-release",
+  "python": "3.13.7",
+  "runs": [
+    {
+      "artifacts": {
+        "canonical": "/home/User/Kuang/artifacts/phase3-trap-release/project.kuang.json",
+        "midi": "/home/User/Kuang/artifacts/phase3-trap-release/song.mid",
+        "native": "/home/User/Kuang/artifacts/phase3-trap-release/native/session.scraft",
+        "original_canonical": "/home/User/Kuang/artifacts/phase3-trap-release/original.kuang.json",
+        "original_native": "/home/User/Kuang/artifacts/phase3-trap-release/original-native/session.scraft",
+        "original_preview": "/home/User/Kuang/artifacts/phase3-trap-release/original.wav",
+        "plan": "/home/User/Kuang/artifacts/phase3-trap-release/change-plan.json",
+        "preview": "/home/User/Kuang/artifacts/phase3-trap-release/preview.wav",
+        "receipt": "/home/User/Kuang/artifacts/phase3-trap-release/revision-receipt.json",
+        "report": "/home/User/Kuang/artifacts/phase3-trap-release/report.json"
+      },
+      "audio": {
+        "difference": {
+          "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+          "changed_fraction": 0.49241483220733845,
+          "changed_samples": 1343870,
+          "channels": 2,
+          "difference_peak": 0.13311481475830078,
+          "difference_rms": 0.008152713970888415,
+          "difference_rms_dbfs": -41.77395588317442,
+          "difference_to_original_rms_ratio": 0.3602538986640249,
+          "frames": 1364571,
+          "measurable_change": true,
+          "offset_frames": 0,
+          "sample_rate": 48000
+        },
+        "original": {
+          "action": "render",
+          "analysis": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 28.4285625,
+            "frames": 1364571,
+            "non_silent": true,
+            "peak": 0.15019190311431885,
+            "peak_dbfs": -16.46706959264981,
+            "rms": 0.022630467015408173,
+            "rms_dbfs": -32.90612967201286,
+            "sample_rate": 48000
+          },
+          "canonical_hash": "8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a",
+          "native_unchanged": true,
+          "output": "/home/User/Kuang/artifacts/phase3-trap-release/original.wav",
+          "wav_sha256": "b49e33f67033a72a17b4129dcd53d0f768853bacb7a446fcc8880d25b2541807"
+        },
+        "revised": {
+          "action": "render",
+          "analysis": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 28.4285625,
+            "frames": 1364571,
+            "non_silent": true,
+            "peak": 0.15168726444244385,
+            "peak_dbfs": -16.381017614924957,
+            "rms": 0.021881982142682124,
+            "rms_dbfs": -33.198266814377774,
+            "sample_rate": 48000
+          },
+          "canonical_hash": "af1222aeeff3552292b4b87968473a0ee265fe59db64aad72c40ad482c1c30f7",
+          "native_unchanged": true,
+          "output": "/home/User/Kuang/artifacts/phase3-trap-release/preview.wav",
+          "wav_sha256": "bced58f1ccb425ebe8d523473acafc0e42749a3196e67dd74b8f5faa1d6ad79b"
+        },
+        "timing": "equal canonical tempo, length, sections and tick positions; both bounces start at zero"
+      },
+      "baseline_wav_matches_phase2_preview": true,
+      "native_comparison": {
+        "after_native_hash": "645ed0a487c067fe9b825b1cb28abc01ec4da8994a3c771db61b9bdc8e07218b",
+        "before_native_hash": "f3a3c2d0f11b8cc3353157818f0c4607f44198b6c848d63072b33a62f703bf21",
+        "full_native_preservation": true,
+        "method": "scoped receipt replay, mapped scalar/note changes, then full persistent native comparison"
+      },
+      "parameter_changes": [
+        {
+          "after": 880.0,
+          "before": 220.0,
+          "parameter_id": "synth.cutoff_hz",
+          "target_id": "instrument-bass"
+        },
+        {
+          "after": 0.28,
+          "before": 0.08,
+          "parameter_id": "synth.resonance",
+          "target_id": "instrument-bass"
+        }
+      ],
+      "prompt": "make the bass more aggressive, simplify the drums in Main, keep everything else unchanged",
+      "removed_note_ids": [
+        "note-kick-1-0001",
+        "note-kick-1-0004",
+        "note-kick-1-0007",
+        "note-kick-1-0010",
+        "note-snare-1-0004",
+        "note-hats-1-0001",
+        "note-hats-1-0002",
+        "note-hats-1-0003",
+        "note-hats-1-0005",
+        "note-hats-1-0006",
+        "note-hats-1-0007",
+        "note-hats-1-0009",
+        "note-hats-1-0010",
+        "note-hats-1-0011",
+        "note-hats-1-0013",
+        "note-hats-1-0014",
+        "note-hats-1-0015",
+        "note-hats-1-0016",
+        "note-hats-1-0017",
+        "note-hats-1-0019",
+        "note-hats-1-0020",
+        "note-hats-1-0021",
+        "note-hats-1-0023",
+        "note-hats-1-0024",
+        "note-hats-1-0025",
+        "note-hats-1-0027",
+        "note-hats-1-0028",
+        "note-hats-1-0029",
+        "note-hats-1-0031",
+        "note-hats-1-0032",
+        "note-hats-1-0033",
+        "note-hats-1-0034",
+        "note-hats-1-0035"
+      ],
+      "report_path": "/home/User/Kuang/artifacts/phase3-trap-release/report.json",
+      "report_provenance_archived": true,
+      "source": "/home/User/Kuang/artifacts/phase2-trap-final",
+      "source_files_sha256": {
+        "native/inspection.json": "8086c902dcb1a31faa675d3d6211a605759c3d03b9db728a632a69df8681d501",
+        "native/manifest.json": "42696255189a661d145a9cfc3a1d66b7a74f00138120dc4104a94a58bbb6ba36",
+        "native/project.kuang.json": "8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a",
+        "native/report.json": "0ab594f0a9f9e59bfb7c2745004f7771469d2ee1aee47eab8e9fdc8178ed7fef",
+        "native/session.scraft": "287574502e878a84d3d15740584d9222869ab458e2e0e8896944c375ae08e5df",
+        "preview.wav": "b49e33f67033a72a17b4129dcd53d0f768853bacb7a446fcc8880d25b2541807",
+        "project.kuang.json": "8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a",
+        "report.json": "21189797c99688a2d641dd6c8d22f09c388e8e419718c0b5b42d9933426e11b0",
+        "song-spec.json": "a0e96ce4785077220fe44d1917bd90d91e642122ac158ef08c42a16233009127",
+        "song.mid": "b56d10c61c165419a1273f2a04511a14f1bff1e404a4d34902ceda119ec93311"
+      },
+      "style": "trap",
+      "unchanged_projection_hash": "93050a5f929a2b236a828ba6063d09d263e4f15f4cc6b0add439b2839b4f6536",
+      "unchanged_track_ids": [
+        "track-harmony",
+        "track-lead"
+      ],
+      "validation": {
+        "audio_verified": true,
+        "canonical_hash": "af1222aeeff3552292b4b87968473a0ee265fe59db64aad72c40ad482c1c30f7",
+        "exact_undo_redo": true,
+        "native_verified": true,
+        "original_canonical_hash": "8569e25720dcaf9f2014423322d5aa71a17963941f025e2573e6570c9bdd7d5a",
+        "source_files_unchanged": true,
+        "source_host_verified": true,
+        "source_static_manifest_verified": true,
+        "unchanged_canonical_equal": true
+      }
+    },
+    {
+      "artifacts": {
+        "canonical": "/home/User/Kuang/artifacts/phase3-house-release/project.kuang.json",
+        "midi": "/home/User/Kuang/artifacts/phase3-house-release/song.mid",
+        "native": "/home/User/Kuang/artifacts/phase3-house-release/native/session.scraft",
+        "original_canonical": "/home/User/Kuang/artifacts/phase3-house-release/original.kuang.json",
+        "original_native": "/home/User/Kuang/artifacts/phase3-house-release/original-native/session.scraft",
+        "original_preview": "/home/User/Kuang/artifacts/phase3-house-release/original.wav",
+        "plan": "/home/User/Kuang/artifacts/phase3-house-release/change-plan.json",
+        "preview": "/home/User/Kuang/artifacts/phase3-house-release/preview.wav",
+        "receipt": "/home/User/Kuang/artifacts/phase3-house-release/revision-receipt.json",
+        "report": "/home/User/Kuang/artifacts/phase3-house-release/report.json"
+      },
+      "audio": {
+        "difference": {
+          "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+          "changed_fraction": 0.9901929831876876,
+          "changed_samples": 2992080,
+          "channels": 2,
+          "difference_peak": 0.12159097194671631,
+          "difference_rms": 0.0055959182628368,
+          "difference_rms_dbfs": -45.04257275371926,
+          "difference_to_original_rms_ratio": 0.3947200414837201,
+          "frames": 1510857,
+          "measurable_change": true,
+          "offset_frames": 0,
+          "sample_rate": 48000
+        },
+        "original": {
+          "action": "render",
+          "analysis": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 31.4761875,
+            "frames": 1510857,
+            "non_silent": true,
+            "peak": 0.13846397399902344,
+            "peak_dbfs": -17.173264160676865,
+            "rms": 0.014176929658302135,
+            "rms_dbfs": -36.968356309489685,
+            "sample_rate": 48000
+          },
+          "canonical_hash": "2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015",
+          "native_unchanged": true,
+          "output": "/home/User/Kuang/artifacts/phase3-house-release/original.wav",
+          "wav_sha256": "907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041"
+        },
+        "revised": {
+          "action": "render",
+          "analysis": {
+            "bits_per_sample": 24,
+            "channels": 2,
+            "clipped_samples": 0,
+            "duration_seconds": 31.4761875,
+            "frames": 1510857,
+            "non_silent": true,
+            "peak": 0.13770604133605957,
+            "peak_dbfs": -17.2209401256734,
+            "rms": 0.013041667635226803,
+            "rms_dbfs": -37.69333743823176,
+            "sample_rate": 48000
+          },
+          "canonical_hash": "951639bcea6db185ce09160a758249ddff58c8dbda5416777f495c5c7079ae16",
+          "native_unchanged": true,
+          "output": "/home/User/Kuang/artifacts/phase3-house-release/preview.wav",
+          "wav_sha256": "9f64aa85e9dc35508b811f26d34dde08e4b7be8221c619afb5c3e7e6d8754299"
+        },
+        "timing": "equal canonical tempo, length, sections and tick positions; both bounces start at zero"
+      },
+      "baseline_wav_matches_phase2_preview": true,
+      "native_comparison": {
+        "after_native_hash": "4c83f2012832805c9e2a24ff21878fce4213fa01f31488c6f4a94c3909e1907d",
+        "before_native_hash": "e0f6a54aa64725bed5317ec4609df43d1fd4dbca96d5e378564f71d945439235",
+        "full_native_preservation": true,
+        "method": "scoped receipt replay, mapped scalar/note changes, then full persistent native comparison"
+      },
+      "parameter_changes": [
+        {
+          "after": 0.0,
+          "before": 0.12,
+          "parameter_id": "effect.wet",
+          "target_id": "effect-harmony-reverb"
+        },
+        {
+          "after": -25.0,
+          "before": -22.0,
+          "parameter_id": "mixer.gain_db",
+          "target_id": "track-lead"
+        }
+      ],
+      "prompt": "simplify the drums in bars 5-8, make the harmony reverb drier, turn the lead down by 3 dB, keep the bass unchanged, keep everything else unchanged",
+      "removed_note_ids": [
+        "note-kick-1-0001",
+        "note-kick-1-0003",
+        "note-kick-1-0005",
+        "note-kick-1-0007",
+        "note-kick-1-0009",
+        "note-kick-1-0011",
+        "note-kick-1-0013",
+        "note-kick-1-0015",
+        "note-hats-1-0001",
+        "note-hats-1-0003",
+        "note-hats-1-0005",
+        "note-hats-1-0007",
+        "note-hats-1-0009",
+        "note-hats-1-0011",
+        "note-hats-1-0013",
+        "note-hats-1-0015"
+      ],
+      "report_path": "/home/User/Kuang/artifacts/phase3-house-release/report.json",
+      "report_provenance_archived": true,
+      "source": "/home/User/Kuang/artifacts/phase2-house-final",
+      "source_files_sha256": {
+        "native/inspection.json": "76eecade010d21777e2fbc249f6528ed89e36ab1be333e8270773c4d72ec5efc",
+        "native/manifest.json": "e7f0802005f8489eef6e822a05847f8f65e025f2e7640e428039e63dbe1c99c6",
+        "native/project.kuang.json": "2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015",
+        "native/report.json": "0d7821d241581a544e5d398cc3cb7e7b4730749146d2bbb5cccd2d6effb284d1",
+        "native/session.scraft": "3c2a3aab44ac73b8d2ad18de70c9c3b17c99e53866ae83d4ce061fb718fb0c28",
+        "preview.wav": "907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041",
+        "project.kuang.json": "2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015",
+        "report.json": "29b22b4bf13d47b4c14fb325b0a3bc87f005a220ed13adc17d74d8670758d08c",
+        "song-spec.json": "72ae4df85c6294cfe25e23f891de33492a63e4f8bd9df15571a475797e47bd24",
+        "song.mid": "e0cb6cb623c97d6fe283c8d53b0f3f8323195a5f6181750784b8336cea2f91fe"
+      },
+      "style": "house",
+      "unchanged_projection_hash": "005af8eb496e1dcc2786a7f8bf7bbe36e9f3abb5a4705d89b544cf15f92abf35",
+      "unchanged_track_ids": [
+        "track-snare",
+        "track-bass",
+        "track-arp"
+      ],
+      "validation": {
+        "audio_verified": true,
+        "canonical_hash": "951639bcea6db185ce09160a758249ddff58c8dbda5416777f495c5c7079ae16",
+        "exact_undo_redo": true,
+        "native_verified": true,
+        "original_canonical_hash": "2d9f9107ebc9380bf0994d5fefdabcc8dbd0ada829a3a9ed76e8093aecba4015",
+        "source_files_unchanged": true,
+        "source_host_verified": true,
+        "source_static_manifest_verified": true,
+        "unchanged_canonical_equal": true
+      }
+    }
+  ],
+  "wheel": {
+    "modules_lua_mit_verified": true,
+    "path": "/tmp/kuang-phase3-wheel-release/kuang-0.1.0-py3-none-any.whl",
+    "sha256": "40fa364525812d03ad22bcfdd5ddab2e8cdd9383a4fd78213896786b3bb1526f"
+  }
+}

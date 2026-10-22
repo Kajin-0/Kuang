@@ -1,4 +1,5 @@
 import contextlib
+import hashlib
 import io
 import json
 import os
@@ -7,6 +8,7 @@ import tempfile
 import unittest
 import wave
 from copy import deepcopy
+from dataclasses import asdict
 from pathlib import Path
 from unittest.mock import patch
 
@@ -14,8 +16,8 @@ from kuang.adapters import DAWAdapter
 from kuang.audio import analyze_wav
 from kuang.cli import main
 from kuang.schema import AutomationLane, AutomationPoint, Lock, ParameterSpec, ValidationError, dumps, state_hash
-from kuang.soundcraft import AdapterError, SoundCraftAdapter, UnsupportedError
-from kuang.transactions import (AddAutomationPoints, DeleteAutomationPoints, LockedError,
+from kuang.soundcraft import AdapterError, SoundCraftAdapter, UnsupportedError, _hash
+from kuang.transactions import (AddAutomationPoints, DeleteAutomationPoints, Engine, LockedError,
                                 Scope, ScopeError, SetParameter, UpdateNote)
 from helpers import small_project, full_scope
 from soundcraft_fake import CONTRACT, NATIVE, FakeCLI
@@ -81,6 +83,34 @@ class SoundCraftTests(unittest.TestCase):
         self.assertEqual(after, expected)
         self.assertEqual((self.bundle/"session.scraft").read_bytes(), before)
         self.assertTrue((self.root/"edited/receipt.json").is_file())
+
+    def test_revision_full_native_comparison_accepts_only_replayed_changes(self):
+        ops = [SetParameter("set_parameter", "track-kick", "mixer.gain_db", -10)]
+        receipt = Engine(self.project).apply(ops, self.scope, state_hash(self.project))
+        edited = self.root/"revision"
+        self.adapter.apply(self.bundle, edited, ops, self.scope, state_hash(self.project))
+        result = self.adapter.compare_revision(self.bundle, edited, [asdict(receipt)])
+        self.assertTrue(result["full_native_preservation"])
+        bad = asdict(receipt); bad["operations"][0]["value"] = -11
+        with self.assertRaises(ValidationError): self.adapter.compare_revision(self.bundle, edited, [bad])
+
+    def test_revision_unchanged_native_parameter_requires_exact_equality(self):
+        ops = [SetParameter("set_parameter", "track-kick", "mixer.gain_db", -10)]
+        receipt = Engine(self.project).apply(ops, self.scope, state_hash(self.project))
+        edited = self.root/"revision"
+        self.adapter.apply(self.bundle, edited, ops, self.scope, state_hash(self.project))
+        path = edited/"session.scraft"
+        native = json.loads(path.read_text())
+        # Deliberate tiny corruption inside the ordinary mapping tolerance. A
+        # re-signed unit-test fixture must still fail full preservation comparison.
+        params = native["tracks"][1]["instrument"]["params"]
+        params["hat_decay"] = params.get("hat_decay", 80) + 1e-7
+        path.write_text(json.dumps(native))
+        manifest = json.loads((edited/"manifest.json").read_text())
+        manifest.update(native_hash=_hash(native), native_file_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+        (edited/"manifest.json").write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(AdapterError, "outside authorized"):
+            self.adapter.compare_revision(self.bundle, edited, [asdict(receipt)])
 
     def test_automation_add_delete_preserves_other_lane_and_point_values(self):
         add = AddAutomationPoints("add_automation_points", "test-lane", [AutomationPoint("phase1-point", 480, -0.2, "linear")])

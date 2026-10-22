@@ -16,8 +16,9 @@ from pathlib import Path
 
 from . import midi
 from .audio import analyze_wav
-from .schema import Project, ValidationError, dumps, load, save, state_hash, strict_json, validate
-from .transactions import AddAutomationPoints, DeleteAutomationPoints, Engine, SetParameter
+from .schema import Project, ValidationError, dumps, load, save, state_hash, strict_json, targets, validate
+from .transactions import (AddAutomationPoints, DeleteAutomationPoints, Engine, RemoveNotes,
+                           SetParameter, receipt_from_dict, replay)
 
 HOST_VERSION = "0.11.0"
 COMMANDS = ("engine.plugins", "session.new", "session.inspect", "session.save", "file.import_midi",
@@ -530,6 +531,73 @@ class SoundCraftAdapter:
             if path.read_bytes() != original:
                 raise AdapterError("source changed during save")
             return self._publish(work / "publish", destination, project, reopened, {"action": "save"})
+
+    def compare_revision(self, source, revised, receipts):
+        """Full persistent native equality outside precisely replayed note/parameter edits.
+
+        This only builds an expected object in memory; native files are never patched.
+        Fresh export remains the only instrument/note revision path.
+        """
+        _, before_project, before = self._load_bundle(source)
+        _, after_project, after = self._load_bundle(revised)
+        candidate = before_project
+        parsed = [receipt_from_dict(r) for r in receipts]
+        for receipt in parsed:
+            candidate = replay(candidate, receipt, undo=False)
+        if dumps(candidate) != dumps(after_project):
+            raise AdapterError("native revision snapshots differ from the scoped receipt chain")
+        expected = deepcopy(before)
+        changed_paths = []
+        indexes = {t.id: i for i, t in enumerate(before_project.tracks)}
+        for receipt in parsed:
+            for operation in receipt.operations:
+                if isinstance(operation, SetParameter):
+                    kind, track_id, _ = targets(before_project)[operation.target_id]
+                    index = indexes[track_id]
+                    track = before_project.tracks[index]
+                    host = expected["tracks"][index]
+                    if kind == "track":
+                        key = MIXER[operation.parameter_id][2]
+                        value = operation.value
+                        host["mixer"][key] = [value, value] if key == "pan" else bool(value) if key == "mute" else value
+                        changed_paths.append(("tracks", index, "mixer", key))
+                    else:
+                        if kind == "instrument":
+                            device, plugin, native = track.instrument, self._device(track), host["instrument"]
+                        else:
+                            slot, device = next((i, e) for i, e in enumerate(track.effects) if e.id == operation.target_id)
+                            plugin, native = device.plugin_ref.removeprefix("soundcraft:"), host["mixer"]["inserts"][slot]
+                        parameter, value = self._parameter(before_project, device, plugin, operation.parameter_id, operation.value)
+                        if parameter == "bypass":
+                            native["bypass"] = value
+                        else:
+                            native["params"][parameter] = value
+                            path = ("instrument",) if kind == "instrument" else ("mixer", "inserts", slot)
+                            changed_paths.append(("tracks", index, *path, "params", parameter))
+                elif isinstance(operation, RemoveNotes):
+                    track, clip = next((t, c) for t in before_project.tracks for c in t.clips if c.id == operation.clip_id)
+                    keys = {(clip.start+n.start, n.duration, n.pitch, n.velocity, n.channel)
+                            for n in clip.notes if n.id in operation.note_ids}
+                    native_notes = expected["tracks"][indexes[track.id]]["playlists"][0]["clips"][0]["content"]["Midi"]["sequence"]["notes"]
+                    kept = [n for n in native_notes if (n["start"], n["length"], n["pitch"], n["velocity"], n["channel"]) not in keys]
+                    if len(native_notes) - len(kept) != len(operation.note_ids):
+                        raise AdapterError("native revision note identity mismatch")
+                    native_notes[:] = kept
+                else:
+                    raise AdapterError("native revision comparison supports set_parameter/remove_notes only")
+        # Plugin values may persist as f32. Compare their checked values with the
+        # adapter tolerance, then require exact equality for every other field.
+        for path in changed_paths:
+            old, new = expected, after
+            for key in path[:-1]:
+                old, new = old[key], new[key]
+            a, b = old[path[-1]], new[path[-1]]
+            if _close(a, b) or (type(a) is list and type(b) is list and len(a) == len(b) and all(_close(x, y) for x, y in zip(a, b))):
+                old[path[-1]] = b
+        if expected != after:
+            raise AdapterError("fresh export changed native state outside authorized notes/parameters; source state or derived clip bounds cannot be preserved")
+        return {"full_native_preservation": True, "before_native_hash": _hash(before), "after_native_hash": _hash(after),
+                "method": "scoped receipt replay, mapped scalar/note changes, then full persistent native comparison"}
 
     def apply(self, source, destination, operations, scope, expected_before_hash):
         path, project, before = self._load_bundle(source)
