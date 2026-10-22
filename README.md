@@ -42,6 +42,16 @@ python3 tools/phase5_house.py --out-dir artifacts/my-house-pocket \
 
 This compares against the existing `artifacts/phase4-house-reference/B-refined` bundle; use `--baseline PATH` for another Phase 4 16-bar/126 BPM bundle. `--symbolic` instead of `--soundcraft` creates canonical/MIDI without a host. Surge XT was sandbox-tested but did not pass the render/control gate; it is optional and absent from the candidate. See [Phase 5 evidence and private user-reference comparison interface](docs/PHASE5.md).
 
+Phase 6 is an opt-in **depth experiment over that exact Phase 5 groove**. It preserves every original note, the centred kick/bass and existing movement, and adds sustained rootless ninth pad/air layers, contrasting static ADSRs, chorus/phaser modulation, moving insert lowpass filters and more reverb on the unchanged stabs/call:
+
+```bash
+python3 tools/phase6_house.py --out-dir artifacts/my-house-depth \
+  --source artifacts/phase5-house \
+  --soundcraft /absolute/path/to/soundcraft-cli
+```
+
+The source must match the released Phase 5 fingerprint and contain its verified `native/` and `candidate.wav`. The new directory contains aligned 16-bar A/B WAVs with four seconds of tail, equal-RMS listening copies, isolated stems, same-MIDI reverb/modulation controls, complete editable native/canonical/MIDI bundles and **`phase6-house-listening.zip`**. Use a new destination each time. `--symbolic` without `--source` reproduces the exact notes/layers offline; it does not claim audio proof. No new plugin or model is needed. Movement comes from native effects and EQ automation, with distinct ADSRs on separate instruments; it is not oscillator LFO or ADSR automation. [Phase 6 measurements, reproduction and limitations](docs/PHASE6.md) document the verified release at `artifacts/phase6-house/`. Human listening remains the quality gate.
+
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash

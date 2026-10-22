@@ -13,6 +13,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
+      - name: Project-local test scratch
+        run: |
+          mkdir -p .local/phase6/tmp
+          echo "TMPDIR=$PWD/.local/phase6/tmp" >> "$GITHUB_ENV"
+          echo "PIP_CACHE_DIR=$PWD/.local/phase6/pip-cache" >> "$GITHUB_ENV"
       - name: Unit and adapter contract tests (stdlib only)
         run: python -m unittest discover -s tests -v
       - name: CLI vertical slice
@@ -56,3 +61,22 @@ jobs:
           python -m kuang validate out/pocket-a/project.kuang.json
           cmp out/pocket-a/project.kuang.json out/pocket-b/project.kuang.json
           cmp out/pocket-a/song.mid out/pocket-b/song.mid
+      - name: Exact-pocket depth experiment (no external plugin or host required)
+        run: |
+          python tools/phase6_house.py --symbolic --out-dir artifacts/phase6-house/ci-a
+          python tools/phase6_house.py --symbolic --out-dir artifacts/phase6-house/ci-b
+          python -m kuang validate artifacts/phase6-house/ci-a/project.kuang.json
+          cmp artifacts/phase6-house/ci-a/project.kuang.json artifacts/phase6-house/ci-b/project.kuang.json
+          cmp artifacts/phase6-house/ci-a/song.mid artifacts/phase6-house/ci-b/song.mid
+      - name: Wheel install and installed depth smoke
+        run: |
+          mkdir -p .local/phase6/build-src
+          cp pyproject.toml LICENSE .local/phase6/build-src/
+          cp -r kuang .local/phase6/build-src/
+          python -m pip wheel --no-deps .local/phase6/build-src --wheel-dir .local/phase6/wheels
+          python -m venv .local/phase6/install
+          .local/phase6/install/bin/pip install --no-deps .local/phase6/wheels/*.whl
+          mkdir -p .local/phase6/away
+          cd .local/phase6/away
+          ../install/bin/python -c 'from kuang.depth import depth_house; from kuang.schema import validate; validate(depth_house())'
+          ../install/bin/kuang --help
