@@ -2,7 +2,7 @@
 
 `python3 -m kuang create PROMPT --out-dir NEW_DIRECTORY [--seed N] [--soundcraft PATH] [--render]`
 
-Rules mode is the default and needs no service/network. `--model ollama --ollama-model qwen3.5:4b` explicitly enables actual local LLM planning. No paid service, model download, external plugin, sample library or proprietary DAW is required. SoundCraft is a separate optional user-installed free executable, pinned to 0.11.0 by the existing adapter. `KUANG_SOUNDCRAFT` can supply its path. Without it, the command produces symbolic canonical/MIDI output and reports that native/audio validation did not run. `--render` requires the backend. No localhost UI is included; SoundCraft supplies the human editor.
+Rules mode is the default and needs no service/network. `--model ollama --ollama-model qwen3.5:4b` explicitly enables experimental local LLM planning. Small 3–4B models are not assumed to be sufficient primary musical intelligence or to improve musical quality. This optional path establishes a measured inference/schema boundary for experiments and future comparisons. No paid service, model download, external plugin, sample library or proprietary DAW is required. SoundCraft is a separate optional user-installed free executable, pinned to 0.11.0 by the existing adapter. `KUANG_SOUNDCRAFT` can supply its path. Without it, the command produces symbolic canonical/MIDI output and reports that native/audio validation did not run. `--render` requires the backend. No localhost UI is included; SoundCraft supplies the human editor.
 
 ## Plan and arrangement
 
@@ -66,3 +66,11 @@ python3 -m unittest discover -s tests -v
 ```
 
 The suite retains all original 77 tests and adds style/seed/transposition/harmony tests, structured local-model corruption/injection/network bounds checks, provenance/no-clobber/failure cleanup checks and two real prompt render workflows in one integration method. CI tests Python 3.11 and 3.13 with offline rules and the legacy generation/propose/apply/undo/redo smoke workflow. It downloads neither SoundCraft nor models. Actual VPS measurements, local-model result, skipped checks and limitations are recorded in [STATUS.md](STATUS.md) and [phase2-verification.json](phase2-verification.json).
+
+## Future planner benchmark (not implemented)
+
+Keep the deterministic no-model workflow as a complete baseline. A future optional stronger planner may use Codex CLI `codex exec` or another provider, emitting the **same** SongSpec or existing typed operation envelope. Provider output must pass the existing strict decoding, range/allowlist, scope, lock and hash checks; it gains no direct host/file/shell authority. No Codex backend or model-quality assumption is part of Phase 2. No recursive Codex invocation was made from this development session, and no future implementation should invoke Codex recursively during Codex development.
+
+Before choosing primary musical intelligence, A/B test identical prompts/seeds across rules, small local Ollama and an explicitly authorized stronger provider. Record schema/intent success rates, repair/rejection rates, latency, memory, inference cost, note/harmonic/rhythmic diversity, editable-host preservation and blinded human listening/preference. Render success or a valid JSON response alone does not demonstrate musical intelligence. Preserve plans, provider/model versions and actual fees/terms with results. No stronger-provider benchmark has run and no superiority is claimed.
+
+The [official OpenAI non-interactive documentation](https://developers.openai.com/codex/noninteractive) describes structured final output with `codex exec --output-schema`; that would supplement, never replace, Kuang's validator. Codex CLI source licensing is separate from access to hosted inference. Hosted use has provider account/service terms and plan/usage limits or API charges; consult [official Codex pricing](https://developers.openai.com/codex/pricing) for current costs. No fixed price, free/unlimited access, or OSS model-weight license is implied by an open-source CLI. Kuang's MIT core and local composition/rendering remain usable without commercial inference.

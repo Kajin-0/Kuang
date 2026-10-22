@@ -21,7 +21,7 @@ This writes `project.kuang.json`, `song-spec.json`, `song.mid`, `native/session.
 
 Omit `--soundcraft` and `--render` (and leave `KUANG_SOUNDCRAFT` unset) for fully offline canonical/MIDI generation without a host. Try `"uplifting house, 126 bpm, C major"` or `"ambient cinematic, 72 bpm, D minor"`. Rules mode is heuristic and reports `ai_plan: false`.
 
-Optional actual local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`:
+Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash
 python3 -m kuang create "ambient cinematic, 72 bpm, D minor, spacious pads" \
@@ -31,6 +31,8 @@ python3 -m kuang create "ambient cinematic, 72 bpm, D minor, spacious pads" \
 ```
 
 Only loopback Ollama is contacted; no model is downloaded. Invalid/unavailable model results fail with an actionable error, without silent rules fallback. The composer remains deterministic templates. `qwen2.5:3b-instruct` is rejected because its license is Qwen Research, not unrestricted Apache; FIRM/cloud models are also rejected. See [workflow and plan contract](docs/PHASE2.md), [recorded verification](docs/STATUS.md) and [license review](docs/LICENSING.md).
+
+Future optional stronger planners (for example Codex CLI `codex exec` or another provider) must use the same strict SongSpec/typed-operation validation. They are not implemented in Phase 2. Provider accounts, inference costs and terms remain separate from the MIT core and are never required for local use. See the [proposed benchmark](docs/PHASE2.md#future-planner-benchmark-not-implemented).
 
 ## Original demo and exact edits
 
