@@ -10,6 +10,7 @@ from pathlib import Path
 
 from . import midi
 from .composer import COMPOSER, compose
+from .production import REFINED_COMPOSER, REFINED_LIMITATIONS, refine_house
 from .local_planner import LOCAL_MODEL, ollama_plan
 from .schema import ValidationError, dumps, state_hash
 from .song import LIMITATIONS, rules_plan
@@ -21,6 +22,8 @@ def add_parser(commands):
     command.add_argument("prompt")
     command.add_argument("--out-dir", required=True, help="new output directory, never overwritten")
     command.add_argument("--seed", type=int, default=7)
+    command.add_argument("--production", choices=("sketch", "refined"), default="sketch",
+                         help="refined: opt-in arranged house production with built-in sound design")
     command.add_argument("--model", choices=("rules", "ollama"), default="rules")
     command.add_argument("--ollama-model", default=LOCAL_MODEL)
     command.add_argument("--ollama-timeout", type=float, default=120)
@@ -34,7 +37,7 @@ def _write(path, data):
 
 
 def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, ollama_timeout=120,
-           soundcraft=None, soundcraft_timeout=120, render=False):
+           soundcraft=None, soundcraft_timeout=120, render=False, production="sketch"):
     raw_output = Path(output).expanduser()
     if raw_output.is_symlink():
         raise ValidationError("output already exists or is a symlink; choose a new directory")
@@ -53,6 +56,10 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
     else:
         raise ValidationError("model must be rules or ollama")
     project = compose(spec)
+    if production == "refined":
+        project = refine_house(spec, project)
+    elif production != "sketch":
+        raise ValidationError("production must be sketch or refined")
     project.metadata.update({"prompt": prompt, "planner": provenance["planner"], "ai_plan": str(provenance["ai_plan"]).lower()})
     if model == "ollama":
         project.metadata.update({"model": provenance["model"], "model_digest": provenance["model_digest"]})
@@ -92,10 +99,11 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
                 artifacts["preview"] = audio["output"]
                 validation["audio_verified"] = True
         report = {"version": "1", "action": "create", "song_spec": asdict(spec), "prompt": prompt,
-                  "engine": {**provenance, "composer": COMPOSER, "composition": "deterministic musical templates, not model-generated audio"},
+                  "engine": {**provenance, "composer": REFINED_COMPOSER if production == "refined" else COMPOSER,
+                             "production": production, "composition": "deterministic musical templates, not model-generated audio"},
                   "artifacts": artifacts, "capabilities": capabilities, "validation": validation,
                   "native_export": export, "render": audio, "interpretation_notes": messages,
-                  "limitations": LIMITATIONS, "tracks": len(project.tracks),
+                  "limitations": REFINED_LIMITATIONS if production == "refined" else LIMITATIONS, "tracks": len(project.tracks),
                   "note_count": sum(len(c.notes) for t in project.tracks for c in t.clips),
                   "artifact_sha256": {str(p.relative_to(stage)): hashlib.sha256(p.read_bytes()).hexdigest()
                                       for p in sorted(stage.rglob("*")) if p.is_file()}}
@@ -115,6 +123,6 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
 def run(args):
     result = create(args.prompt, args.out_dir, seed=args.seed, model=args.model, ollama_model=args.ollama_model,
                     ollama_timeout=args.ollama_timeout, soundcraft=args.soundcraft,
-                    soundcraft_timeout=args.soundcraft_timeout, render=args.render)
+                    soundcraft_timeout=args.soundcraft_timeout, render=args.render, production=args.production)
     print(json.dumps(result, sort_keys=True, indent=2, ensure_ascii=False, allow_nan=False))
     return 0

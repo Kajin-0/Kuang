@@ -42,3 +42,10 @@ jobs:
           python -m kuang redo out/revision-undone.kuang.json out/trap-revised/revision-receipt.json out/revision-redone.kuang.json
           cmp out/trap-revised/project.kuang.json out/revision-redone.kuang.json
           python -m kuang revise out/trap-revised "make the lead reverb wetter, turn the lead down by 2 dB" --out-dir out/trap-revised-again
+      - name: Refined house production and deterministic export
+        run: |
+          python -m kuang create "uplifting house, 126 bpm, C major, 16 bars" --production refined --seed 29 --out-dir out/refined-a
+          python -m kuang create "uplifting house, 126 bpm, C major, 16 bars" --production refined --seed 29 --out-dir out/refined-b
+          python -m kuang validate out/refined-a/project.kuang.json
+          cmp out/refined-a/project.kuang.json out/refined-b/project.kuang.json
+          cmp out/refined-a/song.mid out/refined-b/song.mid

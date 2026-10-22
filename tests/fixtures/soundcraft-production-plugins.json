@@ -1,0 +1,402 @@
+{
+  "chorus": {
+    "category": "Modulation",
+    "id": "chorus",
+    "instrument": false,
+    "name": "Chorus",
+    "params": [
+      {
+        "choices": [],
+        "default": 0.800000011920929,
+        "id": "rate",
+        "max": 5.0,
+        "min": 0.05000000074505806,
+        "name": "Rate",
+        "taper": "Log",
+        "unit": "Hz"
+      },
+      {
+        "choices": [],
+        "default": 50.0,
+        "id": "depth",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Depth",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 12.0,
+        "id": "delay",
+        "max": 30.0,
+        "min": 5.0,
+        "name": "Delay",
+        "taper": "Linear",
+        "unit": "Ms"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "feedback",
+        "max": 90.0,
+        "min": 0.0,
+        "name": "Feedback",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 50.0,
+        "id": "mix",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Mix",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 100.0,
+        "id": "spread",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Spread",
+        "taper": "Linear",
+        "unit": "Percent"
+      }
+    ]
+  },
+  "compressor": {
+    "category": "Dynamics",
+    "id": "compressor",
+    "instrument": false,
+    "name": "Compressor/Limiter",
+    "params": [
+      {
+        "choices": [],
+        "default": -20.0,
+        "id": "threshold",
+        "max": 0.0,
+        "min": -60.0,
+        "name": "Threshold",
+        "taper": "Linear",
+        "unit": "Db"
+      },
+      {
+        "choices": [],
+        "default": 4.0,
+        "id": "ratio",
+        "max": 100.0,
+        "min": 1.0,
+        "name": "Ratio",
+        "taper": "Log",
+        "unit": "Ratio"
+      },
+      {
+        "choices": [],
+        "default": 10.0,
+        "id": "attack",
+        "max": 300.0,
+        "min": 0.009999999776482582,
+        "name": "Attack",
+        "taper": "Log",
+        "unit": "Ms"
+      },
+      {
+        "choices": [],
+        "default": 100.0,
+        "id": "release",
+        "max": 3000.0,
+        "min": 5.0,
+        "name": "Release",
+        "taper": "Log",
+        "unit": "Ms"
+      },
+      {
+        "choices": [],
+        "default": 6.0,
+        "id": "knee",
+        "max": 24.0,
+        "min": 0.0,
+        "name": "Knee",
+        "taper": "Linear",
+        "unit": "Db"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "makeup",
+        "max": 40.0,
+        "min": 0.0,
+        "name": "Makeup",
+        "taper": "Linear",
+        "unit": "Db"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "sc_hpf_on",
+        "max": 1.0,
+        "min": 0.0,
+        "name": "SC HPF",
+        "taper": "Linear",
+        "unit": "Toggle"
+      },
+      {
+        "choices": [],
+        "default": 100.0,
+        "id": "sc_hpf_freq",
+        "max": 500.0,
+        "min": 20.0,
+        "name": "SC HPF Freq",
+        "taper": "Log",
+        "unit": "Hz"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "limiter",
+        "max": 1.0,
+        "min": 0.0,
+        "name": "Limit",
+        "taper": "Linear",
+        "unit": "Toggle"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "lookahead",
+        "max": 10.0,
+        "min": 0.0,
+        "name": "Lookahead",
+        "taper": "Linear",
+        "unit": "Ms"
+      },
+      {
+        "choices": [],
+        "default": 100.0,
+        "id": "mix",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Mix",
+        "taper": "Linear",
+        "unit": "Percent"
+      }
+    ]
+  },
+  "mod_delay": {
+    "category": "Delay",
+    "id": "mod_delay",
+    "instrument": false,
+    "name": "Mod Delay",
+    "params": [
+      {
+        "choices": [],
+        "default": 250.0,
+        "id": "time",
+        "max": 2000.0,
+        "min": 1.0,
+        "name": "Time",
+        "taper": "Log",
+        "unit": "Ms"
+      },
+      {
+        "choices": [],
+        "default": 30.0,
+        "id": "feedback",
+        "max": 99.0,
+        "min": -99.0,
+        "name": "Feedback",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 30.0,
+        "id": "mix",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Mix",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 0.5,
+        "id": "mod_rate",
+        "max": 10.0,
+        "min": 0.009999999776482582,
+        "name": "Mod Rate",
+        "taper": "Log",
+        "unit": "Hz"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "mod_depth",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Mod Depth",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 12000.0,
+        "id": "lpf",
+        "max": 20000.0,
+        "min": 500.0,
+        "name": "LPF",
+        "taper": "Log",
+        "unit": "Hz"
+      }
+    ]
+  },
+  "plate_reverb": {
+    "category": "Reverb",
+    "id": "plate_reverb",
+    "instrument": false,
+    "name": "Plate Reverb",
+    "params": [
+      {
+        "choices": [],
+        "default": 30.0,
+        "id": "mix",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Mix",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 20.0,
+        "id": "pre_delay",
+        "max": 250.0,
+        "min": 0.0,
+        "name": "Pre-Delay",
+        "taper": "Linear",
+        "unit": "Ms"
+      },
+      {
+        "choices": [],
+        "default": 2.5,
+        "id": "decay",
+        "max": 20.0,
+        "min": 0.10000000149011612,
+        "name": "Decay",
+        "taper": "Log",
+        "unit": "Seconds"
+      },
+      {
+        "choices": [],
+        "default": 50.0,
+        "id": "size",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Size",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 10000.0,
+        "id": "damping",
+        "max": 20000.0,
+        "min": 1000.0,
+        "name": "HF Damping",
+        "taper": "Log",
+        "unit": "Hz"
+      },
+      {
+        "choices": [],
+        "default": 85.0,
+        "id": "diffusion",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Diffusion",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 100.0,
+        "id": "width",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Width",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 20.0,
+        "id": "low_cut",
+        "max": 1000.0,
+        "min": 20.0,
+        "name": "Low Cut",
+        "taper": "Log",
+        "unit": "Hz"
+      }
+    ]
+  },
+  "saturator": {
+    "category": "Harmonic",
+    "id": "saturator",
+    "instrument": false,
+    "name": "Saturator",
+    "params": [
+      {
+        "choices": [],
+        "default": 6.0,
+        "id": "drive",
+        "max": 36.0,
+        "min": 0.0,
+        "name": "Drive",
+        "taper": "Linear",
+        "unit": "Db"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "bias",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Asymmetry",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 20000.0,
+        "id": "tone",
+        "max": 20000.0,
+        "min": 1000.0,
+        "name": "Tone",
+        "taper": "Log",
+        "unit": "Hz"
+      },
+      {
+        "choices": [],
+        "default": 100.0,
+        "id": "mix",
+        "max": 100.0,
+        "min": 0.0,
+        "name": "Mix",
+        "taper": "Linear",
+        "unit": "Percent"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "output",
+        "max": 12.0,
+        "min": -24.0,
+        "name": "Output",
+        "taper": "Linear",
+        "unit": "Db"
+      }
+    ]
+  }
+}

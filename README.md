@@ -4,7 +4,7 @@
 
 Kuang turns a musical description into a short editable instrumental sketch. Its source of truth is a DAW-agnostic structured project, with MIDI and optional native SoundCraft sessions and measured WAV previews. Everything runs locally. Python 3.11+, standard library only; no subscriptions, API keys, required proprietary components or bundled model/audio downloads.
 
-**Working today:** one-command creation and iterative revision/audition of existing songs; distinct trap, house and ambient composition templates; key/tempo/seed controls; free built-in synths, EQ, reverb, mixer and gain automation; native SoundCraft 0.11.0 export/save/reopen and measured A/B WAV checks. Phase 0/1 strict canonical JSON, MIDI, scoped atomic transactions, locks, exact undo/redo and the optional REAPER Lua adapter remain available. Rules need no model; local Ollama creation is an optional experiment.
+**Working today:** one-command creation and iterative revision/audition of existing songs; distinct trap, house and ambient composition templates; opt-in refined house production with oscillator/filter-envelope sound design, seventh voicings, call/response, swing, EQ/dynamics/modulation FX and evolving automation; native SoundCraft 0.11.0 export/save/reopen and measured A/B WAV checks. Phase 0/1 strict canonical JSON, MIDI, scoped atomic transactions, locks, exact undo/redo and the optional REAPER Lua adapter remain available. Rules need no model; local Ollama creation is an optional experiment.
 
 **Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor, 8/16/32 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI/listening tests or professional composition/mastering claim. SoundCraft is the human editor; Kuang does not implement another DAW UI.
 
@@ -22,6 +22,16 @@ python3 -m kuang create \
 This writes `project.kuang.json`, `song-spec.json`, `song.mid`, `native/session.scraft`, `preview.wav` and JSON verification/provenance reports. It renders all 16 bars plus one second of tail and refuses silence/clipping. Existing output directories are never replaced. Open `native/session.scraft` with SoundCraft's Open session action; notes are native MIDI clips, and instruments, FX inserts, mixer and automation are native editable objects. Save manual work to a new `.scraft`. Keep the companion canonical snapshot/manifest: automatic import of manual native changes is deliberately unsupported.
 
 Omit `--soundcraft` and `--render` (and leave `KUANG_SOUNDCRAFT` unset) for fully offline canonical/MIDI generation without a host. Try `"uplifting house, 126 bpm, C major"` or `"ambient cinematic, 72 bpm, D minor"`. Rules mode is heuristic and reports `ai_plan: false`.
+
+For the electronic house production profile:
+
+```bash
+python3 -m kuang create "uplifting house, 126 bpm, C major, 16 bars" \
+  --production refined --seed 29 --out-dir artifacts/my-refined-house \
+  --soundcraft /absolute/path/to/soundcraft-cli --render
+```
+
+This adds Intro/Groove/Breakdown/Drop sections, distinct bass/stab/pluck/pad voices, shaped envelopes, ghost fills, beat gain ducking, filter sweeps, delay throws and pan movement. It uses the installed free built-ins. The default `--production sketch` preserves the original composer. Refined currently supports house only; gain ducking is programmed rather than audio-triggered sidechaining. MIDI contains notes; sound design and automation live in canonical/native sessions. See [Phase 4 capabilities, listening files and reproducible A/B](docs/PHASE4.md). New output has measured balance changes; human preference is still unverified.
 
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 

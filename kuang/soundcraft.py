@@ -179,6 +179,8 @@ class SoundCraftAdapter:
             name = "cutoff"
         elif parameter == "synth.resonance":
             name, scale = "resonance", 100
+        elif parameter == "soundcraft.decay_ms":
+            name, scale = "decay", 0.001
         elif parameter.startswith("soundcraft."):
             name = parameter.removeprefix("soundcraft.")
         else:
@@ -188,7 +190,26 @@ class SoundCraftAdapter:
             raise AdapterError(f"{plugin} has no discovered parameter {name}")
         spec = next(s for s in project.parameters if s.id == parameter)
         units = {"dB": "Db", "Hz": "Hz", "ms": "Ms", "boolean": "Toggle", "normalized": "Percent"}
-        if units.get(spec.unit) != descriptor["unit"]:
+        # Schema 0.1 already has dimensionless normalized controls. Discrete
+        # selectors use evenly spaced normalized positions, never interpolated
+        # fractional choices. Pitch units remain unsupported rather than being
+        # mislabeled as Hz or percentages.
+        choice = descriptor["unit"] == "Choice"
+        if choice:
+            choices = descriptor.get("choices", [])
+            if (type(choices) is not list or any(type(c) is not str for c in choices) or
+                    spec.unit != "normalized" or spec.minimum != 0 or spec.maximum != 1 or
+                    len(choices) < 2 or descriptor["min"] != 0 or descriptor["max"] != len(choices)-1):
+                raise AdapterError(f"invalid normalized choice mapping: {parameter}")
+            converted = value * (len(choices)-1)
+            if not math.isclose(converted, round(converted), abs_tol=1e-7):
+                raise AdapterError(f"fractional plugin choice: {parameter}")
+            return name, round(converted)
+        if parameter == "soundcraft.decay_ms":
+            expected_unit = "Seconds" if spec.unit == "ms" else None
+        else:
+            expected_unit = units.get(spec.unit)
+        if expected_unit != descriptor["unit"]:
             raise AdapterError(f"unit mismatch: {parameter} / {descriptor['unit']}")
         if parameter.startswith("soundcraft.") and spec.unit == "normalized":
             scale = 100
@@ -213,6 +234,9 @@ class SoundCraftAdapter:
                         raise AdapterError("FX bypass automation is unsupported")
                     plugin = effect.plugin_ref.removeprefix("soundcraft:")
                     name, _ = self._parameter(project, effect, plugin, lane.parameter_id, effect.parameters[lane.parameter_id])
+                    descriptor = next(p for p in self._discover()["plugins"][plugin]["params"] if p["id"] == name)
+                    if descriptor["unit"] in ("Choice", "Toggle"):
+                        raise AdapterError("discrete plugin parameter automation is unsupported")
                     points = [(p.id, p.tick, self._parameter(project, effect, plugin, lane.parameter_id, p.value)[1])
                               for p in sorted(lane.points, key=lambda x: x.tick)]
                     return index, [(f"plugin:{slot}:{name}", {"Plugin": {"slot": slot, "param": name}}, points)]

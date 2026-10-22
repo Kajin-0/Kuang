@@ -1,0 +1,239 @@
+{
+  "aligned_difference": {
+    "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+    "changed_fraction": 0.9999854387278213,
+    "changed_samples": 3021670,
+    "channels": 2,
+    "difference_peak": 0.3030855655670166,
+    "difference_rms": 0.030121409971887506,
+    "difference_rms_dbfs": -30.42249405667881,
+    "difference_to_original_rms_ratio": 2.124677959042291,
+    "frames": 1510857,
+    "measurable_change": true,
+    "offset_frames": 0,
+    "sample_rate": 48000
+  },
+  "base_commit": "3f91d4f803d7906d25c49958971a5aa180017aaf",
+  "date": "2026-10-22",
+  "host_contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+  "host_executable_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+  "host_version": "0.11.0",
+  "limitations": "Design and measured balance changes; no human preference, mastering, LUFS or true-peak claim.",
+  "listening_performed": false,
+  "metrics": {
+    "original": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 19.79509214881282,
+      "duration_seconds": 31.4761875,
+      "frames": 1510857,
+      "non_silent": true,
+      "peak": 0.13846397399902344,
+      "peak_dbfs": -17.173264160676865,
+      "rms": 0.014176929658302135,
+      "rms_dbfs": -36.968356309489685,
+      "sample_rate": 48000,
+      "sections": {
+        "breakdown": {
+          "crest_db": 22.25276124620539,
+          "end_frame": 1097143,
+          "peak": 0.024718403816223145,
+          "rms": 0.0019071390581166124,
+          "rms_dbfs": -54.39235278857205,
+          "side_rms": 0.0001688563680170964,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9843380927447395
+        },
+        "drop": {
+          "crest_db": 18.114871173458525,
+          "end_frame": 1462857,
+          "peak": 0.13404905796051025,
+          "rms": 0.016654063169487136,
+          "rms_dbfs": -35.56959584758629,
+          "side_rms": 0.00017894792031841516,
+          "start_frame": 1097143,
+          "stereo_correlation": 0.9997691180126775
+        },
+        "full": {
+          "crest_db": 19.795092148872698,
+          "end_frame": 1510857,
+          "peak": 0.13846397399902344,
+          "rms": 0.014176929658204393,
+          "rms_dbfs": -36.96835630954957,
+          "side_rms": 0.0001686000187429754,
+          "start_frame": 0,
+          "stereo_correlation": 0.9997171344576526
+        },
+        "groove": {
+          "crest_db": 18.290115350052098,
+          "end_frame": 731429,
+          "peak": 0.13846397399902344,
+          "rms": 0.016858969480495586,
+          "rms_dbfs": -35.46337951072896,
+          "side_rms": 0.00017947489334182152,
+          "start_frame": 365714,
+          "stereo_correlation": 0.9997733674299828
+        },
+        "intro": {
+          "crest_db": 18.538964638095827,
+          "end_frame": 365714,
+          "peak": 0.1376110315322876,
+          "rms": 0.016281897576647657,
+          "rms_dbfs": -35.76589963139047,
+          "side_rms": 0.00015711435457914618,
+          "start_frame": 0,
+          "stereo_correlation": 0.9998138840591547
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.0010122802050860147,
+          "body_120_500": 0.18587002812232714,
+          "mid_500_2000": 0.015740622535888614,
+          "presence_2000_8000": 0.003999883433221537,
+          "sub_20_120": 0.7933771857034767
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    },
+    "refined": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 20.91360326303252,
+      "duration_seconds": 31.4761875,
+      "frames": 1510857,
+      "non_silent": true,
+      "peak": 0.36717891693115234,
+      "peak_dbfs": -8.702445270730122,
+      "rms": 0.03305198700335125,
+      "rms_dbfs": -29.616048533762644,
+      "sample_rate": 48000,
+      "sections": {
+        "breakdown": {
+          "crest_db": 18.645650956725543,
+          "end_frame": 1097143,
+          "peak": 0.2309577465057373,
+          "rms": 0.026992927334758936,
+          "rms_dbfs": -31.375000288570654,
+          "side_rms": 0.0016071709296521738,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9929421730740627
+        },
+        "drop": {
+          "crest_db": 19.04297441240956,
+          "end_frame": 1462857,
+          "peak": 0.36717891693115234,
+          "rms": 0.04099482301967643,
+          "rms_dbfs": -27.745419683139684,
+          "side_rms": 0.0020290896284480852,
+          "start_frame": 1097143,
+          "stereo_correlation": 0.9956193902562174
+        },
+        "full": {
+          "crest_db": 20.91360326302212,
+          "end_frame": 1510857,
+          "peak": 0.36717891693115234,
+          "rms": 0.033051987003390806,
+          "rms_dbfs": -29.61604853375224,
+          "side_rms": 0.0016700475073919958,
+          "start_frame": 0,
+          "stereo_correlation": 0.9952348306378904
+        },
+        "groove": {
+          "crest_db": 19.554096949301453,
+          "end_frame": 731429,
+          "peak": 0.3531759977340698,
+          "rms": 0.037178026553626384,
+          "rms_dbfs": -28.594273334648037,
+          "side_rms": 0.002052162509869567,
+          "start_frame": 365714,
+          "stereo_correlation": 0.9949885760023814
+        },
+        "intro": {
+          "crest_db": 16.59917245030971,
+          "end_frame": 365714,
+          "peak": 0.1815485954284668,
+          "rms": 0.026855563582583467,
+          "rms_dbfs": -31.419314584453048,
+          "side_rms": 0.0007777996884858128,
+          "start_frame": 0,
+          "stereo_correlation": 0.9983481863864869
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.007170757958056914,
+          "body_120_500": 0.48054944853072323,
+          "mid_500_2000": 0.22979172498538472,
+          "presence_2000_8000": 0.03894553060349331,
+          "sub_20_120": 0.2435425379223418
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    }
+  },
+  "native_save_reopen_equal": true,
+  "offline_tests": {
+    "count": 167,
+    "passed": 160,
+    "seconds": 38.987,
+    "skipped": 7
+  },
+  "original_files_preserved": 40,
+  "real_tests": {
+    "count": 167,
+    "errors": 0,
+    "failures": 0,
+    "python": "3.13.7",
+    "seconds": 77.106,
+    "skipped": 0
+  },
+  "refined_canonical_hash": "d4325411c43d8c1cc92d170f82695b3c24820f39dc0165cb9ffd17e34f4797c7",
+  "rms_matched": {
+    "original": {
+      "analysis": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 31.4761875,
+        "frames": 1510857,
+        "non_silent": true,
+        "peak": 0.13846397399902344,
+        "peak_dbfs": -17.173264160676865,
+        "rms": 0.014176929658302135,
+        "rms_dbfs": -36.968356309489685,
+        "sample_rate": 48000
+      },
+      "gain_db": 0.0
+    },
+    "refined": {
+      "analysis": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 31.4761875,
+        "frames": 1510857,
+        "non_silent": true,
+        "peak": 0.15749335289001465,
+        "peak_dbfs": -16.054755423405847,
+        "rms": 0.014176929627711976,
+        "rms_dbfs": -36.96835632823159,
+        "sample_rate": 48000
+      },
+      "gain_db": -7.352307775727045
+    }
+  },
+  "sources_unchanged": true,
+  "wav_sha256": {
+    "A-original.wav": "907be68152ced1a03a314853b80b97ede079646c667f61663108775da4722041",
+    "B-refined.wav": "539f9b7794ad13fd9ef779434212ef875a2a93383a054a93461c2b1c4b95afe4",
+    "RMS-matched/A-original.wav": "4134756a47fa2cb45d6f49696680063ac9a4972fdc43514ef04cdfe75dd98da5",
+    "RMS-matched/B-refined.wav": "3531e874f1c89c595992cd722f43f51dc90f578dae89d1e0b69dc8eaa974fd73"
+  }
+}

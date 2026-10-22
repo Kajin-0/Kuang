@@ -2,6 +2,8 @@
 
 SoundCraft is Kuang's primary optional executable backend. The adapter is verified against the installed **SoundCraft CLI 0.11.0**, using its real native `.scraft` format, built-in instruments/FX and offline WAV bounce. No proprietary DAW, Vital, external samples, model weights, Python dependencies or system installations are needed. Kuang does not download or bundle SoundCraft. REAPER remains an optional legacy adapter with separate, unverified host integration.
 
+Phase 4 adds opt-in refined house production with verified built-in EQ/compressor/saturation/chorus/modulated-delay/plate chains. Normalized discrete selectors map to integer native choices (fractional positions fail); `soundcraft.decay_ms` converts milliseconds to native reverb seconds. The canonical 0.1 unit set and original discovery pin are unchanged. Discrete plugin automation remains unsupported. See [PHASE4.md](PHASE4.md) for the pinned catalog table, real edit/reopen/render evidence and remaining synthesis/mapping gaps.
+
 The backend uses [versioned CLI commands](https://github.com/storytold/soundcraft/blob/v0.11.0/apps/soundcraft-cli/src/main.rs), discovers each supported command through `describe <id>`, and obtains actual plugin IDs, parameter IDs, units/ranges/defaults from `engine.plugins`. It never guesses VST indices. Upstream SoundCraft code is [MIT OR Apache-2.0](https://github.com/storytold/soundcraft/blob/v0.11.0/LICENSE-MIT); it remains a separate installed program. Original Kuang code is [MIT](../LICENSE); see the [separate dependency terms](LICENSING.md).
 
 ## CLI workflow
