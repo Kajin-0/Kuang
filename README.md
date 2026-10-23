@@ -96,6 +96,23 @@ python3 tools/phase10_house.py package --out-dir artifacts/my-phase10
 
 Download **`artifacts/phase10-house/phase10-house-listening.zip`**: full integrated-LUFS-matched **A=unchanged Phase9 native**, **D=combined Phase10**, **E=optional off-host master**, matched drop A/D, causal pulse/pad-space controls, all four editable native/canonical/MIDI variants and the frozen E reproduction script. B=pulse only and C=space only are separate controls, unrelated to Phase 9's B/C labels. `--symbolic` instead of `--soundcraft` needs no host; `--reference-guide` accepts the optional strictly numeric local guide. No reference recording, external plugin, model or download is included. The new >500 Hz side fraction measures **2.65% → 5.25%**, with **94.75%** high-band mono energy retention; native loudness changes only **.008 LU**. These are DSP observations; human listening decides preference. See [Phase 10 exact controls, rejected trials, measurements and reproduction](docs/PHASE10.md).
 
+Phase 11 proves a **live external wavetable instrument**: separately installed **DISTRHO Vitalium 1.0.6 VST3**, original Fourier-table pad/bass/pluck patches, internal oscillator/filter LFOs and envelopes, **771 explicitly normalized controls**, exact native save/reopen and repeated PCM. It preserves the complete Phase 10 MIDI. **Official Vital itself remains untested:** its free Basic download route requires an account; no login/credentials or unofficial binary mirror was used. Vitalium is an older GPL fork, not current official Vital. Legacy defaults/adapter remain unchanged.
+
+```bash
+mkdir -p .local/phase11/tmp
+export TMPDIR="$PWD/.local/phase11/tmp"
+python3 -m kuang.external_synth capabilities \
+  --plugin .local/phase11/vitalium/usr/lib/vst3/vitalium.vst3 \
+  --soundcraft /absolute/path/to/soundcraft-cli
+python3 -m kuang.external_synth edit --source artifacts/phase11-vital/native \
+  --track track-bass --parameter 'Filter 1 Cutoff' --normalized-value .8 \
+  --out-dir artifacts/my-vitalium-edit \
+  --plugin .local/phase11/vitalium/usr/lib/vst3/vitalium.vst3 \
+  --soundcraft /absolute/path/to/soundcraft-cli
+```
+
+The adapter fails closed without the exact reviewed Linux plugin/host. Only optional patch preparation uses a separate user-installed Pedalboard/NumPy interpreter; normal Kuang and rendering prepared native bundles remain stdlib-only. `artifacts/phase11-vital/phase11-vitalium-listening.zip` contains full/drop LUFS-matched built-in/Vitalium comparisons, matched stems, internal-LFO controls and the complete live native/canonical/MIDI/original-patch bundle. No plugin/host binaries, factory content or reference recording is bundled. [Phase 11 availability, licensing, exact installation/preparation/reproduction and limitations](docs/PHASE11_VITAL.md) explain what was actually verified. GUI editor and official Vital/Windows patch compatibility remain unverified; human listening decides preference.
+
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash

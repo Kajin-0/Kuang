@@ -1,0 +1,593 @@
+{
+  "all_1536_notes_and_full_midi_bytes_exact": true,
+  "allowed_old_file_edits": [
+    ".github/workflows/test.yml",
+    "README.md",
+    "docs/STATUS.md"
+  ],
+  "artifact_inventory": "artifacts/phase11-vital/verification.json",
+  "availability_and_licensing": {
+    "checked_utc_date": "2026-10-23",
+    "credentials_accounts_or_access_bypass_used": false,
+    "distribution": "No plugin/host binaries, factory presets/samples or reference/Suno recording; original Kuang patches/waves MIT",
+    "exact_current_basic_linux_version_verified": false,
+    "fork": "DISTRHO Vitalium1.0.6 GPL-3.0-or-later, separately installed",
+    "forum_reports": "April2026 early access1.6.0 then1.6.1,1.6.2 Windows only; not a verified current Basic download",
+    "native_sampler_bridge_needed": false,
+    "official_basic_route": "https://account.vital.audio/basic",
+    "official_binary_obtained_or_instantiated": false,
+    "official_github_binary_releases_found": 0,
+    "official_ppa_checksum_match": true,
+    "official_route_presents_login_registration": true,
+    "official_vital_basic_advertised_free_full_engine": true,
+    "optional_preparer_host": "Pedalboard0.9.26 GPL-3.0 with NumPy2.5.4, isolated interpreter",
+    "package_bytes": 3024340,
+    "package_sha256": "ee73aba51b6342f690a6651a9f5b8c8c823c530c04b4faeaef20ce0ed5d46740",
+    "package_url": "https://launchpad.net/~kxstudio-debian/+archive/ubuntu/plugins/+files/vitalium-vst_20210315_amd64.deb",
+    "plugin_binary_sha256": "c6329121bd9a4923a54d3e55a9fba9bf8635a1e1d8990fa4be69a05703ed24c1",
+    "source_policy": "https://github.com/mtytel/vital",
+    "surge_offhost_without_extra_factory_content": {
+      "factory_content_added": false,
+      "name": "Surge XT",
+      "peak": 0.2677898406982422,
+      "rms": 0.06004166975617409,
+      "version": "1.3.4"
+    },
+    "surge_precise_host_failure_resolved": false,
+    "surge_soundcraft_clap_vst3": "Both digital silence with original plugin-only resources"
+  },
+  "base_commit": "f830e4560787cab8b75f5fb85edf7be4eac34758",
+  "canonical_hash": "ed567f8198579b7769fdd93cb0134a94ded3b0e77ed6f14f2dafe26227ebb404",
+  "capabilities": {
+    "adapter": "external-vitalium-experimental-1",
+    "contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+    "downloads": false,
+    "instrument_automation": false,
+    "license": "External Vitalium GPL-3.0-or-later; optional preparer Pedalboard GPL-3.0; MIT Kuang remains separate",
+    "live_native_instrument": true,
+    "native_json_mutation": false,
+    "normalized_static_controls": 771,
+    "official_vital_tested": false,
+    "plugin": {
+      "category": "Instrument",
+      "class_id": "56535456697461766974616C69756D00",
+      "id": "vst3:56535456697461766974616C69756D00",
+      "is_instrument": true,
+      "name": "Vitalium",
+      "path": "/home/User/Kuang/.local/phase11/vitalium/usr/lib/vst3/vitalium.vst3",
+      "sdk_version": "VST 3.6.13",
+      "sub_categories": [
+        "Instrument",
+        "Synth"
+      ],
+      "vendor": "DISTRHO",
+      "version": "1.0.6"
+    },
+    "plugin_sha256": "c6329121bd9a4923a54d3e55a9fba9bf8635a1e1d8990fa4be69a05703ed24c1",
+    "soundcraft_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130"
+  },
+  "ci": {
+    "matrix": [
+      "3.11",
+      "3.13"
+    ],
+    "result": "recorded separately after push in artifacts/phase11-vital/proof/release-summary.json"
+  },
+  "drop_matching": {
+    "A": {
+      "error_lu": 7.361435905295366e-10,
+      "gain_db": -0.0016674478171232465,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 18.950604262977222,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.846834287852214,
+        "oversample": 4,
+        "rms": 0.05339198722652284,
+        "rms_dbfs": -25.45047829179408,
+        "sample_peak": 0.4731581211090088,
+        "sample_peak_dbfs": -6.49987402881686,
+        "sample_rate": 48000,
+        "true_peak": 0.4743439853191376,
+        "true_peak_dbtp": -6.478132038032371
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.84683428711607
+    },
+    "B": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 19.14207669460821,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.84683428711607,
+        "oversample": 4,
+        "rms": 0.052832007691845644,
+        "rms_dbfs": -25.542057703761714,
+        "sample_peak": 0.4786311388015747,
+        "sample_peak_dbfs": -6.399981009153501,
+        "sample_rate": 48000,
+        "true_peak": 0.4799489974975586,
+        "true_peak_dbtp": -6.376098222581548
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.84683428711607
+    }
+  },
+  "formal_ebu_certification": false,
+  "full_matching": {
+    "A": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.71578766664839,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.050291527188786,
+        "oversample": 4,
+        "rms": 0.04438372301430016,
+        "rms_dbfs": -27.055525418037575,
+        "sample_peak": 0.5407706499099731,
+        "sample_peak_dbfs": -5.339737751389184,
+        "sample_rate": 48000,
+        "true_peak": 0.5407706499099731,
+        "true_peak_dbtp": -5.339737751389184
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -25.050291527188786
+    },
+    "B": {
+      "error_lu": 1.5623484728166659e-09,
+      "gain_db": -0.008024027802271405,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.81546041148603,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.050291528751135,
+        "oversample": 4,
+        "rms": 0.0439677960764847,
+        "rms_dbfs": -27.137306064367237,
+        "sample_peak": 0.5418857336044312,
+        "sample_peak_dbfs": -5.321845652881212,
+        "sample_rate": 48000,
+        "true_peak": 0.5418857336044312,
+        "true_peak_dbtp": -5.321845652881212
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -25.050291527188786
+    }
+  },
+  "historical_files_unchanged": 7907,
+  "human_listening": false,
+  "internal_lfo_difference": {
+    "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+    "changed_fraction": 0.8877866722131126,
+    "changed_samples": 1980526,
+    "channels": 2,
+    "difference_peak": 0.09661567211151123,
+    "difference_rms": 0.013067576252082656,
+    "difference_rms_dbfs": -37.67609914044566,
+    "difference_to_original_rms_ratio": 0.3366205772945316,
+    "frames": 1115429,
+    "measurable_change": true,
+    "offset_frames": 0,
+    "sample_rate": 48000
+  },
+  "limitations": [
+    "Official Vital account/download unavailable; no official binary tried",
+    "Live Vitalium 1.0.6 only, pinned older GPL fork",
+    "GUI editor/display not tested on VPS",
+    "Normalized static plugin controls only; no instrument-automation mapping",
+    "Host shell preset label stays <factory default>; embedded state contains verified original Kuang patch name",
+    "Human preference unknown; no claim of matching Suno or professional quality"
+  ],
+  "metrics": {
+    "A": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.71578766664839,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.050291527188786,
+      "oversample": 4,
+      "rms": 0.04438372301430016,
+      "rms_dbfs": -27.055525418037575,
+      "sample_peak": 0.5407706499099731,
+      "sample_peak_dbfs": -5.339737751389184,
+      "sample_rate": 48000,
+      "true_peak": 0.5407706499099731,
+      "true_peak_dbtp": -5.339737751389184
+    },
+    "B": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.815459972881822,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.042267499386515,
+      "oversample": 4,
+      "rms": 0.044008432315998,
+      "rms_dbfs": -27.12928203507502,
+      "sample_peak": 0.542386531829834,
+      "sample_peak_dbfs": -5.313822062193198,
+      "sample_rate": 48000,
+      "true_peak": 0.542386531829834,
+      "true_peak_dbtp": -5.313822062193198
+    }
+  },
+  "native_independent": {
+    "actual_live_vst3": true,
+    "all_source_note_fields_exact": true,
+    "embedded_patch_and_normalized_controls_exact": true,
+    "exact_unrelated_state_undo_redo": true,
+    "full_native_and_pcm_repeat_exact": true,
+    "internal_lfo_pcm_delta": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.8877866722131126,
+      "changed_samples": 1980526,
+      "channels": 2,
+      "difference_peak": 0.09661567211151123,
+      "difference_rms": 0.013067576252082656,
+      "difference_rms_dbfs": -37.67609914044566,
+      "difference_to_original_rms_ratio": 0.3366205772945316,
+      "frames": 1115429,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "lufs_match_remeasured": true,
+    "release_read_only": true,
+    "relocated_bundle_source_hidden_new_plugin_path_pcm_exact": true,
+    "typed_native_parameter_edit_audio_changed": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.27933378099368045,
+      "changed_samples": 623154,
+      "channels": 2,
+      "difference_peak": 0.05533742904663086,
+      "difference_rms": 0.0026770589727330885,
+      "difference_rms_dbfs": -51.4468412333367,
+      "difference_to_original_rms_ratio": 0.13816839410387236,
+      "frames": 1115429,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "zip_verified_no_plugin_or_reference_audio": true
+  },
+  "native_session": "artifacts/phase11-vital/native/session.scraft",
+  "old_code_profiles_tests_fixtures_unchanged": true,
+  "old_tracked_files": 126,
+  "phase": 11,
+  "python": "3.13.7",
+  "quality_claim": false,
+  "raw_audio": [
+    "artifacts/phase11-vital/A-phase10-builtins.wav",
+    "artifacts/phase11-vital/B-live-vitalium.wav"
+  ],
+  "relocation": {
+    "bytes_relocated_without_rewriting": true,
+    "primary_reopened_and_relocated_independent_native_exact": true,
+    "snapshot_imports_exact": true
+  },
+  "source_hash": "dad1db280f798fdf07ab4b0243bcc6e528f680b30f32b8a5e92104a94ce640b1",
+  "source_inventory": "artifacts/phase11-vital/proof/sources-before.json",
+  "spatial": {
+    "A": {
+      "bands": {
+        "high_over_500": {
+          "mid": 153071.58132566043,
+          "mono_energy_retention": 0.9474785165530331,
+          "side": 8485.201916814909,
+          "side_to_mid_db": -12.562323873587609,
+          "side_to_mid_power_ratio": 0.0554329016746917
+        },
+        "low_20_120": {
+          "mid": 625301.0625572354,
+          "mono_energy_retention": 0.999999910405029,
+          "side": 0.0560238355453986,
+          "side_to_mid_db": -70.47716328169737,
+          "side_to_mid_power_ratio": 8.959497896306646e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.5365302562713623,
+        "rms": 0.04402196565951051,
+        "rms_loss_db": -0.071085968357011
+      },
+      "windows": 96
+    },
+    "B": {
+      "bands": {
+        "high_over_500": {
+          "mid": 159905.67926897015,
+          "mono_energy_retention": 0.9398369038760828,
+          "side": 10236.266221237669,
+          "side_to_mid_db": -11.93722316241577,
+          "side_to_mid_power_ratio": 0.06401440066440484
+        },
+        "low_20_120": {
+          "mid": 591079.6830824029,
+          "mono_energy_retention": 0.9999999541845033,
+          "side": 0.027080610533853435,
+          "side_to_mid_db": -73.38987580478987,
+          "side_to_mid_power_ratio": 4.581549883872105e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.5402603149414062,
+        "rms": 0.04365001174441843,
+        "rms_loss_db": -0.07103066698677851
+      },
+      "windows": 96
+    }
+  },
+  "stem_lufs_deltas": {
+    "bass": 0.40169082641815734,
+    "pad": -2.3466075113276474e-05,
+    "pluck": -0.5142654334144225
+  },
+  "stem_matching": {
+    "bass": {
+      "A": {
+        "error_lu": 0.0,
+        "gain_db": 0,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 21.318976212546204,
+          "duration_seconds": 23.238104166666666,
+          "fir_taps": 49,
+          "frames": 1115429,
+          "integrated_lufs": -31.735362317092047,
+          "oversample": 4,
+          "rms": 0.019606583109118347,
+          "rms_dbfs": -34.15196170762591,
+          "sample_peak": 0.2282184362411499,
+          "sample_peak_dbfs": -12.8329854950797,
+          "sample_rate": 48000,
+          "true_peak": 0.22839228808879852,
+          "true_peak_dbtp": -12.82637129197602
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -31.735362317092047
+      },
+      "B": {
+        "error_lu": 4.561155009241702e-09,
+        "gain_db": -0.40169082641815734,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 22.622453521104063,
+          "duration_seconds": 23.238104166666666,
+          "fir_taps": 49,
+          "frames": 1115429,
+          "integrated_lufs": -31.735362321653202,
+          "oversample": 4,
+          "rms": 0.018499700050121762,
+          "rms_dbfs": -34.656706261813255,
+          "sample_peak": 0.2502000331878662,
+          "sample_peak_dbfs": -12.034252740709196,
+          "sample_rate": 48000,
+          "true_peak": 0.250516414642334,
+          "true_peak_dbtp": -12.023276249824342
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -31.735362317092047
+      }
+    },
+    "pad": {
+      "A": {
+        "error_lu": -4.28126267593143e-06,
+        "gain_db": -2.3466075113276474e-05,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 23.02615363189076,
+          "duration_seconds": 23.238104166666666,
+          "fir_taps": 49,
+          "frames": 1115429,
+          "integrated_lufs": -36.018259592052786,
+          "oversample": 4,
+          "rms": 0.009504873140192112,
+          "rms_dbfs": -40.44107350418162,
+          "sample_peak": 0.13466477394104004,
+          "sample_peak_dbfs": -17.414919872290856,
+          "sample_rate": 48000,
+          "true_peak": 0.13483360409736633,
+          "true_peak_dbtp": -17.404037132973926
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -36.01826387331546
+      },
+      "B": {
+        "error_lu": 0.0,
+        "gain_db": 0,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 20.60048771365875,
+          "duration_seconds": 23.238104166666666,
+          "fir_taps": 49,
+          "frames": 1115429,
+          "integrated_lufs": -36.01826387331546,
+          "oversample": 4,
+          "rms": 0.009459587397208268,
+          "rms_dbfs": -40.48255611979403,
+          "sample_peak": 0.10136699676513672,
+          "sample_peak_dbfs": -19.882068406135282,
+          "sample_rate": 48000,
+          "true_peak": 0.10140570998191833,
+          "true_peak_dbtp": -19.87875179870838
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -36.01826387331546
+      }
+    },
+    "pluck": {
+      "A": {
+        "error_lu": 2.98371318763202e-08,
+        "gain_db": -0.5142654334144225,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 34.32060703451402,
+          "duration_seconds": 23.238104166666666,
+          "fir_taps": 49,
+          "frames": 1115429,
+          "integrated_lufs": -37.90617202795464,
+          "oversample": 4,
+          "rms": 0.004407764459036665,
+          "rms_dbfs": -47.11563242502095,
+          "sample_peak": 0.2292180061340332,
+          "sample_peak_dbfs": -12.79502539050693,
+          "sample_rate": 48000,
+          "true_peak": 0.2298337072134018,
+          "true_peak_dbtp": -12.771725554445778
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -37.90617199811751
+      },
+      "B": {
+        "error_lu": 0.0,
+        "gain_db": 0,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 27.201439138775818,
+          "duration_seconds": 23.238104166666666,
+          "fir_taps": 49,
+          "frames": 1115429,
+          "integrated_lufs": -37.90617199811751,
+          "oversample": 4,
+          "rms": 0.004885794366537396,
+          "rms_dbfs": -46.22129631154728,
+          "sample_peak": 0.11194562911987305,
+          "sample_peak_dbfs": -19.019857172771456,
+          "sample_rate": 48000,
+          "true_peak": 0.11221537739038467,
+          "true_peak_dbtp": -18.998952512543845
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -37.90617199811751
+      }
+    }
+  },
+  "suite_original_staging": ".local/phase11/integration",
+  "suite_relocated": "artifacts/phase11-vital/proof/native-suite",
+  "tests": {
+    "focused_real_plugin_seconds": 97.136,
+    "new_real_plugin": 1,
+    "new_unit": 15,
+    "offline": {
+      "log_sha256": "3fa04ffe49a73869b9996317f21e3213866a12b6ca0cd964ef87aec37a8ee626",
+      "passed": 263,
+      "run": 277,
+      "seconds": 314.15,
+      "skipped": 14
+    },
+    "old_methods_preserved": 261,
+    "real": {
+      "log_sha256": "851b8caf3b002a899a0efb9dc371d58f872a2d2eb3b3e3f7fa7b1525d46b3dbe",
+      "passed": 277,
+      "run": 277,
+      "seconds": 1464.638,
+      "skipped": 0
+    }
+  },
+  "wheel": {
+    "bars": 64,
+    "canonical_hash": "ed567f8198579b7769fdd93cb0134a94ded3b0e77ed6f14f2dafe26227ebb404",
+    "installed_cli_backend_import": true,
+    "installed_full_live_native_pcm_exact": true,
+    "installed_module": "/home/User/Kuang/.local/phase11/install/lib/python3.13/site-packages/kuang/__init__.py",
+    "lua_resource": true,
+    "notes": 1536,
+    "pcm_sha256": "74e8fd87bf8be1ae478fa12826b7bfa69f3a110a532f4f44af6d83f2bb9e8a50",
+    "pedalboard_or_numpy_imported": false,
+    "runtime_dependencies": []
+  },
+  "zip": {
+    "bytes": 85894467,
+    "sha256": "ee1f403f1b7b12f7f3025a598ff33497440f832e066b077e72a48751c7cdea14",
+    "zip": "/home/User/Kuang/artifacts/phase11-vital/phase11-vitalium-listening.zip"
+  }
+}
