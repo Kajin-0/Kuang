@@ -74,6 +74,16 @@ python3 tools/phase8_house.py --package --out-dir artifacts/my-phase8
 
 Download `artifacts/phase8-house/phase8-house-listening.zip` for the released full Phase 7/8 equal-RMS pair, short context excerpts, isolated effect controls and complete editable native/canonical/MIDI bundles. Both full songs have identical length: 64 bars plus five seconds of tail. The pump is **tempo-programmed gain ducking**, not an input-triggered sidechain. `--symbolic` generates the deterministic project without a host or audio claim. New paths only; no downloads, services or extra plugins. See [Phase 8 controls, measurements and limits](docs/PHASE8.md). Human listening decides whether it sounds better.
 
+Phase 9 is one **sound-design/translation mix of the exact Phase 8 notes and automation**: shorter kick decay with a clearer attack, single-saw bass harmonics with calibrated output, small complementary EQ and upper-part pan changes. Pads and prior production gestures remain. It adds a validated mono/stereo LUFS/true-peak file meter and an optional, explicitly **off-host** gentle master; the native SoundCraft session is the editable pre-master.
+
+```bash
+python3 tools/phase9_house.py --source artifacts/phase8-house \
+  --out-dir artifacts/my-phase9 --soundcraft /absolute/path/to/soundcraft-cli
+python3 tools/phase9_house.py package --out-dir artifacts/my-phase9
+```
+
+The standalone meter needs only Python; the explicit optional `--meter-library .local/phase9/libebur128.so` uses the separately built MIT reference backend for faster analysis. Neither tests nor the tool download it. The released **`artifacts/phase9-house/phase9-house-listening.zip`** contains integrated-LUFS-matched A/B/C, matched drop excerpts, raw B/C, the complete editable B bundle and a frozen, reproducible master script. C is not claimed to be native editable. No fixed commercial loudness target or formal EBU certification is claimed. [Phase 9 source controls, licensing, measurement validation, limitations and reproduction](docs/PHASE9.md) include the private user-licensed reference interface.
+
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash

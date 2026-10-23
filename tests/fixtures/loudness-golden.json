@@ -1,0 +1,248 @@
+{
+  "loudness_tolerance_lu": 0.01,
+  "reference": "libebur128 1.2.6, official v1.2.6 source, MIT, project-local cc -O3 build",
+  "source_tar_sha256": "baa7fc293a3d4651e244d8022ad03ab797ca3c2ad8442c43199afe8059faa613",
+  "source_url": "https://github.com/jiixyj/libebur128/tree/v1.2.6",
+  "true_peak_tolerance_db": 0.01,
+  "vectors": {
+    "mono-1k": {
+      "input_sha256": "36b87faac9535c6f3eb4778739577bc032bb0f2d3d713a0bb8b3789b63634f66",
+      "integrated_lufs": -26.003632056542695,
+      "recipe": {
+        "channels": 1,
+        "seconds": 1.2,
+        "segments": [
+          [
+            1.2,
+            0.0707945784384138,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": -22.999999518003015,
+      "true_peak_dbtp": -22.999999518003015
+    },
+    "quiet-absolute-gate": {
+      "input_sha256": "c20ba1660e326ca7ca086f565df22392824ffed6c6ed330a66116ad679e3b0ff",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 1,
+        "segments": [
+          [
+            1,
+            0.0001,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": -79.99855878885734,
+      "true_peak_dbtp": -79.99855878885734
+    },
+    "relative-gate": {
+      "input_sha256": "7693f5eaf0c3742b2dfc0833018561c7b83320587c3c4fa0afbdc749ebcd585f",
+      "integrated_lufs": -20.78509951575426,
+      "recipe": {
+        "channels": 2,
+        "seconds": 4,
+        "segments": [
+          [
+            1,
+            0,
+            1000,
+            0
+          ],
+          [
+            1.5,
+            0.1,
+            1000,
+            0
+          ],
+          [
+            1.5,
+            0.001,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": -19.99999792912278,
+      "true_peak_dbtp": -19.99999792912278
+    },
+    "short-block": {
+      "input_sha256": "a6b39a2d944c7b041254477cb8077f9b8875d80a249cdc8340419e6046110a29",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 1,
+        "seconds": 0.399,
+        "segments": [
+          [
+            0.399,
+            0.1,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": -19.99999792912278,
+      "true_peak_dbtp": -19.99999792912278
+    },
+    "silence": {
+      "input_sha256": "d7264d809422869548bde66158cec79e7010b01423a4f5fb94826b5bbd3c7749",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 1,
+        "segments": [
+          [
+            1,
+            0,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": null,
+      "true_peak_dbtp": null
+    },
+    "stereo-1k": {
+      "input_sha256": "2fbc7b51073b9582d05dbec14aa2878ef8dfdf3dce3323dbdd1cea64aeca0059",
+      "integrated_lufs": -22.993332099902883,
+      "recipe": {
+        "channels": 2,
+        "seconds": 1.2,
+        "segments": [
+          [
+            1.2,
+            0.0707945784384138,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": -22.999999518003015,
+      "true_peak_dbtp": -22.999999518003015
+    },
+    "tp15": {
+      "input_sha256": "c59861630afc1ca4cd3b288f302c5141e62e8e802dabbbecf0605d199f909267",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 0.2,
+        "segments": [
+          [
+            0.2,
+            0.5,
+            12000,
+            0
+          ]
+        ],
+        "taper": true
+      },
+      "sample_peak_dbfs": -6.020599913279624,
+      "true_peak_dbtp": -6.020599913279624
+    },
+    "tp16-intersample": {
+      "input_sha256": "c3d46081c8e04b458d90dd514182f8bb19b4f2bef61c3ea5bf6d4b21c87ef547",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 0.2,
+        "segments": [
+          [
+            0.2,
+            0.5,
+            12000,
+            0.7853981633974483
+          ]
+        ],
+        "taper": true
+      },
+      "sample_peak_dbfs": -9.03090221506967,
+      "true_peak_dbtp": -6.053408583777436
+    },
+    "tp17": {
+      "input_sha256": "e80bcdffdff087a1bdb104360580dc3d30f5016b068317b703a4e42cba953aaa",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 0.2,
+        "segments": [
+          [
+            0.2,
+            0.5,
+            8000,
+            1.0471975511965976
+          ]
+        ],
+        "taper": true
+      },
+      "sample_peak_dbfs": -7.269989228691694,
+      "true_peak_dbtp": -6.004537516940446
+    },
+    "tp18": {
+      "input_sha256": "5db43be44229e14c82b67315884bb2e05133cd8a9503b64fcb0a4cbd31cad6d7",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 0.2,
+        "segments": [
+          [
+            0.2,
+            0.5,
+            6000,
+            1.1780972450961724
+          ]
+        ],
+        "taper": true
+      },
+      "sample_peak_dbfs": -6.708294381745611,
+      "true_peak_dbtp": -6.017510713514044
+    },
+    "tp19-overfull": {
+      "input_sha256": "a9641d179d82c2e04d8174ba8665432da2dc1a51b51db4168dee87e81ba091a0",
+      "integrated_lufs": null,
+      "recipe": {
+        "channels": 2,
+        "seconds": 0.2,
+        "segments": [
+          [
+            0.2,
+            1.41,
+            12000,
+            0.7853981633974483
+          ]
+        ],
+        "taper": true
+      },
+      "sample_peak_dbfs": -0.02591838702939395,
+      "true_peak_dbtp": 2.951574599852969
+    },
+    "two-level": {
+      "input_sha256": "5f026c557c9139dea518f91b687753968ee8ae8d56614ace2acb00266285efcf",
+      "integrated_lufs": -22.03447173316665,
+      "recipe": {
+        "channels": 2,
+        "seconds": 3.2,
+        "segments": [
+          [
+            1.6,
+            0.1,
+            1000,
+            0
+          ],
+          [
+            1.6,
+            0.05,
+            1000,
+            0
+          ]
+        ]
+      },
+      "sample_peak_dbfs": -19.99999792912278,
+      "true_peak_dbtp": -19.99999792912278
+    }
+  }
+}
