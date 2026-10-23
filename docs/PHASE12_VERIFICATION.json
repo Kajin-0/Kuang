@@ -1,0 +1,934 @@
+{
+  "A_is_frozen_source_excerpt_with_native_DSP_reset": true,
+  "A_is_running_historical_PCM": false,
+  "MIDI_A_C_exact": true,
+  "MIDI_B_D_exact": true,
+  "active_metrics": {
+    "A": {
+      "active_crest_db": 21.454469374465045,
+      "active_high_side_fraction": 0.06562313206947257,
+      "active_low_mono_retention": 0.9999779572268548,
+      "active_rms_dbfs": -25.35735618324032,
+      "full_mono_loss_db": -0.0912119379975384,
+      "kick_bass_interference_db": 0.01599008577550489,
+      "matched_active_lufs": -23.814574335269118,
+      "raw_active_lufs": -23.812862601860996,
+      "stereo_correlation": 0.9589962773131047,
+      "true_peak_dbtp": -3.886743460806567
+    },
+    "B": {
+      "active_crest_db": 21.47814230705407,
+      "active_high_side_fraction": 0.06487339643760592,
+      "active_low_mono_retention": 0.9999810073425045,
+      "active_rms_dbfs": -25.381029115829342,
+      "full_mono_loss_db": -0.08798661130532587,
+      "kick_bass_interference_db": 0.002298250224363585,
+      "matched_active_lufs": -23.81457432911088,
+      "raw_active_lufs": -23.81457432911088,
+      "stereo_correlation": 0.9604144275081196,
+      "true_peak_dbtp": -3.886743460806567
+    },
+    "C": {
+      "active_crest_db": 22.048890208015965,
+      "active_high_side_fraction": 0.06678892147761084,
+      "active_low_mono_retention": 0.9999993860159326,
+      "active_rms_dbfs": -25.370099467312677,
+      "full_mono_loss_db": -0.09104535391391008,
+      "kick_bass_interference_db": 0.007977548566833328,
+      "matched_active_lufs": -23.81457433878743,
+      "raw_active_lufs": -23.75991674472502,
+      "stereo_correlation": 0.9590741969904757,
+      "true_peak_dbtp": -3.3051304991132495
+    },
+    "D": {
+      "active_crest_db": 22.067785496468225,
+      "active_high_side_fraction": 0.06555845818643713,
+      "active_low_mono_retention": 0.9999994289590274,
+      "active_rms_dbfs": -25.38899475576494,
+      "full_mono_loss_db": -0.08816645665526057,
+      "kick_bass_interference_db": -0.00028551035912228876,
+      "matched_active_lufs": -23.814574334235996,
+      "raw_active_lufs": -23.76053738899951,
+      "stereo_correlation": 0.9603379805215355,
+      "true_peak_dbtp": -3.3051304991132495
+    }
+  },
+  "added_inserts": 0,
+  "added_notes": 0,
+  "all_original_kick_hook_pad_pulse_notes_exact": true,
+  "audit_sha256": "5ccf82b79dd56b01378f8471f15b8803f086522a2116c2b1c37c8502f94c6028",
+  "bands": {
+    "A": {
+      "absolute": {
+        "120_250": 0.0004395623983005514,
+        "2000_8000": 8.935111881331595e-05,
+        "20_40": 2.2398049188174094e-05,
+        "250_500": 0.00029805128256781157,
+        "40_80": 0.0009693678291527378,
+        "500_2000": 0.000398078849608272,
+        "8000_nyquist": 2.8520032092609116e-05,
+        "80_120": 0.00045719186515480345,
+        "harmonics_100_400": 0.0008700777367147498
+      },
+      "fractions": {
+        "120_250": 0.16264899669402244,
+        "2000_8000": 0.03306213153049857,
+        "20_40": 0.008287834087821497,
+        "250_500": 0.1102863717652992,
+        "40_80": 0.35869015513777075,
+        "500_2000": 0.14729905411432656,
+        "8000_nyquist": 0.010553119701500125,
+        "80_120": 0.1691723369687609,
+        "harmonics_100_400": 0.3219503566947445
+      },
+      "method": "16384-frame Hann, stereo absolute mean squares, window-power normalized; no target EQ curve"
+    },
+    "B": {
+      "absolute": {
+        "120_250": 0.0004422482963282118,
+        "2000_8000": 9.049123252663609e-05,
+        "20_40": 2.1128514561197902e-05,
+        "250_500": 0.0003038815686675164,
+        "40_80": 0.0009531736872696269,
+        "500_2000": 0.0004176415273090015,
+        "8000_nyquist": 2.636319192104449e-05,
+        "80_120": 0.000455816803594287,
+        "harmonics_100_400": 0.0009030969553472822
+      },
+      "fractions": {
+        "120_250": 0.16314641374947159,
+        "2000_8000": 0.03338242382178383,
+        "20_40": 0.007794357620215066,
+        "250_500": 0.11210260965228386,
+        "40_80": 0.35162796566884125,
+        "500_2000": 0.15406892005921569,
+        "8000_nyquist": 0.009725442138765068,
+        "80_120": 0.16815186728942363,
+        "harmonics_100_400": 0.3331545440790811
+      },
+      "method": "16384-frame Hann, stereo absolute mean squares, window-power normalized; no target EQ curve"
+    },
+    "C": {
+      "absolute": {
+        "120_250": 0.00047943307948519976,
+        "2000_8000": 8.857485309365793e-05,
+        "20_40": 3.018314165647589e-05,
+        "250_500": 0.00029614818007246766,
+        "40_80": 0.0008562017838636316,
+        "500_2000": 0.00039728808800149973,
+        "8000_nyquist": 2.737536873323711e-05,
+        "80_120": 0.0004917939795082977,
+        "harmonics_100_400": 0.0009397182091672914
+      },
+      "fractions": {
+        "120_250": 0.17976503701992483,
+        "2000_8000": 0.03321143748051986,
+        "20_40": 0.011317269936985067,
+        "250_500": 0.11104175083470426,
+        "40_80": 0.3210357231462641,
+        "500_2000": 0.14896449766013584,
+        "8000_nyquist": 0.010264486086459912,
+        "80_120": 0.1843997978350062,
+        "harmonics_100_400": 0.3523504862047603
+      },
+      "method": "16384-frame Hann, stereo absolute mean squares, window-power normalized; no target EQ curve"
+    },
+    "D": {
+      "absolute": {
+        "120_250": 0.0004811289278248386,
+        "2000_8000": 9.050466485289455e-05,
+        "20_40": 2.8795479309720597e-05,
+        "250_500": 0.00029714484895055433,
+        "40_80": 0.0008467912827600573,
+        "500_2000": 0.00041163390789097963,
+        "8000_nyquist": 2.529681627211039e-05,
+        "80_120": 0.0004902534694787549,
+        "harmonics_100_400": 0.0009591438083872176
+      },
+      "fractions": {
+        "120_250": 0.18009359224422491,
+        "2000_8000": 0.03387721931812715,
+        "20_40": 0.010778568922735458,
+        "250_500": 0.11122566150056015,
+        "40_80": 0.31696635802550244,
+        "500_2000": 0.15408059020014672,
+        "8000_nyquist": 0.009468968193999594,
+        "80_120": 0.18350904159470358,
+        "harmonics_100_400": 0.35902155106779876
+      },
+      "method": "16384-frame Hann, stereo absolute mean squares, window-power normalized; no target EQ curve"
+    }
+  },
+  "base_commit": "849b97dd466d1bf273d6301fa70985e89acfd97a",
+  "bpm": 126,
+  "changed_groove_notes": 186,
+  "checks": {
+    "all_24_native_stem_tails_digital_zero": true,
+    "all_historical_unchanged": true,
+    "all_old_code_tests_fixtures_unchanged": true,
+    "ci": "Python 3.11/3.13 configured; actual post-push results belong in proof/release-summary.json",
+    "earlier_methods": 277,
+    "errors": 0,
+    "failures": 0,
+    "historical_files": 9284,
+    "host": "SoundCraft 0.11.0",
+    "installed_exact_apply_undo_redo": true,
+    "new_host_methods": 2,
+    "new_unit_methods": 18,
+    "only_changed_old_tracked_files": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/STATUS.md"
+    ],
+    "python": "3.13.7",
+    "seconds": 1681.213,
+    "skips": 0,
+    "tests": 297,
+    "two_symbolic_builds_exact": true,
+    "wheel_install_and_outside_checkout_smoke": true
+  },
+  "exact_historical_PCM_excerpt": {
+    "comparison_policy": "A/B/C/D all start native DSP from rest; running-history archive cut is separate.",
+    "excerpt_sha256": "0d4183170fedec89a14d7fb087e44735889b5da5a4b84bcc46b657d7d793012a",
+    "parent_sha256": "e1dde17b94fa8a3ed3e5f2e484ccf3cf882c68459b30d2075e17a206cea46fac"
+  },
+  "full_native_state_and_reopened_PCM_exact_all_variants": true,
+  "full_song_expanded": false,
+  "host": {
+    "binary_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+    "contract_sha256": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+    "version": "0.11.0"
+  },
+  "human_listening_performed": false,
+  "key": "C minor",
+  "labels": {
+    "A": "frozen-phase10",
+    "B": "groove-only",
+    "C": "sound-only",
+    "D": "combined"
+  },
+  "limits": [
+    "Basic native palette and fixed clap envelope",
+    "Native instrument edits use fresh export; scoped native apply still rejects them",
+    "General canonical bus/send adapter unsupported; bounded native prototype only",
+    "All four audition bounces reset DSP history",
+    "LUFS/true peak meter validated previously, not EBU certified",
+    "Metrics cannot prove producer preference or groove quality"
+  ],
+  "loudness_match_interval": "first 731429 active frames; same attenuation on 384000 release frames",
+  "matching": {
+    "A": {
+      "active_measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.454468871857735,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.814574335269118,
+        "oversample": 4,
+        "rms": 0.0539568520445605,
+        "rms_dbfs": -25.35906791816307,
+        "sample_peak": 0.6379256248474121,
+        "sample_peak_dbfs": -3.904599046305335,
+        "sample_rate": 48000,
+        "true_peak": 0.6391124129295349,
+        "true_peak_dbtp": -3.88845494884269
+      },
+      "error_lu": 6.158238363696e-09,
+      "gain_db": -0.0017117272498836655,
+      "interval": "exactly the first eight active bars; same constant attenuation also applied to untouched natural release",
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 23.286924448825076,
+        "duration_seconds": 23.238104166666666,
+        "fir_taps": 49,
+        "frames": 1115429,
+        "integrated_lufs": -23.87421310695582,
+        "oversample": 4,
+        "rms": 0.043694203321501285,
+        "rms_dbfs": -27.19152349513041,
+        "sample_peak": 0.6379256248474121,
+        "sample_peak_dbfs": -3.904599046305335,
+        "sample_rate": 48000,
+        "true_peak": 0.6391124129295349,
+        "true_peak_dbtp": -3.88845494884269
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.81457432911088,
+      "wav_sha256": "2997ada511ba09a6992248de2ef712062d6603c35fd6ccb80e903785496224fe"
+    },
+    "B": {
+      "active_measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.478142307056608,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.81457432911088,
+        "oversample": 4,
+        "rms": 0.05382060113698091,
+        "rms_dbfs": -25.381029115831875,
+        "sample_peak": 0.6380513906478882,
+        "sample_peak_dbfs": -3.90288680877527,
+        "sample_rate": 48000,
+        "true_peak": 0.6392383575439453,
+        "true_peak_dbtp": -3.886743460806567
+      },
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "interval": "exactly the first eight active bars; same constant attenuation also applied to untouched natural release",
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 23.310595908641332,
+        "duration_seconds": 23.238104166666666,
+        "fir_taps": 49,
+        "frames": 1115429,
+        "integrated_lufs": -23.878464710671526,
+        "oversample": 4,
+        "rms": 0.04358387738863342,
+        "rms_dbfs": -27.213482717416603,
+        "sample_peak": 0.6380513906478882,
+        "sample_peak_dbfs": -3.90288680877527,
+        "sample_rate": 48000,
+        "true_peak": 0.6392383575439453,
+        "true_peak_dbtp": -3.886743460806567
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.81457432911088,
+      "wav_sha256": "3ad36a59baaeca6ad059fbe14cad92387b25688d0eaeb580b63d28ed68d5ac3a"
+    },
+    "C": {
+      "active_measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 22.048890898045947,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.81457433878743,
+        "oversample": 4,
+        "rms": 0.05355032944149627,
+        "rms_dbfs": -25.424757060906245,
+        "sample_peak": 0.6779640913009644,
+        "sample_peak_dbfs": -3.375866162860305,
+        "sample_rate": 48000,
+        "true_peak": 0.6792202591896057,
+        "true_peak_dbtp": -3.359787376276304
+      },
+      "error_lu": 9.676551115944676e-09,
+      "gain_db": -0.05465758438585766,
+      "interval": "exactly the first eight active bars; same constant attenuation also applied to untouched natural release",
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 23.881345645701902,
+        "duration_seconds": 23.238104166666666,
+        "fir_taps": 49,
+        "frames": 1115429,
+        "integrated_lufs": -23.876211086742877,
+        "oversample": 4,
+        "rms": 0.04336500587582293,
+        "rms_dbfs": -27.257211808562207,
+        "sample_peak": 0.6779640913009644,
+        "sample_peak_dbfs": -3.375866162860305,
+        "sample_rate": 48000,
+        "true_peak": 0.6792202591896057,
+        "true_peak_dbtp": -3.359787376276304
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.81457432911088,
+      "wav_sha256": "aa4e435fccc950cee8dac2230e41e0585e81d0d5f9b310830217637cf20a8024"
+    },
+    "D": {
+      "active_measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 22.06778558830416,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.814574334235996,
+        "oversample": 4,
+        "rms": 0.05343778090851353,
+        "rms_dbfs": -25.443031698972653,
+        "sample_peak": 0.678012490272522,
+        "sample_peak_dbfs": -3.3752461106684946,
+        "sample_rate": 48000,
+        "true_peak": 0.6792687177658081,
+        "true_peak_dbtp": -3.3591677086128477
+      },
+      "error_lu": 5.125116331328172e-09,
+      "gain_db": -0.05403694011137006,
+      "interval": "exactly the first eight active bars; same constant attenuation also applied to untouched natural release",
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 23.900239771064122,
+        "duration_seconds": 23.238104166666666,
+        "fir_taps": 49,
+        "frames": 1115429,
+        "integrated_lufs": -23.87920458627757,
+        "oversample": 4,
+        "rms": 0.04327386699516565,
+        "rms_dbfs": -27.275485881732617,
+        "sample_peak": 0.678012490272522,
+        "sample_peak_dbfs": -3.3752461106684946,
+        "sample_rate": 48000,
+        "true_peak": 0.6792687177658081,
+        "true_peak_dbtp": -3.3591677086128477
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.81457432911088,
+      "wav_sha256": "ec3142cb9aa91d13ed53ccb4fdf715c2b8c818a7aa1b50a08b062956c80433a9"
+    }
+  },
+  "musical_bars": 8,
+  "native_canonical_hashes": {
+    "A": "0010864525aaae998a4a768ad99ab730955a22b855f4f5076c3254146d4b8e08",
+    "B": "3f03b437e476e371542ab902b3eb7e815585931176c031152a0b8716ec08d733",
+    "C": "1077a7fbcd5bb036c26515e80a2cbe5c2e9c109cdf940d748752ba992e045c17",
+    "D": "08fe90b64a26f87e7233bcd9bc986c82ad2b108131d4da4e004773da9981e83c"
+  },
+  "native_post_fx_trim_db": {
+    "bass": 1.5,
+    "clap": 0.3,
+    "hats": 1.3,
+    "kick": 0.75,
+    "stabs": -2.9
+  },
+  "native_routing": {
+    "full_native_reopen_equal": true,
+    "host_native_send_aux_proven": true,
+    "limit": "Bounded static post-fader send/aux prototype only. General canonical routing, locks, native transactions and send automation are not mapped; production adapter continues to reject them.",
+    "production_bus_used": false,
+    "reopened_PCM_exact": true,
+    "send_off_dry_PCM_exact": true
+  },
+  "native_send_difference_rms_ratio": 0.06369886884500174,
+  "native_send_tail_rms": {
+    "dry": 0.0,
+    "wet": 8.793804282371545e-06
+  },
+  "notes_each": 296,
+  "phase": 12,
+  "professional_quality_established": false,
+  "removed_notes": 0,
+  "same_input_sound_controls": {
+    "bass": {
+      "best_scalar": 0.9929436331039647,
+      "method": "aligned least-squares scalar only; no time shift or perceptual score",
+      "native_active_RMS_delta_db": 0.012012378255803924,
+      "residual_to_changed_rms_ratio": 0.1295616779248711
+    },
+    "clap": {
+      "best_scalar": 0.21786338414602402,
+      "method": "aligned least-squares scalar only; no time shift or perceptual score",
+      "native_active_RMS_delta_db": 0.0035553482432106875,
+      "residual_to_changed_rms_ratio": 0.9759991765800252
+    },
+    "hats-percussion": {
+      "best_scalar": 0.09733389180878753,
+      "method": "aligned least-squares scalar only; no time shift or perceptual score",
+      "native_active_RMS_delta_db": -0.1095748174289497,
+      "residual_to_changed_rms_ratio": 0.9951301628827374
+    },
+    "kick": {
+      "best_scalar": 0.9924795879074868,
+      "method": "aligned least-squares scalar only; no time shift or perceptual score",
+      "native_active_RMS_delta_db": -0.007318915843274709,
+      "residual_to_changed_rms_ratio": 0.11542477001310583
+    },
+    "stabs": {
+      "best_scalar": 0.9425028792328382,
+      "method": "aligned least-squares scalar only; no time shift or perceptual score",
+      "native_active_RMS_delta_db": 0.02814820107858651,
+      "residual_to_changed_rms_ratio": 0.34267648736887785
+    }
+  },
+  "source_first_bar_zero_based": 32,
+  "source_note_fields_exact_A": true,
+  "source_phase10_canonical_sha256": "dad1db280f798fdf07ab4b0243bcc6e528f680b30f32b8a5e92104a94ce640b1",
+  "source_phase10_wav_sha256": "e1dde17b94fa8a3ed3e5f2e484ccf3cf882c68459b30d2075e17a206cea46fac",
+  "stem_metrics": {
+    "A": {
+      "bass": {
+        "active_rms_dbfs": -32.319264146825326,
+        "band_mean_square": {
+          "120_250": 0.0001602153588700448,
+          "2000_8000": 4.625500853453838e-09,
+          "20_40": 2.0938609187533973e-05,
+          "250_500": 5.275152871115342e-05,
+          "40_80": 0.0005053763864591461,
+          "500_2000": 1.1409035371842249e-05,
+          "8000_nyquist": 6.831171168414482e-15,
+          "80_120": 3.100621882166187e-05,
+          "harmonics_100_400": 0.00021838839980872863
+        },
+        "onsets": {
+          "attack_0_20ms": 0.006081644696131491,
+          "body_20_100ms": 0.0012810733969503296,
+          "tail_100_220ms": 0.0001771811654100709
+        }
+      },
+      "clap": {
+        "active_rms_dbfs": -37.53907453277484,
+        "band_mean_square": {
+          "120_250": 5.13578308492047e-06,
+          "2000_8000": 6.472824714707962e-05,
+          "20_40": 4.079744745013832e-14,
+          "250_500": 4.810697534682957e-06,
+          "40_80": 3.0708724480790314e-11,
+          "500_2000": 0.0001962277795587307,
+          "8000_nyquist": 3.1082449267190398e-06,
+          "80_120": 1.1961563131434162e-09,
+          "harmonics_100_400": 8.098800050864846e-06
+        },
+        "onsets": {
+          "attack_0_20ms": 0.002459566602813326,
+          "body_20_100ms": 0.0013563045110817447,
+          "tail_100_220ms": 1.1439159854334524e-05
+        }
+      },
+      "hats-percussion": {
+        "active_rms_dbfs": -42.85590909104468,
+        "band_mean_square": {
+          "120_250": 1.3525952589439565e-13,
+          "2000_8000": 7.732321130439768e-06,
+          "20_40": 5.0544797044985834e-14,
+          "250_500": 1.907664824967057e-13,
+          "40_80": 9.741763104106458e-14,
+          "500_2000": 5.731766162501284e-10,
+          "8000_nyquist": 2.5383394759623316e-05,
+          "80_120": 5.911269601738066e-14,
+          "harmonics_100_400": 3.172349133291389e-13
+        },
+        "onsets": null
+      },
+      "hook-pads-pulse": {
+        "active_rms_dbfs": -33.89145594384077,
+        "band_mean_square": {
+          "120_250": 2.711113131377695e-07,
+          "2000_8000": 1.099722450883839e-05,
+          "20_40": 8.587151095224334e-07,
+          "250_500": 0.00020399305169447614,
+          "40_80": 1.2531771121218729e-05,
+          "500_2000": 0.00013602587078394984,
+          "8000_nyquist": 3.4135688833591e-08,
+          "80_120": 1.7549953576866652e-06,
+          "harmonics_100_400": 0.00015096367699262968
+        },
+        "onsets": null
+      },
+      "kick": {
+        "active_rms_dbfs": -27.995487057875394,
+        "band_mean_square": {
+          "120_250": 0.00026694712123185243,
+          "2000_8000": 2.810747614968831e-07,
+          "20_40": 2.1749505577090517e-06,
+          "250_500": 4.49142084982148e-06,
+          "40_80": 0.0003931202584159074,
+          "500_2000": 7.863303035644764e-07,
+          "8000_nyquist": 4.790683947688913e-09,
+          "80_120": 0.00042213258245976166,
+          "harmonics_100_400": 0.0004833147762989085
+        },
+        "onsets": {
+          "attack_0_20ms": 0.022310628605109437,
+          "body_20_100ms": 0.0037700615240849173,
+          "tail_100_220ms": 6.382670042120252e-05
+        }
+      },
+      "stabs": {
+        "active_rms_dbfs": -41.42061079592224,
+        "band_mean_square": {
+          "120_250": 1.0199760402121184e-05,
+          "2000_8000": 4.9990260887150945e-06,
+          "20_40": 3.81990424035446e-08,
+          "250_500": 5.282386472603538e-05,
+          "40_80": 7.265982908213397e-08,
+          "500_2000": 4.576065551563654e-05,
+          "8000_nyquist": 1.663450691033379e-08,
+          "80_120": 9.453644528492303e-08,
+          "harmonics_100_400": 4.968358034700701e-05
+        },
+        "onsets": {
+          "attack_0_20ms": 0.0032848411908264017,
+          "body_20_100ms": 0.0003150808808123459,
+          "tail_100_220ms": 2.1232272170643163e-06
+        }
+      }
+    },
+    "B": {
+      "bass": {
+        "active_rms_dbfs": -32.43439100017552,
+        "band_mean_square": {
+          "120_250": 0.00016131103330530415,
+          "2000_8000": 4.6400244615128115e-09,
+          "20_40": 2.0197254752465332e-05,
+          "250_500": 5.31567330358316e-05,
+          "40_80": 0.0005073627251140934,
+          "500_2000": 1.1459283229914988e-05,
+          "8000_nyquist": 6.74564490824547e-15,
+          "80_120": 3.080377765081945e-05,
+          "harmonics_100_400": 0.0002198609448162616
+        },
+        "onsets": {
+          "attack_0_20ms": 0.0059966012974800665,
+          "body_20_100ms": 0.0011673841847667068,
+          "tail_100_220ms": 0.00020871222772725676
+        }
+      },
+      "clap": {
+        "active_rms_dbfs": -37.257407735247355,
+        "band_mean_square": {
+          "120_250": 2.6633336201364205e-06,
+          "2000_8000": 6.714618855655283e-05,
+          "20_40": 3.2209015857405985e-14,
+          "250_500": 3.960156265312193e-06,
+          "40_80": 1.8978706971129922e-11,
+          "500_2000": 0.0002168716018590541,
+          "8000_nyquist": 2.528914504185367e-06,
+          "80_120": 7.165727742099757e-10,
+          "harmonics_100_400": 4.675701973410534e-06
+        },
+        "onsets": {
+          "attack_0_20ms": 0.0026978999863018984,
+          "body_20_100ms": 0.001479404392039915,
+          "tail_100_220ms": 1.248747907345027e-05
+        }
+      },
+      "hats-percussion": {
+        "active_rms_dbfs": -42.957515580211165,
+        "band_mean_square": {
+          "120_250": 1.2691914753122203e-13,
+          "2000_8000": 7.378031544885873e-06,
+          "20_40": 4.066524297505711e-14,
+          "250_500": 1.8447023947830591e-13,
+          "40_80": 6.740438405977194e-14,
+          "500_2000": 5.684133546812953e-10,
+          "8000_nyquist": 2.3881806184513793e-05,
+          "80_120": 5.0117496984009475e-14,
+          "harmonics_100_400": 2.863895215833186e-13
+        },
+        "onsets": null
+      },
+      "hook-pads-pulse": {
+        "active_rms_dbfs": -33.89145594384077,
+        "band_mean_square": {
+          "120_250": 2.711113131377695e-07,
+          "2000_8000": 1.099722450883839e-05,
+          "20_40": 8.587151095224334e-07,
+          "250_500": 0.00020399305169447614,
+          "40_80": 1.2531771121218729e-05,
+          "500_2000": 0.00013602587078394984,
+          "8000_nyquist": 3.4135688833591e-08,
+          "80_120": 1.7549953576866652e-06,
+          "harmonics_100_400": 0.00015096367699262968
+        },
+        "onsets": null
+      },
+      "kick": {
+        "active_rms_dbfs": -27.995487057875394,
+        "band_mean_square": {
+          "120_250": 0.00026694712123185243,
+          "2000_8000": 2.810747614968831e-07,
+          "20_40": 2.1749505577090517e-06,
+          "250_500": 4.49142084982148e-06,
+          "40_80": 0.0003931202584159074,
+          "500_2000": 7.863303035644764e-07,
+          "8000_nyquist": 4.790683947688913e-09,
+          "80_120": 0.00042213258245976166,
+          "harmonics_100_400": 0.0004833147762989085
+        },
+        "onsets": {
+          "attack_0_20ms": 0.022310628605109437,
+          "body_20_100ms": 0.0037700615240849173,
+          "tail_100_220ms": 6.382670042120252e-05
+        }
+      },
+      "stabs": {
+        "active_rms_dbfs": -41.60798635437915,
+        "band_mean_square": {
+          "120_250": 1.0214583579923746e-05,
+          "2000_8000": 4.7816960130970456e-06,
+          "20_40": 3.2042760645633666e-08,
+          "250_500": 5.14596326858963e-05,
+          "40_80": 6.166212062145684e-08,
+          "500_2000": 4.253478448419909e-05,
+          "8000_nyquist": 1.7044001618433112e-08,
+          "80_120": 8.210688946724872e-08,
+          "harmonics_100_400": 4.8755666209733196e-05
+        },
+        "onsets": {
+          "attack_0_20ms": 0.00318308327210665,
+          "body_20_100ms": 0.0002927838198065401,
+          "tail_100_220ms": 2.1301046612735336e-06
+        }
+      }
+    },
+    "C": {
+      "bass": {
+        "active_rms_dbfs": -32.30725176856952,
+        "band_mean_square": {
+          "120_250": 0.00015734056311240722,
+          "2000_8000": 1.0742097126800562e-08,
+          "20_40": 2.8351147159614515e-05,
+          "250_500": 5.3282403097525955e-05,
+          "40_80": 0.000498476774552838,
+          "500_2000": 1.3959412983895835e-05,
+          "8000_nyquist": 1.3307452227852023e-14,
+          "80_120": 3.5090585486667636e-05,
+          "harmonics_100_400": 0.00021654099894109365
+        },
+        "onsets": {
+          "attack_0_20ms": 0.007301321451112892,
+          "body_20_100ms": 0.001030860925662712,
+          "tail_100_220ms": 0.0001489732697802366
+        }
+      },
+      "clap": {
+        "active_rms_dbfs": -37.53551918453163,
+        "band_mean_square": {
+          "120_250": 3.9218921013013105e-06,
+          "2000_8000": 6.499903441064414e-05,
+          "20_40": 7.76895565660851e-14,
+          "250_500": 4.207091945608953e-06,
+          "40_80": 3.1501685067810416e-11,
+          "500_2000": 0.00018754010490626107,
+          "8000_nyquist": 3.0080218640745986e-06,
+          "80_120": 1.222674985639978e-09,
+          "harmonics_100_400": 6.58683524078052e-06
+        },
+        "onsets": {
+          "attack_0_20ms": 0.0025986693310696214,
+          "body_20_100ms": 0.0013469518379567156,
+          "tail_100_220ms": 1.225528931439426e-05
+        }
+      },
+      "hats-percussion": {
+        "active_rms_dbfs": -42.96548390847363,
+        "band_mean_square": {
+          "120_250": 5.131550568467427e-14,
+          "2000_8000": 6.55543403213728e-06,
+          "20_40": 5.819458246678479e-15,
+          "250_500": 1.6901099054306895e-13,
+          "40_80": 7.312087856594744e-15,
+          "500_2000": 5.855969891796976e-10,
+          "8000_nyquist": 2.4397897607078773e-05,
+          "80_120": 1.4469437557610304e-14,
+          "harmonics_100_400": 1.4173737891105325e-13
+        },
+        "onsets": null
+      },
+      "hook-pads-pulse": {
+        "active_rms_dbfs": -33.89145594384077,
+        "band_mean_square": {
+          "120_250": 2.711113131377695e-07,
+          "2000_8000": 1.099722450883839e-05,
+          "20_40": 8.587151095224334e-07,
+          "250_500": 0.00020399305169447614,
+          "40_80": 1.2531771121218729e-05,
+          "500_2000": 0.00013602587078394984,
+          "8000_nyquist": 3.4135688833591e-08,
+          "80_120": 1.7549953576866652e-06,
+          "harmonics_100_400": 0.00015096367699262968
+        },
+        "onsets": null
+      },
+      "kick": {
+        "active_rms_dbfs": -28.00280597371867,
+        "band_mean_square": {
+          "120_250": 0.0003099762358993343,
+          "2000_8000": 3.7551808320376156e-07,
+          "20_40": 2.8366766729423974e-06,
+          "250_500": 5.640066657113034e-06,
+          "40_80": 0.0002989061507630088,
+          "500_2000": 1.4454533338023602e-06,
+          "8000_nyquist": 5.850553822796614e-09,
+          "80_120": 0.0004527606444074969,
+          "harmonics_100_400": 0.0005515381186913005
+        },
+        "onsets": {
+          "attack_0_20ms": 0.025280257196958363,
+          "body_20_100ms": 0.0030778942040882496,
+          "tail_100_220ms": 1.9883246932031086e-05
+        }
+      },
+      "stabs": {
+        "active_rms_dbfs": -41.39246259484365,
+        "band_mean_square": {
+          "120_250": 1.1109487089733441e-05,
+          "2000_8000": 5.449205410880663e-06,
+          "20_40": 1.145824292249604e-10,
+          "250_500": 5.2343951731356515e-05,
+          "40_80": 3.1050970158435533e-10,
+          "500_2000": 4.806289702311354e-05,
+          "8000_nyquist": 2.113590778387086e-08,
+          "80_120": 4.1831969474091976e-09,
+          "harmonics_100_400": 5.24116431922201e-05
+        },
+        "onsets": {
+          "attack_0_20ms": 0.00406224443406818,
+          "body_20_100ms": 0.00013415280753988586,
+          "tail_100_220ms": 1.5860706633082038e-07
+        }
+      }
+    },
+    "D": {
+      "bass": {
+        "active_rms_dbfs": -32.402156583789306,
+        "band_mean_square": {
+          "120_250": 0.0001586520132460643,
+          "2000_8000": 1.0768889861962015e-08,
+          "20_40": 2.751201605137063e-05,
+          "250_500": 5.382988166065327e-05,
+          "40_80": 0.0005014946366883203,
+          "500_2000": 1.4044954382172236e-05,
+          "8000_nyquist": 1.3245642639103825e-14,
+          "80_120": 3.4223140199623924e-05,
+          "harmonics_100_400": 0.00021833000887434292
+        },
+        "onsets": {
+          "attack_0_20ms": 0.007198290269580881,
+          "body_20_100ms": 0.0009433497470565917,
+          "tail_100_220ms": 0.0001749531475458074
+        }
+      },
+      "clap": {
+        "active_rms_dbfs": -37.239704121773876,
+        "band_mean_square": {
+          "120_250": 2.0544964710561752e-06,
+          "2000_8000": 6.848934411696915e-05,
+          "20_40": 3.2071118309864415e-14,
+          "250_500": 3.3966944582536872e-06,
+          "40_80": 1.8506062274804422e-11,
+          "500_2000": 0.0002064241632880659,
+          "8000_nyquist": 2.640068979759354e-06,
+          "80_120": 7.510168074839129e-10,
+          "harmonics_100_400": 3.8238328924456605e-06
+        },
+        "onsets": {
+          "attack_0_20ms": 0.0028327960982853857,
+          "body_20_100ms": 0.0014682231560889487,
+          "tail_100_220ms": 1.3407898745724912e-05
+        }
+      },
+      "hats-percussion": {
+        "active_rms_dbfs": -43.064827236045176,
+        "band_mean_square": {
+          "120_250": 4.839185434187937e-14,
+          "2000_8000": 6.28974281747715e-06,
+          "20_40": 5.815038188175159e-15,
+          "250_500": 1.84368428052836e-13,
+          "40_80": 1.3853871384009412e-14,
+          "500_2000": 5.766441046159181e-10,
+          "8000_nyquist": 2.2737515541682748e-05,
+          "80_120": 1.7515063339221997e-14,
+          "harmonics_100_400": 1.56118207022029e-13
+        },
+        "onsets": null
+      },
+      "hook-pads-pulse": {
+        "active_rms_dbfs": -33.89145594384077,
+        "band_mean_square": {
+          "120_250": 2.711113131377695e-07,
+          "2000_8000": 1.099722450883839e-05,
+          "20_40": 8.587151095224334e-07,
+          "250_500": 0.00020399305169447614,
+          "40_80": 1.2531771121218729e-05,
+          "500_2000": 0.00013602587078394984,
+          "8000_nyquist": 3.4135688833591e-08,
+          "80_120": 1.7549953576866652e-06,
+          "harmonics_100_400": 0.00015096367699262968
+        },
+        "onsets": null
+      },
+      "kick": {
+        "active_rms_dbfs": -28.00280597371867,
+        "band_mean_square": {
+          "120_250": 0.0003099762358993343,
+          "2000_8000": 3.7551808320376156e-07,
+          "20_40": 2.8366766729423974e-06,
+          "250_500": 5.640066657113034e-06,
+          "40_80": 0.0002989061507630088,
+          "500_2000": 1.4454533338023602e-06,
+          "8000_nyquist": 5.850553822796614e-09,
+          "80_120": 0.0004527606444074969,
+          "harmonics_100_400": 0.0005515381186913005
+        },
+        "onsets": {
+          "attack_0_20ms": 0.025280257196958363,
+          "body_20_100ms": 0.0030778942040882496,
+          "tail_100_220ms": 1.9883246932031086e-05
+        }
+      },
+      "stabs": {
+        "active_rms_dbfs": -41.70150878766363,
+        "band_mean_square": {
+          "120_250": 1.0458782539488121e-05,
+          "2000_8000": 4.821160403755275e-06,
+          "20_40": 7.535808877677203e-11,
+          "250_500": 4.847503899065865e-05,
+          "40_80": 2.1548027257238431e-10,
+          "500_2000": 4.289235263268167e-05,
+          "8000_nyquist": 1.959625616295968e-08,
+          "80_120": 3.6227385584894347e-09,
+          "harmonics_100_400": 4.880809474445907e-05
+        },
+        "onsets": {
+          "attack_0_20ms": 0.003782885462388823,
+          "body_20_100ms": 0.0001249829710332272,
+          "tail_100_220ms": 1.8656709008406123e-07
+        }
+      }
+    }
+  },
+  "stem_sum_peak_error_lsb": {
+    "A": 3,
+    "B": 3,
+    "C": 3,
+    "D": 3
+  },
+  "wheel_sha256": "6419c2a89a21f01b02468b8ba8e3d4bb7fac6d592dc9d585356cc07d59c4da3f",
+  "zip": {
+    "bytes": 35525405,
+    "path": "artifacts/phase12-house/phase12-house-listening.zip",
+    "sha256": "3da862b02a02c8b7bf352dce0cf6a6fb9de9139fa4303accf1f6284625696942"
+  }
+}

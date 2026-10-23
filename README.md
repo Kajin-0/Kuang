@@ -8,6 +8,17 @@ Kuang turns a musical description into a short editable instrumental sketch. Its
 
 **Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor. `create` supports 8/16/32 bars; the separate authored house expansion supports 64 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI verification or professional composition/mastering claim; new-candidate listening quality requires human audition. SoundCraft is the human editor; Kuang does not implement another DAW UI.
 
+**Phase 12 listening experiment:** eight bars from the user-preferred Phase 10 D drop, with **A=frozen source, B=groove only, C=sound only, D=combined**. The kick and hook notes stay exact; supporting rhythm gets authored accents, ghost-note timing and bass/stab articulation. Existing envelopes/processing are adjusted with measured native gain compensation. No new inserts or required plugins. All four have editable native/canonical/MIDI bundles and active-eight-bar LUFS-matched WAVs with natural release tails. A separate exact historical PCM cut documents the difference between a running song and a fresh DSP-reset excerpt. Human preference remains unknown. See [Phase 12 controls, evidence and reproduction](docs/PHASE12.md).
+
+```bash
+python3 tools/phase12_house.py --out-dir artifacts/phase12-house \
+  --source artifacts/phase10-house --soundcraft /absolute/path/to/soundcraft-cli
+# Or reproduce only the four canonical/MIDI variants, without any host:
+python3 tools/phase12_house.py --symbolic --out-dir .local/phase12/my-symbolic
+```
+
+Use a fresh destination. The listening download is `artifacts/phase12-house/phase12-house-listening.zip`. A separate bounded native send/aux prototype works; general routing remains unsupported by Kuang's production adapter and is absent from the four comparisons.
+
 ## Quick start
 
 From this checkout, use an already installed free [SoundCraft 0.11.0](https://github.com/storytold/soundcraft/releases/tag/v0.11.0) CLI:
