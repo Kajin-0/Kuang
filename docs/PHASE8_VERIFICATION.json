@@ -1,0 +1,712 @@
+{
+  "base_commit": "e2a6ddace0fdb8226d5f5d87435f5f1c7e593b38",
+  "canonical_hash": "22a3d95c5479dbdd312db6aefe803e0e600ba7ecd62350060c2e1880759ca2a7",
+  "ci": {
+    "host_proof_local_only": true,
+    "offline_matrix": true,
+    "push_status_record": "artifacts/phase8-house/proof/release-summary.json (written after push)",
+    "python": [
+      "3.11",
+      "3.13"
+    ]
+  },
+  "club_ready": false,
+  "control_differences": {
+    "compressor-bypass": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.09289886931294535,
+      "changed_samples": 103622,
+      "channels": 2,
+      "difference_peak": 0.5780742168426514,
+      "difference_rms": 0.011412715535098528,
+      "difference_rms_dbfs": -38.85222015003781,
+      "difference_to_original_rms_ratio": 1.6244748475665398,
+      "frames": 557714,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "delay-dry": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.1668973703367676,
+      "changed_samples": 186162,
+      "channels": 2,
+      "difference_peak": 0.16799771785736084,
+      "difference_rms": 0.003479548164298659,
+      "difference_rms_dbfs": -49.169542951481866,
+      "difference_to_original_rms_ratio": 0.7094506166527023,
+      "frames": 557714,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "duck-off": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.8161880462028925,
+      "changed_samples": 910399,
+      "channels": 2,
+      "difference_peak": 0.08596909046173096,
+      "difference_rms": 0.006451147929123506,
+      "difference_rms_dbfs": -43.80725998659442,
+      "difference_to_original_rms_ratio": 0.4716612969350285,
+      "frames": 557714,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "hpf-static": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.9986755884859583,
+      "changed_samples": 1844412,
+      "channels": 2,
+      "difference_peak": 0.4994025230407715,
+      "difference_rms": 0.024461024901409806,
+      "difference_rms_dbfs": -32.23050700511016,
+      "difference_to_original_rms_ratio": 1.5652793016149407,
+      "frames": 923429,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "lpf-static": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.9460884377683612,
+      "changed_samples": 1747291,
+      "channels": 2,
+      "difference_peak": 0.44612419605255127,
+      "difference_rms": 0.02204766205273472,
+      "difference_rms_dbfs": -33.13274913202167,
+      "difference_to_original_rms_ratio": 1.4108464056286463,
+      "frames": 923429,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "modulation-off": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.762266143578967,
+      "changed_samples": 850253,
+      "channels": 2,
+      "difference_peak": 0.11282265186309814,
+      "difference_rms": 0.010701579895171575,
+      "difference_rms_dbfs": -39.411042036754814,
+      "difference_to_original_rms_ratio": 0.563040231250855,
+      "frames": 557714,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "reverb-dry": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.9748428405957175,
+      "changed_samples": 1087367,
+      "channels": 2,
+      "difference_peak": 0.13046598434448242,
+      "difference_rms": 0.013611387005739018,
+      "difference_rms_dbfs": -37.321952355232405,
+      "difference_to_original_rms_ratio": 1.2747805136598405,
+      "frames": 557714,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    }
+  },
+  "determinism": {
+    "all_equal": true,
+    "files": {
+      "A-phase7-original-64bars.wav": "eed192494c229bf7e9f2ff3eb54a7cd06de838d52dd4265e91f7b742ec51837f",
+      "B-phase8-motion-64bars.wav": "f02fe3e396876d6b0de94dc7aeed43234518b8136642ce13c4313acb07ad8d65",
+      "demonstrations/breakdown-reverb/audio.wav": "3f66d73ad8ff0efd55ab4cca8652243639f3d86d7b9175e24ad761f1e76d6998",
+      "demonstrations/compression/audio.wav": "537425558b605276e9e845c597a1487e8d339873e4827de615b392ba169056b3",
+      "demonstrations/compressor-bypass/audio.wav": "b19a5f054db4a943ee6ca4e4015e3da76d1c0d2042aba7516c5c4b82a1036175",
+      "demonstrations/delay-dry/audio.wav": "d0d96210cf973669e254137831b9676fb4878642b7b3e0c0290a5b55218204a0",
+      "demonstrations/delay-throw/audio.wav": "98d5802fe4d2577db4d94374c9a6f2d5994219cbe84b37d213f9ef48d8c05dd6",
+      "demonstrations/drop-pump/audio.wav": "eea6f1f6c07d66f0ca0ee153fd604aa0bc7ed1f473551a6eeba33b83e900a6cf",
+      "demonstrations/duck-off/audio.wav": "c2286f971897378359186b173d3fe708245d8e28293b29320b1bfb12d19d2cc3",
+      "demonstrations/filters/audio.wav": "6a1524cfac0e211e1f1fb17aee17a76f6653fec0da040a493d43ccf978c92528",
+      "demonstrations/hpf-static/audio.wav": "bd0fdaeb20c28c5fa573aefa983f19d51576e982f1e8274d90e217456e2eaa33",
+      "demonstrations/lpf-static/audio.wav": "38bac760db93f4e3221d2965f89cd5ae64601e34d51fd076293a576311c9deb1",
+      "demonstrations/modulation-off/audio.wav": "7fdc2db555bd6fa3c9a42c3f3963cd226887b31fa310cc3710282ce5a466f82f",
+      "demonstrations/modulation/audio.wav": "8febd0ef361987964836c6bcd7710c4cfcc952d08fe9ac09e645deabf7be4f98",
+      "demonstrations/reverb-dry/audio.wav": "6b0475b90c73fea1853a944c61dfc8b0514601e6c7308905e9b9030074d48b3d",
+      "listening/A-phase7-64bars-RMS-matched.wav": "394f98d3fe94c6300df38674ec934d3e839dae808c5a643f7555565063981671",
+      "listening/B-phase8-64bars-RMS-matched.wav": "91754faf43a9cdd4e0fcee2e62aea59014e94806dbefe44405e48e131f57c00b",
+      "listening/C-build-filter.wav": "6aafffcede99a59c0a842de5e7fa5181743fa455cc24af12b43ad702f456dd02",
+      "listening/D-breakdown-and-drop.wav": "d2164144cc0089ad1c1996914cadb9476ad67d2b0726ca93a0671c0957543034",
+      "listening/E-drop-call-response.wav": "ed544fa9c77de845aee6de2c39afc54a9759b20c0931c5f7e8222a3e9c812c99",
+      "project.kuang.json": "22a3d95c5479dbdd312db6aefe803e0e600ba7ecd62350060c2e1880759ca2a7",
+      "song.mid": "cee934c0feaa52d7dfab1d362445715228fa85e3a77a7a20e1cc633135f163ac"
+    },
+    "independent_native_builds": 2
+  },
+  "download": {
+    "bytes": 98364617,
+    "sha256": "e1642f1883218acc1aeb15db655e3c48e084367938cb7fd832c281aa0f433c7e",
+    "zip": "/home/User/Kuang/artifacts/phase8-house/phase8-house-listening.zip"
+  },
+  "dsp": {
+    "compression": {
+      "envelope": {
+        "active_windows": 45,
+        "gain_variation_db": 9.669928519310174,
+        "maximum_gain_db": 0.0,
+        "median_gain_db": -4.781275256846136,
+        "minimum_gain_db": -9.669928519310174,
+        "window_ms": 20
+      },
+      "peak_gain_db": -7.925019730513476,
+      "rms_gain_db": -8.181708642576762,
+      "same_input_zero_makeup": true
+    },
+    "delay_echo_windows": {
+      "echo-1": {
+        "dry_rms": 0.0,
+        "seconds": [
+          5.882619047619047,
+          6.022619047619047
+        ],
+        "wet_minus_dry_db": null,
+        "wet_rms": 0.005004775470070591
+      },
+      "echo-2": {
+        "dry_rms": 0.0,
+        "seconds": [
+          6.239761904761905,
+          6.379761904761905
+        ],
+        "wet_minus_dry_db": null,
+        "wet_rms": 0.0015545169046901205
+      },
+      "echo-3": {
+        "dry_rms": 0.0,
+        "seconds": [
+          6.596904761904762,
+          6.7369047619047615
+        ],
+        "wet_minus_dry_db": null,
+        "wet_rms": 8.111396659024341e-05
+      }
+    },
+    "delay_peak_timing": {
+      "configured_delay_ms": 357.14285714285717,
+      "max_spacing_error_ms": 0.00297619047586295,
+      "observed_peaks": [
+        {
+          "peak_window_start_seconds": 5.835333333333334,
+          "repeat": 1,
+          "window_rms": 0.06729368755045168
+        },
+        {
+          "peak_window_start_seconds": 6.192479166666667,
+          "repeat": 2,
+          "window_rms": 0.02519392989073125
+        },
+        {
+          "peak_window_start_seconds": 6.549625,
+          "repeat": 3,
+          "window_rms": 0.0012754051501332074
+        }
+      ],
+      "observed_spacing_ms": [
+        357.14583333333303,
+        357.14583333333303
+      ],
+      "rms_window_ms": 20,
+      "search_hop_ms": 2
+    },
+    "diagnostic_note": "Fresh native DSP-reset windows, not full-bounce slices. Same MIDI within each pair; compression makeup zero in both only for gain-reduction measurement.",
+    "filter_deltas": {
+      "early_lpf_high_db": -10.916094117411726,
+      "late_hpf_lowmid_db": -24.259254737673118
+    },
+    "pump_phase_energy": {
+      "duck": {
+        "on_off_db": -10.28032916314877,
+        "on_off_energy_ratio": 0.09374909493416124
+      },
+      "open": {
+        "on_off_db": -3.308665444696818e-05,
+        "on_off_energy_ratio": 0.9999923815452899
+      },
+      "recover": {
+        "on_off_db": -4.67714219942947,
+        "on_off_energy_ratio": 0.34063226320477985
+      }
+    },
+    "reverb_release_tail": {
+      "breakdown-reverb": {
+        "band_mean_square": {
+          "air_8000_nyquist": 8.035302434036722e-16,
+          "body_120_500": 1.176547807253624e-08,
+          "mid_500_2000": 1.1903986917953045e-08,
+          "presence_2000_8000": 8.429563501812917e-12,
+          "sub_20_120": 1.0316342642953714e-17
+        },
+        "peak": 0.0009590387344360352,
+        "rms": 0.00015094265636550342,
+        "rms_dbfs": -76.4237602268515,
+        "sampled_windows": 11
+      },
+      "reverb-dry": {
+        "band_mean_square": {
+          "air_8000_nyquist": 4.0371245739138905e-16,
+          "body_120_500": 1.428600898551439e-12,
+          "mid_500_2000": 1.7303801219378366e-12,
+          "presence_2000_8000": 3.051324939759116e-14,
+          "sub_20_120": 2.829649577170699e-18
+        },
+        "peak": 1.633167266845703e-05,
+        "rms": 1.7718930194507402e-06,
+        "rms_dbfs": -115.03125005603084,
+        "sampled_windows": 11
+      }
+    }
+  },
+  "host": {
+    "adapter": "soundcraft",
+    "apply_targets": {
+      "automation": "existing canonical track/effect lanes; instrument and bypass automation unsupported",
+      "notes": "edit canonical JSON through Kuang transactions, then create a fresh export",
+      "set_parameter": "standard track mixer controls and mapped effect parameters"
+    },
+    "contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+    "executable_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+    "notes": [
+      "MIDI clips merge per track; original clip/note/point IDs are retained in the companion canonical snapshot and identity map.",
+      "Native import restores a verified snapshot only; external host edits require explicit reconciliation and are rejected.",
+      "One canonical pan drives both native stereo panners; audio panning laws are host-defined.",
+      "Key, locks and other canonical-only intent remain in the snapshot; native save names the session from its filename."
+    ],
+    "operations": [
+      "set_parameter",
+      "add_automation_points",
+      "delete_automation_points"
+    ],
+    "supported": true,
+    "unsupported": [],
+    "version": "0.11.0"
+  },
+  "human_listening": false,
+  "limitations": [
+    "Human listening unknown; no club/professional claim",
+    "Programmed gain ducking, not input-triggered sidechain",
+    "No new synth LFO/wavetable/ADSR automation or buses",
+    "Stereo width remains modest",
+    "RMS matching is not LUFS; no true-peak/perceptual crackle-free certification"
+  ],
+  "metrics": {
+    "phase7": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 20.21770688851384,
+      "duration_seconds": 126.90477083333333,
+      "frames": 6091429,
+      "non_silent": true,
+      "peak": 0.4573441743850708,
+      "peak_dbfs": -6.795136971068477,
+      "rms": 0.044602356745604615,
+      "rms_dbfs": -27.012843859582315,
+      "sample_rate": 48000,
+      "sections": {
+        "Breakdown": {
+          "crest_db": 28.105331828776173,
+          "end_frame": 2925714,
+          "peak": 0.4526594877243042,
+          "rms": 0.017803485539789998,
+          "rms_dbfs": -34.989899276847225,
+          "side_rms": 0.004105497975118683,
+          "start_frame": 2194286,
+          "stereo_correlation": 0.9089429089831785
+        },
+        "Build": {
+          "crest_db": 19.542936465895096,
+          "end_frame": 2194286,
+          "peak": 0.4465080499649048,
+          "rms": 0.04706331017123531,
+          "rms_dbfs": -26.54635060459202,
+          "side_rms": 0.005049252304151447,
+          "start_frame": 1462857,
+          "stereo_correlation": 0.9773814519740981
+        },
+        "DJ Intro": {
+          "crest_db": 20.525318374227815,
+          "end_frame": 731429,
+          "peak": 0.42620694637298584,
+          "rms": 0.040119416216254734,
+          "rms_dbfs": -27.932907901817927,
+          "side_rms": 0.0010857114960805376,
+          "start_frame": 0,
+          "stereo_correlation": 0.9985360783937507
+        },
+        "DJ Outro": {
+          "crest_db": 19.749473510116246,
+          "end_frame": 5851429,
+          "peak": 0.447310209274292,
+          "rms": 0.046039980921141324,
+          "rms_dbfs": -26.737297300256195,
+          "side_rms": 0.003165448772743021,
+          "start_frame": 4388571,
+          "stereo_correlation": 0.9907103231519027
+        },
+        "Groove": {
+          "crest_db": 18.72744630772448,
+          "end_frame": 1462857,
+          "peak": 0.4337066411972046,
+          "rms": 0.050213877298590226,
+          "rms_dbfs": -25.98352485975886,
+          "side_rms": 0.0036868179231721115,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9892733899659948
+        },
+        "Main Drop": {
+          "crest_db": 18.682824129767464,
+          "end_frame": 4388571,
+          "peak": 0.4573441743850708,
+          "rms": 0.05322331793929999,
+          "rms_dbfs": -25.47796110083594,
+          "side_rms": 0.005419430812071211,
+          "start_frame": 2925714,
+          "stereo_correlation": 0.9794662489977585
+        },
+        "full": {
+          "crest_db": 20.217706888486482,
+          "end_frame": 6091429,
+          "peak": 0.4573441743850708,
+          "rms": 0.044602356745745086,
+          "rms_dbfs": -27.012843859554962,
+          "side_rms": 0.004039609352391041,
+          "start_frame": 0,
+          "stereo_correlation": 0.9838047058982108
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.0167114434982068,
+          "body_120_500": 0.11580898702767041,
+          "mid_500_2000": 0.08847515651741174,
+          "presence_2000_8000": 0.021872608465660835,
+          "sub_20_120": 0.7571318044910502
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    },
+    "phase8": {
+      "bits_per_sample": 24,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.580239766592257,
+      "duration_seconds": 126.90477083333333,
+      "frames": 6091429,
+      "non_silent": true,
+      "peak": 0.5311683416366577,
+      "peak_dbfs": -5.495356348336498,
+      "rms": 0.044281282864805864,
+      "rms_dbfs": -27.075596114928754,
+      "sample_rate": 48000,
+      "sections": {
+        "Breakdown": {
+          "crest_db": 24.436936510830712,
+          "end_frame": 2925714,
+          "peak": 0.24353361129760742,
+          "rms": 0.014612081414289494,
+          "rms_dbfs": -36.70575833380388,
+          "side_rms": 0.0037715635636220604,
+          "start_frame": 2194286,
+          "stereo_correlation": 0.892548389372125
+        },
+        "Build": {
+          "crest_db": 18.393590493429222,
+          "end_frame": 2194286,
+          "peak": 0.3742741346359253,
+          "rms": 0.04503086508287199,
+          "rms_dbfs": -26.929794195492,
+          "side_rms": 0.00431421760274276,
+          "start_frame": 1462857,
+          "stereo_correlation": 0.9821614199712548
+        },
+        "DJ Intro": {
+          "crest_db": 20.28051760142705,
+          "end_frame": 731429,
+          "peak": 0.4142625331878662,
+          "rms": 0.04010973350343544,
+          "rms_dbfs": -27.9350044708492,
+          "side_rms": 0.0011300457661543386,
+          "start_frame": 0,
+          "stereo_correlation": 0.998413925744919
+        },
+        "DJ Outro": {
+          "crest_db": 19.51631205925365,
+          "end_frame": 5851429,
+          "peak": 0.4341624975204468,
+          "rms": 0.045902538538203065,
+          "rms_dbfs": -26.763265922087797,
+          "side_rms": 0.003108829824862004,
+          "start_frame": 4388571,
+          "stereo_correlation": 0.991017209671153
+        },
+        "Groove": {
+          "crest_db": 18.55239182623216,
+          "end_frame": 1462857,
+          "peak": 0.4271289110183716,
+          "rms": 0.0504590857170028,
+          "rms_dbfs": -25.941212457129033,
+          "side_rms": 0.003911332556869616,
+          "start_frame": 731429,
+          "stereo_correlation": 0.9879913453571693
+        },
+        "Main Drop": {
+          "crest_db": 19.94116138612883,
+          "end_frame": 4388571,
+          "peak": 0.5311683416366577,
+          "rms": 0.053477871489984195,
+          "rms_dbfs": -25.436517734465326,
+          "side_rms": 0.005455298034185189,
+          "start_frame": 2925714,
+          "stereo_correlation": 0.9797044812206219
+        },
+        "full": {
+          "crest_db": 21.580239766564784,
+          "end_frame": 6091429,
+          "peak": 0.5311683416366577,
+          "rms": 0.044281282864945905,
+          "rms_dbfs": -27.075596114901288,
+          "side_rms": 0.003924432538689159,
+          "start_frame": 0,
+          "stereo_correlation": 0.9845846035622767
+        }
+      },
+      "spectrum": {
+        "band_power_fraction": {
+          "air_8000_nyquist": 0.004867689830297255,
+          "body_120_500": 0.10618579984119497,
+          "mid_500_2000": 0.08710102730467359,
+          "presence_2000_8000": 0.02283865921424998,
+          "sub_20_120": 0.7790068238095843
+        },
+        "bin_hz": 23.4375,
+        "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+        "windows": 64
+      }
+    }
+  },
+  "native": {
+    "bars": 64,
+    "exact_core_midi": true,
+    "full_save_reopen_equality": true,
+    "independent_all_note_fields_and_fx_lane_units": true,
+    "lanes": 23,
+    "markers": 6,
+    "note_deviations": [
+      {
+        "absolute_tick": 121938,
+        "clip": "song-clip-snare-07",
+        "reason": "one-beat percussion pause before main drop",
+        "removed": {
+          "channel": 9,
+          "duration": 100,
+          "id": "song-snare-07-003",
+          "pitch": 39,
+          "start": 14418,
+          "velocity": 97
+        },
+        "track": "track-snare"
+      },
+      {
+        "absolute_tick": 121920,
+        "clip": "song-clip-snare-07",
+        "reason": "one-beat percussion pause before main drop",
+        "removed": {
+          "channel": 9,
+          "duration": 90,
+          "id": "song-snare-pickup-7-2",
+          "pitch": 38,
+          "start": 14400,
+          "velocity": 66
+        },
+        "track": "track-snare"
+      },
+      {
+        "absolute_tick": 122400,
+        "clip": "song-clip-snare-07",
+        "reason": "one-beat percussion pause before main drop",
+        "removed": {
+          "channel": 9,
+          "duration": 90,
+          "id": "song-snare-pickup-7-3",
+          "pitch": 38,
+          "start": 14880,
+          "velocity": 73
+        },
+        "track": "track-snare"
+      },
+      {
+        "absolute_tick": 122412,
+        "clip": "song-clip-hats-07",
+        "reason": "one-beat percussion pause before main drop",
+        "removed": {
+          "channel": 9,
+          "duration": 80,
+          "id": "song-hats-07-015",
+          "pitch": 46,
+          "start": 14892,
+          "velocity": 62
+        },
+        "track": "track-hats"
+      },
+      {
+        "absolute_tick": 122686,
+        "clip": "song-clip-percussion-07",
+        "reason": "one-beat percussion pause before main drop",
+        "removed": {
+          "channel": 9,
+          "duration": 60,
+          "id": "song-percussion-07-003",
+          "pitch": 44,
+          "start": 15166,
+          "velocity": 47
+        },
+        "track": "track-percussion"
+      }
+    ],
+    "notes": 1446,
+    "points": 6079,
+    "relocated_bundle_reinspection": true,
+    "reopened_pcm_equality": true,
+    "tracks": 10
+  },
+  "paths": {
+    "machine_native_audio": "verification.json",
+    "matched": "listening/",
+    "proof": "proof/verified-suite/",
+    "raw_A": "A-phase7-original-64bars.wav",
+    "raw_B": "B-phase8-motion-64bars.wav",
+    "release": "artifacts/phase8-house",
+    "session": "native/session.scraft"
+  },
+  "phase": 8,
+  "preservation": {
+    "all_unchanged": true,
+    "changed_existing_files": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/STATUS.md"
+    ],
+    "historical_files": 4651,
+    "historical_inventory_sha256": "1865800790f2a6b2639d76aab6ec6faaf0e875d84b44d39833a19fae5b7be804",
+    "old_tracked_code_tests_fixtures_unchanged": true
+  },
+  "rms_matching": {
+    "A-phase7": {
+      "audio": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 126.90477083333333,
+        "frames": 6091429,
+        "non_silent": true,
+        "peak": 0.4540519714355469,
+        "peak_dbfs": -6.857888686651923,
+        "rms": 0.04428128285311193,
+        "rms_dbfs": -27.07559611722255,
+        "sample_rate": 48000
+      },
+      "gain_db": -0.06275225534643777
+    },
+    "B-phase8": {
+      "audio": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "clipped_samples": 0,
+        "duration_seconds": 126.90477083333333,
+        "frames": 6091429,
+        "non_silent": true,
+        "peak": 0.5311683416366577,
+        "peak_dbfs": -5.495356348336498,
+        "rms": 0.044281282864805864,
+        "rms_dbfs": -27.075596114928754,
+        "sample_rate": 48000
+      },
+      "gain_db": 0.0
+    }
+  },
+  "spatial": {
+    "bands": {
+      "high_over_500": {
+        "mid": 171858.69261615613,
+        "mono_energy_retention": 0.9742179559479313,
+        "side": 4548.128431331754,
+        "side_to_mid_db": -15.773387837337317,
+        "side_to_mid_power_ratio": 0.026464349065484467
+      },
+      "low_20_120": {
+        "mid": 783890.0020141929,
+        "mono_energy_retention": 0.9999999563384419,
+        "side": 0.03422586034083141,
+        "side_to_mid_db": -73.59900751478575,
+        "side_to_mid_power_ratio": 4.366155998021228e-08
+      }
+    },
+    "bin_hz": 11.71875,
+    "last_250ms": {
+      "peak": 0,
+      "rms": 0.0,
+      "rms_dbfs": null
+    },
+    "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+    "mono_sum": {
+      "clipped": false,
+      "peak": 0.5280782580375671,
+      "rms": 0.04410703845666736,
+      "rms_loss_db": -0.034245919304194815
+    },
+    "windows": 96
+  },
+  "tests": {
+    "new_methods": 16,
+    "offline": {
+      "log": ".local/phase8/offline-suite.log",
+      "methods": 226,
+      "passed": 215,
+      "seconds": 115.67,
+      "skipped": 11
+    },
+    "prior_methods_preserved": 210,
+    "real_host": {
+      "log": ".local/phase8/real-suite-final.log",
+      "log_sha256": "cbf16b41b55b7a1423b36dd710728f94cd7513477eb4e22d1bc2715a8644af9f",
+      "methods": 226,
+      "passed": 226,
+      "python": "3.13.7",
+      "seconds": 693.572,
+      "skipped": 0
+    }
+  },
+  "timed_filter_audit": {
+    "band_delta_db": {
+      "early-build-hpf-static": -2.7976221936618852,
+      "early-build-lpf-static": -10.916094117411726,
+      "late-build-hpf-static": -24.259254737673118,
+      "late-build-lpf-static": -0.05857186965481731
+    },
+    "fixed_highpasses_preserved": true,
+    "hpf_closes_by_more_than_12db": true,
+    "lpf_opens_by_more_than_6db": true,
+    "same_input_static_open_controls": true
+  },
+  "wheel": {
+    "installed_smoke": {
+      "bars": 64,
+      "canonical_hash": "22a3d95c5479dbdd312db6aefe803e0e600ba7ecd62350060c2e1880759ca2a7",
+      "dependencies": [],
+      "hpf_control_preserves_fixed_hat_eq": true,
+      "installed_module": "/home/User/Kuang/.local/phase8/install-final/lib/python3.13/site-packages/kuang/__init__.py",
+      "resources": true,
+      "schema": "0.1"
+    },
+    "no_dependency_downloads": true,
+    "sha256": "6ff2ddde79447ae12af45dbc42af5ad369157fcc99d9b4c0b8aa04c07b38ea5d"
+  }
+}

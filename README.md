@@ -64,6 +64,16 @@ python3 tools/phase7_house.py package --out-dir artifacts/my-phase7
 
 `phase7-house-listening.zip` contains matched A/B pad excerpts, the full song at its native level and both editable bundles. The full 64-bar song is **not** RMS matched to the 16-bar comparison. Use new output paths; `--symbolic` instead of `--soundcraft` generates editable canonical/MIDI without audio claims (packaging requires real proof). No downloads or new plugin are required. See [Phase 7 controls, section measurements, limitations and reproduction](docs/PHASE7.md). Width is still modest; technical tests do not establish musical preference or club readiness.
 
+Phase 8 keeps that **same 64-bar song** and adds deliberate native production gestures: steep HPF/LPF sweeps, note-aligned tempo delay throws, a spacious breakdown and an audible programmed pad pump. Every kick, bass and main-hook note is unchanged; five pre-drop percussion notes make a one-beat pause. This is an opt-in experiment, with same-input native effect controls and measured audio evidence.
+
+```bash
+python3 tools/phase8_house.py --out-dir artifacts/my-phase8 \
+  --source artifacts/phase7-house/song --soundcraft /absolute/path/to/soundcraft-cli
+python3 tools/phase8_house.py --package --out-dir artifacts/my-phase8
+```
+
+Download `artifacts/phase8-house/phase8-house-listening.zip` for the released full Phase 7/8 equal-RMS pair, short context excerpts, isolated effect controls and complete editable native/canonical/MIDI bundles. Both full songs have identical length: 64 bars plus five seconds of tail. The pump is **tempo-programmed gain ducking**, not an input-triggered sidechain. `--symbolic` generates the deterministic project without a host or audio claim. New paths only; no downloads, services or extra plugins. See [Phase 8 controls, measurements and limits](docs/PHASE8.md). Human listening decides whether it sounds better.
+
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash
