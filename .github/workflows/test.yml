@@ -16,9 +16,9 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Project-local test scratch
         run: |
-          mkdir -p .local/phase9/tmp
-          echo "TMPDIR=$PWD/.local/phase9/tmp" >> "$GITHUB_ENV"
-          echo "PIP_CACHE_DIR=$PWD/.local/phase9/pip-cache" >> "$GITHUB_ENV"
+          mkdir -p .local/phase10/tmp
+          echo "TMPDIR=$PWD/.local/phase10/tmp" >> "$GITHUB_ENV"
+          echo "PIP_CACHE_DIR=$PWD/.local/phase10/pip-cache" >> "$GITHUB_ENV"
       - name: Unit and adapter contract tests (stdlib only)
         run: python -m unittest discover -s tests -v
       - name: CLI vertical slice
@@ -79,35 +79,43 @@ jobs:
           cmp artifacts/phase7-house/song-a/song.mid artifacts/phase7-house/song-b/song.mid
       - name: Audible gesture experiment (symbolic, deterministic, no downloads)
         run: |
-          python tools/phase8_house.py --symbolic --out-dir .local/phase9/gestures-a
-          python tools/phase8_house.py --symbolic --out-dir .local/phase9/gestures-b
-          python -m kuang validate .local/phase9/gestures-a/project.kuang.json
-          cmp .local/phase9/gestures-a/project.kuang.json .local/phase9/gestures-b/project.kuang.json
-          cmp .local/phase9/gestures-a/song.mid .local/phase9/gestures-b/song.mid
+          python tools/phase8_house.py --symbolic --out-dir .local/phase10/gestures-a
+          python tools/phase8_house.py --symbolic --out-dir .local/phase10/gestures-b
+          python -m kuang validate .local/phase10/gestures-a/project.kuang.json
+          cmp .local/phase10/gestures-a/project.kuang.json .local/phase10/gestures-b/project.kuang.json
+          cmp .local/phase10/gestures-a/song.mid .local/phase10/gestures-b/song.mid
       - name: Translation mix and standalone loudness/master imports
         run: |
-          python tools/phase9_house.py --symbolic --out-dir .local/phase9/translation-a
-          python tools/phase9_house.py --symbolic --out-dir .local/phase9/translation-b
-          python -m kuang validate .local/phase9/translation-a/project.kuang.json
-          cmp .local/phase9/translation-a/project.kuang.json .local/phase9/translation-b/project.kuang.json
-          cmp .local/phase9/translation-a/song.mid .local/phase9/translation-b/song.mid
+          python tools/phase9_house.py --symbolic --out-dir .local/phase10/translation-a
+          python tools/phase9_house.py --symbolic --out-dir .local/phase10/translation-b
+          python -m kuang validate .local/phase10/translation-a/project.kuang.json
+          cmp .local/phase10/translation-a/project.kuang.json .local/phase10/translation-b/project.kuang.json
+          cmp .local/phase10/translation-a/song.mid .local/phase10/translation-b/song.mid
+      - name: Pad-space and pruned sine pulse (deterministic, no host or model)
+        run: |
+          python tools/phase10_house.py --symbolic --out-dir .local/phase10/atmosphere-a
+          python tools/phase10_house.py --symbolic --out-dir .local/phase10/atmosphere-b
+          python -m kuang validate .local/phase10/atmosphere-a/project.kuang.json
+          cmp .local/phase10/atmosphere-a/project.kuang.json .local/phase10/atmosphere-b/project.kuang.json
+          cmp .local/phase10/atmosphere-a/song.mid .local/phase10/atmosphere-b/song.mid
       - name: Wheel install and installed profiles/loudness/master smoke
         run: |
-          mkdir -p .local/phase9/build-src
-          cp pyproject.toml LICENSE .local/phase9/build-src/
-          cp -r kuang .local/phase9/build-src/
+          mkdir -p .local/phase10/build-src
+          cp pyproject.toml LICENSE .local/phase10/build-src/
+          cp -r kuang .local/phase10/build-src/
           # The image's cached 3.11 has setuptools/wheel; 3.13 omits them.
           # Build the universal wheel without fetching packages, then install
           # and run it with the selected matrix interpreter below.
-          phase9_builder=("$RUNNER_TOOL_CACHE"/Python/3.11.*/x64/bin/python)
-          test -x "${phase9_builder[0]}"
-          "${phase9_builder[0]}" -m pip wheel --no-index --no-deps --no-build-isolation .local/phase9/build-src --wheel-dir .local/phase9/wheels
-          python -m venv .local/phase9/install
-          .local/phase9/install/bin/pip install --no-index --no-deps .local/phase9/wheels/*.whl
-          mkdir -p .local/phase9/away
-          cd .local/phase9/away
+          phase10_builder=("$RUNNER_TOOL_CACHE"/Python/3.11.*/x64/bin/python)
+          test -x "${phase10_builder[0]}"
+          "${phase10_builder[0]}" -m pip wheel --no-index --no-deps --no-build-isolation .local/phase10/build-src --wheel-dir .local/phase10/wheels
+          python -m venv .local/phase10/install
+          .local/phase10/install/bin/pip install --no-index --no-deps .local/phase10/wheels/*.whl
+          mkdir -p .local/phase10/away
+          cd .local/phase10/away
           ../install/bin/python -c 'from kuang.depth import depth_house; from kuang.schema import validate; validate(depth_house())'
           ../install/bin/python -c 'from kuang.house_song import arrange_house; from kuang.schema import validate; p=arrange_house(); validate(p); assert p.bars==64'
           ../install/bin/python -c 'from kuang.gestures import gesture_house; from kuang.schema import validate; p=gesture_house(); validate(p); assert p.bars==64'
           ../install/bin/python -c 'from kuang.translation import translation_house; from kuang.schema import validate; from kuang.loudness import k_coefficients; from kuang.mastering import validate_recipe; p=translation_house(); validate(p); assert p.bars==64; k_coefficients(48000)'
+          ../install/bin/python -c 'from kuang.atmosphere import atmosphere_house; from kuang.schema import validate; p=atmosphere_house(); validate(p); assert p.bars==64; assert len(p.tracks)==11'
           ../install/bin/kuang --help

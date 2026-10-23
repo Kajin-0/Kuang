@@ -84,6 +84,18 @@ python3 tools/phase9_house.py package --out-dir artifacts/my-phase9
 
 The standalone meter needs only Python; the explicit optional `--meter-library .local/phase9/libebur128.so` uses the separately built MIT reference backend for faster analysis. Neither tests nor the tool download it. The released **`artifacts/phase9-house/phase9-house-listening.zip`** contains integrated-LUFS-matched A/B/C, matched drop excerpts, raw B/C, the complete editable B bundle and a frozen, reproducible master script. C is not claimed to be native editable. No fixed commercial loudness target or formal EBU certification is claimed. [Phase 9 source controls, licensing, measurement validation, limitations and reproduction](docs/PHASE9.md) include the private user-licensed reference interface.
 
+Phase 10 develops the **same 64-bar Phase 9 song** with clearer pad envelopes, longer plate/tempo-delay tails, independent higher-part pans and a very quiet, late-offbeat mono sine pulse. All **1446 original notes** stay exact; the optional pulse adds 90 notes in the groove/drop. Pad faders and gain lanes remain unchanged, and measured average pad level is lower. Pulse trials with local cancellation were pruned before release.
+
+```bash
+mkdir -p .local/phase10/tmp
+export TMPDIR="$PWD/.local/phase10/tmp"
+python3 tools/phase10_house.py --source artifacts/phase9-house \
+  --out-dir artifacts/my-phase10 --soundcraft /absolute/path/to/soundcraft-cli
+python3 tools/phase10_house.py package --out-dir artifacts/my-phase10
+```
+
+Download **`artifacts/phase10-house/phase10-house-listening.zip`**: full integrated-LUFS-matched **A=unchanged Phase9 native**, **D=combined Phase10**, **E=optional off-host master**, matched drop A/D, causal pulse/pad-space controls, all four editable native/canonical/MIDI variants and the frozen E reproduction script. B=pulse only and C=space only are separate controls, unrelated to Phase 9's B/C labels. `--symbolic` instead of `--soundcraft` needs no host; `--reference-guide` accepts the optional strictly numeric local guide. No reference recording, external plugin, model or download is included. The new >500 Hz side fraction measures **2.65% → 5.25%**, with **94.75%** high-band mono energy retention; native loudness changes only **.008 LU**. These are DSP observations; human listening decides preference. See [Phase 10 exact controls, rejected trials, measurements and reproduction](docs/PHASE10.md).
+
 Optional experimental local LLM **plan** generation, using an already installed Apache-2.0 model and local `ollama serve`. Small 3–4B models are not assumed to provide Kuang's primary musical intelligence or better composition; this path is for experiments and eventual A/B benchmarks:
 
 ```bash

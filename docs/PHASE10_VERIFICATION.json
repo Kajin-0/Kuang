@@ -1,0 +1,1209 @@
+{
+  "allowed_old_file_edits": [
+    ".github/workflows/test.yml",
+    "README.md",
+    "docs/STATUS.md"
+  ],
+  "artifact_inventory": "artifacts/phase10-house/verification.json",
+  "bars": 64,
+  "base_commit": "dd79840098d067b94d74cec40e1789c5f5a4a472",
+  "canonical_hash": "dad1db280f798fdf07ab4b0243bcc6e528f680b30f32b8a5e92104a94ce640b1",
+  "ci": {
+    "matrix": [
+      "3.11",
+      "3.13"
+    ],
+    "result": "checked after push; recorded in artifacts/phase10-house/proof/release-summary.json"
+  },
+  "club_ready_claim": false,
+  "controls": {
+    "echo_timing": {
+      "configured_delay_ms": 357.14285714285717,
+      "max_spacing_error_ms": 0.00297619047586295,
+      "observed_peaks": [
+        {
+          "peak_window_start_seconds": 5.835333333333334,
+          "repeat": 1,
+          "window_rms": 0.07038729099168307
+        },
+        {
+          "peak_window_start_seconds": 6.192479166666667,
+          "repeat": 2,
+          "window_rms": 0.0289054104071408
+        },
+        {
+          "peak_window_start_seconds": 6.549625,
+          "repeat": 3,
+          "window_rms": 0.0022691432466106875
+        }
+      ],
+      "observed_spacing_ms": [
+        357.14583333333303,
+        357.14583333333303
+      ],
+      "rms_window_ms": 20,
+      "search_hop_ms": 2
+    },
+    "echo_windows": {
+      "echo-1": {
+        "dry_rms": 0.0,
+        "seconds": [
+          5.882619047619047,
+          6.022619047619047
+        ],
+        "wet_minus_dry_db": null,
+        "wet_rms": 0.005307037099219309
+      },
+      "echo-2": {
+        "dry_rms": 0.0,
+        "seconds": [
+          6.239761904761905,
+          6.379761904761905
+        ],
+        "wet_minus_dry_db": null,
+        "wet_rms": 0.0018010035758682934
+      },
+      "echo-3": {
+        "dry_rms": 0.0,
+        "seconds": [
+          6.596904761904762,
+          6.7369047619047615
+        ],
+        "wet_minus_dry_db": null,
+        "wet_rms": 0.0001507770896996709
+      }
+    },
+    "envelope_windows": {
+      "envelope-new": {
+        "bin_hz": 11.71875,
+        "method": "absolute mean squares: up to 32 equally spaced stereo 4096-frame Hann FFTs, window-power normalized; RMS uses every frame",
+        "regions": {
+          "attack": {
+            "band_mean_square": {
+              "air_8000_nyquist": 3.325038091247575e-13,
+              "body_120_500": 5.157627707817705e-05,
+              "mid_500_2000": 5.373136334580901e-05,
+              "presence_2000_8000": 1.6332917473414258e-07,
+              "sub_20_120": 2.6440886304471543e-13
+            },
+            "peak": 0.11274099349975586,
+            "rms": 0.022993153637628584,
+            "rms_dbfs": -32.7680291753181,
+            "sampled_windows": 1
+          },
+          "release": {
+            "band_mean_square": {
+              "air_8000_nyquist": 8.030561341251348e-16,
+              "body_120_500": 5.125408140887948e-09,
+              "mid_500_2000": 5.776998399893321e-09,
+              "presence_2000_8000": 9.863410519728946e-12,
+              "sub_20_120": 3.643237124964846e-17
+            },
+            "peak": 0.0005452632904052734,
+            "rms": 0.00010413114383078305,
+            "rms_dbfs": -79.64838722131344,
+            "sampled_windows": 4
+          }
+        }
+      },
+      "envelope-old": {
+        "bin_hz": 11.71875,
+        "method": "absolute mean squares: up to 32 equally spaced stereo 4096-frame Hann FFTs, window-power normalized; RMS uses every frame",
+        "regions": {
+          "attack": {
+            "band_mean_square": {
+              "air_8000_nyquist": 4.3072641794553424e-14,
+              "body_120_500": 7.298661032085887e-06,
+              "mid_500_2000": 7.5847095897094345e-06,
+              "presence_2000_8000": 2.2145928830614026e-08,
+              "sub_20_120": 3.8400217554550705e-14
+            },
+            "peak": 0.0423893928527832,
+            "rms": 0.008633110660966854,
+            "rms_dbfs": -41.27665384356476,
+            "sampled_windows": 1
+          },
+          "release": {
+            "band_mean_square": {
+              "air_8000_nyquist": 7.939006777489106e-16,
+              "body_120_500": 3.7718331114172095e-11,
+              "mid_500_2000": 3.7988404542606266e-11,
+              "presence_2000_8000": 7.177459163122772e-14,
+              "sub_20_120": 4.615903446156742e-18
+            },
+            "peak": 5.519390106201172e-05,
+            "rms": 8.648614102364239e-06,
+            "rms_dbfs": -101.26106961005142,
+            "sampled_windows": 4
+          }
+        }
+      }
+    },
+    "low_band_changes_db": {
+      "120_250": 0.010291628179724193,
+      "20_40": -0.11301747041349648,
+      "40_80": 0.28105343270876226,
+      "80_120": 0.04100584523718524
+    },
+    "pad_levels": {
+      "pads-original": {
+        "crest_db": 17.96530868603498,
+        "end_frame": 731429,
+        "peak": 0.1164013147354126,
+        "rms": 0.014712702431414227,
+        "rms_dbfs": -36.64615097338125,
+        "side_rms": 0.003993339830211598,
+        "start_frame": 0,
+        "stereo_correlation": 0.9425045263363128
+      },
+      "pads-wet": {
+        "crest_db": 21.94652551315756,
+        "end_frame": 731429,
+        "peak": 0.16002166271209717,
+        "rms": 0.012789468688197476,
+        "rms_dbfs": -37.86294994010146,
+        "side_rms": 0.006370824262471715,
+        "start_frame": 0,
+        "stereo_correlation": 0.6165692795741612
+      }
+    },
+    "pad_rms_change_db": -1.216798966720205,
+    "pad_wet_dry_difference": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.8287013337469261,
+      "changed_samples": 1848715,
+      "channels": 2,
+      "difference_peak": 0.07325625419616699,
+      "difference_rms": 0.005106738610821888,
+      "difference_rms_dbfs": -45.83712742006915,
+      "difference_to_original_rms_ratio": 0.4930713332526456,
+      "frames": 1115429,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "pulse_acceptance_note": "Quiet, band-limited and no significant measured cancellation; no claim of human preference. Speaker approximation adds negligible pulse benefit.",
+    "pulse_accepted": true,
+    "pulse_bass_interaction": {
+      "bass_band_rms": 0.0023885375028588327,
+      "correlation": 0.2354760807759301,
+      "interference_db": 0.306870702587433,
+      "kick_band_rms": 0.014983217867009431,
+      "method": "mono stems, one-pole 20 Hz HP then 120 Hz LP; not phase calibration",
+      "summed_to_independent_energy_ratio": 1.0732158308428583
+    },
+    "pulse_relative_bass_db": -16.659437941410175,
+    "pulse_steps": {
+      "frames": 1115429,
+      "interpretation": "discontinuity diagnostic, not perceptual crackle-free certification",
+      "maximum_adjacent_sample_step": 0.0002669095993041992
+    },
+    "speaker120": {
+      "lowend-OFF": {
+        "cutoff_hz": 120,
+        "method": "two cascaded 2-pole Butterworth HP, 24dB/oct; diagnostic approximation, not an actual speaker",
+        "peak": 0.2578418532996033,
+        "peak_dbfs": -11.772931717793869,
+        "production_processing": false,
+        "rms": 0.015678261693205464,
+        "rms_dbfs": -36.09404181632052
+      },
+      "lowend-ON": {
+        "cutoff_hz": 120,
+        "method": "two cascaded 2-pole Butterworth HP, 24dB/oct; diagnostic approximation, not an actual speaker",
+        "peak": 0.2578418532996033,
+        "peak_dbfs": -11.772931717793869,
+        "production_processing": false,
+        "rms": 0.0156936167901916,
+        "rms_dbfs": -36.08553912570067
+      }
+    },
+    "speaker120_change_db": 0.008502690619849318,
+    "sub20_60": {
+      "lowend-OFF": {
+        "band_hz": [
+          20,
+          60
+        ],
+        "bin_hz": 2.9296875,
+        "mean_square": 0.00036258555688420754,
+        "method": "stereo 16384-frame Hann mean squares, 16 aligned windows; absolute sampled power",
+        "windows": [
+          {
+            "mean_square": 0.00023654408211242473,
+            "start_frame": 0
+          },
+          {
+            "mean_square": 0.0002769525326382257,
+            "start_frame": 47670
+          },
+          {
+            "mean_square": 0.0003749832552137318,
+            "start_frame": 95339
+          },
+          {
+            "mean_square": 0.00025114573298001537,
+            "start_frame": 143009
+          },
+          {
+            "mean_square": 0.00010096800760333047,
+            "start_frame": 190679
+          },
+          {
+            "mean_square": 2.3902608135932893e-05,
+            "start_frame": 238348
+          },
+          {
+            "mean_square": 5.06461088272827e-05,
+            "start_frame": 286018
+          },
+          {
+            "mean_square": 0.00026131810805546293,
+            "start_frame": 333688
+          },
+          {
+            "mean_square": 0.0006101403001440993,
+            "start_frame": 381357
+          },
+          {
+            "mean_square": 0.000810812831971014,
+            "start_frame": 429027
+          },
+          {
+            "mean_square": 0.0008147930991673587,
+            "start_frame": 476697
+          },
+          {
+            "mean_square": 0.00030795349519198174,
+            "start_frame": 524366
+          },
+          {
+            "mean_square": 0.0002787237605877517,
+            "start_frame": 572036
+          },
+          {
+            "mean_square": 0.0005979373888820952,
+            "start_frame": 619706
+          },
+          {
+            "mean_square": 3.878452731392046e-05,
+            "start_frame": 667375
+          },
+          {
+            "mean_square": 0.000765763071322693,
+            "start_frame": 715045
+          }
+        ]
+      },
+      "lowend-ON": {
+        "band_hz": [
+          20,
+          60
+        ],
+        "bin_hz": 2.9296875,
+        "mean_square": 0.00036997105939897773,
+        "method": "stereo 16384-frame Hann mean squares, 16 aligned windows; absolute sampled power",
+        "windows": [
+          {
+            "mean_square": 0.0002352412903438848,
+            "start_frame": 0
+          },
+          {
+            "mean_square": 0.00026715561206660734,
+            "start_frame": 47670
+          },
+          {
+            "mean_square": 0.00035593107323545105,
+            "start_frame": 95339
+          },
+          {
+            "mean_square": 0.00023630865268737945,
+            "start_frame": 143009
+          },
+          {
+            "mean_square": 9.366142406040509e-05,
+            "start_frame": 190679
+          },
+          {
+            "mean_square": 2.6044261853129678e-05,
+            "start_frame": 238348
+          },
+          {
+            "mean_square": 4.8661660034029175e-05,
+            "start_frame": 286018
+          },
+          {
+            "mean_square": 0.00026004615048673977,
+            "start_frame": 333688
+          },
+          {
+            "mean_square": 0.0006099395030134471,
+            "start_frame": 381357
+          },
+          {
+            "mean_square": 0.0008108102168678146,
+            "start_frame": 429027
+          },
+          {
+            "mean_square": 0.0008147930977678037,
+            "start_frame": 476697
+          },
+          {
+            "mean_square": 0.0003079541361909544,
+            "start_frame": 524366
+          },
+          {
+            "mean_square": 0.0002824833007378284,
+            "start_frame": 572036
+          },
+          {
+            "mean_square": 0.0005979373888820952,
+            "start_frame": 619706
+          },
+          {
+            "mean_square": 6.251507432522816e-05,
+            "start_frame": 667375
+          },
+          {
+            "mean_square": 0.0009100541078308459,
+            "start_frame": 715045
+          }
+        ]
+      }
+    },
+    "sub_change_db": 0.08757252603736991,
+    "voice_leakage": {
+      "before": {
+        "crest_db": null,
+        "end_frame": 12000,
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null,
+        "side_rms": 0.0,
+        "start_frame": 0,
+        "stereo_correlation": null
+      },
+      "full": {
+        "crest_db": 29.717883156582946,
+        "end_frame": 326857,
+        "peak": 0.02967989444732666,
+        "rms": 0.0009695454983947561,
+        "rms_dbfs": -60.26863611462179,
+        "side_rms": 0.0,
+        "start_frame": 0,
+        "stereo_correlation": 1.0
+      },
+      "released": {
+        "crest_db": null,
+        "end_frame": 96000,
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null,
+        "side_rms": 0.0,
+        "start_frame": 48000,
+        "stereo_correlation": null
+      }
+    }
+  },
+  "drop_matching": {
+    "A": {
+      "error_lu": 1.684046679883977e-09,
+      "gain_db": -0.16194512567825115,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 19.145840850201942,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.89554731869145,
+        "oversample": 4,
+        "rms": 0.05277451213527004,
+        "rms_dbfs": -25.55151545521975,
+        "sample_peak": 0.4783174991607666,
+        "sample_peak_dbfs": -6.405674605017806,
+        "sample_rate": 48000,
+        "true_peak": 0.4799257516860962,
+        "true_peak_dbtp": -6.376518924455664
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.895547317007402
+    },
+    "B": {
+      "error_lu": -8.314756883009977e-09,
+      "gain_db": -0.2104936744930228,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 19.072100232881873,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.895547308692645,
+        "oversample": 4,
+        "rms": 0.05292780230873793,
+        "rms_dbfs": -25.526322771980126,
+        "sample_peak": 0.47565150260925293,
+        "sample_peak_dbfs": -6.454222539098255,
+        "sample_rate": 48000,
+        "true_peak": 0.4772508144378662,
+        "true_peak_dbtp": -6.425066436032404
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.895547317007402
+    },
+    "C": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 19.026655359918408,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.895547317007402,
+        "oversample": 4,
+        "rms": 0.05293670419951938,
+        "rms_dbfs": -25.524862020995116,
+        "sample_peak": 0.4732489585876465,
+        "sample_peak_dbfs": -6.498206661076705,
+        "sample_rate": 48000,
+        "true_peak": 0.474435031414032,
+        "true_peak_dbtp": -6.476465019009585
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.895547317007402
+    },
+    "D": {
+      "error_lu": 7.171898630531359e-10,
+      "gain_db": -0.05038047770845466,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 18.950603804238266,
+        "duration_seconds": 15.238104166666666,
+        "fir_taps": 49,
+        "frames": 731429,
+        "integrated_lufs": -23.895547317724592,
+        "oversample": 4,
+        "rms": 0.05309338732834857,
+        "rms_dbfs": -25.499191320608933,
+        "sample_peak": 0.47051191329956055,
+        "sample_peak_dbfs": -6.548587516370665,
+        "sample_rate": 48000,
+        "true_peak": 0.4716911315917969,
+        "true_peak_dbtp": -6.526845779599522
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -23.895547317007402
+    }
+  },
+  "external_audio_redistributed": false,
+  "formal_ebu_certification": false,
+  "full_matching": {
+    "A": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.643298300331047,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.05823510790324,
+        "oversample": 4,
+        "rms": 0.04466397852423128,
+        "rms_dbfs": -27.0008518795855,
+        "sample_peak": 0.5396625995635986,
+        "sample_peak_dbfs": -5.357553579254455,
+        "sample_rate": 48000,
+        "true_peak": 0.5396625995635986,
+        "true_peak_dbtp": -5.357553579254455
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -25.05823510790324
+    },
+    "D": {
+      "error_lu": 3.3356428730257903e-10,
+      "gain_db": -0.007943580714453446,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.715787161826224,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.058235108236804,
+        "oversample": 4,
+        "rms": 0.0443431509443644,
+        "rms_dbfs": -27.0634689988421,
+        "sample_peak": 0.540276288986206,
+        "sample_peak_dbfs": -5.3476818370158785,
+        "sample_rate": 48000,
+        "true_peak": 0.540276288986206,
+        "true_peak_dbtp": -5.3476818370158785
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -25.05823510790324
+    },
+    "E": {
+      "error_lu": 3.850210816835897e-09,
+      "gain_db": -2.8636438367065935,
+      "measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.27647461783573,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.05823511175345,
+        "oversample": 4,
+        "rms": 0.04434695140908158,
+        "rms_dbfs": -27.06272459972087,
+        "sample_peak": 0.5136739015579224,
+        "sample_peak_dbfs": -5.786249981885136,
+        "sample_rate": 48000,
+        "true_peak": 0.5136739015579224,
+        "true_peak_dbtp": -5.786249981885136
+      },
+      "processing": "constant attenuation only; no hidden EQ/compression",
+      "target_lufs": -25.05823510790324
+    }
+  },
+  "historical_files_unchanged": 6652,
+  "human_listening": false,
+  "key": "C minor",
+  "limits": [
+    "New musical preference untested by human",
+    "Pulse has negligible high-passed small-speaker benefit",
+    "Six candidate-only Bb1 pulses rejected for local cancellation",
+    "Static synth ADSRs, no direct envelope automation or oscillator LFO/wavetable",
+    "Programmed ducking, no verified input-triggered sidechain or phase reset",
+    "E is off-host, no mapped native master/canonical sampler",
+    "Finite FIR true peak is validated but not formal certification",
+    "Numeric Suno guide is different material, no reference audio used"
+  ],
+  "master": {
+    "native_editable": false,
+    "plan": {
+      "available_true_peak_headroom_db": 4.7226058646829765,
+      "choice": "75% of measured headroom, maximum 3 dB gain; no commercial loudness target",
+      "compressed_measurement": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.2764748950964,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.194591270937813,
+        "oversample": 4,
+        "rms": 0.043656203178454436,
+        "rms_dbfs": -27.199080759779374,
+        "sample_peak": 0.5056729316711426,
+        "sample_peak_dbfs": -5.922605864682977,
+        "sample_rate": 48000,
+        "true_peak": 0.5056729316711426,
+        "true_peak_dbtp": -5.922605864682977
+      },
+      "compression": {
+        "active_fraction": 0.11115930268579015,
+        "detector": "linked stereo peak, exponential 15ms attack / 150ms release; no makeup",
+        "maximum_reduction_db": 0.9403874178456557,
+        "native_editable": false,
+        "rms_gain_db": -0.1435553426908572
+      }
+    },
+    "processing": {
+      "active_fraction": 0.11115930268579015,
+      "detector": "linked stereo peak, exponential 15ms attack / 150ms release; no makeup",
+      "gain_db": 3.0,
+      "input_sha256": "e1dde17b94fa8a3ed3e5f2e484ccf3cf882c68459b30d2075e17a206cea46fac",
+      "maximum_reduction_db": 0.9403874178456557,
+      "native_editable": false,
+      "output_sha256": "2e97ac439e67e49f9c54e672982931af39e4072f3d59858ae75d493b7a655f3b",
+      "recipe": {
+        "attack_ms": 15.0,
+        "ceiling_dbtp": -1.2,
+        "gain_db": 3.0,
+        "input_sha256": "e1dde17b94fa8a3ed3e5f2e484ccf3cf882c68459b30d2075e17a206cea46fac",
+        "ratio": 1.3,
+        "release_ms": 150.0,
+        "threshold_dbfs": -20.0,
+        "version": "gentle-master-1"
+      },
+      "rms_gain_db": -0.1435553426908572
+    },
+    "recipe": {
+      "attack_ms": 15.0,
+      "ceiling_dbtp": -1.2,
+      "gain_db": 3.0,
+      "input_sha256": "e1dde17b94fa8a3ed3e5f2e484ccf3cf882c68459b30d2075e17a206cea46fac",
+      "ratio": 1.3,
+      "release_ms": 150.0,
+      "threshold_dbfs": -20.0,
+      "version": "gentle-master-1"
+    }
+  },
+  "metrics": {
+    "A": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.643298300331047,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.05823510790324,
+      "oversample": 4,
+      "rms": 0.04466397852423128,
+      "rms_dbfs": -27.0008518795855,
+      "sample_peak": 0.5396625995635986,
+      "sample_peak_dbfs": -5.357553579254455,
+      "sample_rate": 48000,
+      "true_peak": 0.5396625995635986,
+      "true_peak_dbtp": -5.357553579254455
+    },
+    "B": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.60474556517235,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.018211852908156,
+      "oversample": 4,
+      "rms": 0.04486266232933918,
+      "rms_dbfs": -26.962299144426808,
+      "sample_peak": 0.5396625995635986,
+      "sample_peak_dbfs": -5.357553579254455,
+      "sample_rate": 48000,
+      "true_peak": 0.5396625995635986,
+      "true_peak_dbtp": -5.357553579254455
+    },
+    "C": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.755179983127828,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.077168659201828,
+      "oversample": 4,
+      "rms": 0.044182889352502495,
+      "rms_dbfs": -27.09491773451701,
+      "sample_peak": 0.5407706499099731,
+      "sample_peak_dbfs": -5.339737751389184,
+      "sample_rate": 48000,
+      "true_peak": 0.5407706499099731,
+      "true_peak_dbtp": -5.339737751389184
+    },
+    "D": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.71578766664839,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.050291527188786,
+      "oversample": 4,
+      "rms": 0.04438372301430016,
+      "rms_dbfs": -27.055525418037575,
+      "sample_peak": 0.5407706499099731,
+      "sample_peak_dbfs": -5.339737751389184,
+      "sample_rate": 48000,
+      "true_peak": 0.5407706499099731,
+      "true_peak_dbtp": -5.339737751389184
+    },
+    "E": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 21.276475314264644,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -22.194591271196646,
+      "oversample": 4,
+      "rms": 0.061666026051504605,
+      "rms_dbfs": -24.199080758897843,
+      "sample_peak": 0.7142820358276367,
+      "sample_peak_dbfs": -2.9226054446331995,
+      "sample_rate": 48000,
+      "true_peak": 0.7142820358276367,
+      "true_peak_dbtp": -2.9226054446331995
+    }
+  },
+  "native": {
+    "all_mapped_instruments_audited": {
+      "passed": true,
+      "source": "saved native inspection, independent catalog unit conversion",
+      "tracks": [
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 6,
+          "plugin": "drum_synth",
+          "track": "track-kick"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 6,
+          "plugin": "drum_synth",
+          "track": "track-snare"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 6,
+          "plugin": "drum_synth",
+          "track": "track-hats"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-bass"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-harmony"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-arp"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-lead"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 6,
+          "plugin": "drum_synth",
+          "track": "track-percussion"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-depth-pad"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-depth-air"
+        },
+        {
+          "mapped_instrument_parameters_exact_with_native_f32_tolerance": 16,
+          "plugin": "subtractive_synth",
+          "track": "track-sub-pulse"
+        }
+      ]
+    },
+    "capabilities": {
+      "adapter": "soundcraft",
+      "apply_targets": {
+        "automation": "existing canonical track/effect lanes; instrument and bypass automation unsupported",
+        "notes": "edit canonical JSON through Kuang transactions, then create a fresh export",
+        "set_parameter": "standard track mixer controls and mapped effect parameters"
+      },
+      "contract_hash": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+      "executable_sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+      "notes": [
+        "MIDI clips merge per track; original clip/note/point IDs are retained in the companion canonical snapshot and identity map.",
+        "Native import restores a verified snapshot only; external host edits require explicit reconciliation and are rejected.",
+        "One canonical pan drives both native stereo panners; audio panning laws are host-defined.",
+        "Key, locks and other canonical-only intent remain in the snapshot; native save names the session from its filename."
+      ],
+      "operations": [
+        "set_parameter",
+        "add_automation_points",
+        "delete_automation_points"
+      ],
+      "supported": true,
+      "unsupported": [],
+      "version": "0.11.0"
+    },
+    "full_saved_native_equality": true,
+    "independent_checks": {
+      "actual_pcm_acceptance_gates": true,
+      "actual_zip_master_exact": true,
+      "all_note_fields_fx_lane_points_markers": true,
+      "full_native_repeat": true,
+      "lufs_match_remeasured": true,
+      "pulse_repeated_pcm_exact": true,
+      "read_only_release_unchanged": true,
+      "scoped_native_edit_and_replay": true
+    }
+  },
+  "native_session": "artifacts/phase10-house/native/session.scraft",
+  "new_dependencies": [],
+  "new_pulse_notes": 90,
+  "notes_total": 1536,
+  "old_core_adapter_profiles_tests_fixtures_unchanged": true,
+  "old_tracked_files": 118,
+  "original_notes_exact": 1446,
+  "phase": 10,
+  "proof_original_staging": ".local/phase10/integration",
+  "proof_relocated": "artifacts/phase10-house/proof/verified-suite",
+  "pulse_windows_minimum_db": 0.0,
+  "python": "3.13.7",
+  "reference": {
+    "loudness_target": false,
+    "metric_caveat": "Approximate supplied guide; different material, duration, vocals and possibly analysis windows. Side fraction is S/(M+S), not S/M.",
+    "provided_numeric_guide": {
+      "comparison": "Suno has greater upper-band stereo complexity and much louder mastering but adds vocals and arrangement changes; do not blindly normalize or copy it. Test native Phase9 B vs Phase10 at equal LUFS.",
+      "kuang_phase8": {
+        "high_band_side_fraction_above_500Hz_approx": 0.025,
+        "integrated_lufs_approx": -25.6,
+        "stereo_correlation_approx": 0.985
+      },
+      "purpose": "Directional Suno reference from user audio, not a mastering target or identical arrangement; audio not redistributed",
+      "suno": {
+        "high_band_side_fraction_above_500Hz_approx": 0.142,
+        "integrated_lufs_approx": -15.1,
+        "stereo_correlation_approx": 0.937
+      }
+    },
+    "same_arrangement": false,
+    "source_audio_redistributed": false,
+    "source_audio_used": false
+  },
+  "reference_guide_sha256": "ca87f8ed06a38a2d7ca49d1b76a249df3404836dc620b919cf7f3247679b34c0",
+  "rejected_trial": {
+    "audits": "artifacts/phase10-house/proof/pulse-trial-audits",
+    "minimum_window_db_after": 0.0,
+    "minimum_window_db_before": -1.297198477,
+    "old_notes_removed": 0,
+    "pulse_notes_after": 90,
+    "pulse_notes_before": 96,
+    "removed_only_new_pitch": 34
+  },
+  "relocation": {
+    "all_four_variant_canonical_native_imports_exact": true,
+    "files_relocated_without_rewriting": true,
+    "primary_and_saved_native_full_equality": true,
+    "relocated_independent_and_reopened_native_full_equality": true
+  },
+  "repeated_symbolic_cli_canonical_midi_exact": true,
+  "schema": "0.1",
+  "section_metrics": {
+    "bits_per_sample": 24,
+    "channels": 2,
+    "clipped_samples": 0,
+    "crest_db": 21.71578766673895,
+    "duration_seconds": 126.90477083333333,
+    "frames": 6091429,
+    "non_silent": true,
+    "peak": 0.5407706499099731,
+    "peak_dbfs": -5.339737751389184,
+    "rms": 0.04438372301383742,
+    "rms_dbfs": -27.055525418128134,
+    "sample_rate": 48000,
+    "sections": {
+      "Breakdown": {
+        "crest_db": 25.802569030086428,
+        "end_frame": 2925714,
+        "peak": 0.2506074905395508,
+        "rms": 0.01284888955887086,
+        "rms_dbfs": -37.82268807590417,
+        "side_rms": 0.005859442362269011,
+        "start_frame": 2194286,
+        "stereo_correlation": 0.5986265552118762
+      },
+      "Build": {
+        "crest_db": 19.682746290498777,
+        "end_frame": 2194286,
+        "peak": 0.4308145046234131,
+        "rms": 0.04468409866974499,
+        "rms_dbfs": -26.99693995731753,
+        "side_rms": 0.006243676838755602,
+        "start_frame": 1462857,
+        "stereo_correlation": 0.9614787072819867
+      },
+      "DJ Intro": {
+        "crest_db": 21.190189499126916,
+        "end_frame": 731429,
+        "peak": 0.4719196557998657,
+        "rms": 0.04114893424072889,
+        "rms_dbfs": -27.712828171058234,
+        "side_rms": 0.0015059346065660626,
+        "start_frame": 0,
+        "stereo_correlation": 0.9973246088457841
+      },
+      "DJ Outro": {
+        "crest_db": 20.32896293468753,
+        "end_frame": 5851429,
+        "peak": 0.4776550531387329,
+        "rms": 0.045990298650943014,
+        "rms_dbfs": -26.74667540406809,
+        "side_rms": 0.004532916866359467,
+        "start_frame": 4388571,
+        "stereo_correlation": 0.9808242031530936
+      },
+      "Groove": {
+        "crest_db": 19.149634745886196,
+        "end_frame": 1462857,
+        "peak": 0.4623016119003296,
+        "rms": 0.05098514636599314,
+        "rms_dbfs": -25.851126592106258,
+        "side_rms": 0.005148588406170234,
+        "start_frame": 731429,
+        "stereo_correlation": 0.9796210861538809
+      },
+      "Main Drop": {
+        "crest_db": 20.095843652996678,
+        "end_frame": 4388571,
+        "peak": 0.5407706499099731,
+        "rms": 0.05348363666093981,
+        "rms_dbfs": -25.43558140438586,
+        "side_rms": 0.007847233796490069,
+        "start_frame": 2925714,
+        "stereo_correlation": 0.9572942362185823
+      },
+      "full": {
+        "crest_db": 21.715787666712497,
+        "end_frame": 6091429,
+        "peak": 0.5407706499099731,
+        "rms": 0.04438372301397257,
+        "rms_dbfs": -27.05552541810168,
+        "side_rms": 0.005655210699549444,
+        "start_frame": 0,
+        "stereo_correlation": 0.9677790658725562
+      }
+    },
+    "spectrum": {
+      "band_power_fraction": {
+        "air_8000_nyquist": 0.004550000475900723,
+        "body_120_500": 0.14834799674163962,
+        "mid_500_2000": 0.07618163045799065,
+        "presence_2000_8000": 0.020882039032315555,
+        "sub_20_120": 0.7500383332921534
+      },
+      "bin_hz": 23.4375,
+      "method": "2048-frame Hann FFT, equally spaced windows, sum of stereo powers",
+      "windows": 64
+    }
+  },
+  "sections": 6,
+  "source_hash": "209b21e6b58283237ebaf3f29e56e7af6d2d0f6b8f267bff855663267e7c17ef",
+  "spatial": {
+    "A": {
+      "bands": {
+        "high_over_500": {
+          "mid": 174352.93169100035,
+          "mono_energy_retention": 0.9734651565025813,
+          "side": 4752.535542574966,
+          "side_to_mid_db": -15.645038808133865,
+          "side_to_mid_power_ratio": 0.027258133812155905
+        },
+        "low_20_120": {
+          "mid": 609516.212094707,
+          "mono_energy_retention": 0.9999999230614417,
+          "side": 0.046895302296065644,
+          "side_to_mid_db": -71.13855921853067,
+          "side_to_mid_power_ratio": 7.69385643326892e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.5363956689834595,
+        "rms": 0.0444708477271228,
+        "rms_loss_db": -0.03763995468724265
+      },
+      "windows": 96
+    },
+    "C": {
+      "bands": {
+        "high_over_500": {
+          "mid": 153071.58973312573,
+          "mono_energy_retention": 0.9474785176839988,
+          "side": 8485.202190021453,
+          "side_to_mid_db": -12.562323972289951,
+          "side_to_mid_power_ratio": 0.05543290041486515
+        },
+        "low_20_120": {
+          "mid": 609517.7914491461,
+          "mono_energy_retention": 0.9999999080852144,
+          "side": 0.05602370225127559,
+          "side_to_mid_db": -70.36614581723373,
+          "side_to_mid_power_ratio": 9.191479401787047e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.5365302562713623,
+        "rms": 0.04381947401867931,
+        "rms_loss_db": -0.07173906021221237
+      },
+      "windows": 96
+    },
+    "D": {
+      "bands": {
+        "high_over_500": {
+          "mid": 153071.58132566043,
+          "mono_energy_retention": 0.9474785165530331,
+          "side": 8485.201916814909,
+          "side_to_mid_db": -12.562323873587609,
+          "side_to_mid_power_ratio": 0.0554329016746917
+        },
+        "low_20_120": {
+          "mid": 625301.0625572354,
+          "mono_energy_retention": 0.999999910405029,
+          "side": 0.0560238355453986,
+          "side_to_mid_db": -70.47716328169737,
+          "side_to_mid_power_ratio": 8.959497896306646e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.5365302562713623,
+        "rms": 0.04402196565951051,
+        "rms_loss_db": -0.071085968357011
+      },
+      "windows": 96
+    },
+    "E": {
+      "bands": {
+        "high_over_500": {
+          "mid": 284317.84512936627,
+          "mono_energy_retention": 0.9439906629369184,
+          "side": 16869.291875574298,
+          "side_to_mid_db": -12.267072663799336,
+          "side_to_mid_power_ratio": 0.059332511710261
+        },
+        "low_20_120": {
+          "mid": 1167848.3553220364,
+          "mono_energy_retention": 0.9999999053428872,
+          "side": 0.11054516396290948,
+          "side_to_mid_db": -70.23846705279502,
+          "side_to_mid_power_ratio": 9.465712175655412e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.708681046962738,
+        "rms": 0.061148391208922646,
+        "rms_loss_db": -0.07321853306055418
+      },
+      "windows": 96
+    }
+  },
+  "tempo_bpm": 126,
+  "tests": {
+    "new_real_host_methods": 1,
+    "new_unit_methods": 14,
+    "offline": {
+      "log_sha256": "35e7b4fd834f4d370e4ca9a077f0cf258927a9f6e38c41168fb640e0e00bf957",
+      "passed": 248,
+      "run": 261,
+      "seconds": 252.151,
+      "skipped": 13
+    },
+    "old_methods_preserved": 246,
+    "real_host": {
+      "log_sha256": "075da77705761cad9447e8d9ffc56346a2c808f6e914d9b0344c19bc7fba5a38",
+      "passed": 261,
+      "run": 261,
+      "seconds": 1329.58,
+      "skipped": 0
+    }
+  },
+  "variants": {
+    "A": "209b21e6b58283237ebaf3f29e56e7af6d2d0f6b8f267bff855663267e7c17ef",
+    "B": "6b41c65bad96e53bf4bfae659af0cbf9a67777f4173ba2bce46192f7797dbc8f",
+    "C": "8ce68bfd9ffacd7fde7b7e886268d541e6defa302faad7a3d117446f0a2d31a7",
+    "D": "dad1db280f798fdf07ab4b0243bcc6e528f680b30f32b8a5e92104a94ce640b1"
+  },
+  "wheel": {
+    "bars": 64,
+    "canonical_hash": "dad1db280f798fdf07ab4b0243bcc6e528f680b30f32b8a5e92104a94ce640b1",
+    "installed_master_pcm_exact": true,
+    "installed_module": "/home/User/Kuang/.local/phase10/install/lib/python3.13/site-packages/kuang/__init__.py",
+    "lua_resource": true,
+    "master_sha256": "2e97ac439e67e49f9c54e672982931af39e4072f3d59858ae75d493b7a655f3b",
+    "notes": 1536,
+    "runtime_dependencies": [],
+    "tracks": 11
+  },
+  "zip": {
+    "bytes": 163432574,
+    "sha256": "6484dfb795cca2e10c09f3e4d83f1b53d2b71b368c311dc22d18ac341066e135",
+    "zip": "/home/User/Kuang/artifacts/phase10-house/phase10-house-listening.zip"
+  }
+}

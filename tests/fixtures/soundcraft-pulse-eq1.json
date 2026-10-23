@@ -1,0 +1,68 @@
+{
+  "eq_1band": {
+    "category": "Eq",
+    "id": "eq_1band",
+    "instrument": false,
+    "name": "EQ 1-Band",
+    "params": [
+      {
+        "choices": [
+          "Peak",
+          "Low Shelf",
+          "High Shelf",
+          "High Pass",
+          "Low Pass",
+          "Notch",
+          "Band Pass"
+        ],
+        "default": 0.0,
+        "id": "type",
+        "max": 6.0,
+        "min": 0.0,
+        "name": "Type",
+        "taper": "Linear",
+        "unit": "Choice"
+      },
+      {
+        "choices": [],
+        "default": 1000.0,
+        "id": "freq",
+        "max": 20000.0,
+        "min": 20.0,
+        "name": "Freq",
+        "taper": "Log",
+        "unit": "Hz"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "gain",
+        "max": 24.0,
+        "min": -24.0,
+        "name": "Gain",
+        "taper": "Linear",
+        "unit": "Db"
+      },
+      {
+        "choices": [],
+        "default": 1.0,
+        "id": "q",
+        "max": 10.0,
+        "min": 0.10000000149011612,
+        "name": "Q",
+        "taper": "Log",
+        "unit": "None"
+      },
+      {
+        "choices": [],
+        "default": 0.0,
+        "id": "output_gain",
+        "max": 24.0,
+        "min": -24.0,
+        "name": "Output",
+        "taper": "Linear",
+        "unit": "Db"
+      }
+    ]
+  }
+}
