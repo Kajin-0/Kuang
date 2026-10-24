@@ -1,0 +1,259 @@
+{
+  "asset_scope": "one licensed sample per track; seven static controls; native MIDI remains live",
+  "base_commit": "245a282b7e493611de37693d123c1e82b56d7ffc",
+  "ci": {
+    "actual_post_push_result": "artifacts/producer/proof/release-summary.json",
+    "configured_python": [
+      "3.11",
+      "3.13"
+    ]
+  },
+  "history": {
+    "artifact_example_files": 9417,
+    "exact": true,
+    "old_core_adapter_profiles_tests_fixtures_exact": true
+  },
+  "host": {
+    "contract_sha256": "5af7ed8eed0e51a251da6dee6f57a9b83ac6ae004c70b13a96416cdee4ad49f7",
+    "sha256": "84466d199a6cb4d4924a9179fdf36b0c6d1ab3a0082b60ceed50d06f09f0b130",
+    "version": "0.11.0"
+  },
+  "human_preference": "unreviewed",
+  "incumbent": "Phase10 D remains unchanged",
+  "independent_context_reconstruction": {
+    "A": {
+      "error_rms": 4.715268336484833e-08,
+      "error_rms_dbfs": -146.52987174787071,
+      "method": "sum independent native stem PCM without gain changes; quantization differences expected",
+      "peak_error_lsb": 1
+    },
+    "B": {
+      "error_rms": 4.9883696147102367e-08,
+      "error_rms_dbfs": -146.0408274964842,
+      "method": "sum independent native stem PCM without gain changes; quantization differences expected",
+      "peak_error_lsb": 1
+    }
+  },
+  "legacy_default_changed": false,
+  "licensing": "MIT Kuang and original diagnostic fixtures; no plugin binaries or factory content bundled",
+  "limitations": [
+    "No SFZ multi-zone, velocity layers, round robin or choke groups",
+    "No general bus/send or true triggered sidechain adapter",
+    "No mixed Vitalium/sampler backend composition",
+    "Audition baseline currently ordinary verified built-in bundles; repeated instrument-rebind workflow remains future work",
+    "License/ownership and actual listening are declarations, not authenticated by software",
+    "No autonomous professional musical judgement or established sound quality gain",
+    "Native GUI itself not exercised on this headless VPS"
+  ],
+  "milestone": "editable-producer-foundation",
+  "paths": {
+    "architecture": "docs/PRODUCER_ARCHITECTURE.md",
+    "artifacts": "artifacts/producer",
+    "native": "artifacts/producer/full-song-audition/B/native/session.scraft",
+    "usage": "docs/PRODUCER_USAGE.md"
+  },
+  "promoted_listening_zip": null,
+  "proof": {
+    "all_note_fields_exact": true,
+    "audition_manifest_sha256": "53e8b0491f018bfb1df6c05602a7a70e7ac4a76aedcb6bc96288cb3b5c00140f",
+    "baseline_PCM_exact": true,
+    "candidate_native": "full-song-audition/B/native/session.scraft",
+    "full_native_reopen_PCM_exact": true,
+    "human_preference": "unreviewed",
+    "infrastructure_only": true,
+    "levels": {
+      "A": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 21.71578766664839,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -25.050291527188786,
+        "oversample": 4,
+        "rms": 0.04438372301430016,
+        "rms_dbfs": -27.055525418037575,
+        "sample_peak": 0.5407706499099731,
+        "sample_peak_dbfs": -5.339737751389184,
+        "sample_rate": 48000,
+        "true_peak": 0.5407706499099731,
+        "true_peak_dbtp": -5.339737751389184
+      },
+      "B": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 22.907342595098438,
+        "duration_seconds": 126.90477083333333,
+        "fir_taps": 49,
+        "frames": 6091429,
+        "integrated_lufs": -24.654307184171614,
+        "oversample": 4,
+        "rms": 0.04868105418226511,
+        "rms_dbfs": -26.25280051492674,
+        "sample_peak": 0.6803417205810547,
+        "sample_peak_dbfs": -3.345457919828299,
+        "sample_rate": 48000,
+        "true_peak": 0.6806805729866028,
+        "true_peak_dbtp": -3.3411328846354054
+      }
+    },
+    "matching": {
+      "full": {
+        "A": {
+          "error_lu": 0.0,
+          "gain_db": 0,
+          "measurement": {
+            "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+            "backend": "libebur128-1.2.6",
+            "bits_per_sample": 24,
+            "certified": false,
+            "channels": 2,
+            "clipped_samples": 0,
+            "crest_db": 21.71578766664839,
+            "duration_seconds": 126.90477083333333,
+            "fir_taps": 49,
+            "frames": 6091429,
+            "integrated_lufs": -25.050291527188786,
+            "oversample": 4,
+            "rms": 0.04438372301430016,
+            "rms_dbfs": -27.055525418037575,
+            "sample_peak": 0.5407706499099731,
+            "sample_peak_dbfs": -5.339737751389184,
+            "sample_rate": 48000,
+            "true_peak": 0.5407706499099731,
+            "true_peak_dbtp": -5.339737751389184
+          },
+          "processing": "constant attenuation only; no hidden EQ/compression",
+          "target_lufs": -25.050291527188786
+        },
+        "B": {
+          "error_lu": 3.34669181256686e-10,
+          "gain_db": -0.39598434301717234,
+          "measurement": {
+            "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+            "backend": "libebur128-1.2.6",
+            "bits_per_sample": 24,
+            "certified": false,
+            "channels": 2,
+            "clipped_samples": 0,
+            "crest_db": 22.90734318484201,
+            "duration_seconds": 126.90477083333333,
+            "fir_taps": 49,
+            "frames": 6091429,
+            "integrated_lufs": -25.050291527523456,
+            "oversample": 4,
+            "rms": 0.046511544043033926,
+            "rms_dbfs": -26.648784859634695,
+            "sample_peak": 0.6500217914581299,
+            "sample_peak_dbfs": -3.741441674792683,
+            "sample_rate": 48000,
+            "true_peak": 0.650345504283905,
+            "true_peak_dbtp": -3.737117152103751
+          },
+          "processing": "constant attenuation only; no hidden EQ/compression",
+          "target_lufs": -25.050291527188786
+        }
+      },
+      "instrument": {
+        "A": {
+          "error_lu": 0.0,
+          "gain_db": 0,
+          "measurement": {
+            "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+            "backend": "libebur128-1.2.6",
+            "bits_per_sample": 24,
+            "certified": false,
+            "channels": 2,
+            "clipped_samples": 0,
+            "crest_db": 22.503502436036374,
+            "duration_seconds": 126.90477083333333,
+            "fir_taps": 49,
+            "frames": 6091429,
+            "integrated_lufs": -27.054784033803482,
+            "oversample": 4,
+            "rms": 0.035374714592160954,
+            "rms_dbfs": -29.02614110796769,
+            "sample_peak": 0.4719196557998657,
+            "sample_peak_dbfs": -6.522638671931316,
+            "sample_rate": 48000,
+            "true_peak": 0.4723430871963501,
+            "true_peak_dbtp": -6.514848724370729
+          },
+          "processing": "constant attenuation only; no hidden EQ/compression",
+          "target_lufs": -27.054784033803482
+        },
+        "B": {
+          "error_lu": -2.796149090045219e-09,
+          "gain_db": -0.650466341853857,
+          "measurement": {
+            "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+            "backend": "libebur128-1.2.6",
+            "bits_per_sample": 24,
+            "certified": false,
+            "channels": 2,
+            "clipped_samples": 0,
+            "crest_db": 24.456175413784077,
+            "duration_seconds": 126.90477083333333,
+            "fir_taps": 49,
+            "frames": 6091429,
+            "integrated_lufs": -27.054784031007333,
+            "oversample": 4,
+            "rms": 0.03779157703063479,
+            "rms_dbfs": -28.452099694651483,
+            "sample_peak": 0.6312534809112549,
+            "sample_peak_dbfs": -3.9959242808674054,
+            "sample_rate": 48000,
+            "true_peak": 0.6315678954124451,
+            "true_peak_dbtp": -3.9915990932112915
+          },
+          "processing": "constant attenuation only; no hidden EQ/compression",
+          "target_lufs": -27.054784033803482
+        }
+      }
+    },
+    "native_live_sampler": true,
+    "production_listening_zip_created": false,
+    "quality_improvement_claimed": false,
+    "source_full_song_bars": 64,
+    "source_notes": 1536,
+    "why_no_listening_zip": "The importer/host mechanism is validated. The synthesized assets are test fixtures, not a credible human-curated studio-quality sound selection. No human preference has been recorded."
+  },
+  "python": "3.13.7",
+  "quality_improvement_established": false,
+  "runtime_dependencies": "standard library only",
+  "schema_version": "0.1",
+  "tests": {
+    "additional_new_native": {
+      "passed": 2,
+      "seconds": 74.166
+    },
+    "additional_new_unit": {
+      "passed": 19,
+      "seconds": 30.378
+    },
+    "errors": 0,
+    "failed": 0,
+    "new_native_methods": 2,
+    "new_unit_methods": 19,
+    "old_methods_preserved": 297,
+    "optional_vitalium_regressions_enabled": true,
+    "passed": 318,
+    "real_soundcraft_enabled": true,
+    "seconds": 1866.046,
+    "skipped": 0,
+    "total": 318
+  },
+  "wheel": {
+    "no_download_build_install": true,
+    "outside_checkout_installed_asset_cli_and_exact_transaction_replay": true,
+    "sha256": "74ddaa750823a1a52b3911b2ea43670b186593235e3e3425e2311b47e97b9996"
+  }
+}

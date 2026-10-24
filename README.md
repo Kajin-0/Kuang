@@ -8,6 +8,13 @@ Kuang turns a musical description into a short editable instrumental sketch. Its
 
 **Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor. `create` supports 8/16/32 bars; the separate authored house expansion supports 64 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI verification or professional composition/mastering claim; new-candidate listening quality requires human audition. SoundCraft is the human editor; Kuang does not implement another DAW UI.
 
+The next producer foundation is a **generic licensed sample-asset importer, live native sampler backend and full-song audition/review loop**. It preserves MIDI, effects, mixer, automation and SongSpec while opening the palette to explicit user-selected WAVs. Original samples and native `Audio Files` travel in a hash-verified editable bundle; mono/stereo relocation, state and actual PCM are tested. This is infrastructure, not a claim of Suno-class production or a better song. See the [research-driven architecture](docs/PRODUCER_ARCHITECTURE.md) and [CLI workflow, licensing and actual evidence](docs/PRODUCER_USAGE.md). Normal creation and previous releases stay unchanged.
+
+```bash
+python3 -m kuang.sampled_instrument --help
+python3 -m kuang.producer --help
+```
+
 **Phase 12 listening experiment:** eight bars from the user-preferred Phase 10 D drop, with **A=frozen source, B=groove only, C=sound only, D=combined**. The kick and hook notes stay exact; supporting rhythm gets authored accents, ghost-note timing and bass/stab articulation. Existing envelopes/processing are adjusted with measured native gain compensation. No new inserts or required plugins. All four have editable native/canonical/MIDI bundles and active-eight-bar LUFS-matched WAVs with natural release tails. A separate exact historical PCM cut documents the difference between a running song and a fresh DSP-reset excerpt. Human preference remains unknown. See [Phase 12 controls, evidence and reproduction](docs/PHASE12.md).
 
 ```bash

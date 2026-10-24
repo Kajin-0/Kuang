@@ -16,9 +16,9 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Project-local test scratch
         run: |
-          mkdir -p .local/phase12/tmp
-          echo "TMPDIR=$PWD/.local/phase12/tmp" >> "$GITHUB_ENV"
-          echo "PIP_CACHE_DIR=$PWD/.local/phase12/pip-cache" >> "$GITHUB_ENV"
+          mkdir -p .local/producer/tmp
+          echo "TMPDIR=$PWD/.local/producer/tmp" >> "$GITHUB_ENV"
+          echo "PIP_CACHE_DIR=$PWD/.local/producer/pip-cache" >> "$GITHUB_ENV"
       - name: Unit and adapter contract tests (stdlib only)
         run: python -m unittest discover -s tests -v
       - name: CLI vertical slice
@@ -114,19 +114,19 @@ jobs:
           cmp .local/phase12/pocket-a/A/song.mid .local/phase12/pocket-a/C/song.mid
       - name: Wheel install and installed profiles/loudness/master smoke
         run: |
-          mkdir -p .local/phase12/build-src
-          cp pyproject.toml LICENSE .local/phase12/build-src/
-          cp -r kuang .local/phase12/build-src/
+          mkdir -p .local/producer/build-src
+          cp pyproject.toml LICENSE .local/producer/build-src/
+          cp -r kuang .local/producer/build-src/
           # The image's cached 3.11 has setuptools/wheel; 3.13 omits them.
           # Build the universal wheel without fetching packages, then install
           # and run it with the selected matrix interpreter below.
           phase11_builder=("$RUNNER_TOOL_CACHE"/Python/3.11.*/x64/bin/python)
           test -x "${phase11_builder[0]}"
-          "${phase11_builder[0]}" -m pip wheel --no-index --no-deps --no-build-isolation .local/phase12/build-src --wheel-dir .local/phase12/wheels
-          python -m venv .local/phase12/install
-          .local/phase12/install/bin/pip install --no-index --no-deps .local/phase12/wheels/*.whl
-          mkdir -p .local/phase12/away
-          cd .local/phase12/away
+          "${phase11_builder[0]}" -m pip wheel --no-index --no-deps --no-build-isolation .local/producer/build-src --wheel-dir .local/producer/wheels
+          python -m venv .local/producer/install
+          .local/producer/install/bin/pip install --no-index --no-deps .local/producer/wheels/*.whl
+          mkdir -p .local/producer/away
+          cd .local/producer/away
           ../install/bin/python -c 'from kuang.depth import depth_house; from kuang.schema import validate; validate(depth_house())'
           ../install/bin/python -c 'from kuang.house_song import arrange_house; from kuang.schema import validate; p=arrange_house(); validate(p); assert p.bars==64'
           ../install/bin/python -c 'from kuang.gestures import gesture_house; from kuang.schema import validate; p=gesture_house(); validate(p); assert p.bars==64'
@@ -136,3 +136,6 @@ jobs:
           ../install/bin/python -m kuang.external_synth --help
           ../install/bin/python -c 'from kuang.pocket_production import experiment; from kuang.schema import validate; from kuang.midi import export_bytes; ps,_=experiment(); [validate(p) for p in ps.values()]; assert all(p.bars==8 for p in ps.values()); assert export_bytes(ps["A"])==export_bytes(ps["C"])'
           ../install/bin/kuang --help
+          ../install/bin/python -I "$GITHUB_WORKSPACE/tools/producer_smoke.py"
+          ../install/bin/python -m kuang.sampled_instrument --help
+          ../install/bin/python -m kuang.producer --help
