@@ -47,3 +47,16 @@ includes original MIT source/notices and per-file CC0 identities/licenses,
 with the external GPL component requirement explicit. Official Vital/latest
 application/factory terms are not inferred from Vitalium's GPL fork. See
 [PHASE14.md](PHASE14.md) for exact source/host gates and remaining limitations.
+
+Phase15 adds original MIT tuning diagnostics, harmonic-context analysis and a
+conservative production/replay script. Its listening ZIP reuses only the same
+six declared-CC0 Phase13 samples and original built-in instrument music; **no
+Vitalium binary or prepared preset is required or bundled**. Independent
+pitch diagnostics privately reuse the already separately installed GPL
+Vitalium/Pedalboard components and Kuang's original patches. The optional
+native MIDI initializer uses a verified API parameter ID, not copied DSP code.
+Pinned SoundCraft source is read only into ignored project-local audit scratch;
+no third-party implementation is added to Git/wheel. No reference/Suno audio,
+factory material, download, account or system package is introduced. Previous
+release files remain unchanged. See [postmortem](PHASE14_POSTMORTEM.md) and
+[Phase15 scope](PHASE15.md).

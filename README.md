@@ -251,3 +251,31 @@ isolated replay recipe with frozen MIT source. Vitalium1.0.6 Linux VST3 remains
 an optional **separate GPL component**, not official Vital or a bundled binary.
 No factory presets/reference audio/services are included; no professional-quality
 claim follows from render tests. [Listening/replay guide](docs/PHASE14_LISTENING_README.md).
+
+### Phase15: musical repair and the Phase14 pitch postmortem
+
+**The user rejected Phase14 B; Phase13 remains the musical incumbent.** Actual
+controlled audio tests found the Phase14 VST voices200cents flat in SoundCraft
+legacy mode, despite correct MIDI and state restoration. A synthetic MIDI
+pitch-bend input was initialized to its negative extreme. The opt-in calibrated
+backend centers that input, with unchanged notes/presets and actual cross-register
+and chord tests. [Postmortem](docs/PHASE14_POSTMORTEM.md).
+
+The [Phase15 listening repair](docs/PHASE15.md) is deliberately conservative:
+all original Phase13 notes/sounds/inserts/mixer/automation, no lifted voicings or
+pickups, and only restrained real shared processing. Its editable A/B ZIP needs
+SoundCraft alone, **no Vitalium**. It is not a claimed quality upgrade.
+
+```bash
+python3 tools/phase15_house.py build --out-dir .local/phase15/new-repair \
+  --soundcraft /absolute/path/to/soundcraft-cli
+# Separate optional Vitalium musical-correctness gate, not a source substitution:
+python3 tools/phase15_pitch.py --out-dir .local/phase15/new-pitch-gate \
+  --plugin /absolute/project-local/path/to/vitalium.vst3 \
+  --soundcraft /absolute/path/to/soundcraft-cli
+```
+
+`--center-pitch-bend` on `kuang.production_host` explicitly selects the reviewed
+channel0 calibration. Legacy mode remains available for historical exact replay;
+its earlier non-silence/state checks do not establish correct musical pitch.
+[Listening/replay instructions](docs/PHASE15_LISTENING_README.md).

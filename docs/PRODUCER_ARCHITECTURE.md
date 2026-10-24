@@ -115,3 +115,28 @@ Neither these working paths nor the external synth brand imply Suno-class or
 professional production quality. Licensing stays separate: original MIT patches/
 code, inherited declared CC0 samples, optional separately installed GPL Vitalium,
 no bundled binary/factory/Suno content.
+
+## Phase15 correction: sound-source eligibility includes actual tuning
+
+The user **rejected Phase14 B**, and controlled audio proved a200cent native
+VST pitch offset. The same saved presets play in tune in the independent host.
+The mixed shifted/unshifted sources created unintended harmonic relationships
+although all MIDI pitch classes were in C minor. See the
+[postmortem](PHASE14_POSTMORTEM.md): synthetic MIDI pitch-bend slot1835232641
+started at0 rather than neutral.5. Serialization equality faithfully reproduced
+the error; it was not a musical acceptance test.
+
+Insert an actual musical correctness gate **before source ranking or full-song
+sound replacement**: isolated notes across registers, multiple active windows,
+harmonic-aware full-spectrum peaks plus a period estimator, chord root/voicing
+playback, unchanged MIDI and a separate-host control where available. Report
+uncertainty/unison spread; never infer whole-song key from one transient peak or
+label every minor second an error. After tuning passes, articulation and taste
+still require human context listening.
+
+An explicit pinned Vitalium/SoundCraft channel0 initializer now centers the
+proven synthetic input while preserving ordinary controls, component state and
+bend range. Legacy exact replay remains unchanged and unsuitable as evidence for
+new tuning claims. The safe primary [Phase15 candidate](PHASE15.md) instead uses
+all preferred Phase13 sources/notes and two quiet real shared paths. Phase13 stays
+incumbent; the repaired source/backend and the new mix are separate decisions.

@@ -93,10 +93,14 @@ def graph_contract(p):
 
 
 class ProductionAdapter:
-    def __init__(self,executable=None,*,plugin=None,workspace=None):
-        self.workspace=Path(workspace or Path.cwd()).resolve();self.scratch=self.workspace/'.local/phase14/tmp';self.scratch.mkdir(parents=True,exist_ok=True)
+    def __init__(self,executable=None,*,plugin=None,workspace=None,scratch=None,center_pitch_bend=False):
+        self.workspace=Path(workspace or Path.cwd()).resolve()
+        self.scratch=Path(scratch or self.workspace/'.local/phase14/tmp').resolve()
+        if not self.scratch.is_relative_to(self.workspace):raise ValidationError('production scratch must stay inside workspace')
+        self.scratch.mkdir(parents=True,exist_ok=True)
         self.samples=SampledInstrumentAdapter(executable,workspace=self.workspace);self.samples.scratch=self.scratch
-        self.external=ExternalSynthAdapter(plugin,executable,workspace=self.workspace) if plugin else None
+        if center_pitch_bend and not plugin:raise ValidationError('pitch-center calibration requires the explicit reviewed Vitalium plugin')
+        self.external=ExternalSynthAdapter(plugin,executable,workspace=self.workspace,center_pitch_bend=center_pitch_bend) if plugin else None
         if self.external:self.external.scratch=self.scratch;self.samples.base=self.external.base
         self.base=self.samples.base
 
@@ -110,12 +114,14 @@ class ProductionAdapter:
 
     def capabilities(self):
         sample=self.samples.capabilities();ext=self.external.capabilities() if self.external else None
-        return {'version':'production-native-1','host_sha256':sample['soundcraft_sha256'],'contract_hash':sample['contract_hash'],
+        result={'version':'production-native-1','host_sha256':sample['soundcraft_sha256'],'contract_hash':sample['contract_hash'],
             'plugin_sha256':ext['plugin_sha256'] if ext else None,'sampler':True,'aux_buses':True,
             'post_fader_sends':True,'send_automation':'channel-owned dB trim plus fixed Send.gain_db',
             'stereo_pan':'two native pan positions = center minus/plus static spread; no phase DSP',
             'external_plugin':PLUGIN_ID if ext else None,'instrument_automation':False,'pre_fader_or_send_pan':False,
             'true_triggered_sidechain':False,'native_json_mutation':False}
+        if ext and 'midi_pitch_initialization' in ext:result['midi_pitch_initialization']=ext['midi_pitch_initialization']
+        return result
 
     @staticmethod
     def _plain(p):
@@ -396,7 +402,8 @@ def main():
     parser.add_argument('action',choices=('capabilities','inspect','save','render'))
     parser.add_argument('--source');parser.add_argument('--out');parser.add_argument('--soundcraft')
     parser.add_argument('--plugin');parser.add_argument('--workspace',default=str(Path.cwd()))
-    args=parser.parse_args();a=ProductionAdapter(args.soundcraft,plugin=args.plugin,workspace=args.workspace)
+    parser.add_argument('--center-pitch-bend',action='store_true',help='Opt in to calibrated Vitalium channel-1 MIDI pitch initialization')
+    args=parser.parse_args();a=ProductionAdapter(args.soundcraft,plugin=args.plugin,workspace=args.workspace,center_pitch_bend=args.center_pitch_bend)
     if args.action=='capabilities':result=a.capabilities()
     else:
         if not args.source:parser.error('--source required')

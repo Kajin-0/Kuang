@@ -1,0 +1,185 @@
+{
+  "base_commit": "0239d757ae6ae6c42b8e904ad261d8a7536ba681",
+  "final_zip_replay_payload": "Only verification.json test metadata changed after actual isolated replay; all code/media/MIDI/audio/recipe hashes exact",
+  "incumbent": "Phase13 B",
+  "levels": {
+    "A": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 23.00388194173463,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.062399345363076,
+      "oversample": 4,
+      "rms": 0.04452170743749361,
+      "rms_dbfs": -27.0285637706359,
+      "sample_peak": 0.6291669607162476,
+      "sample_peak_dbfs": -4.0246818289012705,
+      "sample_rate": 48000,
+      "true_peak": 0.6299118399620056,
+      "true_peak_dbtp": -4.014404569569008
+    },
+    "B": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 22.746391254070147,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.17229016049323,
+      "oversample": 4,
+      "rms": 0.04375779087236525,
+      "rms_dbfs": -27.178892232651247,
+      "sample_peak": 0.6003091335296631,
+      "sample_peak_dbfs": -4.432500978581102,
+      "sample_rate": 48000,
+      "true_peak": 0.6013550162315369,
+      "true_peak_dbtp": -4.417381239811246
+    }
+  },
+  "limitations": [
+    "Human new mix preference unknown",
+    "Corrected Vitalium voices not used in safe candidate",
+    "Channel0/pinned binaries only for optional calibration",
+    "GUI/cross-platform unverified",
+    "Legacy mode retained for exact reproduction, not new musical correctness claims",
+    "No true input sidechain or native master bus",
+    "Meters not certified"
+  ],
+  "matching": {
+    "A": {
+      "error_lu": -1.4667023151559988e-10,
+      "gain_db": -0.10989081513015364,
+      "target_lufs": -25.17229016049323
+    },
+    "B": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "target_lufs": -25.17229016049323
+    }
+  },
+  "phase14_human_verdict": "rejected",
+  "phase15_human_preference": "unreviewed",
+  "preservation": {
+    "earlier_methods_exact": 363,
+    "earlier_test_files_exact": true,
+    "historical_files": 10132,
+    "historical_hashes_exact": true,
+    "installed_and_frozen_runtime_exact": true,
+    "intentional_old_file_changes": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/LICENSING.md",
+      "docs/PRODUCER_ARCHITECTURE.md",
+      "docs/STATUS.md",
+      "kuang/external_synth.py",
+      "kuang/production_host.py"
+    ]
+  },
+  "quality_upgrade_claimed": false,
+  "repair": {
+    "MIDI_bytes_exact": true,
+    "all_original_instruments_inserts_mixer_lanes_exact": true,
+    "auxes": 2,
+    "bars": 64,
+    "bpm": 126,
+    "full_native_save_reopen_PCM_exact": true,
+    "isolated_relative_replay_PCM_exact": true,
+    "key": "C minor",
+    "live_external_plugins": 0,
+    "new_notes": 0,
+    "no_offhost_master": true,
+    "source": "Phase13 B",
+    "source_note_records_exact": 1536,
+    "voicing_changes": 0
+  },
+  "root_cause": {
+    "MIDI_transpose_for_fix": false,
+    "active_windows_per_case": 3,
+    "channel": 0,
+    "corrected_chord": [
+      {
+        "midi": 51,
+        "nearest_peak_cents": 0.023245116548404943
+      },
+      {
+        "midi": 55,
+        "nearest_peak_cents": 0.008465476157592152
+      },
+      {
+        "midi": 58,
+        "nearest_peak_cents": 0.02598155078741522
+      },
+      {
+        "midi": 62,
+        "nearest_peak_cents": 0.008520344970875572
+      }
+    ],
+    "default": 0,
+    "fixed_normalized": 0.5,
+    "independent_host_cases": 10,
+    "isolated_native_cases": 10,
+    "native_legacy_offset_cents": -200,
+    "opt_in_backend_only": true,
+    "ordinary_synth_controls_modified": false,
+    "original_synth_component_modified": false,
+    "projected_out_of_scale_Phase14_records": 131,
+    "range_semitones": 2,
+    "synthetic_MIDI_input": "1835232641",
+    "synthetic_slot_counterfactual": {
+      "0": {
+        "fft_cents": -200.0021011034654,
+        "period_cents": -199.99755648793794
+      },
+      "0.5": {
+        "fft_cents": 0.016109617570348417,
+        "period_cents": 0.013898561662554342
+      },
+      "1": {
+        "fft_cents": 199.99803372754084,
+        "period_cents": 200.002253344228
+      }
+    }
+  },
+  "shared_processing_bypass_relative_RMS": 0.031047460411765093,
+  "tests": {
+    "all_real": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "a09b1b6a3c2c648cd716eb4ce3831d95e85996bed84ec9a8744ac0732dd443b3",
+      "methods": 377,
+      "seconds": 2430.167,
+      "skipped": 0
+    },
+    "focused_native": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "cdd1b5894364793f924393b13b8982cb140e0c0a48ad25868c8b4e244b8bc8ed",
+      "methods": 3,
+      "seconds": 144.984,
+      "skipped": 0
+    },
+    "focused_unit": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "c3afc2e013458b094cfa0a58a41be91aadedb0d2cd6b08d87c5f8fa827fd7e3d",
+      "methods": 10,
+      "seconds": 42.772,
+      "skipped": 0
+    }
+  },
+  "version": "phase15-verification-1",
+  "zip": {
+    "bytes": 61350981,
+    "sha256": "0466dfb6fcf5f416228031e440e83fdf3562cb0eae437a5561832009afc831b1"
+  }
+}

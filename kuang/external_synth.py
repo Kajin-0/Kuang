@@ -132,7 +132,9 @@ class _SandboxSoundCraft(SoundCraftAdapter):
 
 
 class ExternalSynthAdapter:
-    def __init__(self,plugin,executable=None,*,workspace=None):
+    def __init__(self,plugin,executable=None,*,workspace=None,center_pitch_bend=False):
+        if type(center_pitch_bend) is not bool:raise ValidationError('explicit MIDI pitch-center boolean required')
+        self.center_pitch_bend=center_pitch_bend
         self.workspace=Path(workspace or Path.cwd()).resolve();self.scratch=self.local(self.workspace/'.local/phase11/tmp')
         self.plugin=self.local(plugin);self.module=self.plugin/'Contents/x86_64-linux/vitalium.so'
         if not self.module.is_file() or digest(self.module)!=PLUGIN_SHA:
@@ -198,7 +200,11 @@ class ExternalSynthAdapter:
                 'official_vital_tested':False,'live_native_instrument':True,'normalized_static_controls':771,
                 'instrument_automation':False,'native_json_mutation':False,'downloads':False,
                 'license':'External Vitalium GPL-3.0-or-later; optional preparer Pedalboard GPL-3.0; MIT Kuang remains separate'}
-        return deepcopy(self._caps)
+        result=deepcopy(self._caps)
+        if self.center_pitch_bend:
+            result['midi_pitch_initialization']={'version':'vitalium-ch1-center-1','native_id':'1835232641','normalized':.5,'channel':0,
+                'reason':'JUCE synthetic channel-1 pitch-bend input defaults to zero; actual multi-register PCM calibration required'}
+        return result
 
     def script(self,commands,source,output,work):
         if any(k not in ('mix.instrument','mix.insert_state') for k,_ in commands):raise ValidationError('unsupported external operation')
@@ -237,6 +243,10 @@ class ExternalSynthAdapter:
             v=t.instrument.parameters[r['canonical_id']]
             if r['steps'] and abs(v*r['scale']-round(v*r['scale']))>2e-5:raise ValidationError('fractional external discrete selector')
             result[r['native_id']]=round(v*r['scale']) if r['steps'] else v
+        if self.center_pitch_bend:
+            if result.get('1835232641')!=0 or any(n.channel!=0 for c in t.clips for n in c.notes):
+                raise ValidationError('reviewed channel-1 MIDI pitch-center contract requires default-zero slot and channel-0 notes')
+            result['1835232641']=.5
         return result
 
     def _verify(self,p,native,patches):
