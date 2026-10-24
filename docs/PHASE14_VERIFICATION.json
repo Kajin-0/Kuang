@@ -1,0 +1,242 @@
+{
+  "DSP": {
+    "controls": {
+      "no-drum-glue": 0.03501754175300199,
+      "no-shared-space": 0.06671334700509668,
+      "static-stab-filter": 0.05038524915971424
+    },
+    "drum_envelope": [
+      {
+        "after_kick_ms": [
+          0,
+          20.0
+        ],
+        "bypass_mean_square": 0.012220910414397908,
+        "enabled_mean_square": 0.01170054073211062,
+        "gain_db": -0.18897627688891555
+      },
+      {
+        "after_kick_ms": [
+          20.0,
+          100.0
+        ],
+        "bypass_mean_square": 0.006148721631963267,
+        "enabled_mean_square": 0.005548378454134237,
+        "gain_db": -0.4461875531147699
+      },
+      {
+        "after_kick_ms": [
+          100.0,
+          200.0
+        ],
+        "bypass_mean_square": 0.0008352729411319369,
+        "enabled_mean_square": 0.0007792383691232962,
+        "gain_db": -0.3015808382198681
+      }
+    ],
+    "independent_stem_peak_error_lsb": 3,
+    "pad_LFO_difference_ratio": 0.21535897843883772
+  },
+  "artifacts": "artifacts/phase14-house",
+  "base_commit": "7e50935bbf8c694418861b68b33c59bbdae37b11",
+  "candidate_hash": "f1d146d14b964669fbbd3a302e21b91e69527a664b739ba311b1c8ec03c20cd4",
+  "human_preference": "unreviewed",
+  "levels": {
+    "A": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 23.00388194173463,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.062399345363076,
+      "oversample": 4,
+      "rms": 0.04452170743749361,
+      "rms_dbfs": -27.0285637706359,
+      "sample_peak": 0.6291669607162476,
+      "sample_peak_dbfs": -4.0246818289012705,
+      "sample_rate": 48000,
+      "true_peak": 0.6299118399620056,
+      "true_peak_dbtp": -4.014404569569008
+    },
+    "B": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 22.337319487298796,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -24.74059908920982,
+      "oversample": 4,
+      "rms": 0.04584259117237752,
+      "rms_dbfs": -26.774616852200367,
+      "sample_peak": 0.5999777317047119,
+      "sample_peak_dbfs": -4.437297364901571,
+      "sample_rate": 48000,
+      "true_peak": 0.6010170578956604,
+      "true_peak_dbtp": -4.4222640359908265
+    }
+  },
+  "limits": [
+    "No subjective listening verdict yet",
+    "Vitalium 1.0.6 Linux VST3 separately installed; official Vital not tested",
+    "No GUI/cross-platform verification",
+    "One-level post-fader only; no nested/pre-fader/custom send pan",
+    "No external instrument automation or native master bus",
+    "Return ducking is scheduled, not input-triggered sidechain",
+    "Meters are not certified"
+  ],
+  "listening_zip": {
+    "bytes": 62720878,
+    "human_preference": "unreviewed",
+    "sha256": "96d2fa228e2378dd905de386d3c018b67da7e30ac09f109c3731d5fedbe6a02c"
+  },
+  "matching": {
+    "A": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "target_lufs": -25.062399345363076
+    },
+    "B": {
+      "error_lu": 1.1591190229864878e-09,
+      "gain_db": -0.32180025615325647,
+      "target_lufs": -25.062399345363076
+    }
+  },
+  "native": {
+    "PCM_repeat_exact": true,
+    "aux_buses": 4,
+    "builtin_only_return_also_proven": true,
+    "external_plugin_bundled": false,
+    "full_state_reopen_equal": true,
+    "json_state_synthesized": false,
+    "live_original_Vitalium_voices": 4,
+    "one_level_post_fader": true,
+    "portable_isolated_frozen_replay_exact": true,
+    "samplers": 6,
+    "total_strips": 17
+  },
+  "native_candidate": "B/native/session.scraft",
+  "preservation": {
+    "all_historical_files_exact": true,
+    "base_commit": "7e50935bbf8c694418861b68b33c59bbdae37b11",
+    "earlier_test_files_exact": true,
+    "earlier_test_methods": 337,
+    "final_zip_only_change_after_actual_replay": "verification.json; all replay code, MIDI, patches, media, recipe and audio hashes exact",
+    "frozen_runtime_exact": true,
+    "historical_files": 9670,
+    "installed_runtime_exact": true,
+    "intentional_old_file_changes": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/LICENSING.md",
+      "docs/PRODUCER_ARCHITECTURE.md",
+      "docs/STATUS.md",
+      "kuang/vst3_worker.py"
+    ],
+    "source_inventory_sha256": "bc7488038e9b4001bd8af2665cbaf134c897221505870ee67a68462c21a4f4c9",
+    "version": "phase14-preservation-1"
+  },
+  "professional_quality_established": false,
+  "rejected_checks": [
+    {
+      "cause": "offline preservation test overlapped temporary historical source hiding in real relocation gate",
+      "log_sha256": "1bfcb714ce3ea7f5f5c94152e843f0ce0daf3dc1154344cf67679f9edacdb0ee",
+      "resolution": "sequential fresh full offline suite passed; guard unchanged"
+    },
+    {
+      "cause": "additional built-in-only no-FX fixture lacked headroom",
+      "log_sha256": "0fc2faa699bad3610cc960ace935bf51753618671ded232a2ec410025e5bcb28",
+      "resolution": "diagnostic source gain -18dB; production A/B unchanged; clipping guard retained"
+    }
+  ],
+  "song": {
+    "SongSpec_provenance_exact": true,
+    "added_notes": 8,
+    "bars": 64,
+    "bpm": 126,
+    "candidate_notes": 1544,
+    "changed_original_note_records": 54,
+    "drum_bass_main_call_all_fields_exact": true,
+    "key": "C minor",
+    "removed_notes": 0,
+    "sections": 6,
+    "source_notes": 1536
+  },
+  "source_hash": "fe30aebffc6118ccebf4bdfb0884beb0bc2972e3b5f4a175bfd8d8dd4f9e4ca9",
+  "stereo": {
+    "A": {
+      "high_side_mid_ratio": 0.05220972108553853,
+      "low_mono_retention": 0.9999999227527957,
+      "mono_rms_loss_db": -0.07073460133712366
+    },
+    "B": {
+      "high_side_mid_ratio": 0.0652022879948933,
+      "low_mono_retention": 0.9999999831315876,
+      "mono_rms_loss_db": -0.07975099429780282
+    }
+  },
+  "tests": {
+    "all_real": {
+      "errors": 0,
+      "failed": 0,
+      "log_sha256": "196036dc96921c306f83273b0cfdf2b1ed7e20af910bbd045cfe5f9c6776c39f",
+      "methods": 363,
+      "seconds": 2107.61,
+      "skipped": 0
+    },
+    "current_native_edits": {
+      "errors": 0,
+      "failed": 0,
+      "log_sha256": "c85926957f76904edce6cd2bbd16626903ed32ced3eb592bb1ef393aecaf889d",
+      "methods": 3,
+      "seconds": 91.829,
+      "skipped": 0
+    },
+    "current_native_portability": {
+      "errors": 0,
+      "failed": 0,
+      "log_sha256": "416f6a97d2e6aa3660b3a4d866d98d175cd7e4297f871ed79dd621cdf4e0ca1d",
+      "methods": 3,
+      "seconds": 90.897,
+      "skipped": 0
+    },
+    "current_offline": {
+      "errors": 0,
+      "failed": 0,
+      "log_sha256": "0635d55483fc4b148730d4a242e67952e976c0e6afdc6980caf968fc1b52f7c1",
+      "methods": 363,
+      "seconds": 503.246,
+      "skipped": 26
+    },
+    "current_unit": {
+      "errors": 0,
+      "failed": 0,
+      "log_sha256": "91ff56cad8faf6495866aa4d3c025130022641985008e49f47fae1d69db8ece0",
+      "methods": 20,
+      "seconds": 10.318,
+      "skipped": 0
+    },
+    "final_frozen_zip_replay": {
+      "errors": 0,
+      "failed": 0,
+      "log_sha256": "aabfc7bef020d50adf400b5836d72edb35ebc4470db12777fb2c5963fbf92b9a",
+      "methods": 1,
+      "seconds": 44.151,
+      "skipped": 0
+    }
+  },
+  "version": "phase14-verification-1",
+  "wheel": {
+    "installed_own_source_exact": true,
+    "smoke_log_sha256": "378c91769d76646a30f281c3459eec915e0a5dc57bf89452b2491d2968453cdc"
+  }
+}

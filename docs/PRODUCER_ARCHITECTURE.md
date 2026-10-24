@@ -83,3 +83,35 @@ Acceptance requires:
 - All 297 regressions plus new meaningful tests, Python 3.11/3.13 CI and wheel/install smoke. All scratch in `.local/producer`, new results in `artifacts/producer`; previous artifacts remain byte-identical. Actual final evidence and remaining gaps belong in `docs/STATUS.md` and a machine-readable verification report.
 
 Still proposed after this slice: general buses/sends with transactional route edits, SFZ/multi-layer drums, a broader license-reviewed human sound catalog, patch performance macros, true input-triggered sidechain, and a musical planner capable of evaluating more than templates. This design is not an assertion that Kuang already produces Suno-class or professional music.
+
+## Phase14 implementation update: mixed live sources and one-level shared paths
+
+[Phase14](PHASE14.md) composes the positive sampler and Vitalium lifecycles in
+`production_host.ProductionAdapter`, leaving the older adapters/defaults strict.
+It maps canonical MIDI→bus post-fader sends to actual CLI-created Bus/Aux objects,
+including a real six-source drum sum, separate100%-wet returns, linear send-trim
+lanes and existing FX/mixer lanes. Cycle validation, native slot/address/unit
+bounds, full original-strip projection, aux-state validation, relative asset/
+preset closure, exact state/PCM reopen and scoped static edits are mandatory.
+Pre-fader/custom-pan sends, nested buses, arbitrary structural transactions,
+external instrument automation and true input sidechain remain rejected.
+
+A channel-owned dB trim explicitly offsets the canonical Send.gain_db. Static
+normalized stereo spread maps two native channel pan positions with verified
+bounds; it is not a hidden phase-widening processor. The first apparent bus
+proof was rejected when strict output validation found dry sources still on
+Main: a scalar plural selector was ignored. Audio matching alone did not prove
+routing. The corrected singular selector and causal summed-compressor/return
+controls establish the working one-level slice.
+
+The full Phase13→Phase14 A/B now uses four coordinated original role patches,
+short articulated foreground voices, restored chord fundamentals, a restrained
+pad, phrase tone/echo performances and documented voicing/answer changes. It
+preserves the preferred song and original drum/bass/call MIDI. Source-role
+calibration precedes whole-song LUFS matching. The six independent native groups
+reconstruct the record within3LSB; internal controls remain evidence rather than
+user listening homework. The explicit human preference gate is still pending.
+Neither these working paths nor the external synth brand imply Suno-class or
+professional production quality. Licensing stays separate: original MIT patches/
+code, inherited declared CC0 samples, optional separately installed GPL Vitalium,
+no bundled binary/factory/Suno content.

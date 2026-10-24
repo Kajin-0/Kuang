@@ -15,7 +15,7 @@ from .schema import ValidationError,strict_json
 from .vitalium_patch import PLUGIN_ID,VERSION,chunks,component,original_patch,vstpreset
 
 
-def prepare(job):
+def prepare(job, *, patch_factory=original_patch):
     if type(job) is not dict or set(job)!={'plugin','defaults','role','modulation','volume_db','out'}:
         raise ValidationError('invalid worker request')
     import pedalboard
@@ -39,7 +39,7 @@ def prepare(job):
             'steps':parameter.num_steps if 2<=parameter.num_steps<=129 else 0,
             'default_normalized':parameter.raw_value})
     if len(bindings)!=771:raise ValidationError('unexpected Vitalium controller layout')
-    patch=original_patch(job['role'],modulation=job['modulation'],volume_db=job['volume_db'])
+    patch=patch_factory(job['role'],modulation=job['modulation'],volume_db=job['volume_db'])
     p.preset_data=vstpreset(component(patch))
     saved=p.preset_data;state=chunks(saved)[b'Comp']
     readback=strict_json(state[state.index(b'{'):state.rindex(b'}')+1].decode())

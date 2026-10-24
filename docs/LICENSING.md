@@ -30,3 +30,20 @@ The delivered Phase 5 music, MIDI and parameter recipe are original Kuang materi
 Future Codex CLI/other-provider planning is not implemented or required. An open-source client does not grant an open license to hosted model weights or remove provider service/account terms, usage limits, subscription costs or API inference charges. Review the exact client license and provider terms when an optional backend is proposed, and record actual costs in the planned A/B benchmark. See [official OpenAI pricing](https://developers.openai.com/codex/pricing) and the [future planner contract](PHASE2.md#future-planner-benchmark-not-implemented). No commercial inference or recursive Codex call was run for Phase 2 production planning.
 
 Phase13 explicitly adds separately attributed **CC0-1.0 sample assets** to its ignored listening/native release, from [octal-samples at pinned commit22d222ce36e290ba3792c776811aa9c69dcc8776](https://github.com/octalmusic/octal-samples/tree/22d222ce36e290ba3792c776811aa9c69dcc8776). The wheel contains only a reviewed CC0 metadata/hash catalog, no audio or plugin binary. The six used WAVs are publisher-declared original synthesis; the complete license, per-file origins, original PCM and derived asset hashes accompany the bundle. Authorship/quality is not independently certified. The pack's unused Unlicense cymbal origins were checked against pinned upstream originals but are not redistributed. Explicit offline resampling uses separately extracted **BSD-2-Clause libsamplerate0.2.2**, not a new mandatory dependency or bundled implementation. Kuang's original code remains MIT; its own frozen source accompanies the reproduction recipe. No GPL/proprietary plugin or factory preset is bundled. [PHASE13.md](PHASE13.md) records source URLs, exact package/hash, scope, conversion and limitations.
+
+Phase14 reuses the six Phase13 declared-CC0 source assets and adds **original
+Kuang Fourier wavetables and four role-specific patch designs** under MIT.
+No factory preset/sample, third-party DSP implementation, plugin binary or Suno
+recording is included in Git, wheel or listening ZIP. The separately installed
+[DISTRHO Vitalium1.0.6](https://github.com/DISTRHO/DISTRHO-Ports/tree/2021-03-15/ports/vitalium)
+remains GPL-3.0-or-later, invoked as an external live VST3 instrument by the
+separately installed MIT/Apache-2.0 SoundCraft host. Original serialized patch/
+component settings and the strict Python integration do not statically link or
+relicense that synth. Optional original-patch preparation uses separately
+installed [Pedalboard0.9.26](https://github.com/spotify/pedalboard),GPL-3.0; prepared
+native replay needs neither Pedalboard nor a converter. No new download,
+account, paid component or system installation occurs. The portable archive
+includes original MIT source/notices and per-file CC0 identities/licenses,
+with the external GPL component requirement explicit. Official Vital/latest
+application/factory terms are not inferred from Vitalium's GPL fork. See
+[PHASE14.md](PHASE14.md) for exact source/host gates and remaining limitations.

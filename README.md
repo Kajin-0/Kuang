@@ -224,4 +224,30 @@ Each native bundle contains `session.scraft`, its canonical snapshot, identity m
 
 For optional REAPER import, run `out/import_demo.lua` in a **new empty project tab**, assign local instruments and save `.RPP`. See [REAPER and Vital validation](docs/REAPER.md); real REAPER execution remains unverified.
 
-See [architecture and edit semantics](docs/ARCHITECTURE.md), [current status](docs/STATUS.md), and [MIT license](LICENSE). No third-party plugins, presets, samples, models or credentials are bundled.
+See [architecture and edit semantics](docs/ARCHITECTURE.md), [current status](docs/STATUS.md), and [MIT license](LICENSE). The wheel bundles no third-party plugins, presets, samples, models or credentials; optional listening releases carry explicitly licensed media with their own notices.
+
+### Full-song ensemble production and shared native paths (Phase14)
+
+[Phase14](docs/PHASE14.md) is an **unreviewed full-record production proposal**
+against Phase13: four coordinated original Vitalium voices, preserved sampled
+kick/groove/main call, documented chord/response performance and real shared
+room/plate/echo plus summed drum compression. Canonical0.1, live samples,
+original presets, all native lanes and six markers remain editable. The new
+opt-in mixed-source adapter supports one-level post-fader aux paths and strict
+scoped static edits; legacy creation/default adapters remain unchanged.
+
+```bash
+python3 -m kuang.production_host --help
+python3 -m kuang.production_host inspect \
+  --source artifacts/phase14-house/B/native --workspace "$PWD" \
+  --plugin .local/phase11/vitalium/usr/lib/vst3/vitalium.vst3 \
+  --soundcraft /absolute/path/to/soundcraft-cli
+```
+
+Listen to the two complete equal-LUFS files in
+`artifacts/phase14-house/phase14-house-listening.zip`. The ZIP also carries
+editable A/B, relative licensed media, original patch/control state and a tested
+isolated replay recipe with frozen MIT source. Vitalium1.0.6 Linux VST3 remains
+an optional **separate GPL component**, not official Vital or a bundled binary.
+No factory presets/reference audio/services are included; no professional-quality
+claim follows from render tests. [Listening/replay guide](docs/PHASE14_LISTENING_README.md).
