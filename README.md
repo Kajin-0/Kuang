@@ -8,6 +8,16 @@ Kuang turns a musical description into a short editable instrumental sketch. Its
 
 **Limits:** template-based instrumental sketches, constant tempo, 4/4, major/natural minor. `create` supports 8/16/32 bars; the separate authored house expansion supports 64 bars. No vocals, acoustic instrument emulation, pitch-slide 808, external presets, sidechain compressor or automatic host reconciliation. No GUI verification or professional composition/mastering claim; new-candidate listening quality requires human audition. SoundCraft is the human editor; Kuang does not implement another DAW UI.
 
+**Phase13 full-song listening:** the preferred Phase10 arrangement now has a complete, selected **CC0 sampled drum palette**: kick, clap, ghost snare, closed/open hats and shuffled shaker. Every original note field survives; mixed-pitch drums become explicit live sampler tracks. Bass, hook, pads and their production stay exact. The two complete records are matched in integrated LUFS, with editable A/B projects and a self-contained MIT reproduction script/source. Download `artifacts/phase13-house/phase13-house-listening.zip`; start with its two `listening/` WAVs. This is an unreviewed musical candidate, not an established listening win. [Source choices, licensing, controls and evidence](docs/PHASE13.md).
+
+```bash
+# Inspect deterministic full-song partitioning without samples or a host:
+python3 tools/phase13_house.py --symbolic --out-dir .local/phase13/my-symbolic
+# From the extracted listening ZIP, reproduce the actual native B:
+python3 -I reproduce.py --source . --out reproduced-native \
+  --workspace /absolute/path/to/your/project --soundcraft /path/to/soundcraft-cli
+```
+
 The next producer foundation is a **generic licensed sample-asset importer, live native sampler backend and full-song audition/review loop**. It preserves MIDI, effects, mixer, automation and SongSpec while opening the palette to explicit user-selected WAVs. Original samples and native `Audio Files` travel in a hash-verified editable bundle; mono/stereo relocation, state and actual PCM are tested. This is infrastructure, not a claim of Suno-class production or a better song. See the [research-driven architecture](docs/PRODUCER_ARCHITECTURE.md) and [CLI workflow, licensing and actual evidence](docs/PRODUCER_USAGE.md). Normal creation and previous releases stay unchanged.
 
 ```bash

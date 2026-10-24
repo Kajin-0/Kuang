@@ -1,0 +1,615 @@
+{
+  "commit": "22d222ce36e290ba3792c776811aa9c69dcc8776",
+  "license": "CC0-1.0",
+  "pack": "house-core",
+  "repository": "https://github.com/octalmusic/octal-samples",
+  "reviewed_files": {
+    "LICENSE": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "LICENSES.md": "2e3b1f544630a4ad604ea30d83eb6279faac1ae23503bd8e1e96ba77861b76a2",
+    "README.md": "98ffb4d311ca84c6b6a6d1df4c386cb28ca03b7225591a55b1e92f33d520bea2",
+    "agent/notes.md": "f4e24396202fc51620ed1e76e21c4c18862581360cdc3e42fa34bca940f2d276",
+    "manifest.json": "871a4349cbc96b1be247ffb2c513802aa7e729a617914573c24772e9d2dce3b2",
+    "package.json": "eff41c03f5c91c53d5a47d2d3efaa4e4f46632f0d677ae604ca22faad0c2ad50",
+    "scripts/build-release.ts": "358faf119af996b55c1229d6ebd471c6afa9928010c2d2e9f1266b26a7c74cb8",
+    "scripts/check-licenses.ts": "1370d49ce34c7ce5cb86804a00e44e4187e52ce6356eaca4a9b37b963f050935",
+    "scripts/check-manifest.ts": "171861ecfa0057842a3d3dbc8c196c6e0fac6e262fbe6218ceedc6f26ccba0c8",
+    "scripts/generate-kit.ts": "bb08fa2ea54bc5fd6c57885b8db1656f945aef7f0a82bec117209940d3a86859",
+    "scripts/render-audition.ts": "011eaacc7790f7d682aa27e5f837a59e505a8cab2420f38dca435989d7e7c7ea",
+    "scripts/synth/analyze.ts": "e1ca39665242dddf705b59967d22dd0ccc2533baacde456cbae97b8a66c0b7ae",
+    "scripts/synth/claps.ts": "25fd49a1a2eafbe2aba66d89f8fc5c9686e499421e7abfe4f3e609afa748e951",
+    "scripts/synth/cymbals.ts": "e40fc85615b04d02e619bf2c330d53becc6136f0dcc092b7da90291628cf61a2",
+    "scripts/synth/def.ts": "12dc93cd6d744313dfb88ec1a7421eac7e6e6df32a47b198e9ff3acc655a6d90",
+    "scripts/synth/dsp.ts": "e2bde200aaf30d9e701f254921e4d87b0ef6da01031ffe6d75d2bf9cf5c6ff58",
+    "scripts/synth/fx.ts": "3f45fb29e2f41d9992cb0fb0ce7a5d045e7caf153bdcfb8e2202e833d8cd8c46",
+    "scripts/synth/hats.ts": "56ec22af3f7749ce9b3556444ddf74879ed04952f42b9ea4c8348f7b18cd471f",
+    "scripts/synth/kicks.ts": "b9f41d378d7dce1352731364d05904ba17e9a80a0f056d6786122d4b2386c5c8",
+    "scripts/synth/kit.ts": "2b7a69ee42da7a4fcd08c212f186adb6640049e51e71070390774cf7fbf666e0",
+    "scripts/synth/percs.ts": "2084f30cbd1630fa47e95096ba3e96cf767139f3c58de865540800b3169d41b0",
+    "scripts/synth/wav-decode.ts": "2497014d6f875c51ff482913673e1326073ad87daf6d816b4ef70ebea365f182",
+    "sources/uzu-drumkit/LICENSE": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+    "sources/uzu-drumkit/PROVENANCE.md": "929356c05c238b74fb433a5c01a980b796d357917305529594b1320886832cd8"
+  },
+  "samples": {
+    "house.clap.classic-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style clap: seeded noise, 3 bursts every 10 ms (\u03c4=5 ms) + tail \u03c4=60 ms (gain 0.85); double bandpass ~1150 Hz (Q 1.2), highpass 400 Hz, tanh glue, peak-normalized, 10 ms fade; rendered length 0.26 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "tight",
+        "dry"
+      ],
+      "length": 0.26,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/claps/classic-01.wav",
+      "root_note": null,
+      "sha256": "7d925a0ffb269f404d2c8da1fab1291616faea5cfab6c6751ac61b3311fcd541",
+      "type": "clap"
+    },
+    "house.clap.classic-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style clap: seeded noise, 4 bursts every 11 ms (\u03c4=5 ms) + tail \u03c4=110 ms (gain 0.9); double bandpass ~1000 Hz (Q 0.9), highpass 400 Hz, tanh glue, peak-normalized, 10 ms fade; rendered length 0.34 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "wide",
+        "roomy"
+      ],
+      "length": 0.34,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/claps/classic-02.wav",
+      "root_note": null,
+      "sha256": "53d98144934f6b90f16f2bcfd00bef82522c392d6c7f23c86a5f1488cb9cddcd",
+      "type": "clap"
+    },
+    "house.clap.classic-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style clap: seeded noise, 3 bursts every 8 ms (\u03c4=4 ms) + tail \u03c4=50 ms (gain 0.8); double bandpass ~1400 Hz (Q 1.3), highpass 400 Hz, tanh glue, peak-normalized, 10 ms fade; rendered length 0.24 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "snappy",
+        "bright"
+      ],
+      "length": 0.24,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/claps/classic-03.wav",
+      "root_note": null,
+      "sha256": "4c2c91f1b3e4e642048ddd32e326b1ab793d72be400247a46f81ba596f708c92",
+      "type": "clap"
+    },
+    "house.crash.wash-01": {
+      "audit": "- Origin: uzu-drumkit (github.com/tidalcycles/uzu-drumkit, commit `2f3e05c7`), released under The Unlicense (public domain); verbatim copy + sha256 recorded in `sources/uzu-drumkit/PROVENANCE.md`; source file `11_cr_mot4i.wav` (crash).\n- Processing: decoded PCM16, stereo mixed to mono, highpass 280 Hz, tanh saturation drive 1.15, peak-normalized to 0.84, 60 ms fade; rendered length 2 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "washy",
+        "long",
+        "bright"
+      ],
+      "length": 2,
+      "license_source": "uzu-drumkit (The Unlicense, public domain) \u2014 owned derivative rendered deterministically by scripts/generate-kit.ts from sources/uzu-drumkit (provenance + processing chain in LICENSES.md)",
+      "path": "samples/cymbals/crash-01.wav",
+      "root_note": null,
+      "sha256": "1b195fb66af2ce562596946bbe1b66c30eb9c28af0a09c44e677e71ed48c6a68",
+      "type": "crash"
+    },
+    "house.fx.noise-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: seeded noise bed, lowpass 1.8 kHz, 150 ms fade-in, peak 0.5, 250 ms fade-out, 2 s; rendered length 2 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "bed",
+        "smooth"
+      ],
+      "length": 2,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/fx/noise-01.wav",
+      "root_note": null,
+      "sha256": "c693f2d7376433a7068c93976e5722b44af6afacd6c8569177fb18850212812d",
+      "type": "noise"
+    },
+    "house.fx.riser-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: seeded noise, amplitude ramp (progress^1.6), swept bandpass 350 Hz \u2192 5.5 kHz with Q 1 \u2192 6 over 3 s; peak-normalized to 0.8, 30 ms fade; rendered length 3 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "rising",
+        "tense"
+      ],
+      "length": 3,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/fx/riser-01.wav",
+      "root_note": null,
+      "sha256": "f6b258c01e32be91837e28407e385129a0444dfd18272eaf632f5d7dcea35129",
+      "type": "riser"
+    },
+    "house.hat.closed-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71) \u2192 bandpass 10000 Hz \u2192 decay \u03c4=32 ms \u2192 highpass 8000 Hz; seeded sizzle 0.22; peak-normalized, 6 ms fade; rendered length 0.1 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "tight",
+        "crisp"
+      ],
+      "length": 0.1,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-01.wav",
+      "root_note": null,
+      "sha256": "eceb021f51c8461f1bb1e5e3ce65492601470e4b495fdc9e54cd1b3be426c404",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.06) \u2192 bandpass 10600 Hz \u2192 decay \u03c4=36 ms \u2192 highpass 8400 Hz; seeded sizzle 0.26; peak-normalized, 6 ms fade; rendered length 0.11 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "crisp",
+        "bright"
+      ],
+      "length": 0.11,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-02.wav",
+      "root_note": null,
+      "sha256": "53464f970b90c37c113fac1b4164117c18ec0dc17682c389b10bbfffa2a635c8",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.12) \u2192 bandpass 11200 Hz \u2192 decay \u03c4=40 ms \u2192 highpass 8800 Hz; seeded sizzle 0.34; peak-normalized, 6 ms fade; rendered length 0.12 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "bright",
+        "sizzly"
+      ],
+      "length": 0.12,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-03.wav",
+      "root_note": null,
+      "sha256": "b25124be0c49be95f763389ba9a029e28c0532742fa0b40599da4e984159ec1b",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-04": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d70.97) \u2192 bandpass 9800 Hz \u2192 decay \u03c4=24 ms \u2192 highpass 8200 Hz; seeded sizzle 0.16; peak-normalized, 6 ms fade; rendered length 0.08 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "short",
+        "clicky"
+      ],
+      "length": 0.08,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-04.wav",
+      "root_note": null,
+      "sha256": "34539d73d6a026dbc07dfe4d4f4c97561fd1c9dbf4cae8580b18b137a10a0651",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-05": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.03) \u2192 bandpass 10200 Hz \u2192 decay \u03c4=50 ms \u2192 highpass 7800 Hz; seeded sizzle 0.3; peak-normalized, 6 ms fade; rendered length 0.14 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "loose",
+        "airy"
+      ],
+      "length": 0.14,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-05.wav",
+      "root_note": null,
+      "sha256": "60490494d934c80e9e75a33910f4e7be7a74f74b10ef614f53f167772268f071",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-06": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d70.9) \u2192 bandpass 9200 Hz \u2192 decay \u03c4=30 ms \u2192 highpass 7400 Hz; seeded sizzle 0.18; peak-normalized, 6 ms fade; rendered length 0.1 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "dark",
+        "tight"
+      ],
+      "length": 0.1,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-06.wav",
+      "root_note": null,
+      "sha256": "b9a5b709e9795b3686b851fd7fc2e82a4369d2c3f8e792045de81c6ca067b2fb",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-07": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71) \u2192 bandpass 10000 Hz \u2192 decay \u03c4=32 ms \u2192 highpass 8000 Hz; seeded sizzle 0.2; 6-bit quantize; peak-normalized, 6 ms fade; rendered length 0.1 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "crunchy",
+        "tight"
+      ],
+      "length": 0.1,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-07.wav",
+      "root_note": null,
+      "sha256": "7d613e746e3c983448d12f37211333f24b9d8facc4a8f3d82bc2f40c7f41d8b4",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-08": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.08) \u2192 bandpass 10800 Hz \u2192 decay \u03c4=38 ms \u2192 highpass 8600 Hz; seeded sizzle 0.28; 6-bit quantize; peak-normalized, 6 ms fade; rendered length 0.12 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "crunchy",
+        "bright"
+      ],
+      "length": 0.12,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-08.wav",
+      "root_note": null,
+      "sha256": "db9e6da61a706a5d9fa1191b2e2143e64a966c4a02f8eb4935e6aaf6f0bc8d68",
+      "type": "hat_closed"
+    },
+    "house.hat.closed-09": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.15) \u2192 bandpass 11600 Hz \u2192 decay \u03c4=44 ms \u2192 highpass 9200 Hz; seeded sizzle 0.4; peak-normalized, 6 ms fade; rendered length 0.13 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "airy",
+        "soft"
+      ],
+      "length": 0.13,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/closed-09.wav",
+      "root_note": null,
+      "sha256": "4c70d3f6197b40559d17c29503de8f90ebecc2bc0f6837c100eb5982dc4f50ce",
+      "type": "hat_closed"
+    },
+    "house.hat.open-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71) \u2192 bandpass 10000 Hz \u2192 decay \u03c4=50 ms/+slow \u03c4=160 ms (0.45) \u2192 highpass 7800 Hz; seeded sizzle 0.3; peak-normalized, 6 ms fade; rendered length 0.38 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "washy",
+        "open"
+      ],
+      "length": 0.38,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/open-01.wav",
+      "root_note": null,
+      "sha256": "d8e3babf28bcb75f9c2785fcfc9ad3928c9dca55d6a026b66ae8f856cecd240f",
+      "type": "hat_open"
+    },
+    "house.hat.open-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.06) \u2192 bandpass 10600 Hz \u2192 decay \u03c4=55 ms/+slow \u03c4=200 ms (0.5) \u2192 highpass 8200 Hz; seeded sizzle 0.34; peak-normalized, 6 ms fade; rendered length 0.5 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "long",
+        "bright"
+      ],
+      "length": 0.5,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/open-02.wav",
+      "root_note": null,
+      "sha256": "19296524d04ccb50fc4c01187d7ed75a476a1575d8653465b3c667a86c67c645",
+      "type": "hat_open"
+    },
+    "house.hat.open-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d71.12) \u2192 bandpass 11000 Hz \u2192 decay \u03c4=60 ms/+slow \u03c4=240 ms (0.55) \u2192 highpass 8600 Hz; seeded sizzle 0.42; peak-normalized, 6 ms fade; rendered length 0.58 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "airy",
+        "long"
+      ],
+      "length": 0.58,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/open-03.wav",
+      "root_note": null,
+      "sha256": "0efceadad9e7ef780510207f9a8b31cf5ff225af559539368ec624b1e67aa2c0",
+      "type": "hat_open"
+    },
+    "house.hat.open-04": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: six-square 808 metallic bank (detune \u00d70.96) \u2192 bandpass 9600 Hz \u2192 decay \u03c4=50 ms/+slow \u03c4=170 ms (0.45) \u2192 highpass 7600 Hz; seeded sizzle 0.26; 6-bit quantize; peak-normalized, 6 ms fade; rendered length 0.42 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "crunchy",
+        "open"
+      ],
+      "length": 0.42,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/hats/open-04.wav",
+      "root_note": null,
+      "sha256": "f67f257a3958a200c57028a2c378efc78f36541674c9531b39ae7c8a90ba881b",
+      "type": "hat_open"
+    },
+    "house.kick.deep-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^1.8 above C2 decaying \u03c4=26 ms onto the root, amplitude \u03c4=110 ms; tanh drive 1.7 with transient bloom 0.9; band-passed seeded-noise click (2200 Hz, gain 0.18); lowpass 1600 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.5 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "warm",
+        "round",
+        "full"
+      ],
+      "length": 0.5,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/deep-01.wav",
+      "root_note": "C2",
+      "sha256": "995f185e53cc8c78089b3e078e573b929df5b09a263c3fb5d18755f2e15e8970",
+      "type": "kick"
+    },
+    "house.kick.deep-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^1.8 above D2 decaying \u03c4=26 ms onto the root, amplitude \u03c4=105 ms; tanh drive 1.7 with transient bloom 0.9; band-passed seeded-noise click (2200 Hz, gain 0.18); lowpass 1700 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.48 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "warm",
+        "round"
+      ],
+      "length": 0.48,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/deep-02.wav",
+      "root_note": "D2",
+      "sha256": "6ab7352bc0dc03b1c2cda14bc99e1984ffb171ad3da7c8f2424e7963aeff4e04",
+      "type": "kick"
+    },
+    "house.kick.punch-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^2.4 above F1 decaying \u03c4=30 ms onto the root, amplitude \u03c4=85 ms; tanh drive 2.2 with transient bloom 1.2; band-passed seeded-noise click (2600 Hz, gain 0.32); lowpass 3200 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.46 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "punchy",
+        "solid",
+        "driving"
+      ],
+      "length": 0.46,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/punch-01.wav",
+      "root_note": "F1",
+      "sha256": "0ebcd88db2682917bf9e1593900818ad8d21c3ea447948efe0c990d143f385ea",
+      "type": "kick"
+    },
+    "house.kick.punch-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^2.4 above G1 decaying \u03c4=30 ms onto the root, amplitude \u03c4=85 ms; tanh drive 2.2 with transient bloom 1.2; band-passed seeded-noise click (2600 Hz, gain 0.32); lowpass 3200 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.46 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "punchy",
+        "solid"
+      ],
+      "length": 0.46,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/punch-02.wav",
+      "root_note": "G1",
+      "sha256": "a3a100ddcfc126bf75c282f54c3ac2a054ed09e6d0a393620a7226169b27b7f9",
+      "type": "kick"
+    },
+    "house.kick.punch-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^2.6 above A1 decaying \u03c4=32 ms onto the root, amplitude \u03c4=80 ms; tanh drive 2.4 with transient bloom 1.4; band-passed seeded-noise click (3000 Hz, gain 0.36); lowpass 3800 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.44 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "punchy",
+        "bright"
+      ],
+      "length": 0.44,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/punch-03.wav",
+      "root_note": "A1",
+      "sha256": "bd8ffe390f82422ba43549d40e0bb71bba5bf352f8be10d19f3c5cb57f6301fd",
+      "type": "kick"
+    },
+    "house.kick.punch-04": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^2.6 above A#1 decaying \u03c4=32 ms onto the root, amplitude \u03c4=80 ms; tanh drive 2.4 with transient bloom 1.4; band-passed seeded-noise click (3000 Hz, gain 0.36); lowpass 3800 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.44 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "punchy",
+        "bright",
+        "hard"
+      ],
+      "length": 0.44,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/punch-04.wav",
+      "root_note": "A#1",
+      "sha256": "082b96236aa25596176dc7de53236481c2417e348888630a7ce1318df0c69f99",
+      "type": "kick"
+    },
+    "house.kick.sub-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^1.4 above F1 decaying \u03c4=22 ms onto the root, amplitude \u03c4=160 ms; tanh drive 1.3 with transient bloom 0.6; band-passed seeded-noise click (1800 Hz, gain 0.1); lowpass 900 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.62 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "deep",
+        "sub",
+        "warm"
+      ],
+      "length": 0.62,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/sub-01.wav",
+      "root_note": "F1",
+      "sha256": "249a7415281d23180edfac57c6d9bd758cb8b1b5d1fd0328911b9c3fdfda2091",
+      "type": "kick"
+    },
+    "house.kick.sub-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^1.4 above G1 decaying \u03c4=22 ms onto the root, amplitude \u03c4=150 ms; tanh drive 1.35 with transient bloom 0.6; band-passed seeded-noise click (1800 Hz, gain 0.1); lowpass 950 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.6 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "deep",
+        "sub",
+        "round"
+      ],
+      "length": 0.6,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/sub-02.wav",
+      "root_note": "G1",
+      "sha256": "1c132c91049f3679c82b4f86e097eed877b1c1543bf2d8f808c0c3b4042bbca0",
+      "type": "kick"
+    },
+    "house.kick.sub-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^1.3 above A1 decaying \u03c4=20 ms onto the root, amplitude \u03c4=140 ms; tanh drive 1.3 with transient bloom 0.5; band-passed seeded-noise click (1700 Hz, gain 0.09); lowpass 1000 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.56 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "deep",
+        "round",
+        "soft"
+      ],
+      "length": 0.56,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/sub-03.wav",
+      "root_note": "A1",
+      "sha256": "44f25bfffb0fd8f2a18f752aa652e26a91c793aa54a41a0a5223a8c9f894c145",
+      "type": "kick"
+    },
+    "house.kick.tight-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^2.8 above F1 decaying \u03c4=24 ms onto the root, amplitude \u03c4=50 ms; tanh drive 2.6 with transient bloom 1.6; band-passed seeded-noise click (3400 Hz, gain 0.42); lowpass 4200 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.3 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "tight",
+        "short",
+        "punchy"
+      ],
+      "length": 0.3,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/tight-01.wav",
+      "root_note": "F1",
+      "sha256": "2174e40041e73a5128e9e620bdb1476bc043a3380ed3264d2248a38568e547cf",
+      "type": "kick"
+    },
+    "house.kick.tight-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^2.8 above G1 decaying \u03c4=24 ms onto the root, amplitude \u03c4=50 ms; tanh drive 2.6 with transient bloom 1.6; band-passed seeded-noise click (3400 Hz, gain 0.42); lowpass 4200 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.3 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "tight",
+        "short"
+      ],
+      "length": 0.3,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/tight-02.wav",
+      "root_note": "G1",
+      "sha256": "a5cd85e52841e748af5d90373ad142df870c68c76471c81774f164e29f45c2b0",
+      "type": "kick"
+    },
+    "house.kick.tight-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: sine body, pitch 2^3 above A1 decaying \u03c4=22 ms onto the root, amplitude \u03c4=45 ms; tanh drive 2.8 with transient bloom 1.8; band-passed seeded-noise click (3800 Hz, gain 0.46); lowpass 4600 Hz, highpass 25 Hz, peak-normalized to -1 dBFS, 8 ms fade; rendered length 0.28 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "tight",
+        "clicky"
+      ],
+      "length": 0.28,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/kicks/tight-03.wav",
+      "root_note": "A1",
+      "sha256": "c092b8a6fee0a9dd08ab810082b0af65aaf4a6ab65fdb7310614f945f1127f6f",
+      "type": "kick"
+    },
+    "house.perc.blip-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: two-partial ping: sine 620 Hz (\u03c4=40 ms) + partial \u00d72 (\u03c4=25 ms); peak-normalized, 8 ms fade; rendered length 0.18 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "melodic",
+        "short"
+      ],
+      "length": 0.18,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/blip-01.wav",
+      "root_note": null,
+      "sha256": "c6c23788d5ecdd03b37dfa9aa176b9cd2a643287dd12eb6186b85b05275ef3ba",
+      "type": "perc"
+    },
+    "house.perc.blip-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: two-partial ping: sine 880 Hz (\u03c4=40 ms) + partial \u00d72.4 (\u03c4=25 ms); peak-normalized, 8 ms fade; rendered length 0.18 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "bright",
+        "short"
+      ],
+      "length": 0.18,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/blip-02.wav",
+      "root_note": null,
+      "sha256": "24485cf1602fb82280151dc9323b4453c117d0e9c882665c8ca23d470939fc74",
+      "type": "perc"
+    },
+    "house.perc.blip-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: two-partial ping: sine 1240 Hz (\u03c4=40 ms) + partial \u00d72.76 (\u03c4=25 ms); peak-normalized, 8 ms fade; rendered length 0.18 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "glassy",
+        "short"
+      ],
+      "length": 0.18,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/blip-03.wav",
+      "root_note": null,
+      "sha256": "f396264f9d8fd13c85a13210d5449579a79081c4112d1e1b2afbad7c34ab1d87",
+      "type": "perc"
+    },
+    "house.perc.shaker-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 808-maracas shaker: band-passed 5.5 kHz seeded noise, soft attack \u03c4=20 ms, decay \u03c4=55 ms; peak-normalized, 8 ms fade; rendered length 0.16 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "loose",
+        "airy"
+      ],
+      "length": 0.16,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/shaker-01.wav",
+      "root_note": null,
+      "sha256": "787009ee8360066f6b04a191a78f5fa95de7a2c569d331eacc540c8bda810ce9",
+      "type": "perc"
+    },
+    "house.perc.shaker-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 808-maracas shaker: band-passed 5.5 kHz seeded noise, attack \u03c4=10 ms, decay \u03c4=40 ms; peak-normalized, 8 ms fade; rendered length 0.13 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "driving",
+        "tight"
+      ],
+      "length": 0.13,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/shaker-02.wav",
+      "root_note": null,
+      "sha256": "7ff28d7e238f3318f8a3ab6fbdfef8cedfa0ef4d6a6f45d17be4009d13dd94f6",
+      "type": "perc"
+    },
+    "house.perc.tick-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: seeded noise tick: bandpass 4.2 kHz Q 2 (\u03c4=12 ms); peak-normalized, 8 ms fade; rendered length 0.06 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "dry",
+        "tight"
+      ],
+      "length": 0.06,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/tick-01.wav",
+      "root_note": null,
+      "sha256": "56a2cfa5d8c7bdc134d93ca539e8f9ebb76145170e6c39a29cb13c7ca1ae3527",
+      "type": "perc"
+    },
+    "house.perc.tick-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: seeded noise tick: bandpass 2.6 kHz Q 2 (\u03c4=18 ms); peak-normalized, 8 ms fade; rendered length 0.08 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "woody",
+        "tight"
+      ],
+      "length": 0.08,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/tick-02.wav",
+      "root_note": null,
+      "sha256": "e9339ced3de90fb27e27700e0c536ca425a8bb3ae05d759cd242416b26d3be55",
+      "type": "perc"
+    },
+    "house.perc.tom-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style tom: damped sine 120 Hz with 35% downward bend (amp \u03c4=90 ms), tanh drive, band-passed noise onset; peak-normalized, 8 ms fade; rendered length 0.35 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "low",
+        "round"
+      ],
+      "length": 0.35,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/tom-01.wav",
+      "root_note": null,
+      "sha256": "5c1d5c933008d648e22d634a2596065dd05ff6c83ce4590da36bd15c98d4b7b3",
+      "type": "perc"
+    },
+    "house.perc.tom-02": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style tom: damped sine 165 Hz with 35% downward bend (amp \u03c4=90 ms), tanh drive, band-passed noise onset; peak-normalized, 8 ms fade; rendered length 0.35 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "mid",
+        "round"
+      ],
+      "length": 0.35,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/tom-02.wav",
+      "root_note": null,
+      "sha256": "9fccf1f5f6d4a1abcbde3219f59cf62cb1238dfcc8fb63afcae2de56553a0763",
+      "type": "perc"
+    },
+    "house.perc.tom-03": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style tom: damped sine 220 Hz with 35% downward bend (amp \u03c4=90 ms), tanh drive, band-passed noise onset; peak-normalized, 8 ms fade; rendered length 0.35 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "high",
+        "round"
+      ],
+      "length": 0.35,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/percs/tom-03.wav",
+      "root_note": null,
+      "sha256": "bbed6bdb831d436828bf11021c6f99adfa67b1b6e50054788a60155e9352ac02",
+      "type": "perc"
+    },
+    "house.ride.ping-01": {
+      "audit": "- Origin: uzu-drumkit (github.com/tidalcycles/uzu-drumkit, commit `2f3e05c7`), released under The Unlicense (public domain); verbatim copy + sha256 recorded in `sources/uzu-drumkit/PROVENANCE.md`; source file `10_rd_switchangel.wav` (ride).\n- Processing: decoded PCM16 mono, highpass 320 Hz, tanh saturation drive 1.2, peak-normalized to 0.84, 40 ms fade; rendered length 0.929 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "metallic",
+        "bright"
+      ],
+      "length": 0.929,
+      "license_source": "uzu-drumkit (The Unlicense, public domain) \u2014 owned derivative rendered deterministically by scripts/generate-kit.ts from sources/uzu-drumkit (provenance + processing chain in LICENSES.md)",
+      "path": "samples/cymbals/ride-01.wav",
+      "root_note": null,
+      "sha256": "c33c5da57c06f7ed12a0be3b228a0310377eaa16b3496a7005d37631b0d73240",
+      "type": "ride"
+    },
+    "house.snare.body-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style snare: sine modes 172/316 Hz with fast pitch bend (tone \u03c4=70 ms, gain 0.65); seeded noise split lowpass-7 kHz body (\u03c4=55 ms, 0.6) + highpass-1.8 kHz snap (\u03c4=75 ms, 0.5); tanh glue, peak-normalized, 10 ms fade; rendered length 0.34 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "full",
+        "warm"
+      ],
+      "length": 0.34,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/snares/body-01.wav",
+      "root_note": null,
+      "sha256": "96b1d1a6a93a59fb34500f3cc2f5c745be863cad317279ec3b0ba85ffc1009ac",
+      "type": "snare"
+    },
+    "house.snare.snap-01": {
+      "audit": "- Origin: own synthesis \u2014 rendered deterministically by `scripts/generate-kit.ts` (seeded DSP, no external source material); dedicated CC0-1.0.\n- Processing: 909-style snare: sine modes 190/340 Hz with fast pitch bend (tone \u03c4=50 ms, gain 0.45); seeded noise split lowpass-7 kHz body (\u03c4=45 ms, 0.5) + highpass-1.8 kHz snap (\u03c4=85 ms, 0.75); tanh glue, peak-normalized, 10 ms fade; rendered length 0.28 s. Repeatable via `npm run generate:kit`.",
+      "character_tags": [
+        "snappy",
+        "short"
+      ],
+      "length": 0.28,
+      "license_source": "own synthesis \u2014 deterministic 808/909-style voice rendered by scripts/generate-kit.ts; no external source material; dedicated CC0-1.0 (processing chain in LICENSES.md)",
+      "path": "samples/snares/snap-01.wav",
+      "root_note": null,
+      "sha256": "c94d564db184b1bea0e3ea3a6d544fe8fa1d934495f08e2a7b7fd51c2bcba960",
+      "type": "snare"
+    }
+  },
+  "version": "reviewed-sample-pack-1"
+}

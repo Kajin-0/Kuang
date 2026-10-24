@@ -17,4 +17,4 @@ kuang = "kuang.cli:main"
 include = ["kuang*"]
 
 [tool.setuptools.package-data]
-kuang = ["*.lua"]
+kuang = ["*.lua", "data/*.json"]
