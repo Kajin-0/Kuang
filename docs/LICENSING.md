@@ -60,3 +60,16 @@ no third-party implementation is added to Git/wheel. No reference/Suno audio,
 factory material, download, account or system package is introduced. Previous
 release files remain unchanged. See [postmortem](PHASE14_POSTMORTEM.md) and
 [Phase15 scope](PHASE15.md).
+
+
+Phase16 authors original MIT FM/phase-shaped role patches using the existing
+original Fourier waves and zero unused sample. Tutorial presets were inspected
+privately, with no raw redistribution permission inferred from track-use terms.
+The pinned CC BY-SA alanjyu bank includes separately credited embedded waves;
+those rights were not independently established, so none is used or bundled.
+No downloaded preset/wavetable or GPL binary is in Git, the wheel or listening
+ZIP. Vitalium1.0.6 and optional Pedalboard remain separately installed external
+GPL components; official Vital's account Basic route was not accessed with
+credentials. Original patches, component state and all normalized parameters
+travel as editable data. The existing six CC0 sample identities/notices remain
+unchanged. [Phase16 audit and source URLs](PHASE16.md).

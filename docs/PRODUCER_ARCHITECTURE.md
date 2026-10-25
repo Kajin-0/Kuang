@@ -140,3 +140,27 @@ bend range. Legacy exact replay remains unchanged and unsuitable as evidence for
 new tuning claims. The safe primary [Phase15 candidate](PHASE15.md) instead uses
 all preferred Phase13 sources/notes and two quiet real shared paths. Phase13 stays
 incumbent; the repaired source/backend and the new mix are separate decisions.
+
+
+## Phase16: source timbre eligibility before musical replacement
+
+The user approved Phase15 B after listening; that full song is now the fallback.
+The Phase16 sound-only experiment seals its complete performance and MIDI bytes.
+Original FM/phase-shaped bass, stabs, lead and pad are prepared by a separate
+optional host, then independently pitch-tested in that host and centered native
+SoundCraft across nine pitches per voice, three windows and actual polyphony.
+No detune/pitch LFO is used to disguise wrong fundamentals. One voice enters the
+full mix at a time; role output calibration precedes overall LUFS matching.
+Original drums, aux graph and musical content remain fixed. Exact before/after
+sound controls and restricted gain/HPF lane changes are recorded separately from
+performance. Causal bypass PCM verifies actual synthesis movement.
+
+Downloaded banks are not automatically eligible: audit embedded wavetable and
+sample provenance as well as the repository license and patch version. The
+current original-content importer deliberately does not accept arbitrary banks,
+new Vital builds or factory samples. Official Vital would need its own lawful
+installation, class/build/control/state contract and independent/native pitch,
+chord, reload and relative media tests. The proven Vitalium synthetic MIDI
+initializer must not be guessed for another plugin. No mandatory plugin or legacy
+creation default changes. Human full-song listening remains the preference gate;
+none of the technical gates establishes professional production quality.

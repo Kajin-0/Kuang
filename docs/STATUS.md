@@ -1,5 +1,35 @@
 # Kuang delivery status
 
+## Phase16 — same approved performance, original tuned Vitalium palette
+
+The user listened to and approved Phase15 B; it supersedes the historical
+Phase13/pending-Phase15 preference status below. New Phase16 B is an unreviewed
+sound-design experiment on exactly that64bar/126BPM/Cminor/1536-note performance.
+No pickups, voicing lifts, groove edits, extra notes or arrangement changes.
+The source kick, six CC0 sample tracks, sub/arp/air and two genuine shared auxes
+remain exact. Four original synth patches use real FM/phase shaping, envelopes
+and timbral LFO routes. Native MIDI pitch is explicitly centered. Every requested
+register and polyphonic voice is checked in real native and independent audio.
+
+Official Vital's Basic download is account-linked; no account or credentials were
+accessed. B uses separately installed GPL Vitalium1.0.6, not current official
+Vital. BTP examples remain private; the pinned CC BY-SA bank's embedded wave
+rights were not independently established and none is used. Original Fourier
+waves, patches and code remain MIT; no plugin binary, factory bank or reference
+recording is bundled.
+
+**391/391 real-host tests pass**, zero failures/errors/skips, 2812.043s; all377earlier files/methods unchanged. Final10unit and installed-wheel smoke pass. 10295historical files remain hash-exact. Native full state/PCM reload and frozen relative-media/relocated-plugin replay pass. Both hosts pass36single-note cases plus polyphonic Cm9; maximum native FFT error0.5914cents, period error at most2.2409cents. The full suite was rerun after correcting one fixture-root environment setting; no old test was altered.
+
+Raw A/B **−25.172290/−25.094741LUFS**, both TP **−4.417381dBTP**, zero clips,48k24stereo126.9047708s. Listening matches both−25.172290LUFS with constant attenuation only. No off-host master. Download **`artifacts/phase16-house/phase16-house-listening.zip`**, 63,455,805bytes, SHA256 `2519c9f2411c9324a7cbc030739b20f020159f152f47fafa6255609af4a6154d`. Candidate **`B/native/session.scraft`**; raw `A-Phase15-approved-native.wav`/`B-Phase16-palette-native.wav`. Exact commit/post-push CI3.11/3.13 proof is in artifact`proof/release-summary.json`.
+
+The pad stereo revision improves on the first prototype and retains balance/mono
+safety. Against approved A, the drop pad side fraction is21.62% versus23.80%,
+and the complete mix's sampled >500Hz side fraction is **4.62% versus4.67%**:
+a width improvement over Phase15 is not established. Measurements do not establish better musical taste. Phase15
+remains the approved fallback. No native master, true triggered sidechain,
+arbitrary official Vital/otherVST compatibility or GUI/cross-platform claim.
+[Phase16 controls/licensing](PHASE16.md), [listening and replay](PHASE16_LISTENING_README.md).
+
 ## Phase15 — critical musical repair; Phase14 B rejected
 
 The user rejected Phase14 B as strange/possibly incoherent in key. **Phase13 B remains incumbent.** Controlled actual audio confirms a real fault:10isolated native Phase14 note cases across four voices sound about200cents flat; the same presets are tuned in the independent host. Named synth Pitch Wheel/state restoration did not neutralize synthetic MIDI input1835232641,one of2080default-zero MIDI slots. Actual0/.5/1counterfactual gives−200/0/+200cents. New explicit opt-in initialization centers that input, preserving MIDI/component/771ordinary controls/bend range2, with real multi-register/chord/reload tests. Legacy exact replay remains unchanged and is not a new musical compatibility claim. The previous363technical tests did not test played fundamental pitch; their green status did not establish musical correctness. [Postmortem](PHASE14_POSTMORTEM.md).

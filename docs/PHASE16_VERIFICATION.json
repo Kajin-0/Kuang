@@ -1,0 +1,294 @@
+{
+  "base_commit": "bd96532a78f0d692c5db05d9fde06a95cdd79bcb",
+  "bass_harmonic_translation": {
+    "A_fraction": 0.2793694738363761,
+    "A_mean_square": 0.00021837045706434534,
+    "B_fraction": 0.44537727497628593,
+    "B_mean_square": 0.0003459361912431625,
+    "band": "harmonics_100_400",
+    "power_ratio": 1.584171210216538
+  },
+  "candidate_preference": "unreviewed",
+  "incumbent": "Phase15 B; user approved",
+  "levels": {
+    "A": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 22.746391254070147,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.17229016049323,
+      "oversample": 4,
+      "rms": 0.04375779087236525,
+      "rms_dbfs": -27.178892232651247,
+      "sample_peak": 0.6003091335296631,
+      "sample_peak_dbfs": -4.432500978581102,
+      "sample_rate": 48000,
+      "true_peak": 0.6013550162315369,
+      "true_peak_dbtp": -4.417381239811246
+    },
+    "B": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 22.75153039425541,
+      "duration_seconds": 126.90477083333333,
+      "fir_taps": 49,
+      "frames": 6091429,
+      "integrated_lufs": -25.094741194483195,
+      "oversample": 4,
+      "rms": 0.04373190856003061,
+      "rms_dbfs": -27.18403137283651,
+      "sample_peak": 0.6003091335296631,
+      "sample_peak_dbfs": -4.432500978581102,
+      "sample_rate": 48000,
+      "true_peak": 0.6013550162315369,
+      "true_peak_dbtp": -4.417381239811246
+    }
+  },
+  "limitations": [
+    "Human preference/production quality unreviewed",
+    "Whole-mix >500Hz side fraction4.62% vs4.67%; no width win over approved baseline",
+    "Official Vital/current banks and GUI/cross-platform unverified",
+    "Optional separately installed pinned GPL synth; no plugin binary/factory bank included",
+    "No instrument automation, arbitrary VST/channels, triggered sidechain or native master",
+    "Validated meters, not formal certification"
+  ],
+  "matching": {
+    "A": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "target_lufs": -25.17229016049323
+    },
+    "B": {
+      "error_lu": -3.69159636193217e-09,
+      "gain_db": -0.0775489660100348,
+      "target_lufs": -25.17229016049323
+    }
+  },
+  "onsets": {
+    "bass": {
+      "delay_ms_including_intended_amp_attack": 0.4464285714285976,
+      "first_1percent_peak_seconds": 0.23854166666666668,
+      "first_C2_input_seconds": 0.23809523809523808,
+      "intentional_pad_attack_ms": null,
+      "threshold_relative_to_local_peak": 0.01
+    },
+    "lead": {
+      "delay_ms_including_intended_amp_attack": 0.40476190476190776,
+      "first_1percent_peak_seconds": 0.2385,
+      "first_C2_input_seconds": 0.23809523809523808,
+      "intentional_pad_attack_ms": null,
+      "threshold_relative_to_local_peak": 0.01
+    },
+    "pad": {
+      "delay_ms_including_intended_amp_attack": 47.863095238095234,
+      "first_1percent_peak_seconds": 0.2859583333333333,
+      "first_C2_input_seconds": 0.23809523809523808,
+      "intentional_pad_attack_ms": 420,
+      "threshold_relative_to_local_peak": 0.01
+    },
+    "stab": {
+      "delay_ms_including_intended_amp_attack": 0.34226190476191465,
+      "first_1percent_peak_seconds": 0.2384375,
+      "first_C2_input_seconds": 0.23809523809523808,
+      "intentional_pad_attack_ms": null,
+      "threshold_relative_to_local_peak": 0.01
+    }
+  },
+  "palette": {
+    "external_synth": "DISTRHO Vitalium1.0.6",
+    "native_centered_MIDI_input": "1835232641 =0.5, channel0 only",
+    "native_live_editable": true,
+    "normalized_controls_per_voice": 771,
+    "official_Vital_tested": false,
+    "original_Fourier_content_only": true,
+    "plugin_binary_bundled": false,
+    "synth_pitch_modulation": false,
+    "voices": 4
+  },
+  "performance": {
+    "MIDI_bytes_exact": true,
+    "arrangement_changes": 0,
+    "bars": 64,
+    "bpm": 126,
+    "key": "C minor",
+    "kick_stem_PCM_exact": true,
+    "new_notes": 0,
+    "note_records_exact": 1536,
+    "sections": 6
+  },
+  "pitch": {
+    "actual_hosts": 2,
+    "actual_poly_chords": [
+      "stab",
+      "lead",
+      "pad"
+    ],
+    "bass_mono_last_note_priority_verified": true,
+    "max_measured_cents": {
+      "independent": {
+        "fft": 0.47344009790346375,
+        "period": 2.240896620611437
+      },
+      "native": {
+        "fft": 0.5914011785764378,
+        "period": 2.2053036230796588
+      }
+    },
+    "notes": [
+      36,
+      43,
+      51,
+      55,
+      58,
+      62,
+      63,
+      65,
+      67
+    ],
+    "threshold_cents": 5,
+    "windows_per_note": 3
+  },
+  "preservation": {
+    "all377previous_test_files_and_methods_exact": true,
+    "historical_files_hash_exact": 10295,
+    "installed_and_frozen_runtime_exact": true,
+    "intentional_old_file_edits": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/LICENSING.md",
+      "docs/PRODUCER_ARCHITECTURE.md",
+      "docs/STATUS.md"
+    ],
+    "no_existing_runtime_code_changed": true
+  },
+  "role_drop_rms_dbfs": {
+    "bass": {
+      "A": -32.31914142602325,
+      "B": -32.31914100228158
+    },
+    "lead": {
+      "A": -37.236373477990725,
+      "B": -37.23637379764706
+    },
+    "pad": {
+      "A": -38.714213384183786,
+      "B": -38.737695080408365
+    },
+    "stab": {
+      "A": -41.37931394093914,
+      "B": -40.87931390529959
+    }
+  },
+  "same_input_matrix_bypass_relative_RMS": {
+    "bass": 0.9648105973605111,
+    "lead": 0.33454473730026346,
+    "pad": 0.3149935172334705,
+    "stab": 1.4448159739760331
+  },
+  "same_input_warp_bypass_relative_RMS": {
+    "bass": 0.6413295494044777,
+    "lead": 0.24473121592915717,
+    "pad": 0.35705113241130465,
+    "stab": 1.3765017612537718
+  },
+  "spatial": {
+    "A": {
+      "bands": {
+        "high_over_500": {
+          "mid": 162038.0116980385,
+          "mono_energy_retention": 0.9532962857851538,
+          "side": 7938.536112153349,
+          "side_to_mid_db": -13.098764807790921,
+          "side_to_mid_power_ratio": 0.0489918138896137
+        },
+        "low_20_120": {
+          "mid": 683132.0713670218,
+          "mono_energy_retention": 0.9999999179938317,
+          "side": 0.05602104821410031,
+          "side_to_mid_db": -70.86153444188233,
+          "side_to_mid_power_ratio": 8.200617503141975e-08
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.6003091335296631,
+        "rms": 0.04339523513843668,
+        "rms_loss_db": -0.07226684828961039
+      },
+      "windows": 96
+    },
+    "B": {
+      "bands": {
+        "high_over_500": {
+          "mid": 172652.74373658505,
+          "mono_energy_retention": 0.9538109646413157,
+          "side": 8360.842956153148,
+          "side_to_mid_db": -13.149234183497391,
+          "side_to_mid_power_ratio": 0.0484257752017496
+        },
+        "low_20_120": {
+          "mid": 640142.6654486819,
+          "mono_energy_retention": 0.9999997848695122,
+          "side": 0.13771423348182854,
+          "side_to_mid_db": -66.67297944678225,
+          "side_to_mid_power_ratio": 2.1513053404322512e-07
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.6003091335296631,
+        "rms": 0.04349969571647157,
+        "rms_loss_db": -0.046244246192635285
+      },
+      "windows": 96
+    }
+  },
+  "tested_replay_payload": "Only verification.json test metadata changed after actual ZIP replay; all code/music/media/MIDI/preset/recipe hashes exact",
+  "tests": {
+    "all_real": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "1c627b1999513960ff1b6e043b2a56c15ac924e9ba86dba5dfe19a881fe7f214",
+      "methods": 391,
+      "seconds": 2812.043,
+      "skipped": 0
+    },
+    "final_unit": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "bdfa870d8562424737f48b6a8810db5e30445d760749946e2131c5ea2f88bc24",
+      "methods": 10,
+      "seconds": 24.921,
+      "skipped": 0
+    }
+  },
+  "version": "phase16-delivery-1",
+  "zip": {
+    "bytes": 63455805,
+    "sha256": "2519c9f2411c9324a7cbc030739b20f020159f152f47fafa6255609af4a6154d"
+  }
+}
