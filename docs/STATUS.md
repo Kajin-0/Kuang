@@ -1,5 +1,17 @@
 # Kuang delivery status
 
+## Phase18 — extended record arrangement on the human-approved Phase17 B
+
+The user explicitly heard Phase17 B as better sound/production but a demo/preview. **Phase17 B is now the incumbent.** Phase18 keeps its exact prepared synth/sample palette, all base mixer/insert/send settings and four actual native aux buses, then composes a new160-bar/126BPM/Cminor record with20 eight-bar functions. An Ab/Eb/Fm/Bb bridge has actual paired roots and voiced responses; a kick/bass-free harmonic breakdown and rhythmic rebuild precede a developed final return. The DJ bookends are16bars each, with eight clean unpitched mix-out bars. All4160 events have explicit provenance;608 approved statement events and608 translated return events retain their performance. MIDI bytes are intentionally different. No new plugin, model, sample or mastering stage.
+
+**420/420 tests pass** with real-host integration enabled, zero failures/errors/skips, 3667.333s; all402 previous files/methods and 10,964 historical files remain exact. Thirteen new unit and five native methods, installed wheel, full160-bar save/reopen and extracted relocated replay pass. All4160 note origins and3289 active-note intervals are audited; no unexplained key/chord/bass/root flags. Actual new notes and six poly voicings stay within5cents (max0.3569/0.0232).
+
+B is **309.761896s**,48k24stereo/14868571frames, zero clips. Raw A/B **−24.988128/−24.644595LUFS**, TP **−4.268066/−4.122286dBTP**. Both complete different-length auditions match−24.988128LUFS by constant attenuation. B high-band side fraction **5.4144%**, mono RMS loss.050624dB, low-band mono retention99.9995291%; no constant-width or louder-master claim. Real rebuild filtering and pre-return silence/return contrast pass.
+
+Download **`artifacts/phase18-house/phase18-house-listening.zip`**, 110,755,755bytes, SHA256 `bdb38b9c64d9b9c93a6b7c1ed7b3e7ea2bfc7f866cf9eae8a13bb7511344b769`. Raw A/B: `A-Phase17-approved-native.wav` / `B-Phase18-extended-native.wav`; editable B: `B/native/session.scraft`. Exact commit/CI3.11/3.13 proof is in artifact `proof/release-summary.json`.
+
+Exactly two complete different-length matched listening WAVs plus editable B, source canonical/MIDI, unchanged original patches, relative licensed samples, note/harmony receipt and frozen MIT replay are in `artifacts/phase18-house/phase18-house-listening.zip`. No stems homework, radio edit, plugin binary, factory bank or Suno recording. Phase18 preference remains **unreviewed**. See [Phase18](PHASE18.md) and [listening/replay](PHASE18_LISTENING_README.md). Historical status below is preserved.
+
 ## Phase17 — mix polish on the human-approved Phase16 B
 
 The user listened to Phase16 B and called it an unmistakable qualitative step-change. **Phase16 B is now the musical incumbent**; older pending-listening status below is historical. Phase17 preference remains unreviewed. Its mix-only proposal preserves all1536 MIDI records/bytes,64bars126BPM Cminor/six sections, four original Vitalium patch states, all original instrument objects and six CC0 samples. No new composition or palette.

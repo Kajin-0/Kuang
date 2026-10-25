@@ -83,3 +83,12 @@ Vitalium remains a separately installed external GPL component. Ableton and
 iZotope articles inform general production decisions; no example audio, preset,
 implementation or proprietary plugin is copied. Native outputs stay editable;
 reference/Suno audio is absent. [Phase17 references and limits](PHASE17.md).
+
+
+Phase18 composes new original MIDI and automation from the user-approved Phase17
+project, retaining the same original MIT Vitalium patches and licensed CC0 samples.
+No third-party music, preset, plugin binary or new dependency is added. EDMProd,
+MusicRadar and the official Dennis DeSantis/Ableton online chapters inform general
+arrangement decisions; no tutorial sound/example or book text is copied. Original
+core, note receipts and replay code remain MIT; external GPL Vitalium stays
+separately installed. [Phase18 sources and limits](PHASE18.md).
