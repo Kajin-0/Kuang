@@ -1,5 +1,19 @@
 # Kuang delivery status
 
+## Phase17 — mix polish on the human-approved Phase16 B
+
+The user listened to Phase16 B and called it an unmistakable qualitative step-change. **Phase16 B is now the musical incumbent**; older pending-listening status below is historical. Phase17 preference remains unreviewed. Its mix-only proposal preserves all1536 MIDI records/bytes,64bars126BPM Cminor/six sections, four original Vitalium patch states, all original instrument objects and six CC0 samples. No new composition or palette.
+
+Coordinated actual short-room/dark-plate/filtered-echo aux paths replace stacked harmonic-track spaces. Returns duck from kick MIDI with explicit breakdown/drop levels; this is not audio-triggered sidechain. The actual drum-sum compressor is adjusted conservatively. The extra130ms bass-duck prototype was rejected after negligible real PCM difference in silent gaps; approved bass dynamics remain exact. Role levels are calibrated against the incumbent rather than increased for a louder comparison.
+
+**402/402 real-host tests pass**, zero failures/errors/skips, 3208.101s. All391 earlier tests and 10,773 historical files remain exact. Seven new unit and four native methods, installed wheel, full save/reopen and relocated extracted replay pass. Fresh native G4/Eb4/C2 and Cm9 audio remain within5cents; all four original prepared patches are unchanged.
+
+Raw A/B **−25.094741/−24.988128LUFS**, TP **−4.417381/−4.268066dBTP**, zero clips,48k24stereo126.9047708s. Both listening copies match−25.094741LUFS by B−.106613dB constant attenuation. Above500Hz side fraction **4.6189%→7.0622%**, mono RMS loss **.0744dB** for B; low-band mono retention exceeds99.99998%. Bass PCM and MIDI remain exact. Real dark/echo/room ON/OFF differences and357.142857ms echo trails are verified; this establishes signal behavior, not another listening win.
+
+Download **`artifacts/phase17-house/phase17-house-listening.zip`**, 64,928,467bytes, SHA256 `b0951cb2f22d6a96c4ff51d2bd5e1c4f8d5795c4dbc760d90b4afe93f36a75ff`. Candidate `B/native/session.scraft`; raw `A-Phase16-approved-native.wav` and `B-Phase17-mix-native.wav`. Exact commit/post-push CI3.11/3.13 proof is in artifact `proof/release-summary.json`.
+
+The one listening ZIP contains exactly two complete matched WAVs and editable A/B native/canonical/MIDI, unchanged original patches, relative licensed samples and frozen MIT replay. No optional louder master/C, plugin binary, reference/Suno audio, proprietary bank, account, service or system install. Separately installed reviewed Vitalium1.0.6/SoundCraft0.11.0 remain required for native B replay; official Vital/GUI/cross-platform and native master/input sidechain remain unverified. Human listening decides whether to adopt Phase17. [Details](PHASE17.md),[listening/replay](PHASE17_LISTENING_README.md).
+
 ## Phase16 — same approved performance, original tuned Vitalium palette
 
 The user listened to and approved Phase15 B; it supersedes the historical

@@ -73,3 +73,13 @@ GPL components; official Vital's account Basic route was not accessed with
 credentials. Original patches, component state and all normalized parameters
 travel as editable data. The existing six CC0 sample identities/notices remain
 unchanged. [Phase16 audit and source URLs](PHASE16.md).
+
+
+Phase17 reuses the exact human-approved Phase16 original MIT patch/wavetable
+content and the same six licensed CC0 sample assets, with their notices and
+hashes. No new third-party sound, plugin, bank or code dependency is added. Its
+mix profile, timing/PCM diagnostics and frozen replay source are original MIT;
+Vitalium remains a separately installed external GPL component. Ableton and
+iZotope articles inform general production decisions; no example audio, preset,
+implementation or proprietary plugin is copied. Native outputs stay editable;
+reference/Suno audio is absent. [Phase17 references and limits](PHASE17.md).
