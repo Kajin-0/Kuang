@@ -103,3 +103,13 @@ checks and frozen replay are original Kuang code/data. [Phase19](PHASE19.md).
 
 
 Phase20 adds original MIT synth-source designs, production/diagnostic code and a bounded optional terminal-bus adapter. Two newly authored Vitalium patches use the existing original Fourier waves and no factory content; the approved bass/pad states remain. A shorter CC0 kick comes from the previously reviewed octalmusic pack pinned at22d222ce36e290ba3792c776811aa9c69dcc8776. Its source identity, CC0 dedication and explicit offline best-sinc conversion remain in the portable asset manifest; five previous drum assets remain exact. GPL Vitalium/Pedalboard remain separately installed and unbundled; the BSD converter and optional MIT libebur128 meter are not bundled or runtime requirements. Sound On Sound, Ableton, iZotope and EDMProd inform general decisions with attribution in [Phase20](PHASE20.md). No tutorial sound/preset, factory bank, DJ/Suno recording, proprietary plugin binary or new runtime dependency is redistributed. Private reference excerpts are excluded from the listening ZIP and Git.
+
+
+Phase21 adds original MIT melodic/harmonic MIDI, deterministic composition/audit
+code and native verification/replay tools. All four prepared original synth
+patches and six licensed CC0 drum assets remain exact; no tutorial music,
+reference recording, factory preset, plugin binary or new audio asset is copied.
+Attack Magazine and the official Ableton book inform general musical principles,
+with links in [Phase21](PHASE21.md). Restricted tutorial downloads are not used.
+GPL Vitalium/Pedalboard and SoundCraft remain separate user-installed components;
+core runtime remains standard-library-only MIT.

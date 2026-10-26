@@ -1,5 +1,15 @@
 # Kuang delivery status
 
+## Phase21 — melody, harmony and backing, protected rhythm section
+
+The user clarified that the groove is broadly good and the melody/harmony/background are weak. The bass/drum-rewrite proposal is superseded. Phase21 preserves all six sampled drum tracks, bass and sub pulse, complete source palette/mixer/FX/bus/send/automation state and160-bar dance flow. A new connected upper theme, C-pedal voice-led chord colors, longer pad bed and cadence counterline intentionally change upper MIDI. Actual isolated16-bar drums and bass are PCM-identical. Human preference remains unreviewed.
+
+**493/493 real-host tests pass**, zero failures/errors/skips, 6161.945s. All473 earlier methods/files and 11,555 historical files remain hash-exact. Thirteen unit and seven focused native methods, installed wheel, cross-process deterministic receipt, new-note/polyphonic tuning, concurrent C-pedal/Ab/F voicings and frozen relocated replay pass. The caught receipt-ordering bug is fixed with no music/audio change.
+
+All protected drum/bass/subpulse tracks are exact; actual16-bar drum and bass PCM match byte-for-byte. Global MIDI intentionally changes4,596→4,798 notes, with complete lineage and no unexplained active-interval harmony flags. Maximum note/chord error 1.7583/1.4625cents. ZIP 180,447,700bytes, SHA256 5bfe92b5e72ff9f0cc308bbc431cf4e50225722febb13a59efe8cff235ac609b. Exact commit/CI evidence: artifact proof/release-summary.json. [Machine proof](PHASE21_VERIFICATION.json). Preference remains unreviewed.
+
+One pack contains the requested main16-bar A/B, two complete matched records and live editable original/candidate sources, MIDI, relative licensed assets, patch states, full note lineage and frozen MIT replay. No master chain, source replacement, random tracks or louder-quality claim. [Phase21](PHASE21.md), [listening/replay](PHASE21_LISTENING_README.md). Earlier status entries remain historical.
+
 ## Phase20 — source-first groove and full-song production
 
 The user explicitly rejected a mastering-led response to hollow/dry/weak production. The selected main16-bar prototype instead changes the kick, chord-stab and lead sources, preserving the approved FM bass and moving pad after rejecting alternative bass designs. Original Fourier waves, role envelopes and real modulation are restored in actual Vitalium instances. All4596 MIDI events, sections and original SongSpec remain exact; five drum assets and bass/pad patches remain exact. Full B has no master processor or offline mastering. Human preference is **unreviewed**.

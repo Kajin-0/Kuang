@@ -1,0 +1,223 @@
+{
+  "ZIP": {
+    "bytes": 180447700,
+    "sha256": "5bfe92b5e72ff9f0cc308bbc431cf4e50225722febb13a59efe8cff235ac609b"
+  },
+  "base_commit": "e0a7d4e5e6e01fba43f1556ae855b9c00b2b48b9",
+  "candidate_hash": "44f96f794035a4cc730ff2318d0ef473ee7a1ad8350ea4258258c529f8bbc620",
+  "context": {
+    "backing_difference_RMS_ratio": 1.0448967994202758,
+    "drums_bass_PCM_exact": true,
+    "melody_difference_RMS_ratio": 1.22279840918695,
+    "scope": "Same source palette/processing and aligned native16-bar resets; not a musical quality score"
+  },
+  "full_native_state_PCM_reopen_and_extracted_portable_replay_exact": true,
+  "high_band_side_fraction_B": 0.03973383507829682,
+  "human_preference": "unreviewed",
+  "levels": {
+    "A": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 22.490432145143867,
+      "duration_seconds": 309.7618958333333,
+      "fir_taps": 49,
+      "frames": 14868571,
+      "integrated_lufs": -28.56985732582774,
+      "oversample": 4,
+      "rms": 0.02880659519454161,
+      "rms_dbfs": -30.810161405447708,
+      "sample_peak": 0.38371920585632324,
+      "sample_peak_dbfs": -8.319729260303845,
+      "sample_rate": 48000,
+      "true_peak": 0.39174383878707886,
+      "true_peak_dbtp": -8.139956504810433
+    },
+    "B": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 22.92860759834216,
+      "duration_seconds": 309.7618958333333,
+      "fir_taps": 49,
+      "frames": 14868571,
+      "integrated_lufs": -28.235836748258112,
+      "oversample": 4,
+      "rms": 0.029585755360383926,
+      "rms_dbfs": -30.5783467635624,
+      "sample_peak": 0.4144890308380127,
+      "sample_peak_dbfs": -7.649739165220235,
+      "sample_rate": 48000,
+      "true_peak": 0.4212357997894287,
+      "true_peak_dbtp": -7.509494526069805
+    }
+  },
+  "limits": [
+    "Human preference unknown; no professional or club-ready claim",
+    "The protected groove is exact; upper MIDI intentionally changes",
+    "MIDI-active harmonic audit does not transcribe reverb/release tails or grade consonance",
+    "No master chain, new patches/plugins/tracks or true audio-triggered sidechain",
+    "Pinned separate SoundCraft0.11.0/Vitalium1.0.6 required; other builds/channels/GUI/cross-platform behavior unverified",
+    "No tutorial/reference audio or GPL binary bundled; metering validated, not certified"
+  ],
+  "mastering": false,
+  "matching": {
+    "A": {
+      "error_lu": 0.0,
+      "gain_db": 0,
+      "target_lufs": -28.56985732582774
+    },
+    "B": {
+      "error_lu": 8.069278578659578e-10,
+      "gain_db": -0.33402057756962833,
+      "target_lufs": -28.56985732582774
+    }
+  },
+  "music": {
+    "all_instruments_FX_mixer_sends_buses_lanes_sections_registry_exact": true,
+    "audited_active_intervals": 4281,
+    "backing": "Short/held related stabs, common sustained Eb/G pad with release-aware moving colors and quieter upper counterline",
+    "drums_and_bass_actual16bar_PCM_byte_exact": true,
+    "limits": "MIDI-active harmony and measured tuning, not a consonance/listening score or transcription of FX tails",
+    "main16_harmonic_plan": [
+      "Cm9",
+      "Cm9",
+      "Cm11",
+      "Cm11",
+      "Abmaj9-C",
+      "Abmaj9-C",
+      "Cm9",
+      "Cm9",
+      "Cm9",
+      "Cm9",
+      "Abmaj9-C",
+      "Abmaj9-C",
+      "Fm9-C",
+      "Fm9-C",
+      "Cm11",
+      "Cm9"
+    ],
+    "maximum_corresponding_stab_voice_movement_semitones": 5,
+    "maximum_kick_free_bars": 8,
+    "protected_entire_tracks": [
+      "track-bass",
+      "track-hats",
+      "track-hats.p46",
+      "track-kick",
+      "track-percussion",
+      "track-snare",
+      "track-snare.p38",
+      "track-sub-pulse"
+    ],
+    "theme": "Original G-Eb-F seed; connected upward answer, higher turn and C cadence; related second half, bridge fragments and return",
+    "unexplained_key_upper_low_or_new_melodic_intervals": 0
+  },
+  "new_methods": {
+    "musical_unit": 13,
+    "real_native": 7
+  },
+  "pitch": {
+    "actual_concurrent_C_pedal_inversions_and_existing_F_root_tested": true,
+    "all_prepared_patch_states_unchanged": true,
+    "four_external_voices_native_and_independent": true,
+    "maximum_chord_partial_error_cents": 1.4624962018726455,
+    "maximum_measured_note_error_cents": 1.758255715480403,
+    "native_pitch_bend_center": 0.5,
+    "threshold_cents": 5,
+    "two_native_builtin_upper_voices": true
+  },
+  "preservation": {
+    "all473earlier_test_files_methods_and_runtime_exact": true,
+    "current_installed_frozen_runtime_files_byte_exact": 69,
+    "historical_files_hash_exact": 11555,
+    "old_metadata_files_intentionally_changed": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/LICENSING.md",
+      "docs/STATUS.md"
+    ]
+  },
+  "professional_quality_claimed": false,
+  "reproducibility": "Sorted removed-note provenance, independent Python hash-seed score/MIDI/receipt equality, native save/reopen and extracted frozen replay",
+  "score": {
+    "MIDI_bytes_exact": false,
+    "all_note_origins_and_removals_exact": true,
+    "authored_notes": 1360,
+    "bars": 160,
+    "bpm": 126,
+    "candidate_notes": 4798,
+    "key": "C minor",
+    "removed_notes": 1158,
+    "retained_notes": 3438,
+    "sections": 9,
+    "source_notes": 4596
+  },
+  "source_hash": "eabf2314fbcbd6099a6c93de3ccfd323a645c6c7b9ded294c8aeaadb70227230",
+  "spatial_B": {
+    "bands": {
+      "high_over_500": {
+        "mid": 163344.9892491333,
+        "mono_energy_retention": 0.9602661649217031,
+        "side": 6758.879049144077,
+        "side_to_mid_db": -13.83231141884188,
+        "side_to_mid_power_ratio": 0.04137793929408789
+      },
+      "low_20_120": {
+        "mid": 168949.57709464198,
+        "mono_energy_retention": 0.9999964716895684,
+        "side": 0.5961086585236862,
+        "side_to_mid_db": -54.524316789743054,
+        "side_to_mid_power_ratio": 3.5283228805583736e-06
+      }
+    },
+    "bin_hz": 11.71875,
+    "last_250ms": {
+      "peak": 0,
+      "rms": 0.0,
+      "rms_dbfs": null
+    },
+    "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+    "mono_sum": {
+      "clipped": false,
+      "peak": 0.39969730377197266,
+      "rms": 0.029326887298450496,
+      "rms_loss_db": -0.07633383192660927
+    },
+    "windows": 96
+  },
+  "tested_payload": "Only final verification.json test metadata changed after actual extracted-ZIP replay; all music/native/MIDI/patch/media/receipt/recipe/README/runtime members exact",
+  "tests": {
+    "all_real": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "b389f05999323256cf9d9ebb8ef9a09b37e1a71d0e5b18a21217ce20018164be",
+      "methods": 493,
+      "seconds": 6161.945,
+      "skipped": 0
+    },
+    "focused_native": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "67443fd6e2b9b09943cdbafad0a25d7e91f6d6498aa5c3133d836cf58347cda3",
+      "methods": 7,
+      "seconds": 525.847,
+      "skipped": 0
+    },
+    "focused_unit": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "84c68ff42c559541aaeb55209bcf977f88c412e2aecd7d17a7ef3998c447cda8",
+      "methods": 13,
+      "seconds": 52.034,
+      "skipped": 0
+    }
+  },
+  "user_priority": "Melody/harmony/background upgrade; preferred drums/bass pocket protected, no mastering or bassline rewrite",
+  "version": "phase21-thematic-delivery-1"
+}

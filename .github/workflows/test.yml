@@ -16,9 +16,9 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Project-local test scratch
         run: |
-          mkdir -p .local/phase20/tmp
-          echo "TMPDIR=$PWD/.local/phase20/tmp" >> "$GITHUB_ENV"
-          echo "PIP_CACHE_DIR=$PWD/.local/phase20/pip-cache" >> "$GITHUB_ENV"
+          mkdir -p .local/phase21/tmp
+          echo "TMPDIR=$PWD/.local/phase21/tmp" >> "$GITHUB_ENV"
+          echo "PIP_CACHE_DIR=$PWD/.local/phase21/pip-cache" >> "$GITHUB_ENV"
       - name: Unit and adapter contract tests (stdlib only)
         run: python -m unittest discover -s tests -v
       - name: CLI vertical slice
@@ -160,3 +160,4 @@ jobs:
           ../install/bin/python -I "$GITHUB_WORKSPACE/tools/phase20_smoke.py"
           ../install/bin/python -m kuang.master_bus --help
           ../install/bin/python -m kuang.production_host --help
+          ../install/bin/python -I "$GITHUB_WORKSPACE/tools/phase21_smoke.py"
