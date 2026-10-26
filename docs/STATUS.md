@@ -1,5 +1,17 @@
 # Kuang delivery status
 
+## Phase19 — editorial club continuity, not a new sound palette
+
+The user heard Phase18 as promising but awkward/amateur/confusing for dancers. Phase18 is not an approved club song; Phase17 B remains the approved sound/production baseline. Phase19 is an unreviewed independent editor of the same160bar/126BPM/Cminor score. Bass/drums establish at8, complete G–Eb–F signature at16, the bridge stays on C with only four bars of familiar Fm9/C color, the kick-free break contracts24→8bars, and actual four-floor rhythm holds through88–112. Competing foreground responses give way to the familiar signature. All synth/sample/mixer/insert/send base state remains exact, with the two608-note high points protected.
+
+**437/437 real-host tests pass**, zero failures/errors/skips, 4218.835s; all420 previous files/methods and 11,112 historical files remain exact. Twelve new unit and five native methods, installed wheel, full160-bar save/reopen and extracted relocated replay pass. Complete note-journal and harmonic concurrency/anchor checks pass; actual note/chord error stays below5cents (max0.1071/0.1232). Actual native kick timing confirms96/96 recovery/rebuild beats versus31 in Phase18.
+
+A/B are309.761896s,48k24stereo/14868571frames, zero clips. Raw A/B **-24.644595/-24.431879LUFS**, TP **-4.122286/-4.268066dBTP**. Both auditions match-24.644595LUFS by constant attenuation only. B high-band side fraction5.1223%, mono RMS loss0.047175dB; no new palette, master or audio-triggered sidechain.
+
+Download **`artifacts/phase19-house/phase19-house-listening.zip`**, 160,489,993bytes, SHA256 `3588cc23c55c84eb516a8ae6df6f2cc46c2636e7027f559e95705f8597e3c170`. Raw A/B: `A-Phase18-reference-native.wav` / `B-Phase19-continuity-native.wav`; editable B: `B/native/session.scraft`. Exact commit/CI3.11/3.13 evidence is in artifact `proof/release-summary.json`. Phase19 remains **unreviewed** until human listening.
+
+The one listening ZIP contains two primary complete matched5-minute WAVs (A=Phase18 reference,B=Phase19 revision), editable B, source canonical/MIDI, original patches/relative licensed samples and frozen MIT replay. No stems homework, new plugin/sample/model, louder master or audio-triggered sidechain. [Decisions, source audit and limitations](PHASE19.md), [listening/replay](PHASE19_LISTENING_README.md). Historical listening statements below remain unchanged.
+
 ## Phase18 — extended record arrangement on the human-approved Phase17 B
 
 The user explicitly heard Phase17 B as better sound/production but a demo/preview. **Phase17 B is now the incumbent.** Phase18 keeps its exact prepared synth/sample palette, all base mixer/insert/send settings and four actual native aux buses, then composes a new160-bar/126BPM/Cminor record with20 eight-bar functions. An Ab/Eb/Fm/Bb bridge has actual paired roots and voiced responses; a kick/bass-free harmonic breakdown and rhythmic rebuild precede a developed final return. The DJ bookends are16bars each, with eight clean unpitched mix-out bars. All4160 events have explicit provenance;608 approved statement events and608 translated return events retain their performance. MIDI bytes are intentionally different. No new plugin, model, sample or mastering stage.

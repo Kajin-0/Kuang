@@ -92,3 +92,11 @@ MusicRadar and the official Dennis DeSantis/Ableton online chapters inform gener
 arrangement decisions; no tutorial sound/example or book text is copied. Original
 core, note receipts and replay code remain MIT; external GPL Vitalium stays
 separately installed. [Phase18 sources and limits](PHASE18.md).
+
+
+Phase19 is an original MIT editorial transformation of the Phase18 reference,
+retaining the same original prepared synth patches and licensed CC0 sample
+identities/notices. No new third-party sound, plugin binary, preset bank, book
+text, reference recording or runtime dependency is introduced. GPL Vitalium
+remains a separately installed component. The journal, continuity/pitch/pulse
+checks and frozen replay are original Kuang code/data. [Phase19](PHASE19.md).
