@@ -1,5 +1,15 @@
 # Kuang delivery status
 
+## Phase20 — source-first groove and full-song production
+
+The user explicitly rejected a mastering-led response to hollow/dry/weak production. The selected main16-bar prototype instead changes the kick, chord-stab and lead sources, preserving the approved FM bass and moving pad after rejecting alternative bass designs. Original Fourier waves, role envelopes and real modulation are restored in actual Vitalium instances. All4596 MIDI events, sections and original SongSpec remain exact; five drum assets and bass/pad patches remain exact. Full B has no master processor or offline mastering. Human preference is **unreviewed**.
+
+**473/473 real-host tests pass**, zero failures/errors/skips, 5220.376s; all437 older methods/files and 11,262 historical files are exact. Ten focused source unit tests, installed wheel, actual two-host nine-note/Cm9 tuning, source modulation ON/OFF, native parameter edit/inverse, full save/reopen and extracted relocated replay pass. Maximum selected note/chord error 1.2227/0.0284cents. Source changes are demonstrated; quality preference remains unreviewed.
+
+The ZIP is 181,423,623bytes, SHA256 338ec0ab4a110cf85dd8461206707d88cb308438be54d5e527100d44bd8497b5. Both full songs are48k24stereo309.761896s, zero clips. The full candidate has no master processor; quieter raw output is level-matched honestly. Low-band mono retention 99.999710%, mono RMS loss 0.084505dB. Exact commit/CI evidence: artifact proof/release-summary.json. [Machine proof](PHASE20_VERIFICATION.json).
+
+The listening pack includes the requested matched main16-bar A/B, exactly two primary complete matched5-minute songs and live editable original/candidate native/canonical/MIDI with relative licensed assets, patch states and frozen MIT replay. A separate bounded native terminal-bus adapter and causal mix/master controls are validated infrastructure; the protected initial master prototype is not presented as the quality milestone. No professional-quality, true input-triggered sidechain or true-peak-aware limiter algorithm claim. [Source choices, evidence and limits](PHASE20.md), [listening/replay](PHASE20_LISTENING_README.md). Older status statements below are historical.
+
 ## Phase19 — editorial club continuity, not a new sound palette
 
 The user heard Phase18 as promising but awkward/amateur/confusing for dancers. Phase18 is not an approved club song; Phase17 B remains the approved sound/production baseline. Phase19 is an unreviewed independent editor of the same160bar/126BPM/Cminor score. Bass/drums establish at8, complete G–Eb–F signature at16, the bridge stays on C with only four bars of familiar Fm9/C color, the kick-free break contracts24→8bars, and actual four-floor rhythm holds through88–112. Competing foreground responses give way to the familiar signature. All synth/sample/mixer/insert/send base state remains exact, with the two608-note high points protected.
