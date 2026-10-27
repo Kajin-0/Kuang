@@ -121,3 +121,7 @@ The three16-bar compositions, code, note-origin receipts and score reports are o
 ## Phase23 one melody-free groove
 
 The single original score, two synth recipes and Fourier content remain Kuang MIT. Existing licensed CC0 drums and unchanged bass/pulse sources retain their exact notices and hashes. No reference audio, new sample/preset pack, plugin binary or external model is introduced. Separately installed GPL Vitalium/Pedalboard are not bundled or linked into MIT core; SoundCraft stays an optional external host.
+
+## Phase24 original extended record
+
+The144-bar authored score, arranger, event provenance and performance plan are original Kuang MIT work. All earlier approved sample/patch assets retain exact bytes and notices. No new third-party content, plugin binary, factory preset or reference recording is introduced. Separately installed GPL Vitalium/Pedalboard remain outside MIT core and the listening ZIP.
