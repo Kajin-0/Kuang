@@ -1,0 +1,231 @@
+{
+  "ZIP": {
+    "bytes": 10614252,
+    "sha256": "cc0d0669177d205c0ae640b013c4e364938cf639c9200574b2ba974532623065"
+  },
+  "audio": {
+    "bars": 16,
+    "bits": 24,
+    "bpm": 126,
+    "channels": 2,
+    "comparison": {
+      "existing_reference": "artifacts/phase22-house/listening/A-Phase21-incumbent-MATCHED.wav",
+      "existing_reference_sha256": "df79367c5480b792a15aa684c766e1327c304bf48d452b4e91ec5d602e99d168",
+      "levels": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 26.905375356180574,
+        "duration_seconds": 35.4761875,
+        "fir_taps": 49,
+        "frames": 1702857,
+        "integrated_lufs": -34.053667706898175,
+        "oversample": 4,
+        "rms": 0.01415810639894429,
+        "rms_dbfs": -36.979896564962196,
+        "sample_peak": 0.3135262727737427,
+        "sample_peak_dbfs": -10.074521208781622,
+        "sample_rate": 48000,
+        "true_peak": 0.31377363204956055,
+        "true_peak_dbtp": -10.067671102586658
+      },
+      "processing": "No new reference bounce or master; constant player gain only for fair reference comparison",
+      "reference_gain_db_to_match_candidate": 3.0146992826005423
+    },
+    "levels": {
+      "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+      "backend": "libebur128-1.2.6",
+      "bits_per_sample": 24,
+      "certified": false,
+      "channels": 2,
+      "clipped_samples": 0,
+      "crest_db": 25.144974594178816,
+      "duration_seconds": 35.4761875,
+      "fir_taps": 49,
+      "frames": 1702857,
+      "integrated_lufs": -31.038968424297632,
+      "oversample": 4,
+      "rms": 0.020374852537153317,
+      "rms_dbfs": -33.81811051559515,
+      "sample_peak": 0.3684200048446655,
+      "sample_peak_dbfs": -8.673135921416339,
+      "sample_rate": 48000,
+      "true_peak": 0.3689808249473572,
+      "true_peak_dbtp": -8.659924050040066
+    },
+    "music_seconds": 30.476190476190474,
+    "new_finished_mixes": 1,
+    "raw_sha256": "7981e242b488b13113449c0c119f2d46b3377b753ad3e369845a0a8240954077",
+    "sample_rate": 48000,
+    "spatial": {
+      "bands": {
+        "high_over_500": {
+          "mid": 47069.35548250155,
+          "mono_energy_retention": 0.9275333637482165,
+          "side": 3677.4503167977136,
+          "side_to_mid_db": -11.071914375618238,
+          "side_to_mid_power_ratio": 0.07812833379808734
+        },
+        "low_20_120": {
+          "mid": 46069.19239928616,
+          "mono_energy_retention": 0.9999475916675922,
+          "side": 2.4145360908260862,
+          "side_to_mid_db": -42.80576897743558,
+          "side_to_mid_power_ratio": 5.241107918495874e-05
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.3684200048446655,
+        "rms": 0.020110017871992528,
+        "rms_loss_db": -0.1136403532580759
+      },
+      "windows": 96
+    },
+    "tail_seconds": 5
+  },
+  "base_commit": "c6607f8f6cc554afca7c40080db75aca3d4652dc",
+  "candidate_hash": "01cd20283cc8fe4e4e43b919d405f07367e6d5327a02b007cd39dcb4afa502b0",
+  "causal_controls": {
+    "native_slow_filter_on_off": {
+      "alignment": "sample zero; equal format/frame count; no shift, resampling or gain normalization",
+      "changed_fraction": 0.8985108555797697,
+      "changed_samples": 3060071,
+      "channels": 2,
+      "difference_peak": 0.0252838134765625,
+      "difference_rms": 0.002870411204842597,
+      "difference_rms_dbfs": -50.84111766670127,
+      "difference_to_original_rms_ratio": 0.22227694998688072,
+      "frames": 1702857,
+      "measurable_change": true,
+      "offset_frames": 0,
+      "sample_rate": 48000
+    },
+    "no_control_full_mix_variants": true,
+    "protected_rhythm_PCM_exact": true,
+    "rhythm_PCM_sha256": "2b8417295347d4ea2640c50926e0a296d09c6b9533e4a70ae4a5ef76cce45086",
+    "same_new_MIDI_old_vs_new_source_equal_LUFS": {
+      "track-depth-pad": {
+        "constant_analysis_gain_db": -10.22671274773019,
+        "difference_to_source_RMS": 0.49353249505143315,
+        "processing": "Analysis only; no new listening/mix WAV generated",
+        "samples": 3405714
+      },
+      "track-harmony": {
+        "constant_analysis_gain_db": -5.1219045489829185,
+        "difference_to_source_RMS": 0.5246353314894671,
+        "processing": "Analysis only; no new listening/mix WAV generated",
+        "samples": 3405714
+      }
+    }
+  },
+  "complete_native_state_PCM_save_reopen_and_extracted_relocated_replay_exact": true,
+  "human_preference": "unreviewed",
+  "limits": [
+    "Listening verdict pending; spectra and PCM differences are not a quality score",
+    "MIDI plus conservative dry-envelope release audit, not transcription of FX tails or artistic consonance",
+    "Only pinned Linux SoundCraft0.11.0/Vitalium1.0.6; official Vital,other builds/channels,GUI/cross-platform unverified",
+    "Separate optional GPL plugin/test host not bundled; stdlib MIT core",
+    "No new sample/preset/reference recording; no master, new song or parallel palette"
+  ],
+  "mastering": false,
+  "new_full_song": false,
+  "preservation": {
+    "all513_earlier_methods_files_runtime_exact": true,
+    "historical_files_hash_exact": 12171,
+    "old_metadata_files_intentionally_changed": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/LICENSING.md",
+      "docs/STATUS.md"
+    ],
+    "runtime_current_installed_frozen_files_exact": 72
+  },
+  "priority": "One melody-free16-bar groove; exact preferred drum/bass/sub pocket, original authored chord/pad source states",
+  "professional_quality_claimed": false,
+  "reference_hash": "ec7c372bd16dbc140a5990913442497c829943b2e45177c41fcfdd6d04405d55",
+  "score": {
+    "all_lineage_exact": true,
+    "authored_harmonic_notes": 90,
+    "candidate_notes": 501,
+    "chord_strikes": 28,
+    "dry_release_budgets_seconds": {
+      "bass_sub": 0.03,
+      "pad": 2.0,
+      "stab": 0.2
+    },
+    "pad_notes": 6,
+    "protected_rhythm_notes": 411,
+    "removed_roles": [
+      "track-arp",
+      "track-depth-air",
+      "track-lead"
+    ],
+    "source_notes": 611,
+    "unexplained_active_or_release_intervals": 0
+  },
+  "test_scope": "Full offline531 discovery,80 optional host skips;5 new single-candidate and4 primary adapter real methods pass with no skips. Historical multi-candidate/full-song real suites not rerun.",
+  "tested_payload": "Only verification.json final test metadata changed after actual extracted ZIP replay; all WAV/native/MIDI/patch/media/receipt/recipe/README/runtime members exact",
+  "tests": {
+    "existing_primary_adapter_real": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "904804d5f1450056b497cbfde2fe79eb04ec49e5a76ced22aa44ffe93f6b969f",
+      "methods_discovered": 4,
+      "methods_executed": 4,
+      "optional_host_skips": 0,
+      "seconds": 12.864
+    },
+    "focused_musical_unit": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "7d9d49e8d137a137fc420900a6e87eb5e3751b3875d2f153e955d9f27fc7be67",
+      "methods_discovered": 13,
+      "methods_executed": 13,
+      "optional_host_skips": 0,
+      "seconds": 27.888
+    },
+    "mandatory_offline": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "ebdc150e44f3f8e0e66d6ddcd02bf5850c734acd12a7b8b0ed1a40022d3da249",
+      "methods_discovered": 531,
+      "methods_executed": 451,
+      "optional_host_skips": 80,
+      "seconds": 1045.829
+    },
+    "single_candidate_native": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "9613acde51aaa0a2ee247887cb82e0362f9ea8c75458c27441b28b25ec47015c",
+      "methods_discovered": 5,
+      "methods_executed": 5,
+      "optional_host_skips": 0,
+      "seconds": 160.808
+    }
+  },
+  "tuning": {
+    "actual_native_and_independent_hosts": true,
+    "limit_cents": 5,
+    "maximum_chord_partial_cents": 0.1424740610154655,
+    "maximum_note_cents": 0.31891373452542293,
+    "neutral_pitch_center": 0.5,
+    "two_instance_patch_state_restoration": true,
+    "voices": [
+      "stab",
+      "pad",
+      "unchanged_bass"
+    ]
+  },
+  "version": "phase23-delivery-1"
+}

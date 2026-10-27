@@ -117,3 +117,7 @@ core runtime remains standard-library-only MIT.
 ## Phase22 original musical shortlist
 
 The three16-bar compositions, code, note-origin receipts and score reports are original Kuang MIT work. The same earlier licensed CC0 sample assets and original prepared patches are copied with unchanged provenance/notices; no new third-party audio, tutorial preset, factory bank or reference recording is introduced. Research links and unavailable Berklee-page status are recorded in [Phase22](PHASE22.md). Separate user-installed SoundCraft and GPL Vitalium/Pedalboard are not bundled or statically linked into MIT Kuang.
+
+## Phase23 one melody-free groove
+
+The single original score, two synth recipes and Fourier content remain Kuang MIT. Existing licensed CC0 drums and unchanged bass/pulse sources retain their exact notices and hashes. No reference audio, new sample/preset pack, plugin binary or external model is introduced. Separately installed GPL Vitalium/Pedalboard are not bundled or linked into MIT core; SoundCraft stays an optional external host.
