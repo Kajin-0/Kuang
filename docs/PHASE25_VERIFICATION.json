@@ -1,0 +1,353 @@
+{
+  "ZIP": {
+    "bytes": 139806751,
+    "sha256": "9d23d15599f44a6f02c84b4e11b43146afbd7e118aec91b86295824451aa548a"
+  },
+  "audio": {
+    "anchor_rhythm_PCM_exact": true,
+    "anchor_upper_audio_exact": false,
+    "bars": 144,
+    "bpm": 126,
+    "matching": {
+      "A": {
+        "error_lu": -3.5020022437493026e-09,
+        "gain_db": -1.0142749657029348,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 25.525705999213567,
+          "duration_seconds": 279.28570833333333,
+          "fir_taps": 49,
+          "frames": 13405714,
+          "integrated_lufs": -32.912461734005845,
+          "oversample": 4,
+          "rms": 0.017351787789870794,
+          "rms_dbfs": -35.21311544653895,
+          "sample_peak": 0.32781553268432617,
+          "sample_peak_dbfs": -9.687409447325381,
+          "sample_rate": 48000,
+          "true_peak": 0.32831457257270813,
+          "true_peak_dbtp": -9.674196804904067
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -32.91246173750785
+      },
+      "B": {
+        "error_lu": 5.237268396740546e-10,
+        "gain_db": -0.10000000000000142,
+        "measurement": {
+          "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+          "backend": "libebur128-1.2.6",
+          "bits_per_sample": 24,
+          "certified": false,
+          "channels": 2,
+          "clipped_samples": 0,
+          "crest_db": 26.435332761509464,
+          "duration_seconds": 279.28570833333333,
+          "fir_taps": 49,
+          "frames": 13405714,
+          "integrated_lufs": -32.912461738031574,
+          "oversample": 4,
+          "rms": 0.01736107319546326,
+          "rms_dbfs": -35.208468637958205,
+          "sample_peak": 0.36420273780822754,
+          "sample_peak_dbfs": -8.77313587644874,
+          "sample_rate": 48000,
+          "true_peak": 0.36475715041160583,
+          "true_peak_dbtp": -8.759923715688664
+        },
+        "processing": "constant attenuation only; no hidden EQ/compression",
+        "target_lufs": -32.91246173750785
+      }
+    },
+    "music_seconds": 274.2857142857143,
+    "raw_A_sha256": "e05308ce75a5c894ab11249520e3cb8c5ef912b367d65555f2e03ad24aea5a6d",
+    "raw_B_sha256": "adaed6f8fb5b06ca778e1cca1fe13567a4aa9dd6394ce0657f859e4f5b8ecb04",
+    "raw_levels": {
+      "A": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 25.525704563375054,
+        "duration_seconds": 279.28570833333333,
+        "fir_taps": 49,
+        "frames": 13405714,
+        "integrated_lufs": -31.898186771804912,
+        "oversample": 4,
+        "rms": 0.019501049099249358,
+        "rms_dbfs": -34.1988404847914,
+        "sample_peak": 0.3684200048446655,
+        "sample_peak_dbfs": -8.673135921416339,
+        "sample_rate": 48000,
+        "true_peak": 0.3689808249473572,
+        "true_peak_dbtp": -8.659924050040066
+      },
+      "B": {
+        "algorithm": "K weighting; 400ms / 100ms hop; absolute -70 LUFS, relative -10 LU; finite sinc FIR true peak",
+        "backend": "libebur128-1.2.6",
+        "bits_per_sample": 24,
+        "certified": false,
+        "channels": 2,
+        "clipped_samples": 0,
+        "crest_db": 26.43533271653602,
+        "duration_seconds": 279.28570833333333,
+        "fir_taps": 49,
+        "frames": 13405714,
+        "integrated_lufs": -32.812461737507846,
+        "oversample": 4,
+        "rms": 0.017562104948444693,
+        "rms_dbfs": -35.10846863795236,
+        "sample_peak": 0.3684200048446655,
+        "sample_peak_dbfs": -8.673135921416339,
+        "sample_rate": 48000,
+        "true_peak": 0.3689808249473572,
+        "true_peak_dbtp": -8.659924050040066
+      }
+    },
+    "spatial_B": {
+      "bands": {
+        "high_over_500": {
+          "mid": 41743.72545659577,
+          "mono_energy_retention": 0.9560115982362297,
+          "side": 1920.7295914495035,
+          "side_to_mid_db": -13.371249781383552,
+          "side_to_mid_power_ratio": 0.04601241433150562
+        },
+        "low_20_120": {
+          "mid": 48995.31992109873,
+          "mono_energy_retention": 0.9999916005470795,
+          "side": 0.41153733969515416,
+          "side_to_mid_db": -50.757453519564066,
+          "side_to_mid_power_ratio": 8.399523471994615e-06
+        }
+      },
+      "bin_hz": 11.71875,
+      "last_250ms": {
+        "peak": 0,
+        "rms": 0.0,
+        "rms_dbfs": null
+      },
+      "method": "96 or fewer equally spaced 4096-frame Hann FFTs; M=(L+R)/2, S=(L-R)/2; energy ratios, no phase correction",
+      "mono_sum": {
+        "clipped": false,
+        "peak": 0.3684200048446655,
+        "rms": 0.01737415879955078,
+        "rms_loss_db": -0.0934556290172108
+      },
+      "windows": 96
+    },
+    "tail_seconds": 5
+  },
+  "base_commit": "f730da16f4396c614eeb7bc33a32d4176247bb84",
+  "candidate_hash": "a6109969c1d6d914adf4f5a2bce807858555ee7ba879b0bb6c8aa9a8f6f7e494",
+  "complete_native_state_markers_and_raw_matched_PCM_reopen_and_portable_replay_exact": true,
+  "human_preference": "unreviewed",
+  "limits": [
+    "Source/timing changes are real; musical preference and professional quality await human listening",
+    "Overall high-band side ratio is lower than Phase24, not a measured width increase; low end/mono remain controlled",
+    "Only pinned Linux SoundCraft0.11.0/Vitalium1.0.6; official Vital,other builds/channels,GUI/cross-platform unverified",
+    "Dry-release/concurrent-note checks do not transcribe reverb or certify artistic consonance",
+    "Separate GPL plugin/test host not bundled; unchanged licensed CC0 media and stdlib MIT core"
+  ],
+  "mastering": false,
+  "native_master_feasibility": {
+    "applied_to_final_record": false,
+    "decision": "Keep final master transparent to protect rhythm sound and isolate the source/role production step; no consumer-master variant.",
+    "effects": [
+      "soundcraft:compressor",
+      "soundcraft:maximizer",
+      "soundcraft:saturator"
+    ],
+    "real_processing_and_reopen_proven": true,
+    "true_peak_aware_limiter_claimed": false
+  },
+  "new_candidates": 1,
+  "preservation": {
+    "all549_earlier_methods_files_runtime_exact": true,
+    "historical_files_hash_exact": 12495,
+    "old_metadata_files_intentionally_changed": [
+      ".github/workflows/test.yml",
+      "README.md",
+      "docs/LICENSING.md",
+      "docs/STATUS.md"
+    ],
+    "runtime_current_installed_frozen_files_exact": 74
+  },
+  "priority": "One144-bar no-melody source/depth refinement, scoped transition repair, transparent full A/B",
+  "professional_quality_claimed": false,
+  "rhythm_controls": {
+    "all_four_unaffected_prefix_PCM_exact": true,
+    "bass_omissions_retained": true,
+    "offset_ms": 59.52380952380952,
+    "removed_extra_ghosts": 4,
+    "repaired_chord_voices": 12,
+    "source_late_ghosts_retained": true
+  },
+  "score": {
+    "anchor_MIDI_exact": 501,
+    "anchor_upper_audio_exact": false,
+    "bass_omissions_intentionally_retained": true,
+    "candidate_hash": "a6109969c1d6d914adf4f5a2bce807858555ee7ba879b0bb6c8aa9a8f6f7e494",
+    "harmonic_active_release_intervals": 3088,
+    "human_preference": "unreviewed",
+    "mastering": false,
+    "notes": 3800,
+    "removed_extra_ghosts": [
+      "phase24-track-snare.p38-n62",
+      "phase24-track-snare.p38-n63",
+      "phase24-track-snare.p38-n64",
+      "phase24-track-snare.p38-n65"
+    ],
+    "repaired_chord_voice_onsets": 12,
+    "retained_note_ids_order_other_fields_exact": true,
+    "scope": "Musical/event integrity, not a professional-quality or rhythm-preference score",
+    "seven_unchanged_rhythm_channels_exact": true,
+    "source_hash": "279ddbc10d2692d27ef97d54b914c85b62f2a20bb6a1309a7bc4dbc2c933a6d1",
+    "structure_and_no_lead_exact": true,
+    "unexplained_harmonic_intervals": [],
+    "version": "production-refinement-audit-1"
+  },
+  "source_controls": {
+    "pad": {
+      "LFO_only_on_off_relative_RMS": 0.07236662930637057,
+      "band_fractions": {
+        "new": {
+          "120_250": 2.0156364552397023e-06,
+          "2000_8000": 0.0051134659372417,
+          "20_40": 8.947389581179192e-10,
+          "250_500": 0.6578992085264652,
+          "40_80": 5.161697522078559e-09,
+          "500_2000": 0.3369852370701819,
+          "8000_nyquist": 4.858259055939392e-08,
+          "80_120": 1.8190628987623444e-08,
+          "harmonics_100_400": 0.6569659120768998
+        },
+        "old": {
+          "120_250": 2.5292179072199106e-06,
+          "2000_8000": 0.00256541321789147,
+          "20_40": 8.658361883260255e-10,
+          "250_500": 0.6416359240888831,
+          "40_80": 6.066021286148169e-09,
+          "500_2000": 0.3557960993008619,
+          "8000_nyquist": 4.67191322488446e-09,
+          "80_120": 2.2570685568861457e-08,
+          "harmonics_100_400": 0.6404821018085776
+        }
+      },
+      "native_EQ_input_makeup_db": 2.2836950749501597,
+      "preinsert_error_LU": -0.00037953812725177727,
+      "same_MIDI_equal_LUFS_source_delta": {
+        "constant_analysis_gain_db": 2.2824753595045877,
+        "difference_to_source_RMS": 0.2081222081024961,
+        "processing": "Analysis only; no new listening/mix WAV generated",
+        "samples": 3405714
+      }
+    },
+    "stab": {
+      "LFO_only_on_off_relative_RMS": 0.0673095118915514,
+      "band_fractions": {
+        "new": {
+          "120_250": 0.6331742804684705,
+          "2000_8000": 0.010411804857834956,
+          "20_40": 2.3501664553410764e-06,
+          "250_500": 0.2723891155547741,
+          "40_80": 0.00012372560501202186,
+          "500_2000": 0.08294404040980269,
+          "8000_nyquist": 4.899054032325801e-08,
+          "80_120": 0.0009546339471101634,
+          "harmonics_100_400": 0.8969424314105527
+        },
+        "old": {
+          "120_250": 0.679199724912322,
+          "2000_8000": 0.0009519760760872992,
+          "20_40": 1.2875372467452714e-06,
+          "250_500": 0.29419647505828417,
+          "40_80": 3.924096859732172e-05,
+          "500_2000": 0.025156566977418488,
+          "8000_nyquist": 4.998669785688569e-10,
+          "80_120": 0.00045472797017705386,
+          "harmonics_100_400": 0.9694992133898733
+        }
+      },
+      "native_EQ_input_makeup_db": 0.0,
+      "preinsert_error_LU": -5.606110803313413e-05,
+      "same_MIDI_equal_LUFS_source_delta": {
+        "constant_analysis_gain_db": -0.2258088309348949,
+        "difference_to_source_RMS": 0.26509374805499425,
+        "processing": "Analysis only; no new listening/mix WAV generated",
+        "samples": 3405714
+      }
+    }
+  },
+  "source_hash": "279ddbc10d2692d27ef97d54b914c85b62f2a20bb6a1309a7bc4dbc2c933a6d1",
+  "test_scope": "Full offline568 discovery,91 optional-host skips;6 new source-production and4 existing primary-adapter real methods pass with zero skips. Historical native experiment suites not regenerated.",
+  "tested_payload": "Only verification.json final test metadata changed after actual extracted ZIP raw+matched replay; all audio/native/MIDI/patch/media/receipt/recipe/README/runtime members exact",
+  "tests": {
+    "existing_primary_adapter_real": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "6850405df4ea6a2eb6c1fb27e20c366a9759c911ca5034d5ddd2a4a743a62d6e",
+      "methods_discovered": 4,
+      "methods_executed": 4,
+      "optional_host_skips": 0,
+      "seconds": 15.242
+    },
+    "focused_musical_unit": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "b740cf383e5b66ce5ec0df0b06532983aec79c189db4a0e0464b459dd80fdad9",
+      "methods_discovered": 13,
+      "methods_executed": 13,
+      "optional_host_skips": 0,
+      "seconds": 69.166
+    },
+    "mandatory_offline": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "2e68af19ad32062afd8a36a0b509712e0759843127b4d3133179e661b9a01736",
+      "methods_discovered": 568,
+      "methods_executed": 477,
+      "optional_host_skips": 91,
+      "seconds": 1189.535
+    },
+    "source_production_native": {
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "84ad8b99e36078f46fcf729dbdb798e370795fa38f099349ad7131ba62cc3ca6",
+      "methods_discovered": 6,
+      "methods_executed": 6,
+      "optional_host_skips": 0,
+      "seconds": 735.342
+    }
+  },
+  "tuning": {
+    "actual_native_and_independent_hosts": true,
+    "limit_cents": 5,
+    "maximum_chord_partial_cents": 0.3085574051900638,
+    "maximum_note_cents": 0.20339599489341967,
+    "neutral_pitch_center": 0.5,
+    "two_instance_full_patch_and_both_LFO_shape_restoration": true
+  },
+  "version": "phase25-delivery-1",
+  "wet_only_return_duck_correction": {
+    "duck": {
+      "on_off_db": 2.3015115858796635,
+      "on_off_energy_ratio": 1.6988348384013578
+    },
+    "open": {
+      "on_off_db": 0.0,
+      "on_off_energy_ratio": 1.0
+    },
+    "recover": {
+      "on_off_db": 0.07642746693690988,
+      "on_off_energy_ratio": 1.0177538330628364
+    }
+  }
+}

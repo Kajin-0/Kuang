@@ -125,3 +125,7 @@ The single original score, two synth recipes and Fourier content remain Kuang MI
 ## Phase24 original extended record
 
 The144-bar authored score, arranger, event provenance and performance plan are original Kuang MIT work. All earlier approved sample/patch assets retain exact bytes and notices. No new third-party content, plugin binary, factory preset or reference recording is introduced. Separately installed GPL Vitalium/Pedalboard remain outside MIT core and the listening ZIP.
+
+## Phase25 original source refinements
+
+The two synth recipes, inverse LFO shapes, scoped edits and production code are original Kuang MIT work, using unchanged original Fourier tables and existing licensed CC0 assets. No factory pack, new third-party content, plugin binary or reference recording is introduced. GPL Vitalium/Pedalboard remain optional separately installed processes; no GPL binary is bundled into core or the listening ZIP.

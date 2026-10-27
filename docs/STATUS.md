@@ -1,5 +1,12 @@
 # Kuang delivery status
 
+## Phase25 — one source-first production refinement
+
+Phase24 supplied first full-song viability; occasional awkward rhythm and source quality remain human concerns. Scoped4-ghost/12-voice timing repair, exact anchor MIDI/rhythm sources, two original calibrated Vitalium states and existing native EQ/depth/motion. No new melody, kit, source library or master. [Decisions](PHASE25.md).
+
+Offline **568 discovered /477 pass /91 optional-host skips**; **6 new native +4 primary real methods pass**, zero skips. All549 earlier methods/files and 12,495 historical files exact.4ghosts/12voice timing edits only; anchor501 MIDI/rhythm PCM exact, upper tone changed. Real tuning max 0.2034/0.3086cents; actual source/LFO/duck/master-capability gates pass. Full native raw+matched PCM reopens/replays exactly. Source/core wheel/frozen74files exact. ZIP 139,806,751bytes, SHA256 9d23d15599f44a6f02c84b4e11b43146afbd7e118aec91b86295824451aa548a. [Machine proof](PHASE25_VERIFICATION.json); exact SHA/CI in artifact `proof/release-summary.json`. No master, width-improvement or professional-quality claim; human verdict pending.
+
+
 ## Phase24 — approved groove becomes one complete record
 
 Phase23 is now human-approved. ONE144-bar melody-free arrangement preserves its entire501-note anchor, sources and signal graph, with explicit harmonic/performance development,8-bar maximum kick gap and real DJ bookends. No new lead, source library or master. Phase24 preference pending. [Decisions](PHASE24.md).
