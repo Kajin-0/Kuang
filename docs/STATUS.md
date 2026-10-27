@@ -1,5 +1,13 @@
 # Kuang delivery status
 
+## Phase22 — musical search before another full song
+
+The user now approves the groove alone and finds Phase21 melody/harmony/backing weak. The shortlist preserves all six sampled drum tracks and the existing palette, routing, mixer and automation. B=soulful and C=progressive move only bass/sub pitches with chord changes; D=hypnotic keeps both low tracks exact. Upper MIDI is independently composed. Four matched full-mix16-bar auditions, no selected winner or160-bar extension.
+
+**513/513 real-host tests pass**, zero skips/failures/errors; all493 earlier methods/files and 11,858 historical files exact. All four drums PCM-identical; hypnotic low PCM-identical. Actual new-note/chord maximum error 1.7583/1.0259cents. All four native state/PCM and extracted relocated replay exact. Installed wheel passes. ZIP 42,123,667bytes, SHA256 d03e400acb4a03a07ba5bf52de9ff1235ca19ac9cccd1f56b996876c9140deca. [Machine proof](PHASE22_VERIFICATION.json). Exact SHA/CI: artifact proof/release-summary.json. Human selection pending; no full-song extension or quality claim.
+
+[Musical decisions](PHASE22.md), [listening/replay](PHASE22_LISTENING_README.md). Earlier releases and status entries remain historical.
+
 ## Phase21 — melody, harmony and backing, protected rhythm section
 
 The user clarified that the groove is broadly good and the melody/harmony/background are weak. The bass/drum-rewrite proposal is superseded. Phase21 preserves all six sampled drum tracks, bass and sub pulse, complete source palette/mixer/FX/bus/send/automation state and160-bar dance flow. A new connected upper theme, C-pedal voice-led chord colors, longer pad bed and cadence counterline intentionally change upper MIDI. Actual isolated16-bar drums and bass are PCM-identical. Human preference remains unreviewed.

@@ -113,3 +113,7 @@ Attack Magazine and the official Ableton book inform general musical principles,
 with links in [Phase21](PHASE21.md). Restricted tutorial downloads are not used.
 GPL Vitalium/Pedalboard and SoundCraft remain separate user-installed components;
 core runtime remains standard-library-only MIT.
+
+## Phase22 original musical shortlist
+
+The three16-bar compositions, code, note-origin receipts and score reports are original Kuang MIT work. The same earlier licensed CC0 sample assets and original prepared patches are copied with unchanged provenance/notices; no new third-party audio, tutorial preset, factory bank or reference recording is introduced. Research links and unavailable Berklee-page status are recorded in [Phase22](PHASE22.md). Separate user-installed SoundCraft and GPL Vitalium/Pedalboard are not bundled or statically linked into MIT Kuang.
