@@ -129,3 +129,5 @@ The144-bar authored score, arranger, event provenance and performance plan are o
 ## Phase25 original source refinements
 
 The two synth recipes, inverse LFO shapes, scoped edits and production code are original Kuang MIT work, using unchanged original Fourier tables and existing licensed CC0 assets. No factory pack, new third-party content, plugin binary or reference recording is introduced. GPL Vitalium/Pedalboard remain optional separately installed processes; no GPL binary is bundled into core or the listening ZIP.
+
+Phase26 adds original symbolic composition and MIT code only. It retains the existing original Vitalium patch states and separately licensed CC0 drum assets; no plugin binary, factory preset or reference recording is bundled. Vitalium remains a separately installed GPL component.

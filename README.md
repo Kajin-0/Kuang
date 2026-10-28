@@ -299,3 +299,5 @@ python3 tools/phase15_pitch.py --out-dir .local/phase15/new-pitch-gate \
 channel0 calibration. Legacy mode remains available for historical exact replay;
 its earlier non-silence/state checks do not establish correct musical pitch.
 [Listening/replay instructions](docs/PHASE15_LISTENING_README.md).
+
+Phase26 develops the Phase25 record's harmonic direction and staged intro while preserving its sounds and exact approved anchor. [Composition, native proof and listening release](docs/PHASE26.md).

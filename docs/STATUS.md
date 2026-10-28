@@ -524,3 +524,13 @@ The smoke-test edited state hash was `9c30c361abf30f664e462de5c0e41016017d271a71
 ## Next milestone
 
 Validate the generated importer in a real REAPER project with an already installed Vital instance: check notes/mixer/envelope values, measured macro calibration, failure rollback, save/reopen and native editability. Record host/plugin versions and discrepancies. Then implement a thin local desktop project editor and host reconciliation around these existing exact edit semantics. Add an actual model engine only through validated proposals; make audio-quality and rendering claims only after real output and listening/measurement evidence exist.
+
+## Phase26 — functional harmonic direction
+
+One144-bar melody-free composition from Phase25; original sounds/graph and501-note anchor protected. Bass/sub changes are pitch-only; the new i–iv–Vsus–V cadence supplies direction and the intro delays the upper bed until bar12. Mandatory offline discovery: **580 tests, 485 executed successfully and 95 optional-host skips**. **Four new real-host tests and four existing primary-adapter tests pass**, with zero skips. Installed-wheel smoke passes; **75 runtime files** match current, installed and frozen code. All **568 earlier test methods/files** and **12,668 historical files** remain exact. Older optional native experiments were not regenerated.
+
+The new score contains **3,788 notes**. The complete 501-note anchor reset render, native save/reopen, and extracted relocated raw/matched replay are PCM-exact. Source patches, sample assets and signal graph remain exact. Every later bass/sub onset, gate and accent is retained; only the documented functional pitches change.
+
+The four intro blocks measure **-41.07, -40.68, -37.50, -35.76 dBFS RMS**. Both complete 48kHz/24-bit stereo recordings have zero clipped samples. The scalar-matched copies measure **-33.295045/-33.295045 LUFS**. These measurements establish the staged energy change and level parity, not listener preference.
+
+[Machine verification](PHASE26_VERIFICATION.json). Exact commit and post-push Python 3.11/3.13 CI evidence are stored in artifact `proof/release-summary.json`. Musical preference remains unreviewed.
