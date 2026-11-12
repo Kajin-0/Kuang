@@ -1,11 +1,60 @@
 # Autonomous palette selection
 
-This is a **sound-selection subsystem**, not a one-shot song producer. A prompt
-selects chord/keys, pad and bass candidates from a local Vital preset catalog,
-auditions a bounded shortlist in the real Vitalium VST3, and chooses a candidate
-for each role using an explicit signal-feature heuristic. The prompt parser and
-composition facilities are rules-based; there is no neural music generation or
-claim of professional sound quality. Human listening still decides preference.
+The private experimental workflow can now turn one prompt into an editable
+16- or 32-bar house sketch: it automatically selects chord, pad and bass presets,
+composes MIDI using rules, and renders a native SoundCraft session. This is not a
+full-length autonomous producer or a professional-quality claim. Human listening
+still decides preference. The preset-only CLI remains available separately.
+
+## Private one-prompt native sketch
+
+This opt-in command uses the same local catalog, reviewed installed Vitalium,
+Pedalboard/NumPy/SoundFile interpreter and bubblewrap described below, plus the
+pinned SoundCraft 0.11.0 CLI. Run it from the workspace root; the new output
+must be inside that workspace, outside the source library, and have an existing
+parent directory. Nothing is downloaded.
+
+```bash
+PYTHONPATH="$PWD/.local/phase30-experiment/packages" \
+  "$PWD/.local/preset-library/.extract-venv/bin/python" \
+  -m kuang.autonomous_create \
+  "hypnotic deep house 126 bpm in C minor, warm chords, dark pad, punchy bass, no lead" \
+  --catalog "$PWD/.local/preset-library/reports/catalog.json" \
+  --plugin "$PWD/.local/phase28-tools/extracted/usr/lib/vst3/vitalium.vst3" \
+  --soundcraft /home/User/kuang-eval/soundcraft-0.11.0/soundcraft-0.11.0-linux-x86_64/bin/soundcraft-cli \
+  --out-dir "$PWD/.local/autonomous-palette-eval/my-new-song" \
+  --seed 17 --bars 16 --per-role 1 --max-candidates 12 --timeout 25 \
+  --private-third-party-presets
+```
+
+The output includes `preview.wav`, `project.kuang.json`, `song.mid`,
+`song-spec.json`, `palette/` selection evidence and `native/session.scraft`.
+The **entire directory is private**: its native session and `native/patches/`
+contain copied third-party preset state, not a license to redistribute it. The
+native project needs the same separately installed pinned Vitalium binary and
+original private source library. The adapter rechecks source hashes during
+export, save and render. Archive provenance remains unverified catalog metadata.
+It rejects missing or changed sources, unsupported patches and unsafe paths.
+
+Every selected patch is checked against its source SHA and the audition receipt,
+loaded into the real plugin, and independently restored with its 771 mapped
+controls. Embedded waveform samples and positions, name, author and disabled
+sample oscillator are checked in readback; host serialization need not be
+byte-identical across different plugin instances. The SoundCraft host runs with
+network disabled and only the private staging tree writable; native export is
+verified against the canonical notes, effects and controls and saved/reopened.
+The public original-only `external_synth` validator is unchanged and does not
+accept these patches. The private adapter does not reconcile later GUI edits.
+
+The renderer performs a quiet calibration render and bounded equal track-gain
+adjustment, re-renders the native session, and rejects silence, clipping, or a
+measured true peak above -1 dBTP. The measurement is not a certified mastering
+or perceptual quality assessment. The output is an instrumental, rules-based
+house sketch with built-in drums, not a complete full-length song; `no lead`
+omits the lead track. It does not use a neural music model. More complex prompt
+interpretation, sample selection, composition, arrangement and mastering remain
+future work. A missing/incompatible preset, unavailable worker or host, failed
+roundtrip, or failed audio gate stops publication.
 
 ## Local audition
 
@@ -67,8 +116,9 @@ plugin readback, and renders a role-specific MIDI phrase. It rejects silence,
 non-finite output, clipping and a gross spectral pitch mismatch. Readback checks
 are not a claim of bit-identical state, exhaustive compatibility, or a security
 boundary against a malicious kernel/plugin. The original-only
-`kuang.external_synth` validator is unchanged: this selector does **not** bind a
-foreign patch into SoundCraft or bypass that validator.
+`kuang.external_synth` validator remains unchanged. The separate opt-in native
+workflow above uses its own private source verification and does not bypass that
+validator.
 
 The proxy combines relative low/mid/high energy, envelope attack and tail, and
 stereo energy against simple role-specific targets. Absolute RMS or peak is not
@@ -89,9 +139,9 @@ license before sharing or publishing anything derived from them.
 
 ## Remaining work toward one prompt to finished song
 
-A complete autonomous producer still needs: a safe, license-aware way to bind
-selected foreign states into an editable DAW without weakening the original-only
-adapter; prompt-driven harmonic composition and multi-section arrangement;
+A complete autonomous producer still needs: fully audited redistribution rights
+and portable asset management for foreign states; more capable prompt-driven
+harmonic composition and full-length multi-section arrangement;
 coherent sample and instrument role selection; calibrated gain staging, spatial
 mixing and a reproducible native master; and an evaluation loop combining robust
 signal/tuning checks with meaningful perceptual listening or human feedback.

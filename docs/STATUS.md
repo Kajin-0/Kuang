@@ -1,5 +1,30 @@
 # Kuang delivery status
 
+## Private one-prompt native preset experiment (2026-11-12)
+
+The opt-in `kuang.autonomous_create` command connects automatic local Vital
+preset auditions to rules-based 16/32-bar house composition and a native
+SoundCraft project. A separately implemented private verifier checks the
+selected source hashes, plugin readback, embedded waveform payloads and 771
+controls; the original-only external adapter remains unchanged. The native
+host runs offline with writes confined to the private staging tree. Output
+includes third-party state with unknown redistribution rights and must remain
+private. This is an editable sketch, not a full-length or perceptually judged
+one-shot production.
+
+A real 16-bar C-minor prompt selected chord, pad and bass presets; SoundCraft
+native save/reopen and the source hashes checked successfully. Its 48 kHz/24-bit stereo render lasts 42.48 s
+including 12 s tail, with zero clipped samples and measured -7.60 dBTP. A
+separate G-minor prompt also rendered successfully. An initial exact plugin
+component-byte comparison failed; the implemented worker instead verifies the
+identity, embedded waveforms and every mapped control in a second instance,
+without claiming byte-identical plugin serialization. No listening or
+professional-quality judgment was made. The focused selector, private binding
+and original adapter suite passed 43 tests. The wider offline suite was
+terminated before completion after 110 passing tests, with no failures reported
+before termination. No GUI interaction test was performed.
+
+
 ## Autonomous palette selector — local prototype
 
 The standalone prompt-driven selector shortlists private local Vital presets, verifies their file hashes and conservative resource/version eligibility, and auditions them in separate network-isolated pinned Vitalium workers. It reports role-specific feature scores, failures, preview hashes and selected source references. Foreign presets are **not** bound through the original-only external adapter; no complete autonomous song or subjective quality claim follows. See [AUTONOMOUS_PRODUCER.md](AUTONOMOUS_PRODUCER.md).

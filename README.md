@@ -58,6 +58,8 @@ python3 tools/phase12_house.py --symbolic --out-dir .local/phase12/my-symbolic
 
 Use a fresh destination. The listening download is `artifacts/phase12-house/phase12-house-listening.zip`. At Phase12, routing was a bounded native prototype and is absent from those four comparisons. The later scoped production adapter verifies real one-level post-fader aux buses/sends; see the Phase15/16 evidence.
 
+**Private native experiment:** An opt-in single-prompt house workflow selects and auditions local Vital presets, composes a 16/32-bar MIDI sketch, and renders an editable SoundCraft session. Preset rights are unknown; keep its whole output private. It is rules-based and is not a full-length autonomous producer. [Usage and limitations](docs/AUTONOMOUS_PRODUCER.md).
+
 ## Quick start
 
 From this checkout, use an already installed free [SoundCraft 0.11.0](https://github.com/storytold/soundcraft/releases/tag/v0.11.0) CLI:
