@@ -1,5 +1,10 @@
 # Kuang delivery status
 
+## Autonomous palette selector — local prototype
+
+The standalone prompt-driven selector shortlists private local Vital presets, verifies their file hashes and conservative resource/version eligibility, and auditions them in separate network-isolated pinned Vitalium workers. It reports role-specific feature scores, failures, preview hashes and selected source references. Foreign presets are **not** bound through the original-only external adapter; no complete autonomous song or subjective quality claim follows. See [AUTONOMOUS_PRODUCER.md](AUTONOMOUS_PRODUCER.md).
+
+
 ## Phase25 — one source-first production refinement
 
 Phase24 supplied first full-song viability; occasional awkward rhythm and source quality remain human concerns. Scoped4-ghost/12-voice timing repair, exact anchor MIDI/rhythm sources, two original calibrated Vitalium states and existing native EQ/depth/motion. No new melody, kit, source library or master. [Decisions](PHASE25.md).
