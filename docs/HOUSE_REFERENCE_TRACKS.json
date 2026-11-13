@@ -1,0 +1,222 @@
+{
+  "version": "1",
+  "purpose": "Externally sourced, non-audio house production grammar profiles; no copyrighted samples, MIDI, synth states, audio or note-for-note transcriptions.",
+  "status": "reference data only; no runtime use or perceptual evaluation implemented",
+  "primary_quality_anchor": "User-approved Kuang Phase43 mix / Phase44 master; external profiles are genre grammar, not a substitute for listener approval.",
+  "case_studies": [
+    {
+      "id": "fisher-losing-it-extended-2018",
+      "title": "Losing It",
+      "artist": "FISHER",
+      "release_year": 2018,
+      "subgenre": "tech house",
+      "reference_priority": "high for groove/arrangement, low for exact synthesis and harmonic transcription",
+      "versions": [
+        {
+          "name": "Extended",
+          "tempo_bpm": 125,
+          "duration_seconds": 400,
+          "key_claim": "G major per Beatport",
+          "source_id": "beatport_extended",
+          "claim_status": "retailer metadata"
+        },
+        {
+          "name": "Original Mix",
+          "tempo_bpm": 125,
+          "duration_seconds": 248,
+          "key_claim": "G major per Beatport",
+          "source_id": "beatport_original",
+          "claim_status": "retailer metadata"
+        }
+      ],
+      "uncertainties": [
+        "An independent audio-analysis service labels the short recording G minor; do not enforce a key.",
+        "The Top Music Arts tutorial analyzes a third-party remake, not FISHER's original session.",
+        "Tutorial references to 2-beat loop displays and bass pitches are insufficient to reconstruct canonical original notes.",
+        "The reference recording includes an identifiable lead-like signature; future Kuang standalone melody generation remains disabled."
+      ],
+      "source_ids": [
+        "topmusicarts_remake",
+        "beatport_extended",
+        "beatport_original",
+        "edjing_short",
+        "grammy_2019"
+      ],
+      "core_role_families": [
+        "quarter_pulse_kick",
+        "offbeat_eighth_hats",
+        "backbeat_clap",
+        "four_bar_bass_variations"
+      ],
+      "optional_role_families": [
+        "drop_rimshot_accents",
+        "late_ride_layer",
+        "build_snare_roll",
+        "conditional_sub_layer",
+        "filtered_and_ducked_return"
+      ],
+      "arrangement_grammar": [
+        "intro_pulse",
+        "breakdown_subtraction",
+        "buildup_activity_reassignment",
+        "drop_main_pocket_return",
+        "progressive_drop_instrumentation",
+        "extended_outro"
+      ],
+      "candidate_gate_ids": [
+        "XR01",
+        "XR02",
+        "XR03",
+        "XR04",
+        "XR05",
+        "XR06",
+        "XR07",
+        "XR08",
+        "XR09",
+        "XR10"
+      ],
+      "permissions": "link_only_nontranscriptive; no track or remake MIDI/audio/plugin states",
+      "observation_confidence": {
+        "commercial_release_version_and_bpm": "high",
+        "original_key": "disputed",
+        "remake_arrangement_roles": "medium_for_remake_only",
+        "original_plugin_preset_settings": "unknown",
+        "entire_original_midi": "unknown"
+      }
+    },
+    {
+      "id": "disclosure-when-a-fire-starts-to-burn-2013",
+      "title": "When a Fire Starts to Burn",
+      "artist": "Disclosure",
+      "release_year": 2013,
+      "subgenre": "house / UK garage-influenced",
+      "reference_priority": "qualitative genre-diversity counterexample, not a technical reconstruction",
+      "versions": [],
+      "source_ids": [
+        "pitchfork_disclosure_2013"
+      ],
+      "core_role_families": [
+        "swinging_hats",
+        "rolling_bass",
+        "rhythmic_organ_stabs"
+      ],
+      "optional_role_families": [
+        "sampled_voice_rhythm_outside_current_kuang_scope"
+      ],
+      "arrangement_grammar": [
+        "recognizable_house_pocket",
+        "rhythmic_phrase_interaction"
+      ],
+      "candidate_gate_ids": [],
+      "observation_confidence": {
+        "production_sound_description": "music_criticism",
+        "original_midi_and_plugin_settings": "unknown"
+      },
+      "permissions": "links_and_qualitative_commentary_only; no transcription or audio"
+    }
+  ],
+  "candidate_gates": [
+    {
+      "id": "XR01",
+      "topic": "stable_core_drums",
+      "tier": "convention",
+      "check": "classic house kick/backbeat/hat anchors in active full-groove sections; waivable for designated breaks and other explicitly selected families"
+    },
+    {
+      "id": "XR02",
+      "topic": "bass_variation_family",
+      "tier": "default",
+      "check": "related recurring 2–4 bar bass motif with controlled variations, not unrelated generated phrases"
+    },
+    {
+      "id": "XR03",
+      "topic": "selective_percussion",
+      "tier": "optional",
+      "check": "auxiliary rim/ride/ghost presence localized to sections, rather than mechanically constant"
+    },
+    {
+      "id": "XR04",
+      "topic": "buildup_density_tradeoff",
+      "tier": "default",
+      "check": "withhold some main percussion when a roll/fill is added; compare role-presence matrix"
+    },
+    {
+      "id": "XR05",
+      "topic": "breakdrop_contrast",
+      "tier": "default",
+      "check": "detect a meaningful role/density reduction and return where requested"
+    },
+    {
+      "id": "XR06",
+      "topic": "economical_development",
+      "tier": "default",
+      "check": "recognizable base groove with selective section-specific addition/automation"
+    },
+    {
+      "id": "XR07",
+      "topic": "version_dependent_form",
+      "tier": "convention",
+      "check": "duration and DJ intro/outro follow chosen release type, not 6:40 locked"
+    },
+    {
+      "id": "XR08",
+      "topic": "source_over_processing",
+      "tier": "default",
+      "check": "evaluate actual samples and mix, do not add multiple sub/kick layers without phase evidence"
+    },
+    {
+      "id": "XR09",
+      "topic": "no_melody_default",
+      "tier": "invariant_user_scope",
+      "check": "do not produce an independent lead/arp/melody while current no-melody policy is active"
+    },
+    {
+      "id": "XR10",
+      "topic": "provenance",
+      "tier": "invariant_evidence",
+      "check": "distinguish commercial versions, third-party remakes and uncertain analysis claims"
+    }
+  ],
+  "sources": {
+    "topmusicarts_remake": {
+      "url": "https://topmusicarts.com/blogs/news/fisher-losing-it-deconstructed-and-hot-to-make-in-ableton",
+      "type": "third_party_remake_analysis",
+      "author": "Esteban Miranda",
+      "date": "2018-11-25"
+    },
+    "beatport_extended": {
+      "url": "https://www.beatport.com/track/losing-it/10766349",
+      "type": "retailer_metadata"
+    },
+    "beatport_original": {
+      "url": "https://www.beatport.com/track/losing-it/15719012",
+      "type": "retailer_metadata"
+    },
+    "edjing_short": {
+      "url": "https://edjing.com/track/losing-it-fisher/ca5kr1821202",
+      "type": "independent_audio_analysis",
+      "caution": "G minor conflicts with Beatport and Top Music Arts G major"
+    },
+    "grammy_2019": {
+      "url": "https://www.grammy.com/awards/categories/best-dance-recording/2019/",
+      "type": "award_record"
+    },
+    "pitchfork_disclosure_2013": {
+      "url": "https://pitchfork.com/reviews/tracks/15525-disclosure-when-a-fire-starts-to-burn/",
+      "type": "contemporaneous_music_criticism"
+    }
+  },
+  "integration_policy": {
+    "reference_use": "abstract noncopyrighted rhythm/arrangement/mixing practices only",
+    "selected_gates": "human-reviewed, contextual, waivable; not automatic sonic quality certification",
+    "do_not_copy": [
+      "original_recording",
+      "original_or_remake_MIDI",
+      "original_or_remake_samples",
+      "signature_melody_or_lead",
+      "copyrighted_presets_or_component_states",
+      "exact_master_curve"
+    ],
+    "future_evaluation": "multi-genre, multi-prompt, multi-seed, native-audio and producer-judged comparisons"
+  }
+}

@@ -1,0 +1,403 @@
+{
+  "schema": "kuang-house-harmony-references-v1",
+  "status": "research_reference_only_not_an_executed_gate",
+  "researched_utc_date": "2026-11-13",
+  "primary_quality_anchor": "User-approved Phase43/44; commercial analyses provide genre grammar, not quality certification.",
+  "purpose": "Nontranscriptive, source-linked harmonic reference corpus for original editable house-template generation.",
+  "limitations": [
+    "Curated examples are not representative of all house music or a random commercial hit sample.",
+    "Hooktheory is crowdsourced and section coverage differs; keys and metrics may be disputed or updated.",
+    "Relative metrics are relative to the broader Hooktheory catalog, not a production-quality target.",
+    "Section labels alone do not give instrument presence, precise bar lengths or DAW automation.",
+    "No copyrighted audio, MIDI, melodies, licensed patches or direct transcriptions are stored."
+  ],
+  "sample_summary": {
+    "n": 7,
+    "meter": "4/4 listed in all selected pages",
+    "bpm_min": 122,
+    "bpm_max": 128,
+    "bpm_median": 123,
+    "chord_complexity_min": 15,
+    "chord_complexity_max": 99,
+    "interpretation": "descriptive of handpicked sample only"
+  },
+  "sources": {
+    "hooktheory": {
+      "url": "https://www.hooktheory.com/theorytab",
+      "type": "crowdsourced harmonic analyses"
+    },
+    "peres_one_kiss": {
+      "url": "https://www.top40theory.com/blog/calvin-harris-and-dua-lipas-one-kiss-is-ambiguous-af",
+      "type": "independent music-theory analysis"
+    },
+    "published_score_one_kiss": {
+      "url": "https://bach.oktav.com/nl/04e293c2.pdf",
+      "type": "published music-score excerpt",
+      "caution": "copyright-protected sheet music; metadata only"
+    }
+  },
+  "profiles": [
+    {
+      "id": "calvin-harris-and-dua-lipa-one-kiss",
+      "title": "One Kiss",
+      "artist": "Calvin Harris & Dua Lipa",
+      "release_year": 2018,
+      "source_url": "https://www.hooktheory.com/theorytab/view/calvin-harris-and-dua-lipa/one-kiss",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 124,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "A Phrygian",
+      "hooktheory_all_sections": {
+        "chord_complexity": 83,
+        "chord_progression_novelty": 83
+      },
+      "section_coverage": [
+        "verse/pre-chorus",
+        "chorus",
+        "bridge"
+      ],
+      "section_examples": [
+        {
+          "name": "verse/pre-chorus",
+          "complexity": 71
+        },
+        {
+          "name": "chorus",
+          "complexity": 68
+        },
+        {
+          "name": "bridge",
+          "complexity": 94
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "modal flat-second color",
+        "seventh and suspended voicings",
+        "bass-led tonal-center ambiguity"
+      ],
+      "uncertainties": [
+        "Hooktheory calls it A Phrygian; a published score has a one-flat signature; independent theory hears A minor center.",
+        "Do not copy its original four-bar chord sequence or distinctive recording material."
+      ]
+    },
+    {
+      "id": "calvin-harris-feel-so-close",
+      "title": "Feel So Close",
+      "artist": "Calvin Harris",
+      "release_year": 2011,
+      "source_url": "https://www.hooktheory.com/theorytab/view/calvin-harris/feel-so-close",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 128,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "G major",
+      "hooktheory_all_sections": {
+        "chord_complexity": 65,
+        "chord_progression_novelty": 81
+      },
+      "section_coverage": [
+        "verse",
+        "chorus",
+        "instrumental"
+      ],
+      "section_examples": [
+        {
+          "name": "verse",
+          "complexity": 31
+        },
+        {
+          "name": "chorus",
+          "complexity": 80
+        },
+        {
+          "name": "instrumental",
+          "complexity": 73
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "section-specific chord density",
+        "major-key harmonic family",
+        "instrumental section analysis"
+      ],
+      "uncertainties": [
+        "Section labels cannot be used as measures of full arrangement length."
+      ]
+    },
+    {
+      "id": "disclosure-latch",
+      "title": "Latch",
+      "artist": "Disclosure",
+      "release_year": 2012,
+      "source_url": "https://www.hooktheory.com/theorytab/view/disclosure/latch",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 123,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "A-flat major",
+      "hooktheory_all_sections": {
+        "chord_complexity": 97,
+        "chord_progression_novelty": 98
+      },
+      "section_coverage": [
+        "verse",
+        "chorus"
+      ],
+      "section_examples": [
+        {
+          "name": "verse",
+          "complexity": 96,
+          "bpm": 123
+        },
+        {
+          "name": "chorus",
+          "complexity": 96,
+          "bpm": 122
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "inverted extended voicings",
+        "sevenths",
+        "suspensions",
+        "distinct verse/chorus contexts"
+      ],
+      "uncertainties": [
+        "Hooktheory lists different BPM for sections; this alone does not prove native song tempo automation."
+      ]
+    },
+    {
+      "id": "daft-punk-one-more-time",
+      "title": "One More Time",
+      "artist": "Daft Punk",
+      "release_year": 2000,
+      "source_url": "https://www.hooktheory.com/theorytab/view/daft-punk/one-more-time",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 123,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "B minor",
+      "hooktheory_all_sections": {
+        "chord_complexity": 71,
+        "chord_progression_novelty": 41
+      },
+      "section_coverage": [
+        "verse",
+        "chorus",
+        "bridge"
+      ],
+      "section_examples": [
+        {
+          "name": "verse",
+          "complexity": 63
+        },
+        {
+          "name": "chorus",
+          "complexity": 63
+        },
+        {
+          "name": "bridge",
+          "complexity": 81
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "repeated recognizable harmony",
+        "bridge extension or contrast",
+        "minor-key house/dance vocabulary"
+      ],
+      "uncertainties": [
+        "Older historical reference; not necessarily characteristic of contemporary tech house."
+      ]
+    },
+    {
+      "id": "calvin-harris-and-disciples-how-deep-is-your-love",
+      "title": "How Deep Is Your Love",
+      "artist": "Calvin Harris & Disciples",
+      "release_year": 2015,
+      "source_url": "https://www.hooktheory.com/theorytab/view/calvin-harris-and-disciples/how-deep-is-your-love",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 122,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "E minor",
+      "hooktheory_all_sections": {
+        "chord_complexity": 99,
+        "chord_progression_novelty": 89
+      },
+      "section_coverage": [
+        "chorus"
+      ],
+      "section_examples": [
+        {
+          "name": "chorus",
+          "complexity": 98
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "extended chords",
+        "seventh/suspended sonorities"
+      ],
+      "uncertainties": [
+        "Only chorus analyzed; not evidence of complete arrangement or verse harmony."
+      ]
+    },
+    {
+      "id": "stardust-music-sounds-better-with-you",
+      "title": "Music Sounds Better With You",
+      "artist": "Stardust",
+      "release_year": 1998,
+      "source_url": "https://www.hooktheory.com/theorytab/view/stardust/music-sounds-better-with-you",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 124,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "A minor",
+      "hooktheory_all_sections": {
+        "chord_complexity": 90,
+        "chord_progression_novelty": 63
+      },
+      "section_coverage": [
+        "verse",
+        "chorus"
+      ],
+      "section_examples": [
+        {
+          "name": "verse",
+          "complexity": 89
+        },
+        {
+          "name": "chorus",
+          "complexity": 89
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "repeated minor-context harmony",
+        "seventh chords",
+        "inversions"
+      ],
+      "uncertainties": [
+        "Historical French-house classic; not a statistically random reference."
+      ]
+    },
+    {
+      "id": "joel-corry-x-mnek-head-and-heart",
+      "title": "Head & Heart",
+      "artist": "Joel Corry x MNEK",
+      "release_year": 2020,
+      "source_url": "https://www.hooktheory.com/theorytab/view/joel-corry-x-mnek/head-and-heart",
+      "source_type": "community_analyzed_TheoryTab",
+      "analyzed_bpm": 123,
+      "analyzed_meter": "4/4",
+      "analyzed_key": "A-flat major",
+      "hooktheory_all_sections": {
+        "chord_complexity": 15,
+        "chord_progression_novelty": 6
+      },
+      "section_coverage": [
+        "chorus"
+      ],
+      "section_examples": [
+        {
+          "name": "chorus",
+          "complexity": 17
+        }
+      ],
+      "nontranscriptive_concepts": [
+        "simple triad harmonic vocabulary",
+        "major-key accessible progression"
+      ],
+      "uncertainties": [
+        "Chorus only; simplicity does not imply weak production quality."
+      ]
+    }
+  ],
+  "candidate_gates": [
+    {
+      "id": "HX01",
+      "concept": "recognizable_harmonic_nucleus",
+      "tier": "default",
+      "inspection": "coherent repeatable short harmonic cell with justified phrase length",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX02",
+      "concept": "simple_harmony_option",
+      "tier": "capability_target",
+      "inspection": "support simple triads; don't mandate added seventh/ninth tones",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX03",
+      "concept": "extended_voicings_optional",
+      "tier": "optional",
+      "inspection": "in-context comparisons for voicings/add/sus/7/9 before adding",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX04",
+      "concept": "bass_chord_function",
+      "tier": "default",
+      "inspection": "root/pedal/inversion/passing-tone checks with declared exceptions",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX05",
+      "concept": "mode_and_tonic_ambiguity",
+      "tier": "evidence_invariant",
+      "inspection": "separate pitch collection from perceived tonic and source interpretation",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX06",
+      "concept": "section_harmonic_treatments",
+      "tier": "default",
+      "inspection": "compare actual voicing/rhythm by sections; no invented bar lengths",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX07",
+      "concept": "rhythmic_chord_stabs",
+      "tier": "default",
+      "inspection": "coordinate chord onsets and release with protected bass/kick groove",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX08",
+      "concept": "voice_leading",
+      "tier": "default",
+      "inspection": "monitor leaps/common tones with musical exceptions",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX09",
+      "concept": "no_melody_scope",
+      "tier": "user_invariant",
+      "inspection": "no new lead/arp/topline in current default house template",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX10",
+      "concept": "source_and_sample_hygiene",
+      "tier": "evidence_invariant",
+      "inspection": "source, section coverage, version, interpretation uncertainty; no population claims",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX11",
+      "concept": "vary_chord_density",
+      "tier": "optional",
+      "inspection": "section-aware chord timing/register/voicing alternatives",
+      "perceptual_quality_certified": false
+    },
+    {
+      "id": "HX12",
+      "concept": "unsupported_modal_request",
+      "tier": "future_technical_invariant",
+      "inspection": "fail honestly if Phrygian or borrowed modes are unavailable",
+      "perceptual_quality_certified": false
+    }
+  ],
+  "integration": {
+    "planned": "compare harmonic-profile families under locked groove with actual native preset/bass context",
+    "supported_now": "major and natural minor only; bounded 8/16/32 bar SongSpec; no Phrygian profile",
+    "not_supported": "auto transcription, licensed MIDI downloads, exact signature copying, genre-wide statistical inference",
+    "links": [
+      "docs/HOUSE_HARMONY_REFERENCE_STUDY.md",
+      "docs/HOUSE_REFERENCE_CASE_STUDIES.md",
+      "docs/HOUSE_PRODUCTION_PLAYBOOK.md"
+    ]
+  }
+}
