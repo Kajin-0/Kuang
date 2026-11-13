@@ -3,6 +3,16 @@
 Status: reference specification / proposed producer architecture, **not** evidence that these gates are implemented.
 Established November 12, 2026 from `docs/PHASE2.md`–`PHASE26.md`, the local Phase27–Phase45 release README, production/composition/mastering receipts, and the user's listening feedback. The newest Phase45 sound-design variation has technical verification but **no independently recorded listening approval**. Phase43 is the approved pre-master mix lineage; Phase44 is the separately approved club-master reference. The main song is a **quality and process reference**, NOT a melody, arrangement, timbre, or LUFS template for every generation.
 
+## Priority override — user-directed development order
+
+**This is NOT a flat 75-point checklist.** Follow: **GROOVE (blocking)** -> **CHORDS/HARMONIC STRUCTURE + ARRANGEMENT MAP** -> **COHERENT SOURCES/PRESETS** -> **PRODUCTION DETAIL** -> **MIX/MASTER/VERIFICATION**. Source selection is interleaved with groove construction when needed (kick/bass/clap quality determines groove); final preset refinement occurs after the musical/section plan. The user's '80%+' figure describes the *priority of a convincing groove*, not a calibrated scoring weight. A bad groove must fail even if all other gates pass.
+
+**Melody is deferred** in the current target. No default leads, arps, standalone hooks or automatically generated toplines; the main house song can derive its identity from bass, rhythmic chord stabs, percussion, space and arrangement. A future melody engine requires a separately enabled, evaluated milestone; existing legacy composer behavior is not silently changed by this written specification.
+
+**Reusable house foundations and reference measurements:** see [HOUSE_GROOVE_STANDARDS.md](HOUSE_GROOVE_STANDARDS.md), which documents conventional kick/backbeat/hat archetypes, microtiming, bass syncopation, groove locking, conditional acceptance and external practical references. Generalize rhythmic rules; do not duplicate historical reference MIDI or any third-party recorded loop.
+
+**Execution dependency:** A (constraints) -> B01–B05 and B09 (groove selection/approval) -> B06–B07 and F (chord structure plus arrangement plan) -> C (context-compatible presets; retest groove) -> D/E/G (processing, effects and mix, retest groove) -> H/I (master and native technical delivery). Other numbered checks remain accessible by subject rather than their alphabetical presentation.
+
 ## 0. End state and decision model
 
 One prompt should produce an **original, complete, technically valid, musically coherent, polished, fully editable native house record**. Every meaningful decision is auditable, revisable and preserved if already approved. Human feedback during development calibrates the eventual automatic evaluator; a preset feature score or successfully saved session is not a substitute for listening.
@@ -43,7 +53,7 @@ Mark every item with applicability, pass evidence and an explicit correction act
 
 - [ ] **A01 — Style and intent:** House subtype (deep, soulful, melodic, minimal, funky, progressive, club), energy, mood, intended listening environment, instrumental/vocal status, desired length, references and exclusions. Do not infer a prominent lead from the word 'house'.
 - [ ] **A02 — Musical constants:** One validated tempo, meter, tonic, mode, approximate harmonic language, rhythmic feel and explicit arrangement constraints; parse once and pass **the same spec to auditions, composer, mixer and exporter**. Reject contradictions. Current native SongSpec only supports limited modes/durations; label unsupported intent.
-- [ ] **A03 — Instrument roles:** Choose necessary roles (kick, clap/snare, hats, percussion, bass, chord foreground, pad/atmosphere, optional motif/lead/arp, transition effects). Do not force an instrument to satisfy a fixed template.
+- [ ] **A03 — Instrument roles:** Choose kick, clap/snare, hats, percussion, bass, chord foreground, optional pad/atmosphere and transition effects for the style. **Standalone lead, arp and melody generation are disabled in the current target**; a future explicit opt-in is a separate milestone. Do not force an instrument to satisfy a fixed template.
 - [ ] **A04 — Source/provenance budget:** Identify sample, patch, plugin and model provenance; choose only accessible/compatible sources; respect private preset distribution rights. Cap candidate count, runtime and memory before search.
 - [ ] **A05 — Reference profile:** Determine which qualities are being targeted (kick articulation, bass movement, chord space, percussion groove, arrangement density), not reference audio transcription or global EQ copying.
 - [ ] **A06 — Acceptance brief:** Define expected structure, defining hook/identity, emotional movement, loudness context, prohibited material, human or model evaluation availability and fallback criteria.
@@ -57,7 +67,7 @@ Mark every item with applicability, pass evidence and an explicit correction act
 - [ ] **B05 — Groove variation:** Apply small, intentional velocity, silence, pickup and articulation changes. Stable 4-on-floor is a *reference*, not a requirement to place every instrument on every beat.
 - [ ] **B06 — Harmonic basis:** Choose a 4–16-bar progression whose functional motion actually serves the style. Check inversions, voice leading, chord-register overlap and transitions. Earlier Phase26 harmonic motion was perceived as meandering; Phase34/37 restored a more directed Cm–Ab–Fm–G family.
 - [ ] **B07 — Chord foreground:** Select a punchy and identifiable stab/electric-key/pluck source. Design attack, body, release, register, velocity, saturation and filtering around the groove; don't depend on wash/reverb to create an interesting core tone.
-- [ ] **B08 — Subordinate melody policy:** Lead/motif is **optional**. The user rejected Phase22 melodic candidates and approved Phase23's melody-free groove. If a motif is added, require clear phrasing and a proven improvement to the core groove, else remove it.
+- [ ] **B08 — No-lead musical identity:** Do **not** compose a separate lead/melody/arp in the current production scope. The user rejected multiple melodic alternatives in Phases21–23 and approved a melody-free groove. Use bass movement, chord stabs, percussion, filters, space and arrangement as the musical identity. Revisit melody only as a separately enabled and evaluated future capability.
 - [ ] **B09 — Pocket audition gate:** Compare at least one complete 8–16-bar section with balanced monitoring. If kick, bass or harmony is weak, **repair the sound or performance**, not the master. Do not expand an unconvincing loop into 120 bars.
 
 ### C. Design and verify the instrument palette
@@ -100,7 +110,7 @@ Mark every item with applicability, pass evidence and an explicit correction act
 - [ ] **F04 — Harmonic narrative:** Build an intelligible relationship among tonic, departure, tension and resolution. Test the actual harmonic voices against bass roots. Phase36 made one 16-bar score with 8 bars C minor, 4 F minor, 4 G dominant; Phase37 aligned bass to Phase34's Cm/Ab/Fm/G chord family.
 - [ ] **F05 — Role density by section:** Intro, groove, development, break, build, main peak and outro should differ in *what plays*, frequency activity, note density and ambience. Changing a label without changing events or automation does not create an arrangement.
 - [ ] **F06 — Tension and release:** Use intentional bass/kick withdrawals, brief rests, filtered throws, pad holds, drum fills and pre-drop silence. Contrast is more important than continuous additional layers.
-- [ ] **F07 — Motif restraint:** If a groove has no lead, preserve the no-lead identity across later sections. Avoid rebuilding every climax with an unsolicited melody, extra arp or lead.
+- [ ] **F07 — Locked melody-free sections:** Preserve the no-lead and no-new-arp policy throughout the arrangement; avoid rebuilding every climax with an unsolicited melody. Build interest with chord voicings, rhythmic variation, subtraction/entrance, bass response and controlled spatial effects.
 - [ ] **F08 — Organic section development:** Alter a few meaningful parameters (chord voicing/timbre, hat subdivision, return level, phrase endings) in targeted 4/8/16-bar windows. Keep material outside the edited region untouched.
 - [ ] **F09 — DJ-flow review:** Check that sectional energy is legible, the beat stays danceable, breaks are proportionate and transitions announce rather than confuse. Phase18's failure was **flow**, not merely duration.
 - [ ] **F10 — Outro/resolution:** Finish with an intentional winding down, short reprise or clean tail; don't merely stop a loop. Preserve effects tails in the verified render.
@@ -164,13 +174,13 @@ Mark every item with applicability, pass evidence and an explicit correction act
 **Producer state machine:**
 
 1. **Understand:** `ProductionBrief` with one key/tempo/role plan, user intent and restrictions.
-2. **Compose and audition nucleus:** Generate a small **set of genuinely different 8–16 bar alternatives** within the budget, and prioritize joint kick/bass/chord/pad comparisons.
-3. **Verify musical physics:** Key, actual native pitch, rooted bass/chord function, note overlap, onset alignment and role/articulation constraints. Fail closed if unsupported host parameters are requested.
-4. **Evaluate pocket:** Source quality, rhythm, contrast, timbral identity, dry/wet hierarchy, perceived bass and groove. Gate on quality evidence; do not mistake correct notes for good music.
-5. **Select incumbent:** Keep exactly one chosen candidate and a recorded reason; preserve it while iterating.
-6. **Arrange full song:** Transform the incumbent into a complete sectional form using explicit phrase/role changes, breaks and transitions. Track protected anchors.
-7. **Produce depth:** Add role-specific reverbs, tempo delays, filtered throws, musical space, dynamics and sectional movement only where useful. Every added return or layer must justify itself.
-8. **Balance stems and mix:** Independent per-role calibration and full-context joint evaluation, then section-level stem/mix comparisons, stereo/mono checks and transport playback.
+2. **Research/select groove archetype:** Select a recognized house rhythmic family and build 2–4 contrasting *rhythmically coherent* kick/bass/clap/hat/percussion pockets, already using workable source sounds.
+3. **Verify the groove's physical correctness:** Real host pitch, kick/bass onset and release, drum timing, low-end balance, source integrity, intentional microtiming and actual native playback. Invalid MIDI/host tuning cannot pass.
+4. **BLOCKING GROOVE GATE:** Audition 8–16 bars and compare the groove incumbent at matched loudness. If it fails, revise rhythm/sample/patch/envelope and repeat; **do not proceed** to full-song work.
+5. **Lock groove and design harmony:** Protect kick/bass/percussion rhythmic identity. Choose 4–16-bar chord motion and verify chord/bass roots, voicing and syncopation, with no generated lead/melody/arp.
+6. **Map arrangement before expansion:** Draft 4/8/16-bar section grid of roles, breaks, builds, drops, transitions and outro. Expand by track removal/entry and production automation, not repeated recomposition.
+7. **Audition compatible presets in context:** Test bass/chord/pad combinations over the locked nucleus. Preserve the groove; if swapping a sound weakens it, revert and recheck the groove gate.
+8. **Produce and mix:** Calibrate stems by role; implement controlled room/plate/delay, phrase throws, sections and dynamics; audit both groove and song flow after the FX pass.
 9. **Run a small bounded corrective loop:** Classify a failed dimension; modify only related variables; rerender the affected 8–16 bar region with tail; compare **at equal loudness**; keep/revert based on verdict.
 10. **Master separately:** Evaluate 2–3 safe settings against representative excerpts. Do one full verified render of selected master, with configurable deliverable limits.
 11. **Full-song final QA:** Audition/check intro, groove, breakdown, final peak and outro; verify complete artifact and exact native replay.
@@ -236,9 +246,9 @@ These are **documented development events**, not 45 automatically verified liste
 
 - **M0 — Freeze the reference and ledger.** Hash and inventory Phase43, Phase44 and optional Phase45, preserve originals, transcribe approved/rejected *listening* decisions separately from technical reports. Add this playbook as engineering guidance.
 - **M1 — Single musical intent and role contract.** Build on the existing shared `SongSpec` fix; add future explicit role fields without changing canonical 0.1 until justified.
-- **M2 — Reusable house core.** Extract generalizable kick/bass pocket, harmonic/rhythm constraints, pad policy, groove timing and phrase logic from phase-specific hash-pinned recipes; do not copy exact reference MIDI.
-- **M3 — Audition and context scorer.** Render real presets for actual phrases, combine candidate stems and preserve every track's proven source; create objective diagnostics and a human-reviewed taste ledger. Tune against both liked and disliked reference versions.
-- **M4 — Full-song arranger.** Plan 4/8/16-bar structure, energy, musical recurrence, drops, source continuity, active intro, appropriate no-lead forms.
+- **M2 — Groove archetype library and blocking gate.** Implement established 4/4, offbeat, shuffle, minimal, jackin and percussion-led *original* rhythm templates. Compare real kick/bass/clap/hat source combinations in 8–16-bar context. Record groove/timing fingerprints, accepted versus rejected examples and strict revision budgets. Never auto-promote an unverified subjective score.
+- **M3 — Harmonic loop and arrangement mapper.** Compose compatible chord structures and an explicit 4/8/16-bar track-presence/FX plan before expensive full-song rendering; preserve the accepted groove and do not generate a standalone lead.
+- **M4 — Context-compatible preset audition.** Compare actual Vital/Vitalium bass/chord/pad candidates in locked-groove context and retain incumbent sources when alternatives do not improve the ensemble. Build technical/quality evidence separately.
 - **M5 — Coordinated FX/mix.** Reusable shared return graph, send duck/throws, pad/plate movement, per-role gain staging, attack preservation and section automation.
 - **M6 — Bounded automatic revision.** Gate→diagnose→propose scoped change→render targeted comparison→evaluate→keep/revert; resource budget enforced.
 - **M7 — Native master and release audit.** Measured final master with immutable pre-master and exact editable output, full-song test suite, license compliance and objective/subjective caveats.
