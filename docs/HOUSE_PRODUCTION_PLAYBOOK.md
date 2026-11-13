@@ -1,6 +1,6 @@
 # Kuang House Production Playbook — Reference-derived master checklist
 
-Status: reference specification / proposed producer architecture, **not** evidence that these gates are implemented.
+Status: reference specification / proposed producer architecture, **not** evidence that these gates are implemented. **Product priority:** [PRODUCER_READY_TEMPLATE_PRODUCT.md](PRODUCER_READY_TEMPLATE_PRODUCT.md) defines the goal as a **reliable, high-quality, mostly finished editable house template from a single prompt**. Routine production labor should be automated; producer customization is the intended final stage, not a system defect. Generic house forms are acceptable, reliability outranks novelty, and no standalone melody is required.
 Established November 12, 2026 from `docs/PHASE2.md`–`PHASE26.md`, the local Phase27–Phase45 release README, production/composition/mastering receipts, and the user's listening feedback. The newest Phase45 sound-design variation has technical verification but **no independently recorded listening approval**. Phase43 is the approved pre-master mix lineage; Phase44 is the separately approved club-master reference. The main song is a **quality and process reference**, NOT a melody, arrangement, timbre, or LUFS template for every generation.
 
 ## Priority override — user-directed development order

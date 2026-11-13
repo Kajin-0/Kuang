@@ -1,6 +1,6 @@
 # House-Style Standards and Production Gates
 
-**Status:** sourced reference profile for future producer automation, not an implemented perceptual evaluator. Last research review: November 2026. Read alongside [House Production Playbook](HOUSE_PRODUCTION_PLAYBOOK.md) (75 stage checks) and [House Groove Standards](HOUSE_GROOVE_STANDARDS.md) (archetypes and measured Phase43 reference groove). The 40 entries below are **cross-cutting standards, not 40 additional mandatory effects or scores**. A machine-readable, source-linked mirror is in [HOUSE_STANDARDS_REGISTRY.json](HOUSE_STANDARDS_REGISTRY.json).
+**Status:** sourced reference profile for future producer automation, not an implemented perceptual evaluator. The product goal is a **one-prompt editable, producer-ready house template**, not a self-contained AI chart hit; see [PRODUCER_READY_TEMPLATE_PRODUCT.md](PRODUCER_READY_TEMPLATE_PRODUCT.md). Last research review: November 2026. Read alongside [House Production Playbook](HOUSE_PRODUCTION_PLAYBOOK.md) (75 stage checks) and [House Groove Standards](HOUSE_GROOVE_STANDARDS.md) (archetypes and measured Phase43 reference groove). The 40 entries below are **cross-cutting standards, not 40 additional mandatory effects or scores**. A machine-readable, source-linked mirror is in [HOUSE_STANDARDS_REGISTRY.json](HOUSE_STANDARDS_REGISTRY.json).
 
 ## Why standards help without overfitting
 
