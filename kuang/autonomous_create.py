@@ -18,7 +18,7 @@ from pathlib import Path
 
 from . import midi
 from .autonomous_palette import (MAX_CATALOG_BYTES, _bounded_read, _plugin_info, _read_preset, _validate_patch,
-                                 select_palette)
+                                 select_palette, _intent)
 from ._private_vital_worker import wave_frames
 from .composer import compose
 from .external_synth import (ExternalSynthAdapter, HOST_SHA, CONTRACT, LAYOUT_SHA,
@@ -243,19 +243,22 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
     if explicit and int(explicit.group(1)) != bars: raise ValidationError('prompt bar count conflicts with --bars')
     spec.bars = bars; validate_spec(spec)
+    expected_roles = set(_intent(prompt)['roles'])
+    if not {'chord','bass'} <= expected_roles:
+        raise ValidationError('this house composer requires chord and bass roles')
     with tempfile.TemporaryDirectory(prefix='.autonomous-create-',dir=dest.parent) as temp:
         stage = Path(temp); os.chmod(stage,0o700)
-        select_palette(prompt,catalog,plugin,stage/'palette',seed=seed,per_role=per_role,max_candidates=max_candidates,timeout=timeout)
+        select_palette(prompt,catalog,plugin,stage/'palette',seed=seed,per_role=per_role,max_candidates=max_candidates,timeout=timeout, musical_spec=spec)
         selection = _read_json(stage/'palette/selection.json')
-        if selection['status'] != 'complete' or set(selection['roles']) != {'chord','pad','bass'}:
-            raise ValidationError('complete chord, pad and bass selection required')
+        if selection['status'] != 'complete' or set(selection['roles']) != expected_roles:
+            raise ValidationError('complete selection for every requested role required')
         palette_before = inventory(stage/'palette')
         adapter = PrivateExternal(plugin,soundcraft,workspace,stage/'scratch',selection)
         adapter.capabilities(); defaults = _probe_defaults(adapter,stage)
         role_tracks = {'chord':'track-harmony','pad':'track-pad','bass':'track-bass'}
         assignments = {role_tracks[r]:_prepare(adapter,selection['roles'][r],defaults,stage/('prepare-'+r),timeout)
-                       for r in role_tracks}
-        project = refine_house(spec,compose(spec))
+                       for r in selection['roles']}
+        project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
         # Generous pre-fader headroom for independent third-party patch levels.
         for track in project.tracks:
             track.controls['mixer.gain_db'] -= 15

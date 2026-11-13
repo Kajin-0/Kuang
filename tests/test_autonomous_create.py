@@ -65,6 +65,19 @@ class AutonomousCreateTests(unittest.TestCase):
         self.assertFalse((self.root/'output').exists())
         self.assertFalse(list(self.root.glob('.autonomous-create-*')))
 
+    def test_no_pad_prompt_passes_one_shared_spec_to_selector(self):
+        recorded = {}
+        def selector(prompt, catalog, plugin, out, **kwargs):
+            recorded.update(kwargs)
+            out.mkdir()
+            (out/'selection.json').write_text(json.dumps({'status':'incomplete','roles':{}}))
+        with patch.object(ac,'select_palette',side_effect=selector), self.assertRaises(ValidationError):
+            ac.create('house in C minor, without pad, no lead',self.catalog,self.plugin,self.host,
+                      self.root/'output',private=True,seed=19)
+        self.assertEqual((recorded['musical_spec'].tonic, recorded['musical_spec'].mode), (0,'minor'))
+        self.assertEqual(recorded['musical_spec'].seed, 19)
+        self.assertFalse((self.root/'output').exists())
+
     def test_private_manifest_cannot_enter_original_adapter(self):
         private=self.root/'patch'; private.mkdir()
         (private/'manifest.json').write_text(json.dumps({'version':'private-selected-vital-1'}))
@@ -114,6 +127,24 @@ class AutonomousCreateTests(unittest.TestCase):
         self.assertEqual(next(t for t in result.tracks if t.id=='track-bass').instrument.plugin_ref,ac.PLUGIN_ID)
         self.assertNotEqual(next(t for t in project.tracks if t.id=='track-bass').instrument.plugin_ref,ac.PLUGIN_ID)
         with self.assertRaises(ValidationError): ac._bind(project,{'track-does-not-exist':path},Dummy())
+
+    def test_optional_pad_and_actual_kick_note_ducking(self):
+        spec,_=rules_plan('house in C minor, no lead',17)
+        without=refine_house(spec,compose(spec),include_pad=False,kick_aligned_ducking=True)
+        self.assertNotIn('track-pad',{t.id for t in without.tracks})
+        kick=next(t for t in without.tracks if t.id=='track-kick')
+        onsets={c.start+n.start for c in kick.clips for n in c.notes}
+        self.assertTrue(onsets)
+        self.assertNotIn(0,onsets)
+        lane=next(x for x in without.automation if x.id=='production-harmony-duck')
+        points={p.tick:p.value for p in lane.points}
+        self.assertEqual(points[0], 0)
+        self.assertEqual(points[min(onsets)], -5)
+        self.assertTrue(all(t in onsets for t,v in points.items() if v == -5))
+        with_pad=refine_house(spec,compose(spec),include_pad=True,kick_aligned_ducking=True)
+        self.assertIn('track-pad',{t.id for t in with_pad.tracks})
+        no_pump=refine_house(spec,compose(spec),include_pad=False,kick_aligned_ducking=False)
+        self.assertEqual(next(x for x in no_pump.automation if x.id=='production-harmony-duck').points[0].value,-5)
 
     def test_cli_help_is_stdlib_only(self):
         p=subprocess.run([sys.executable,'-m','kuang.autonomous_create','--help'],capture_output=True,text=True,timeout=10)

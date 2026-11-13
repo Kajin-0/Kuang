@@ -1,8 +1,12 @@
 # Autonomous palette selection
 
 The private experimental workflow can now turn one prompt into an editable
-16- or 32-bar house sketch: it automatically selects chord, pad and bass presets,
-composes MIDI using rules, and renders a native SoundCraft session. This is not a
+16- or 32-bar house sketch: it automatically selects chord and bass presets,
+plus a pad unless the prompt explicitly says no/without pad, composes MIDI
+using rules, and renders a native SoundCraft session. The integrated path now
+passes its validated SongSpec to auditioning so key and mode cannot diverge.
+Only the integrated path uses actual kick MIDI onsets for its programmed gain
+ducking; the general refined-house composer preserves its earlier defaults. This is not a
 full-length autonomous producer or a professional-quality claim. Human listening
 still decides preference. The preset-only CLI remains available separately.
 

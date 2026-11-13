@@ -101,6 +101,23 @@ class PaletteTests(unittest.TestCase):
         self.assertNotIn('pad', palette._intent('house without pad')['roles'])
         with self.assertRaises(ValidationError): palette._intent('C minor and D major house')
 
+    def test_integrated_audition_uses_validated_composition_key(self):
+        from kuang.song import rules_plan
+        spec, _ = rules_plan('warm house, bass, chords and pad', seed=17)
+        self.assertEqual((spec.tonic, spec.mode), (0, 'major'))
+        self.assertEqual((palette._intent('warm house, bass, chords and pad')['tonic'],
+                          palette._intent('warm house, bass, chords and pad')['mode']), (0, 'major'))
+        result = palette.select_palette('warm house, bass, chords and pad', self.catalog,
+                                        None, self.root/'major-spec', renderer=FakeRenderer(),
+                                        seed=17, per_role=1, max_candidates=5, musical_spec=spec)
+        self.assertEqual(result['status'], 'complete')
+        evidence = json.loads((self.root/'major-spec/decision.json').read_text())
+        self.assertEqual((evidence['intent']['tonic'], evidence['intent']['mode']), (0, 'major'))
+        self.assertEqual(evidence['intent']['key_source'], 'validated SongSpec')
+        with self.assertRaisesRegex(ValidationError, 'explicit audition key conflicts'):
+            self.run_selection('contradictory', seed=17, per_role=1, max_candidates=5, musical_spec=spec)
+        self.assertFalse((self.root/'contradictory').exists())
+
     def test_scoring_is_gain_independent_and_role_sensitive(self):
         a = features('bass'); b = dict(a, rms=.005, peak=.02)
         self.assertEqual(palette.score_features('bass', a), palette.score_features('bass', b))

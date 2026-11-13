@@ -21,6 +21,14 @@ Kuang is an audio engineering / desktop DAW project. Preserve local-first operat
 - `examples/soundcraft-demo.kuang.json` explicitly selects built-ins. Preserve the original Phase 0 demo and its hashes. Native notes have no IDs and MIDI clips merge; retain canonical IDs in the bundle manifest. Import is verified snapshot recovery, never automatic reconciliation of host edits.
 - No REAPER process or Vital installation was available for Phase 0. Mock/API-contract tests do not establish real host compatibility or audio quality.
 
+## Private autonomous house integration (November 2026)
+
+- `autonomous_create.py` is a separate opt-in, private third-party preset workflow; it passes one validated SongSpec to `autonomous_palette.select_palette` so the selected audition key matches the composition. The palette-only CLI stays independently usable. Explicitly incompatible audition keys fail closed.
+- The private integrated workflow currently requires chord and bass; an explicit `no pad` or `without pad` excludes the pad during both selection and native composition. Do not silently add forbidden roles. Other native composition restrictions remain and must not be misrepresented as generic instrumentation support.
+- `refine_house(..., include_pad=True, kick_aligned_ducking=False)` retains its legacy defaults for existing experiments. The autonomous workflow explicitly opts into MIDI-kick-aligned gain pumping, not audio-triggered sidechain compression. Avoid changing older project hashes or phase fixtures.
+- Private Vitalium assets and source-library hashes must remain inside ignored workspace outputs. Do not commit or redistribute unknown-license preset states. Proxy scores and native-format checks do not establish professional sound quality.
+- Regression commands: `python3 -m unittest discover -s tests -p 'test_autonomous_*.py' -q` and `python3 -m unittest discover -s tests -p 'test_production.py' -q`. Real-host runs remain separate, expensive and opt-in.
+
 ## Required checks and preservation
 
 Run `python3 -m unittest discover -s tests -v` after code changes. Exercise CLI generation, proposal, apply, undo and redo when changing those paths. Compare full canonical state after scoped edits. Keep the 20-edit regression and exact undo/redo checks meaningful.

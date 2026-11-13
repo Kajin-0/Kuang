@@ -24,8 +24,10 @@ REFINED_LIMITATIONS = [
 ]
 
 
-def refine_house(spec, sketch):
-    """Return a new production, preserving the input and its original SongSpec."""
+def refine_house(spec, sketch, *, include_pad=True, kick_aligned_ducking=False):
+    """Return a new production; optional source-aligned pumping preserves legacy defaults."""
+    if type(include_pad) is not bool or type(kick_aligned_ducking) is not bool:
+        raise ValidationError('production options must be explicit booleans')
     spec = validate_spec(spec)
     if spec.genre != "house" or spec.arrangement != "song":
         raise ValidationError("refined production supports house with song arrangement only")
@@ -117,11 +119,12 @@ def refine_house(spec, sketch):
         return fx
 
     # A separate pad is derived only when the requested harmony role exists.
-    harmony = next(t for t in project.tracks if t.id == "track-harmony")
-    pad = Track("track-pad", "Breathing seventh pad", "midi", deepcopy(harmony.instrument),
-                deepcopy(harmony.controls), [], [], [], True)
-    pad.instrument.id = "instrument-pad"
-    project.tracks.append(pad)
+    if include_pad:
+        harmony = next(t for t in project.tracks if t.id == "track-harmony")
+        pad = Track("track-pad", "Breathing seventh pad", "midi", deepcopy(harmony.instrument),
+                    deepcopy(harmony.controls), [], [], [], True)
+        pad.instrument.id = "instrument-pad"
+        project.tracks.append(pad)
     # Calibrated from isolated native renders, not from nominal MIDI velocities:
     # this host's drum kick is much hotter than its hats and polyphonic synth.
     base_gains = {"kick": -7, "snare": -6, "hats": -2, "bass": -6,
@@ -266,11 +269,22 @@ def refine_house(spec, sketch):
                 (3*width*BAR, 13500), (project.length-PPQ, 9500), (project.length, 2000)])
         if role in ("bass", "harmony", "pad"):
             points = []
-            for bar in range(spec.bars):
-                for beat in range(4):
-                    tick = bar*BAR+beat*PPQ
-                    duck = 0 if width*2 <= bar < width*3 else 1
-                    points += [(tick, gain-5*duck), (tick+100, gain-4*duck), (tick+420, gain), (tick+PPQ-1, gain)]
+            if kick_aligned_ducking:
+                # Follow actual MIDI onsets, not an invented kick every beat.
+                kick = next((t for t in project.tracks if t.id == 'track-kick'), None)
+                onsets = sorted({c.start+n.start for c in kick.clips for n in c.notes} if kick else set())
+                points = [(0, gain)]
+                for tick in onsets:
+                    if tick >= project.length: continue
+                    if tick > 0: points.append((tick-1, gain))
+                    points.extend(((tick, gain-5), (min(tick+100, project.length), gain-4),
+                                   (min(tick+420, project.length), gain)))
+            else:
+                for bar in range(spec.bars):
+                    for beat in range(4):
+                        tick = bar*BAR+beat*PPQ
+                        duck = 0 if width*2 <= bar < width*3 else 1
+                        points += [(tick, gain-5*duck), (tick+100, gain-4*duck), (tick+420, gain), (tick+PPQ-1, gain)]
             points += [(project.length-PPQ//2, gain), (project.length, gain-18)]
             lane(role+"-duck", track.id, "mixer.gain_db", points)
         if role == "arp":

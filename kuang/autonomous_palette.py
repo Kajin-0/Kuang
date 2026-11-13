@@ -24,7 +24,7 @@ import wave
 from pathlib import Path
 
 from .schema import ValidationError, strict_json
-from .song import check_prompt
+from .song import SongSpec, check_prompt, validate_spec
 
 ROLES = ('chord', 'pad', 'bass')
 ROLE_STYLES = {'chord': {'keys', 'chord', 'pluck', 'piano'},
@@ -252,7 +252,8 @@ def _intent(prompt):
             for note, accidental, mode in key_matches}
     if len(keys) > 1:
         raise ValidationError('use one major/minor key for the audition')
-    tonic, mode = next(iter(keys)) if keys else (0, 'minor')
+    # Match the house rules planner's C-major default. Explicit keys still win.
+    tonic, mode = next(iter(keys)) if keys else ((0, 'major') if 'house' in words else (0, 'minor'))
     return {'roles': roles, 'genre': 'house' if 'house' in words else 'unspecified',
             'tonic': tonic, 'mode': mode, 'key_defaulted': not bool(keys),
             'prompt_tokens': sorted(words), 'role_terms': role_terms}
@@ -414,7 +415,7 @@ def _catalog_sources(catalog):
     return result
 
 
-def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max_candidates=12, timeout=15, renderer=None):
+def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max_candidates=12, timeout=15, renderer=None, musical_spec=None):
     """Select a private palette; an injected renderer is for offline tests only."""
     check_prompt(prompt)
     if type(seed) is not int or not 0 <= seed < 2**32:
@@ -448,6 +449,16 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
         raise ValidationError('output must be outside the source library')
     info = _plugin_info(plugin) if renderer is None else {'backend': 'injected-test-renderer', 'runtime_verified': False}
     intent = _intent(prompt)
+    if musical_spec is not None:
+        if type(musical_spec) is not SongSpec:
+            raise ValidationError('musical_spec must be a SongSpec')
+        validate_spec(musical_spec)
+        if musical_spec.seed != seed or musical_spec.genre != 'house' or intent['genre'] != 'house':
+            raise ValidationError('musical_spec seed or genre conflicts with palette audition')
+        if not intent['key_defaulted'] and (intent['tonic'], intent['mode']) != (musical_spec.tonic, musical_spec.mode):
+            raise ValidationError('explicit audition key conflicts with musical_spec')
+        intent.update(tonic=musical_spec.tonic, mode=musical_spec.mode,
+                      key_defaulted=False, key_source='validated SongSpec')
     pools = {r: _role_candidates(rows, r, intent, seed) for r in intent['roles']}
     counters = {r: 0 for r in intent['roles']}
     accepted = {r: [] for r in intent['roles']}
