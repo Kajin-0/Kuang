@@ -27,6 +27,7 @@ from .generator import generate
 from .loudness import measure
 from .production import refine_house
 from .house_template import template as groove_template_project, select_profile
+from .house_full_arranger import arrange_full_song, parse_long_form
 from .house_harmony import select_harmony
 from .house_sources import prepare_kit
 from .production_host import ProductionAdapter
@@ -231,7 +232,8 @@ def _bind(project, assignments, adapter):
 
 
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
-           groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0):
+           groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
+           full_song_bars=None):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -241,12 +243,18 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     library = catalog.parent.parent.resolve()
     if dest.resolve().is_relative_to(library) or dest.resolve().is_relative_to(plugin.resolve()):
         raise ValidationError('output cannot be inside preset library or plugin')
-    spec,notes = rules_plan(prompt,seed)
-    if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
+    if full_song_bars is not None and not groove_template:
+        raise ValidationError('--full-song-bars requires --groove-template')
     import re
+    planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
+    spec,notes = rules_plan(planning_prompt,seed)
+    if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
+    full_length,_ = parse_long_form(prompt,full_song_bars,bpm=spec.bpm) if groove_template else (None,prompt)
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
-    if explicit and int(explicit.group(1)) != bars: raise ValidationError('prompt bar count conflicts with --bars')
-    spec.bars = bars; validate_spec(spec)
+    if not full_length and explicit and int(explicit.group(1)) != bars:
+        raise ValidationError('prompt bar count conflicts with --bars')
+    spec.bars = 32 if full_length else bars
+    validate_spec(spec)
     if type(groove_template) is not bool:
         raise ValidationError('groove_template must be boolean')
     if (sample_pack is not None or groove_profile != 'auto' or harmony_profile != 'auto' or drum_variant != 0) and not groove_template:
@@ -271,11 +279,15 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         assignments = {role_tracks[r]:_prepare(adapter,selection['roles'][r],defaults,stage/('prepare-'+r),timeout)
                        for r in selection['roles']}
         groove_receipt = None
+        arrangement_receipt = None
         sound_assets = {}
         drum_evidence = None
         if groove_template:
             project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
                                                include_pad='pad' in expected_roles)
+            if full_length:
+                project,arrangement_receipt = arrange_full_song(project,bars=full_length,
+                                                               profile=gp,seed=seed)
             if sample_pack is not None:
                 project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
                                                stage/'drum-assets',gp,drum_variant)
@@ -319,6 +331,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         save(project,stage/'project.kuang.json'); (stage/'song.mid').write_bytes(midi.export_bytes(project))
         write(stage/'song-spec.json',asdict(spec))
         if groove_receipt is not None: write(stage/'groove-evidence.json',groove_receipt)
+        if arrangement_receipt is not None: write(stage/'arrangement-evidence.json',arrangement_receipt)
         if drum_evidence is not None: write(stage/'sample-selection.json',drum_evidence)
         write(stage/'report.json',{'version':'private-autonomous-create-1','prompt':prompt,'seed':seed,
             'composition':'rules-based house template, not neural music generation','selection':'palette/selection.json',
@@ -328,6 +341,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'source_presets':'license unknown; private use only','notes':notes,
             'groove_template':groove_template,'groove_profile':gp,'harmony_profile':hp,
             'groove_evidence':'groove-evidence.json' if groove_receipt else None,
+            'arrangement_evidence':'arrangement-evidence.json' if arrangement_receipt else None,
+            'actual_project_bars':project.bars,'source_nucleus_bars':spec.bars,
             'sample_selection':'sample-selection.json' if drum_evidence else None,
             'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
             'quality_judgment':'unreviewed; no professional audio quality established'})
@@ -360,12 +375,15 @@ def main(argv=None):
     parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
     parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
+    parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
+                        help='opt-in full-length editable arrangement from 32-bar nucleus')
     args=parser.parse_args(argv)
     try:
         result=create(args.prompt,args.catalog,args.plugin,args.soundcraft,args.out_dir,seed=args.seed,bars=args.bars,
                       private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout,
                       groove_template=args.groove_template,sample_pack=args.sample_pack,groove_profile=args.groove_profile,
-                      harmony_profile=args.harmony_profile,drum_variant=args.drum_variant)
+                      harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
+                      full_song_bars=args.full_song_bars)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0

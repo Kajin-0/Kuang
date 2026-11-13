@@ -158,7 +158,7 @@ def _to_48k_pcm(src, dest):
 
 
 def prepare_kit(project, pack, library, profile, index=0):
-    """Install one four-role kit and bind it without changing any MIDI events."""
+    """Install an original four/five-drum-role kit without changing MIDI events."""
     if profile not in PREFER or type(index) is not int or index not in (0, 1):
         raise ValidationError("unknown kit candidate")
     library = Path(library)
@@ -168,6 +168,18 @@ def prepare_kit(project, pack, library, profile, index=0):
     # (open). The native sampler supports only one sample per track, so split
     # articulations into two editable sampler roles without adding MIDI hits.
     project = deepcopy(project)
+    # Minimal house may intentionally omit auxiliary percussion; an empty
+    # instrument track is rejected by the native host. Never add drum hits
+    # solely to satisfy a sample binding. Preserve the source project.
+    silent_perc = next((t for t in project.tracks if t.id == "track-percussion"
+                        and not any(c.notes for c in t.clips)),None)
+    if silent_perc is not None:
+        owners = {silent_perc.id, *(fx.id for fx in silent_perc.effects)}
+        if any(s.target_track_id == silent_perc.id
+               for t in project.tracks for s in t.sends) or any(
+               lane.target_id in owners for lane in project.automation):
+            raise ValidationError("empty percussion has active routing or automation")
+        project.tracks.remove(silent_perc)
     hat = next(t for t in project.tracks if t.id == "track-hats")
     opened = deepcopy(hat)
     opened.id = "track-open_hat"
@@ -191,6 +203,10 @@ def prepare_kit(project, pack, library, profile, index=0):
     bindings = {}
     receipt = {}
     for role in ROLES:
+        if not any(t.id == "track-" + role for t in project.tracks):
+            if role == "percussion":
+                continue
+            raise ValidationError("required drum role missing: " + role)
         _, key, meta, src = candidates[role][index]
         item = library / role
         wav = item.with_suffix(".wav")
@@ -221,6 +237,8 @@ def prepare_kit(project, pack, library, profile, index=0):
                          "asset_sha256": digest(item / "asset.json")}
     result = bind_samples(project, bindings)
     for role in ROLES:
+        if "track-" + role not in bindings:
+            continue
         track = next(t for t in result.tracks if t.id == "track-" + role)
         # Independent per-role safety gains, with no hidden gain automation
         # on these drum tracks in the groove template.

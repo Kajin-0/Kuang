@@ -107,6 +107,21 @@ class HouseSourceTests(unittest.TestCase):
         self.assertEqual(original.metadata["composer"], a.metadata["composer"])
         self.assertEqual(proof["harmony"]["profile"], "simple")
 
+    def test_minimal_profile_omits_inactive_percussion_without_invented_hits(self):
+        from kuang.house_full_arranger import arrange_full_song
+        spec, _ = rules_plan("minimal house in D minor, 32 bars", 17)
+        source, _ = template(spec, profile="minimal", harmony_profile="simple",
+                             include_pad=False)
+        long, _ = arrange_full_song(source, bars=96, profile="minimal", seed=17)
+        self.assertNotIn("track-percussion", {t.id for t in long.tracks})
+        bound, bindings, receipt = prepare_kit(long, self.pack,
+                                                self.root/"minimal-kit", "minimal", 0)
+        validate(bound)
+        self.assertNotIn("percussion", receipt)
+        self.assertEqual(set(bindings), {"track-kick","track-snare","track-hats","track-open_hat"})
+        self.assertNotIn("track-percussion", {t.id for t in bound.tracks})
+        self.assertEqual(long.bars, bound.bars)
+
     def test_out_of_scope_and_untrusted_source_rejected(self):
         spec, _ = rules_plan("house, 8 bars", 17)
         project, _ = template(spec, profile="straight")

@@ -105,6 +105,8 @@ Random seed should choose meaningful combinations, not independent uniform rando
 
 **Measured role balance experiment:** [HOUSE_MIX_ROLE_CALIBRATION.md](HOUSE_MIX_ROLE_CALIBRATION.md) describes an opt-in native kick/bass/chord stem-RMS calibration and subsequent native rerender. Initial technical result: 0 clips, source immutable, -25.85 to -23.08 LUFS, but chord relative RMS still misses the provisional target by ~8.52 dB. This is **NOT** an automatic quality winner or completed mastering step.
 
+**Full-song prototype milestone:** [HOUSE_FULL_SONG_ARRANGER.md](HOUSE_FULL_SONG_ARRANGER.md) documents an original 96/112/128/160-bar, eight-section, groove-preserving template architecture. The 32-case cross-profile/key/length structural matrix, 96-bar SoundCraft round-trip, and full 128-bar CC0-sampled-drum native PCM render passed technical checks. This is a reusable, formulaic **product feature**, not a manually polished reference track; full-length Vital preset integration and professional automatic mix/master quality remain separate, unverified stages. Routine development tests do **not** require the user to access or listen on the VPS.
+
 **Current experimental technical implementation:** The separately scoped [HOUSE_REAL_SOURCES_MVP.md](HOUSE_REAL_SOURCES_MVP.md) records actual CC0 sampled drum candidates and private Vitalium combined native renders, all still unreviewed for listening quality. This demonstrates an editable technical source chain but not the full reliable 80% template goal, auto winner selection, final master or full-song arrangement.
 
 ## 7. Implementation roadmap (order of real leverage)
