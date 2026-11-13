@@ -57,6 +57,10 @@
 
 **Transferable cross-genre lesson:** Kuang should **not** learn from FISHER alone. A sound template can lean on swung tops, rolling bass and short organ/chord stabs instead of a peak-time tech-house build/drop formula. Vocals and standalone melodic hooks remain outside the current target, but house chords and bass can supply a convincing musical identity. No obligatory huge riser or snare roll.
 
+## Complementary harmony corpus — Hooktheory
+
+The [Hooktheory study](HOUSE_HARMONY_REFERENCE_STUDY.md) and its [structured seven-track profile collection](HOUSE_HARMONY_REFERENCES.json) compare commercially recognizable dance music for tonal interpretation, chord simplicity versus extension, voice leading and section-specific harmonic variation. They complement FISHER's groove/arrangement reconstruction rather than replace it: TheoryTab's section titles are crowdsourced harmonic analysis, **not** documented original DAW structure or exact section durations. Its *One Kiss* entry is notably disputed between A Phrygian, a one-flat written key signature and an A-minor-centered interpretation; source certainty must be retained. The HX01–HX12 checks are proposed for later implementation, not proven sound-quality criteria.
+
 ## How to use external references safely
 
 1. Maintain several **distinct archetypes** with a source link, release/version identity, declared analysis method, observation confidence and applicability. A template library made from one record will overfit and become repetitive.
