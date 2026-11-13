@@ -1,5 +1,7 @@
 # Operational context
 
+For house-song generation and any future autonomous quality/revision system, consult `docs/HOUSE_PRODUCTION_PLAYBOOK.md` first. Its 75 reference-derived checks distinguish implemented capabilities from proposals and technical validity from actual listening approval. The Phase43/44 main reference is a quality baseline, not a license to copy its music or a mandatory song template. Keep the phase-specific reference states intact.
+
 Kuang is an audio engineering / desktop DAW project. Preserve local-first operation, reproducibility, human editability and exact edit semantics. Do not pivot to a web SaaS or waveform-only generator.
 
 ## Current implementation
