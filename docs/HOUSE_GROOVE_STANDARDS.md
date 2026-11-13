@@ -1,6 +1,6 @@
 # House Groove Standards and Locked-Pocket Production Policy
 
-Status: research-backed engineering specification and groove-archetype catalog; **not** evidence that Kuang already implements these archetypes, tests or subjective evaluations. This complements `docs/HOUSE_PRODUCTION_PLAYBOOK.md`. Main song baseline is Phase43 pre-master and Phase44 club master; Phase45 remains a technically tested, not independently listening-approved alternative.
+Status: research-backed engineering specification and groove-archetype catalog; **not** evidence that Kuang already implements these archetypes, tests or subjective evaluations. This complements `docs/HOUSE_PRODUCTION_PLAYBOOK.md` and `docs/HOUSE_STYLE_STANDARDS.md` (40 source-linked conventions and machine-readable registry). Main song baseline is Phase43 pre-master and Phase44 club master; Phase45 remains a technically tested, not independently listening-approved alternative.
 
 ## Priority, execution sequence and scope
 

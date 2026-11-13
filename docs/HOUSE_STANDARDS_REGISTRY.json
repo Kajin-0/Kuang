@@ -1,0 +1,606 @@
+{
+  "version": "house-standards-gates-1",
+  "status": "reference-only-not-executed",
+  "priority": [
+    "G0: constraints and asset legality",
+    "G1: blocked until groove evidence",
+    "G2: chord + section plan",
+    "G3: context-compatible sound selection",
+    "G4: mix/production checks and groove regression",
+    "G5: final master + native delivery"
+  ],
+  "tiers": [
+    "invariant",
+    "convention",
+    "default",
+    "optional"
+  ],
+  "sources": {
+    "NI": {
+      "url": "https://blog.native-instruments.com/how-to-make-a-deep-house-track/",
+      "name": "Native Instruments — How to Make a Deep House Track"
+    },
+    "NID": {
+      "url": "https://blog.native-instruments.com/saraga/",
+      "name": "Native Instruments — Saraga on Drum Programming in House"
+    },
+    "AB": {
+      "url": "https://learningmusic.ableton.com/make-beats/backbeats.html",
+      "name": "Ableton Learning Music — Backbeats"
+    },
+    "AG": {
+      "url": "https://www.ableton.com/en/manual/using-grooves/",
+      "name": "Ableton — Using Grooves"
+    },
+    "AT": {
+      "url": "https://www.attackmagazine.com/technique/beat-dissected/dusted-deep-house/",
+      "name": "Attack Magazine — Dusted Deep House"
+    },
+    "AM": {
+      "url": "https://www.attackmagazine.com/technique/beat-dissected/minimal-house/",
+      "name": "Attack Magazine — Minimal House"
+    },
+    "AA": {
+      "url": "https://www.attackmagazine.com/technique/beat-dissected/deep-afro-house/",
+      "name": "Attack Magazine — Deep Afro House"
+    },
+    "AP": {
+      "url": "https://www.attackmagazine.com/technique/passing-notes/levelling-up-your-chord-stabs/",
+      "name": "Attack Magazine — Levelling Up Your Chord Stabs"
+    },
+    "MR": {
+      "url": "https://www.musicradar.com/news/house-music-2023",
+      "name": "MusicRadar — Definitive Guide to House"
+    },
+    "MH": {
+      "url": "https://www.musicradar.com/how-to/classic-dance-sounds",
+      "name": "MusicRadar — Classic Dance Sounds"
+    },
+    "MC": {
+      "url": "https://www.musicradar.com/how-to/song-sections-explained-intro-verse-chorus-middle8-outro-tag-bridge",
+      "name": "MusicRadar — Song sections and club structure"
+    },
+    "EP": {
+      "url": "https://www.edmprod.com/how-to-make-house-music/",
+      "name": "EDMProd — House production"
+    },
+    "SO": {
+      "url": "https://www.soundonsound.com/techniques/mixing-bass",
+      "name": "Sound On Sound — Mixing Bass"
+    },
+    "SC": {
+      "url": "https://www.soundonsound.com/techniques/how-when-use-mix-compression",
+      "name": "Sound On Sound — Compression"
+    },
+    "SM": {
+      "url": "https://www.soundonsound.com/techniques/better-bass",
+      "name": "Sound On Sound — Better Bass"
+    },
+    "AL": {
+      "url": "https://makingmusic.ableton.com/catalog-of-attributes",
+      "name": "Ableton — Catalog of Attributes"
+    }
+  },
+  "gates": [
+    {
+      "id": "S01",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "convention",
+      "standard": "Default to 4/4 for conventional house; 120–130 BPM is a common starting envelope, not a rigid classifier.",
+      "inspection": "Check meter/tempo against explicit brief and selected house subtype; log any justified deviation.",
+      "correction": "Keep specified unusual tempo/meter and adjust groove mapping rather than coercing 126 BPM.",
+      "source_ids": [
+        "NI"
+      ]
+    },
+    {
+      "id": "S02",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "invariant",
+      "standard": "Maintain one canonical beat grid and reproducible timebase in every MIDI, sample-trigger and native export.",
+      "inspection": "Inspect time signature, tempo, PPQ conversion, start/end ticks and host render alignment.",
+      "correction": "Correct the timeline/export mismatch before assessing feel.",
+      "source_ids": [
+        "AB",
+        "AG"
+      ]
+    },
+    {
+      "id": "S03",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "convention",
+      "standard": "Use quarter-note four-on-the-floor kick for classic/deep/minimal house unless a groove-family exception is intentional.",
+      "inspection": "Verify expected kick accents at four quarter-note positions per active full-groove bar, not during breaks.",
+      "correction": "Change the archetype/profile or repair missing/extra kicks; do not patch arranged breaks.",
+      "source_ids": [
+        "AB",
+        "NI",
+        "NID"
+      ]
+    },
+    {
+      "id": "S04",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "convention",
+      "standard": "Use clap/snare backbeat on beats 2 and 4 for conventional house; layer only if compatible.",
+      "inspection": "Measure backbeat hit coverage, offset vs kick, and transient collision by full-groove section.",
+      "correction": "Repair phase/timing or select a more compatible clap; allow percussion-led exceptions.",
+      "source_ids": [
+        "AB",
+        "AT"
+      ]
+    },
+    {
+      "id": "S05",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "convention",
+      "standard": "Use offbeat hats as a foundational pulse; closed hats/shakers may add eighth or sixteenth subdivisions.",
+      "inspection": "Measure open/closed hat onset pattern, choke/tail conflicts and velocity hierarchy.",
+      "correction": "Test sparse offbeats vs more subdivided alternatives in context; avoid constant high-hat density.",
+      "source_ids": [
+        "NID",
+        "AT",
+        "AM"
+      ]
+    },
+    {
+      "id": "S06",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "default",
+      "standard": "Select a kick whose attack/body/decay leaves room for the intended bass line.",
+      "inspection": "Compare combined kick+bass attack/tail overlap, crest and low-band energy across actual pattern.",
+      "correction": "Re-audition real kick samples or adjust envelope; do not rely on master EQ.",
+      "source_ids": [
+        "SO",
+        "AT"
+      ]
+    },
+    {
+      "id": "S07",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "convention",
+      "standard": "Compose bass in conversation with the kick: offbeat eighths, syncopated sixteenths, selected downbeats and rests are archetypes.",
+      "inspection": "Measure onset-offset and duration-overlap distributions across 2–4 bars in the full rendered groove.",
+      "correction": "Change bass note duration/syncopation or select complementary patch; do not blindly add more sub.",
+      "source_ids": [
+        "SO",
+        "EP",
+        "AA"
+      ]
+    },
+    {
+      "id": "S08",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "default",
+      "standard": "Make bass notes rhythmically legible and harmonically pitched, including mid-bass articulation on small playback systems.",
+      "inspection": "Verify rendered fundamental, note onset and useful upper harmonics, and compare low-end with kick.",
+      "correction": "Change source timbre/register/envelope or harmonic saturation before changing master loudness.",
+      "source_ids": [
+        "SO",
+        "SM"
+      ]
+    },
+    {
+      "id": "S09",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "default",
+      "standard": "Add controlled per-role timing accents/velocity to hats, claps and ghost percussion; preserve stable kick anchor where appropriate.",
+      "inspection": "Record actual per-note tick offsets, velocities, grid resolution and groove-template identity.",
+      "correction": "Test straight vs swung render; remove unintentional jitter and duplicate swing application.",
+      "source_ids": [
+        "AG",
+        "NID",
+        "AT"
+      ]
+    },
+    {
+      "id": "S10",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "invariant",
+      "standard": "Never apply swing twice to events whose timing was already shifted, and never extrapolate DAW swing-percent to a universal millisecond offset.",
+      "inspection": "Compare original MIDI positions to final sample-accurate output and timing-transform provenance.",
+      "correction": "Undo stacked timing transformations and quantify actual per-role ticks/ms.",
+      "source_ids": [
+        "AG"
+      ]
+    },
+    {
+      "id": "S11",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "default",
+      "standard": "Use ghost notes as quiet structural accents rather than a random high-density layer.",
+      "inspection": "Inspect ghost-to-main velocity/level, event density and masking of clap/kick.",
+      "correction": "Remove redundant ghosts; compare with the stripped pocket.",
+      "source_ids": [
+        "AT",
+        "AA"
+      ]
+    },
+    {
+      "id": "S12",
+      "family": "groove",
+      "phase": "G1",
+      "tier": "default",
+      "standard": "Make a 2/4/8-bar rhythmic call/response with small, deliberate turnarounds; maintain a clear anchor.",
+      "inspection": "Compare bar-by-bar onset fingerprints and variation/recurrence; check phrase-end variation context.",
+      "correction": "Rework 1–2 event placements rather than recomposing the whole pocket.",
+      "source_ids": [
+        "AT",
+        "EP"
+      ]
+    },
+    {
+      "id": "S13",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Choose a concise 2–8-bar core chord loop; extend to 16 bars if function and pacing warrant it.",
+      "inspection": "Check consistent pitch classes, harmonic duration and recognizable return across repeated cycles.",
+      "correction": "Simplify meandering progression or correct inconsistent roots.",
+      "source_ids": [
+        "AP",
+        "MR"
+      ]
+    },
+    {
+      "id": "S14",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "invariant",
+      "standard": "Keep bass pitch and chord roots/function coherent in the actual chosen harmony; explicitly allow intentional inversions, pedals and suspensions.",
+      "inspection": "Check each audible bass note against local chord function and note exceptions.",
+      "correction": "Correct conflicting bass root, voicing or intentional passing-tone labeling.",
+      "source_ids": [
+        "AP",
+        "MH"
+      ]
+    },
+    {
+      "id": "S15",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "optional",
+      "standard": "Use rootless chord voicings where bass owns the low root, reducing redundant low-mid energy.",
+      "inspection": "Compare rootless vs rooted voicings in complete bass/chord context.",
+      "correction": "Restore a voiced root where the harmonic identity disappears.",
+      "source_ids": [
+        "AP"
+      ]
+    },
+    {
+      "id": "S16",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "optional",
+      "standard": "Use sevenths, ninths, sixths or other extensions as appropriate; not all house needs complex harmony.",
+      "inspection": "Inspect consonance/tension, voice range and root/third/seventh clarity; compare simple vs extended.",
+      "correction": "Remove cluttering extensions or widen voicing; never require sevenths by default.",
+      "source_ids": [
+        "AP",
+        "MH"
+      ]
+    },
+    {
+      "id": "S17",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Prefer intentional voice leading and common tones between successive chords when natural.",
+      "inspection": "Calculate voice movement, shared pitch classes and awkward register jumps; audition the actual preset.",
+      "correction": "Test different inversions or durations; preserve deliberate discontinuities.",
+      "source_ids": [
+        "MH"
+      ]
+    },
+    {
+      "id": "S18",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Treat chord stabs as rhythmic instruments: offbeat syncopation and varied lengths can create the hook without a lead.",
+      "inspection": "Inspect chord attacks relative to kick/bass/clap and note lengths/voicings in 4–8-bar loop.",
+      "correction": "Move/re-voice stabs or change envelopes; no automatic extra melody.",
+      "source_ids": [
+        "AP",
+        "AT"
+      ]
+    },
+    {
+      "id": "S19",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "invariant",
+      "standard": "Verify actual plugin-rendered pitch in the native host, not merely the written MIDI key.",
+      "inspection": "Render at multiple octaves; check cent deviations, pitch-bend initialization and exact saved patch state.",
+      "correction": "Reject or repair mis-tuned native adapter before arranging or mixing.",
+      "source_ids": [],
+      "local_evidence": {
+        "description": "Kuang Phase15 pitch-repair postmortem",
+        "doc_path": "PHASE15.md"
+      }
+    },
+    {
+      "id": "S20",
+      "family": "harmony",
+      "phase": "G2",
+      "tier": "invariant",
+      "standard": "No automatically composed separate lead, arp, topline or ornamental melody in the current Kuang target.",
+      "inspection": "Check role set, track audibility and all sections against prompt and configured no-melody scope.",
+      "correction": "Delete the unauthorized part and recheck full arrangement; future melody requires separate opt-in.",
+      "source_ids": [],
+      "local_evidence": {
+        "description": "current user no-melody requirement",
+        "doc_path": "HOUSE_GROOVE_STANDARDS.md"
+      }
+    },
+    {
+      "id": "S21",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "convention",
+      "standard": "Use 4/8/16/32-bar phrasing as a strong structural prior, with clear section boundaries and exceptions recorded.",
+      "inspection": "Inspect bar-level section markers, phrase lengths and downbeat alignment.",
+      "correction": "Align entrances/turnarounds or explain deliberate displacement.",
+      "source_ids": [
+        "MC",
+        "EP"
+      ]
+    },
+    {
+      "id": "S22",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Create A and B treatments of one strong nucleus without unnecessarily adding a new musical hook.",
+      "inspection": "Compare part presence, groove fingerprints, chord rhythm and density of two sections.",
+      "correction": "Vary source/role/FX treatment, not core pocket; make contrast audible.",
+      "source_ids": [
+        "MR"
+      ]
+    },
+    {
+      "id": "S23",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Build arrangement by additive/subtractive layering of existing material, plus selective like-for-like substitutions.",
+      "inspection": "Validate role-presence matrix and automation against planned arrangement; track source-to-section mappings.",
+      "correction": "Remove or replace parts; don't build unrelated MIDI in every section.",
+      "source_ids": [
+        "MR",
+        "EP"
+      ]
+    },
+    {
+      "id": "S24",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Ensure the intro establishes a recognizable pulse or identity promptly, appropriate to the release profile.",
+      "inspection": "Inspect first 8/16 bars, bar-wise role entry and energy curve; audition immediate listener engagement.",
+      "correction": "Introduce a core element earlier or reduce dead space; avoid blindly copying one reference intro.",
+      "source_ids": [
+        "MR",
+        "MC"
+      ]
+    },
+    {
+      "id": "S25",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "optional",
+      "standard": "For DJ/extended mix, allow 16/32-bar relatively sparse beat intros/outros for phrase mixing.",
+      "inspection": "Check configured release type, minimum usable beat-only window and neighboring FX tails.",
+      "correction": "Generate a dedicated DJ mix or adjust section lengths; don't force long intros into radio edit.",
+      "source_ids": [
+        "EP",
+        "MC"
+      ]
+    },
+    {
+      "id": "S26",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "optional",
+      "standard": "For radio/streaming edits, shorten beat-only sections while preserving main groove, harmonic identity and meaningful contrast.",
+      "inspection": "Inspect target duration and introduction-to-hook time, compare edited section mapping.",
+      "correction": "Produce a separate shorter edit without corrupting extended mix.",
+      "source_ids": [
+        "EP",
+        "MC"
+      ]
+    },
+    {
+      "id": "S27",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Create release through subtraction: a reduced-energy breakdown followed by a perceivable re-entry or peak.",
+      "inspection": "Inspect role-count/energy changes and actual kick/bass absence/re-entry; audition transition.",
+      "correction": "Make the break genuinely different or simplify excess layers.",
+      "source_ids": [
+        "MR",
+        "EP"
+      ]
+    },
+    {
+      "id": "S28",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Mark important transitions with a restrained cue: fill, silence, filtered echo or automation at a meaningful phrase boundary.",
+      "inspection": "Locate cues relative to 4/8/16-bar boundaries and check sample/FX tail continuity.",
+      "correction": "Move, thin or delete overused cues; preserve DJ-mix continuity.",
+      "source_ids": [
+        "MR",
+        "MC"
+      ]
+    },
+    {
+      "id": "S29",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Avoid automatic cymbal/fill on every four- or eight-bar boundary: variation should express phrase and tension.",
+      "inspection": "Count identical repeated fills and automation gestures; sample-compare consecutive blocks.",
+      "correction": "Remove mechanical pattern repeats or reduce density.",
+      "source_ids": [
+        "MR",
+        "EP"
+      ]
+    },
+    {
+      "id": "S30",
+      "family": "arrangement",
+      "phase": "G2",
+      "tier": "default",
+      "standard": "Verify full-song pacing; repeated groove should be recognizable but not stagnant, and complexity should not destroy dance continuity.",
+      "inspection": "Check role/energy matrices by section then actual full-song playback; compare A/B section identity.",
+      "correction": "Rebalance part entries/mutes and phrase dynamics before adding new instruments.",
+      "source_ids": [
+        "MR",
+        "AL"
+      ]
+    },
+    {
+      "id": "S31",
+      "family": "sound",
+      "phase": "G3",
+      "tier": "default",
+      "standard": "Audition real kick/bass/chord/pad presets with the actual MIDI and surrounding parts, not just isolated descriptive features.",
+      "inspection": "Compare level-matched full-context 8–16-bar alternatives, actual plugin version and source state.",
+      "correction": "Retain incumbent or replace weak sample/patch; never use semantic filename as proof of fit.",
+      "source_ids": [
+        "AT",
+        "SO",
+        "MH"
+      ]
+    },
+    {
+      "id": "S32",
+      "family": "sound",
+      "phase": "G3",
+      "tier": "invariant",
+      "standard": "Make fader, automation and FX operating levels agree: no hidden lane should silently override intended gain.",
+      "inspection": "Inspect base fader and same-parameter automation; render spot checks.",
+      "correction": "Edit authorized automation values together with gain or revert inconsistent state.",
+      "source_ids": [],
+      "local_evidence": {
+        "description": "Kuang Phase7 fader-automation override",
+        "doc_path": "PHASE7.md"
+      }
+    },
+    {
+      "id": "S33",
+      "family": "mix",
+      "phase": "G4",
+      "tier": "default",
+      "standard": "Preserve kick and clap transients when compressing or saturating drums; use controlled attack and wet ratios.",
+      "inspection": "Compare onset windows and transients before/after, with level-matched playback.",
+      "correction": "Reduce gain reduction, slow attack or re-audition a more suitable source.",
+      "source_ids": [
+        "SC"
+      ]
+    },
+    {
+      "id": "S34",
+      "family": "mix",
+      "phase": "G4",
+      "tier": "default",
+      "standard": "Keep critical sub/low bass mono-compatible, while allowing musically justified side information above.",
+      "inspection": "Measure frequency-dependent side power, L/R correlation, mono sum loss and phase of kick/bass.",
+      "correction": "Repair low-band cancellation or reduce problematic width; do not force all mids mono.",
+      "source_ids": [
+        "SO"
+      ]
+    },
+    {
+      "id": "S35",
+      "family": "mix",
+      "phase": "G4",
+      "tier": "invariant",
+      "standard": "Protect headroom and avoid digital clipping; kick and bass are often the principal LF headroom bottleneck.",
+      "inspection": "Check per-bus peak/RMS, full-mix true peak, clipped samples and low-end overlap.",
+      "correction": "Repair balance, dynamics or source envelope before aggressive maximization.",
+      "source_ids": [
+        "SO"
+      ]
+    },
+    {
+      "id": "S36",
+      "family": "mix",
+      "phase": "G4",
+      "tier": "optional",
+      "standard": "Use foreground dry chords and controlled shared-room/pad/plate depth where it clarifies space.",
+      "inspection": "Compare wet vs corresponding return-muted rendering and in-context mono/stereo clarity.",
+      "correction": "Shorten/filter/reduce tails or remove needless effect layers.",
+      "source_ids": [
+        "MR"
+      ]
+    },
+    {
+      "id": "S37",
+      "family": "mix",
+      "phase": "G4",
+      "tier": "optional",
+      "standard": "Tempo-sync rhythmic delays to beat subdivisions; use selective phrase-end throws rather than permanently high wet mix.",
+      "inspection": "Verify delay time from BPM and actual native effect return automation; measure audible sections.",
+      "correction": "Correct subdivision/routing or strip redundant throws.",
+      "source_ids": [
+        "MR"
+      ]
+    },
+    {
+      "id": "S38",
+      "family": "quality",
+      "phase": "G4",
+      "tier": "invariant",
+      "standard": "Compare candidates against the incumbent at matched loudness and identical musical context when making quality claims.",
+      "inspection": "Record A/B audio, matching method, level difference, source hashes and explicit reviewer/evaluator outcome.",
+      "correction": "Mark quality PENDING unless comparison/acceptance exists; never select from louder sound alone.",
+      "source_ids": [],
+      "local_evidence": {
+        "description": "Kuang Phase43/44 private matched-level A/B receipts",
+        "doc_path": "HOUSE_PRODUCTION_PLAYBOOK.md"
+      }
+    },
+    {
+      "id": "S39",
+      "family": "master",
+      "phase": "G5",
+      "tier": "default",
+      "standard": "Master only after the song and mix are accepted; set deliverable-dependent loudness and true-peak limits.",
+      "inspection": "Check integrated/section LUFS, true peak, LRA, crest and original/matched A/B before promotion.",
+      "correction": "Revert excessive limiting, reconsider mix; avoid fixed house-EQ or loudness targets.",
+      "source_ids": [
+        "SO",
+        "SC"
+      ]
+    },
+    {
+      "id": "S40",
+      "family": "delivery",
+      "phase": "G5",
+      "tier": "invariant",
+      "standard": "Deliver an authorized reproducible editable native project, licensed source closure and verified final audio.",
+      "inspection": "Validate patch and sample hashes, asset licenses, MIDI, native save/reopen, exact role exclusions and render specs.",
+      "correction": "Reject incomplete bundle or source drift; do not redistribute unlicensed preset states.",
+      "source_ids": [],
+      "local_evidence": {
+        "description": "Kuang native adapter/asset licensing contract",
+        "doc_path": "../AGENTS.md"
+      }
+    }
+  ]
+}
