@@ -103,6 +103,8 @@ Random seed should choose meaningful combinations, not independent uniform rando
 
 **Prefer safe generic but professionally coherent over adventurous but weak**. New creative algorithms are permitted only when they repeatedly improve level-matched producer evaluations, not because they are more original. Keep the incumbent and rollback mechanism.
 
+**Measured role balance experiment:** [HOUSE_MIX_ROLE_CALIBRATION.md](HOUSE_MIX_ROLE_CALIBRATION.md) describes an opt-in native kick/bass/chord stem-RMS calibration and subsequent native rerender. Initial technical result: 0 clips, source immutable, -25.85 to -23.08 LUFS, but chord relative RMS still misses the provisional target by ~8.52 dB. This is **NOT** an automatic quality winner or completed mastering step.
+
 **Current experimental technical implementation:** The separately scoped [HOUSE_REAL_SOURCES_MVP.md](HOUSE_REAL_SOURCES_MVP.md) records actual CC0 sampled drum candidates and private Vitalium combined native renders, all still unreviewed for listening quality. This demonstrates an editable technical source chain but not the full reliable 80% template goal, auto winner selection, final master or full-song arrangement.
 
 ## 7. Implementation roadmap (order of real leverage)

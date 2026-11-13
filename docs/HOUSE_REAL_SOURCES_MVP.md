@@ -66,6 +66,8 @@ The sample pipeline checks:
 - Private Vital workers run network-unshared and with strict plugin/source hashes and re-read their independently saved state before use.
 - Song-specific gates and loudness reports explicitly say **`NEEDS_LISTENING`** until a producer approves the sound.
 
+**Mix-staging follow-up:** [HOUSE_MIX_ROLE_CALIBRATION.md](HOUSE_MIX_ROLE_CALIBRATION.md) reports the opt-in native three-role stem-measured calibration experiment. It improved loudness on one reference template without clipping, but it **did not resolve chord dominance** within its bounded -4 dB correction; no subjective quality claim is made. The original private combined output remains unchanged.
+
 ## 4. Missing before the producer-ready 80% promise
 
 1. **Contextual automatic ranking:** audition actual kick+bass+chord+pad **combinations**, compare reasonably loudness-matched clips and calibrate against approved/rejected producer preferences. These two CC0 candidates and the Vital source score do **not** constitute a validated winner.
