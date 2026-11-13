@@ -45,6 +45,8 @@ These are starting assumptions for an **in-context experiment**, not music-indus
 - Existing Phase43/44 user-approved reference is unaffected. Full calibration output and copyrighted presets stay in ignored local workspace, not pushed to GitHub.
 - Successful native rendering does **not** establish music-production quality, club master readiness, a psychoacoustic preference, or equivalence to Phase44.
 
+**Superseding safety rule:** The follow-up [frequency-resolved and A/B study](HOUSE_SPECTRAL_AND_AB_REVIEW.md) showed that comparing kick-wide RMS against sustained chords is a poor automatic mix-quality gate. **`house_mix_roles` now defaults to diagnostics-only**: it produces stem spectra and does not apply this v1 heuristic. To reproduce the historical original automatic fader experiment, supply the deliberate `--apply-fullband-heuristic` flag. Do not apply those fader targets to every generated house track or declare success merely by reaching them.
+
 ## Verified private VPS run — November 13, 2026
 
 An opt-in native run on the existing private 16-bar C-minor/deep-house, seed-17, 7-track SoundCraft/Vital/CC0 template passed the native source comparison and independently rendered updated session. Its before/after 4× FIR loudness and true-peak readings used Kuang's local optional libebur128 1.2.6. **No original Phase43/44 assets were changed.**

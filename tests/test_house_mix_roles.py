@@ -75,6 +75,23 @@ class HouseMixRoleTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             apply_offsets(self.project,{"kick":0.,"bass":7.,"chords":0.})
 
+    def test_diagnostic_default_and_explicit_legacy_mode(self):
+        from unittest.mock import patch
+        from kuang.house_mix_roles import main
+        from contextlib import redirect_stdout, redirect_stderr
+        from io import StringIO
+        args=["--source","unused", "--soundcraft","unused", "--out-dir","unused"]
+        with patch("kuang.house_mix_roles.calibrate_existing",return_value={}) as mock:
+            with redirect_stdout(StringIO()):
+                self.assertEqual(main(args),0)
+            self.assertTrue(mock.call_args.kwargs["diagnostics_only"])
+            with redirect_stdout(StringIO()):
+                self.assertEqual(main(args+["--apply-fullband-heuristic"]),0)
+            self.assertFalse(mock.call_args.kwargs["diagnostics_only"])
+            with redirect_stderr(StringIO()), self.assertRaises(SystemExit) as exc:
+                main(args+["--diagnostics-only","--apply-fullband-heuristic"])
+            self.assertEqual(exc.exception.code,2)
+
     def test_regional_pcm_rms_ignores_intro(self):
         with tempfile.TemporaryDirectory() as t:
             path=Path(t)/"stem.wav"

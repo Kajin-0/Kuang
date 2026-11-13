@@ -22,6 +22,7 @@ from . import midi
 from .autonomous_create import PrivateExternal
 from .external_synth import inventory
 from .loudness import measure
+from .house_mix_spectrum import band_rms, role_spectral_diagnostics
 from .production_host import ProductionAdapter
 from .sample_assets import digest, write
 from .vitalium_patch import PLUGIN_ID
@@ -171,11 +172,13 @@ def _host_adapter(source_root, workspace, scratch, soundcraft):
     return native
 
 
-def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output_db=6.):
+def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output_db=6., diagnostics_only=True):
     """Render kick/bass/chords in context, adjust faders, verify a *new* premix.
 
     The source session, original samples, presets and main branch are immutable.
     """
+    if type(diagnostics_only) is not bool:
+        raise ValidationError("diagnostics_only must be boolean")
     raw_source = Path(source).absolute()
     if raw_source.is_symlink():
         raise ValidationError("source symlinks are not permitted")
@@ -210,6 +213,7 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
         if baseline["canonical_hash"] != source_hash:
             raise ValidationError("native and source canonical drift")
         metrics = {}
+        spectra = {}
         duration = original.length/original.ppq*60/original.tempo_bpm+12
         for role in ROLES:
             isolated = _role_solo(original,role)
@@ -218,6 +222,24 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
             adapter.export(isolated,assets,patches,folder/"native")
             adapter.render(folder/"native",folder/"stem.wav",end_seconds=duration)
             metrics[role] = _rms_region(folder/"stem.wav",window)
+            spectra[role] = band_rms(folder/"stem.wav",window)
+        if diagnostics_only:
+            summary=role_spectral_diagnostics(spectra)
+            if inventory(src) != before:
+                raise ValidationError("private source changed during diagnostics")
+            write(stage/"band-diagnostics.json",{
+                "version":"house-mix-spectrum-v1","source_project_hash":source_hash,
+                "window":window,"fullband_rms":metrics,
+                "band_rms":spectra,"diagnostics":summary,
+                "perceptual_quality":"NEEDS_LISTENING","winner":None})
+            out.mkdir(mode=0o700)
+            try:
+                (stage/"band-diagnostics.json").rename(out/"band-diagnostics.json")
+            except BaseException:
+                shutil.rmtree(out)
+                raise
+            return {"output":str(out),"diagnostics_only":True,
+                    "diagnostics":summary,"perceptual_quality":"NEEDS_LISTENING"}
         proposed,relative = role_offsets(metrics,limit_db=max_role_db)
         revised = apply_offsets(original,proposed)
         folder = stage/"premix"
@@ -261,6 +283,8 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
             "version": VERSION, "original_canonical_hash": source_hash,
             "calibrated_canonical_hash":state_hash(actual_project),
             "measurement_window":window,"stem_metrics":metrics,
+            "role_band_rms":spectra,
+            "frequency_resolved_diagnostics":role_spectral_diagnostics(spectra),
             "relative_rms":relative,
             "role_balance_heuristic_gate": "MET" if all(x["within_3db_heuristic"] for x in relative.values()) else "NOT_MET",
             "role_gain_moves_db":proposed,
@@ -272,6 +296,7 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
             "quality_improvement_established":False,
             "limitations":["RMS-based levels are role-aware engineering heuristics, not a balanced commercial-mix guarantee.",
                            "Three solo submixes include each role's real effects; nonlinearity means stem sum need not equal full mix.",
+                           "Band-specific spectral comparisons cannot prove psychoacoustic masking or an optimum gain balance.",
                            "Kick is anchor; other drum roles retain their earlier staging and are not individually calibrated.",
                            "No independent mastering chain, dynamic sidechain detector, or automatic psychoacoustic winner selection."]})
         # Preserve only one preferred *technical candidate*, and the measured evidence.
@@ -303,10 +328,17 @@ def main(argv=None):
     parser.add_argument("--out-dir",required=True)
     parser.add_argument("--max-role-db",type=float,default=4.)
     parser.add_argument("--max-output-db",type=float,default=6.)
+    parser.add_argument("--diagnostics-only",action="store_true",
+                        help="default mode: measure three native stems, do not change mix")
+    parser.add_argument("--apply-fullband-heuristic",action="store_true",
+                        help="explicit experiment ONLY: apply deprecated fullband-RMS role gains")
     args=parser.parse_args(argv)
+    if args.diagnostics_only and args.apply_fullband_heuristic:
+        parser.exit(2,"cannot combine diagnostic-only and fullband heuristic modes\n")
     try:
         result=calibrate_existing(args.source,args.soundcraft,args.out_dir,
-                                  max_role_db=args.max_role_db,max_output_db=args.max_output_db)
+                                  max_role_db=args.max_role_db,max_output_db=args.max_output_db,
+                                  diagnostics_only=not args.apply_fullband_heuristic)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as e:
         parser.exit(2,"house-mix-roles: "+str(e)+"\n")
     print(json.dumps(result,indent=2,sort_keys=True))
