@@ -12,6 +12,7 @@ from copy import deepcopy
 from dataclasses import asdict
 
 from .composer import SCALES, compose
+from .house_harmony import apply_harmony
 from .production import refine_house
 from .schema import (
     BAR, PPQ, AutomationLane, AutomationPoint, Clip, Note,
@@ -27,6 +28,7 @@ LIMITATIONS = [
     "Built-in SoundCraft drum/synth devices, not selected real sampled drums or Vital presets.",
     "No standalone lead, arp, vocals, or independent melody; optional supporting pad.",
     "Original template supports only 8/16/32 bars, constant 4/4 and diatonic major/minor.",
+    "Simple triads or diatonic sevenths only; no true modal, suspended or ninth-chord support.",
     "Programmed ducking uses actual kick MIDI onsets, not audio-triggered compression.",
     "No per-role audio-calibrated mastering or learned perceptual gate yet.",
 ]
@@ -64,7 +66,8 @@ def _bass_pattern(profile: str, alternate: bool):
         (6, 2, 0), (14, 2, 0))
 
 
-def template(spec: SongSpec, *, profile: str, include_pad: bool = True):
+def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
+             harmony_profile: str = "extended"):
     """Build a separate production; preserve established sketch/refined behavior."""
     spec = validate_spec(spec)
     if spec.genre != "house" or spec.arrangement != "song":
@@ -198,6 +201,9 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True):
             [AutomationPoint(f"{lane_id}-{i}", tick, value, "linear")
              for i, (tick, value) in enumerate(ticks)]))
 
+    # Adjust chord vocabulary without touching the approved kick/bass rhythm.
+    harmonic_evidence = apply_harmony(p, spec, harmony_profile)
+
     # Machine-checkable G1 structural gates, **not** a listening approval.
     groove = p.sections[1]
     onset_by_role = {
@@ -238,7 +244,7 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True):
         "groove_fingerprint_sha256": hashlib.sha256(json.dumps(
             groove_events, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         "full_groove_onsets": groove_events,
-        "melody_roles": [], "limitations": LIMITATIONS,
+        "melody_roles": [], "harmony": harmonic_evidence, "limitations": LIMITATIONS,
         "song_spec": asdict(spec),
     }
     return p, receipt
