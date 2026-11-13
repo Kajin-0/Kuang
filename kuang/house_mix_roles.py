@@ -23,6 +23,7 @@ from .autonomous_create import PrivateExternal
 from .external_synth import inventory
 from .loudness import measure
 from .house_mix_spectrum import band_rms, role_spectral_diagnostics
+from .house_source_fit import fit_diagnostics
 from .production_host import ProductionAdapter
 from .sample_assets import digest, write
 from .vitalium_patch import PLUGIN_ID
@@ -223,6 +224,11 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
             adapter.render(folder/"native",folder/"stem.wav",end_seconds=duration)
             metrics[role] = _rms_region(folder/"stem.wav",window)
             spectra[role] = band_rms(folder/"stem.wav",window)
+        context=fit_diagnostics(original,window,
+                                stage/'kick'/'stem.wav',
+                                stage/'bass'/'stem.wav',
+                                stage/'chords'/'stem.wav',
+                                src/'preview.wav')
         if diagnostics_only:
             summary=role_spectral_diagnostics(spectra)
             if inventory(src) != before:
@@ -231,6 +237,7 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
                 "version":"house-mix-spectrum-v1","source_project_hash":source_hash,
                 "window":window,"fullband_rms":metrics,
                 "band_rms":spectra,"diagnostics":summary,
+                "context_fit":context,
                 "perceptual_quality":"NEEDS_LISTENING","winner":None})
             out.mkdir(mode=0o700)
             try:
@@ -285,6 +292,7 @@ def calibrate_existing(source, soundcraft, output, *, max_role_db=4., max_output
             "measurement_window":window,"stem_metrics":metrics,
             "role_band_rms":spectra,
             "frequency_resolved_diagnostics":role_spectral_diagnostics(spectra),
+            "source_fit_diagnostics":context,
             "relative_rms":relative,
             "role_balance_heuristic_gate": "MET" if all(x["within_3db_heuristic"] for x in relative.values()) else "NOT_MET",
             "role_gain_moves_db":proposed,

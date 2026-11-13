@@ -77,6 +77,8 @@ The three-file package (`preview.wav`, `master-preview/gain-only.wav`, `master-p
 
 Original private output: `/home/User/Kuang/.local/kuang-generalization-batch-20261113/straight-Am-125-s41-master-integrated/`.
 
+**New downstream native-context diagnostic:** The [house source-fit study](HOUSE_SOURCE_FIT_NATIVE.md) uses real isolated native kick/bass/chord stems, actual kick onsets, temporal bass attenuation, hypothetical low-band summation, fullmix stereo/mono fold-down and kick transient contrast. Two independent deep and jackin candidates have been verified. The new measurements are advisory and do not justify automatically selecting a preset or turning down a channel. This fills part of the missing compatibility-evidence layer ahead of mastering.
+
 ## Next generalization gates
 
 1. Add candidate-level evidence for **kick attack duration, bass upper harmonic energy and actual overlap windows** rather than simple 20–120 Hz spectrum totals.
