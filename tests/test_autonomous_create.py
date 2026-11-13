@@ -33,6 +33,14 @@ class AutonomousCreateTests(unittest.TestCase):
         return ac.create('deep house in C minor no lead',self.catalog,self.plugin,self.host,
                          self.root/'output',**kw)
 
+    def test_master_preview_requires_groove_template_before_private_work(self):
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'requires --groove-template'):
+            self.call(private=True,master_preview=True)
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'must be boolean'):
+            self.call(private=True,groove_template=True,master_preview='true')
+        select.assert_not_called()
+
     def test_explicit_private_consent_required(self):
         with patch.object(ac,'select_palette') as select, self.assertRaises(ValidationError): self.call()
         select.assert_not_called()

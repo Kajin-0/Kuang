@@ -28,6 +28,7 @@ from .loudness import measure
 from .production import refine_house
 from .house_template import template as groove_template_project, select_profile
 from .house_full_arranger import arrange_full_song, parse_long_form
+from .house_master_preview import render_previews
 from .house_harmony import select_harmony
 from .house_sources import prepare_kit
 from .production_host import ProductionAdapter
@@ -233,7 +234,7 @@ def _bind(project, assignments, adapter):
 
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
-           full_song_bars=None):
+           full_song_bars=None, master_preview=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -245,6 +246,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('output cannot be inside preset library or plugin')
     if full_song_bars is not None and not groove_template:
         raise ValidationError('--full-song-bars requires --groove-template')
+    if type(master_preview) is not bool:
+        raise ValidationError('master_preview must be boolean')
+    if master_preview and not groove_template:
+        raise ValidationError('--master-preview requires --groove-template')
     import re
     planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
     spec,notes = rules_plan(planning_prompt,seed)
@@ -345,7 +350,17 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'actual_project_bars':project.bars,'source_nucleus_bars':spec.bars,
             'sample_selection':'sample-selection.json' if drum_evidence else None,
             'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
-            'quality_judgment':'unreviewed; no professional audio quality established'})
+            'quality_judgment':'unreviewed; no professional audio quality established',
+            'master_preview_requested':master_preview})
+        if master_preview:
+            # The standalone mastering API deliberately forbids modifying its
+            # source tree. Use a separate scratch root and import the verified
+            # derivatives only after both pass their independent PCM gates.
+            with tempfile.TemporaryDirectory(prefix='.private-preview-',dir=dest.parent) as preview_temp:
+                pending = Path(preview_temp)/'verified'
+                render_previews(stage,pending,
+                                library=str(library_path) if library_path.is_file() else None)
+                shutil.move(str(pending),str(stage/'master-preview'))
         # The native bundle contains copies of third-party states and must remain private.
         for name in ['scratch','probe','probe-vital.scraft','commands.txt','reopened','calibration-native','calibration.wav',
                      'drum-assets',
@@ -375,6 +390,8 @@ def main(argv=None):
     parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
     parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
+    parser.add_argument('--master-preview',action='store_true',
+                        help='produce measured transparent and gentle-compression WAV derivatives')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
                         help='opt-in full-length editable arrangement from 32-bar nucleus')
     args=parser.parse_args(argv)
@@ -383,7 +400,7 @@ def main(argv=None):
                       private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout,
                       groove_template=args.groove_template,sample_pack=args.sample_pack,groove_profile=args.groove_profile,
                       harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
-                      full_song_bars=args.full_song_bars)
+                      full_song_bars=args.full_song_bars,master_preview=args.master_preview)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0

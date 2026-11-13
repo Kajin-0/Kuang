@@ -71,6 +71,8 @@ The first actual evaluation returned:
 
 The private structured record is `/home/User/Kuang/.local/kuang-generalization-batch-20261113/acceptance-v1.json`.
 
+**Follow-up completed:** [HOUSE_MASTER_PREVIEW_BATCH.md](HOUSE_MASTER_PREVIEW_BATCH.md) now records two actual bounded DSP previews per template, all six 48-kHz/24-bit versions measured to -1.7 dBTP with 0 clipped samples. This closes the unused peak headroom but does **not** fix source-combination spectral differences or certify a released master. The editable premix and native SoundCraft session remain separate.
+
 ## Engineering decision and next steps
 
 **Do not ask for the user's final listening test yet.** The technical MVP can create varied samples, but output level consistency and source-combination tonal variance are not controlled. The next generic iteration should implement a **two-stage routine**: (1) select and audit a compatible bass/chord/drum palette over an 8–16 bar groove excerpt; (2) once accepted, produce the chosen full-length arrangement exactly once and package an independently measured premaster and a separate bounded master preview. Use early rejection conditions, no endless iteration or repeated 4-minute renders.
