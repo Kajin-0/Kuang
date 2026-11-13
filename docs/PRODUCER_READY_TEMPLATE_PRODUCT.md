@@ -114,6 +114,8 @@ Random seed should choose meaningful combinations, not independent uniform rando
 
 This direction reuses Kuang's typed schema, transaction/locks system, real SoundCraft export and pitch-correct Vitalium adapter. It does **not** authorize replacing those components, adding web SaaS services, claiming other DAW native support or publishing private patches.
 
+**Commercial-house evidence:** consult [HOUSE_REFERENCE_CASE_STUDIES.md](HOUSE_REFERENCE_CASE_STUDIES.md) and [HOUSE_REFERENCE_TRACKS.json](HOUSE_REFERENCE_TRACKS.json). *Losing It* (FISHER, 2018) is a useful example of strong core rhythmic recurrence plus part-subtraction, related bass variation and selected percussion entrances. The documented deconstruction is a third-party remake: use genre grammar, not proprietary musical content, and keep user-approved Phase43/44 as the primary sound-quality anchor.
+
 ## 8. External workflow analogues (research, not implementation dependencies)
 
 - [Ableton: Default Set and Template Sets](https://help.ableton.com/hc/en-us/articles/209067189-Default-Set-and-Template-Sets): producers use pre-routed, preset-loaded sessions as editable time-saving starting points.
