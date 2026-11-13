@@ -114,6 +114,8 @@ Random seed should choose meaningful combinations, not independent uniform rando
 
 This direction reuses Kuang's typed schema, transaction/locks system, real SoundCraft export and pitch-correct Vitalium adapter. It does **not** authorize replacing those components, adding web SaaS services, claiming other DAW native support or publishing private patches.
 
+**Harmonic reference research:** [HOUSE_HARMONY_REFERENCE_STUDY.md](HOUSE_HARMONY_REFERENCE_STUDY.md) and [HOUSE_HARMONY_REFERENCES.json](HOUSE_HARMONY_REFERENCES.json) provide a seven-song TheoryTab comparison. Use harmonic grammar and section-specific voicings to generate reliable original templates, but **do not impose Hooktheory scores as quality targets**. Support both simple and extended chords; modal writing is a future capability, not a current SongSpec feature. The theory data do not supply exact drum arrangements or producer effects.
+
 **Commercial-house evidence:** consult [HOUSE_REFERENCE_CASE_STUDIES.md](HOUSE_REFERENCE_CASE_STUDIES.md) and [HOUSE_REFERENCE_TRACKS.json](HOUSE_REFERENCE_TRACKS.json). *Losing It* (FISHER, 2018) is a useful example of strong core rhythmic recurrence plus part-subtraction, related bass variation and selected percussion entrances. The documented deconstruction is a third-party remake: use genre grammar, not proprietary musical content, and keep user-approved Phase43/44 as the primary sound-quality anchor.
 
 ## 8. External workflow analogues (research, not implementation dependencies)
