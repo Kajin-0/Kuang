@@ -103,6 +103,8 @@ Random seed should choose meaningful combinations, not independent uniform rando
 
 **Prefer safe generic but professionally coherent over adventurous but weak**. New creative algorithms are permitted only when they repeatedly improve level-matched producer evaluations, not because they are more original. Keep the incumbent and rollback mechanism.
 
+**Current experimental technical implementation:** The separately scoped [HOUSE_REAL_SOURCES_MVP.md](HOUSE_REAL_SOURCES_MVP.md) records actual CC0 sampled drum candidates and private Vitalium combined native renders, all still unreviewed for listening quality. This demonstrates an editable technical source chain but not the full reliable 80% template goal, auto winner selection, final master or full-song arrangement.
+
 ## 7. Implementation roadmap (order of real leverage)
 
 - **P0 — Product handoff contract:** Freeze the explicit editable-template output shape and the 45-phase reference evidence. Add section role/FX maps, pitch/role/source receipts and a producer-facing setup/compatibility statement. Separate editable native session from portable MIDI/stems.

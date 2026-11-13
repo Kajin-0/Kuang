@@ -78,6 +78,42 @@ class AutonomousCreateTests(unittest.TestCase):
         self.assertEqual(recorded['musical_spec'].seed, 19)
         self.assertFalse((self.root/'output').exists())
 
+    def test_sample_drum_source_requires_explicit_groove_mode(self):
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'require --groove-template'):
+            self.call(private=True,sample_pack=self.root/'not-available')
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'require --groove-template'):
+            self.call(private=True,harmony_profile='simple')
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'drum_variant'):
+            self.call(private=True,groove_template=True,drum_variant=2)
+        select.assert_not_called()
+
+    def test_groove_harmony_modes_fail_before_private_audition(self):
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'does not support'):
+            ac.create('deep house in A Phrygian',self.catalog,self.plugin,self.host,self.root/'output',
+                      private=True,groove_template=True)
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'conflicts'):
+            ac.create('house with simple triads',self.catalog,self.plugin,self.host,self.root/'output',
+                      private=True,groove_template=True,harmony_profile='extended')
+        select.assert_not_called()
+        self.assertFalse((self.root/'output').exists())
+
+    def test_groove_sample_mode_passes_validated_spec_to_private_selector(self):
+        captured={}
+        def selector(prompt,catalog,plugin,out,**kw):
+            captured.update(kw); out.mkdir()
+            (out/'selection.json').write_text(json.dumps({'status':'incomplete','roles':{}}))
+        with patch.object(ac,'select_palette',side_effect=selector), self.assertRaisesRegex(ValidationError,'complete selection'):
+            ac.create('deep house in D minor, 16 bars, no lead, without pad',self.catalog,self.plugin,self.host,
+                      self.root/'output',private=True,groove_template=True,
+                      sample_pack=self.root/'placeholder-pack',harmony_profile='simple',seed=17)
+        self.assertEqual(captured['musical_spec'].tonic,2)
+        self.assertEqual(captured['musical_spec'].mode,'minor')
+        self.assertEqual(captured['musical_spec'].seed,17)
+        self.assertFalse((self.root/'output').exists())
+
     def test_private_manifest_cannot_enter_original_adapter(self):
         private=self.root/'patch'; private.mkdir()
         (private/'manifest.json').write_text(json.dumps({'version':'private-selected-vital-1'}))

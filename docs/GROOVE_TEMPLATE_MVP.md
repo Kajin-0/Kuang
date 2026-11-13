@@ -24,6 +24,8 @@ The template deliberately omits lead and arp, reuses the existing SoundCraft-cap
 
 `groove-evidence.json` records the selected style/seed, groove onset fingerprints, role-presence checks, classic-house quarter-note kick coverage, backbeat offsets, harmonic-profile technical evidence and exact source limitations. The harmonic checks inspect intended chord pitch classes by bar, whether bass pitches serve as roots or fifths, and whether chord rhythm was preserved. They do **not** establish appealing voice leading, true modal support or musical quality. The `technical_pass` flag means **only** that the structural checks passed and canonical project validated. The sole perceptual outcome is `NEEDS_LISTENING`.
 
+**Real-source progress:** [HOUSE_REAL_SOURCES_MVP.md](HOUSE_REAL_SOURCES_MVP.md) documents a separate opt-in CC0 drum sample binder and two native rendered candidate kits, including a separate open-hat sampler, plus an opt-in **private** combined Vital chord/bass/pad path. These are actual technical proofs, **not** validated producer-ready mixes or automatic quality selection. Sample versions and private license restrictions are documented there. The old symbolic `create` path remains unchanged.
+
 The first strong product result will require **more than this structural engine**: context-aware sample/Vital preset audition, a measured/human-calibrated groove-selection gate, a reusable full-song (>32 bar) arrangement mapper, per-role calibrated mixing, a legitimate premaster/master, and producer usability evaluations on many prompts/seeds. Those are explicitly not implemented by this MVP.
 
 ## Compatibility and preservation

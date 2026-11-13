@@ -26,6 +26,9 @@ from .external_synth import (ExternalSynthAdapter, HOST_SHA, CONTRACT, LAYOUT_SH
 from .generator import generate
 from .loudness import measure
 from .production import refine_house
+from .house_template import template as groove_template_project, select_profile
+from .house_harmony import select_harmony
+from .house_sources import prepare_kit
 from .production_host import ProductionAdapter
 from .schema import BAR, Clip, Instrument, Note, ParameterSpec, Section, ValidationError, save, strict_json, validate
 from .song import rules_plan, validate_spec
@@ -227,7 +230,8 @@ def _bind(project, assignments, adapter):
     validate(p); return p
 
 
-def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15):
+def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
+           groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -243,6 +247,14 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
     if explicit and int(explicit.group(1)) != bars: raise ValidationError('prompt bar count conflicts with --bars')
     spec.bars = bars; validate_spec(spec)
+    if type(groove_template) is not bool:
+        raise ValidationError('groove_template must be boolean')
+    if (sample_pack is not None or groove_profile != 'auto' or harmony_profile != 'auto' or drum_variant != 0) and not groove_template:
+        raise ValidationError('sample pack and groove/harmony options require --groove-template')
+    if type(drum_variant) is not int or drum_variant not in (0,1):
+        raise ValidationError('drum_variant must be 0 or 1')
+    gp = select_profile(prompt,seed,groove_profile) if groove_template else None
+    hp = select_harmony(prompt,gp,harmony_profile) if groove_template else None
     expected_roles = set(_intent(prompt)['roles'])
     if not {'chord','bass'} <= expected_roles:
         raise ValidationError('this house composer requires chord and bass roles')
@@ -258,7 +270,17 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         role_tracks = {'chord':'track-harmony','pad':'track-pad','bass':'track-bass'}
         assignments = {role_tracks[r]:_prepare(adapter,selection['roles'][r],defaults,stage/('prepare-'+r),timeout)
                        for r in selection['roles']}
-        project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
+        groove_receipt = None
+        sound_assets = {}
+        drum_evidence = None
+        if groove_template:
+            project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
+                                               include_pad='pad' in expected_roles)
+            if sample_pack is not None:
+                project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
+                                               stage/'drum-assets',gp,drum_variant)
+        else:
+            project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
         # Generous pre-fader headroom for independent third-party patch levels.
         for track in project.tracks:
             track.controls['mixer.gain_db'] -= 15
@@ -269,7 +291,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         native = ProductionAdapter(soundcraft,workspace=workspace,scratch=stage/'scratch')
         native.external = adapter; native.samples.base = adapter.base; native.base = adapter.base
         duration = project.length/project.ppq*60/project.tempo_bpm
-        native.export(project,{},assignments,stage/'calibration-native')
+        native.export(project,sound_assets,assignments,stage/'calibration-native')
         native.render(stage/'calibration-native',stage/'calibration.wav',end_seconds=duration+12)
         library_path = workspace/'.local/producer/libebur128.so'
         calibration = measure(stage/'calibration.wav',library=str(library_path) if library_path.is_file() else None)
@@ -284,7 +306,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             if lane.parameter_id == 'mixer.gain_db':
                 for point in lane.points: point.value += adjustment
         validate(project)
-        native.export(project,{},assignments,stage/'native')
+        native.export(project,sound_assets,assignments,stage/'native')
         native.save(stage/'native',stage/'reopened')
         render = native.render(stage/'native',stage/'preview.wav',end_seconds=duration+12)
         audio = measure(stage/'preview.wav',library=str(library_path) if library_path.is_file() else None)
@@ -296,14 +318,22 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             raise ValidationError('catalog, palette evidence or plugin changed during production')
         save(project,stage/'project.kuang.json'); (stage/'song.mid').write_bytes(midi.export_bytes(project))
         write(stage/'song-spec.json',asdict(spec))
+        if groove_receipt is not None: write(stage/'groove-evidence.json',groove_receipt)
+        if drum_evidence is not None: write(stage/'sample-selection.json',drum_evidence)
         write(stage/'report.json',{'version':'private-autonomous-create-1','prompt':prompt,'seed':seed,
             'composition':'rules-based house template, not neural music generation','selection':'palette/selection.json',
             'native':'native/session.scraft','audio':'preview.wav','render':render,'measurement':audio,
             'native_save_reopen_equal':True,'calibration_true_peak_dbtp':calibration['true_peak_dbtp'],
             'native_track_gain_adjustment_db':adjustment,
-            'source_presets':'license unknown; private use only','notes':notes})
+            'source_presets':'license unknown; private use only','notes':notes,
+            'groove_template':groove_template,'groove_profile':gp,'harmony_profile':hp,
+            'groove_evidence':'groove-evidence.json' if groove_receipt else None,
+            'sample_selection':'sample-selection.json' if drum_evidence else None,
+            'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
+            'quality_judgment':'unreviewed; no professional audio quality established'})
         # The native bundle contains copies of third-party states and must remain private.
         for name in ['scratch','probe','probe-vital.scraft','commands.txt','reopened','calibration-native','calibration.wav',
+                     'drum-assets',
                      'cache','config','data','documents']:
             path=stage/name
             if path.is_dir(): shutil.rmtree(path)
@@ -325,10 +355,17 @@ def main(argv=None):
     parser.add_argument('--seed',type=int,default=17); parser.add_argument('--bars',type=int,choices=(16,32),default=16)
     parser.add_argument('--private-third-party-presets',action='store_true'); parser.add_argument('--per-role',type=int,default=3)
     parser.add_argument('--max-candidates',type=int,default=12); parser.add_argument('--timeout',type=float,default=15)
+    parser.add_argument('--groove-template',action='store_true',help='use the curated groove-first MIDI template')
+    parser.add_argument('--sample-pack',help='optional locally audited CC0 house-core pack for native drums')
+    parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
+    parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
+    parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
     args=parser.parse_args(argv)
     try:
         result=create(args.prompt,args.catalog,args.plugin,args.soundcraft,args.out_dir,seed=args.seed,bars=args.bars,
-                      private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout)
+                      private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout,
+                      groove_template=args.groove_template,sample_pack=args.sample_pack,groove_profile=args.groove_profile,
+                      harmony_profile=args.harmony_profile,drum_variant=args.drum_variant)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0
