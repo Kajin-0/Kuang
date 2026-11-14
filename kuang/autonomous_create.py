@@ -240,7 +240,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
            groove_pocket_diagnostics=False, groove_identity_v2=False,
            timbre_source_review=False, contextual_pad_rescue=False,
-           pad_level_calibration=False):
+           pad_level_calibration=False, groove_body_review=False,
+           groove_body_audition=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -280,6 +281,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('--preferred-bass-source-sha requires --groove-impact and valid SHA256')
     if type(pad_level_calibration) is not bool or (pad_level_calibration and not groove_template):
         raise ValidationError("--pad-level-calibration requires --groove-template")
+    if (type(groove_body_review) is not bool or type(groove_body_audition) is not bool
+            or (groove_body_review and not contextual_shortlist)
+            or (groove_body_audition and not groove_body_review)):
+        raise ValidationError("--groove-body-audition requires --groove-body-review and --contextual-shortlist")
     if type(contextual_pad_rescue) is not bool or (contextual_pad_rescue and not contextual_shortlist):
         raise ValidationError("--contextual-pad-rescue requires --contextual-shortlist")
     if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
@@ -388,7 +393,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                     library=str(library_path) if library_path.is_file() else None,
                     pad_rescue=contextual_pad_rescue,
                     pad_review=(timbre_review["roles"].get("pad")
-                                if contextual_pad_rescue else None))
+                                if contextual_pad_rescue else None),
+                    groove_body_review=groove_body_review,
+                    groove_body_audition=groove_body_audition)
             project = _bind(project,assignments,adapter)
             for comparison in context_receipt['comparisons']:
                 if comparison.get('chosen'):
@@ -482,6 +489,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
             'contextual_shortlist_requested':contextual_shortlist,
             'contextual_pad_rescue_requested':contextual_pad_rescue,
+            'groove_body_review_requested':groove_body_review,
+            'groove_body_audition_requested':groove_body_audition,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
             **({'groove_pocket_evidence':'groove-pocket-evidence.json'} if pocket_receipt else {}),
@@ -543,6 +552,10 @@ def main(argv=None):
                         help='experimental bounded +/-3dB chord-source audition RMS gain trim, no creative quality claim')
     parser.add_argument('--pad-level-calibration',action='store_true',
                         help='opt-in measured per-section native pad balance against chords at 100/400ms and sample peaks')
+    parser.add_argument('--groove-body-review',action='store_true',
+                        help='opt-in real native kick/bass offbeat sub+body diagnostics; requires contextual-shortlist')
+    parser.add_argument('--groove-body-audition',action='store_true',
+                        help='optionally audition one upper-bass-distinct verified candidate; no automatic musical choice')
     parser.add_argument('--contextual-pad-rescue',action='store_true',
                         help='opt-in native pad rescue for severe lower-mid masking; requires --contextual-shortlist')
     parser.add_argument('--contextual-shortlist',action='store_true',
@@ -567,6 +580,8 @@ def main(argv=None):
                       timbre_source_review=args.timbre_source_review,
                       contextual_pad_rescue=args.contextual_pad_rescue,
                       pad_level_calibration=args.pad_level_calibration,
+                      groove_body_review=args.groove_body_review,
+                      groove_body_audition=args.groove_body_audition,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2

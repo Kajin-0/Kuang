@@ -20,6 +20,7 @@ from .house_source_fit import fit_diagnostics
 from .house_palette_compare import contextual_review_flags
 from .house_pad_context import compare_native_pad
 from .house_mix_spectrum import band_rms
+from .house_groove_body import groove_body, compare_bass_sources, upper_body_audition_gate
 from .loudness import measure
 from .schema import BAR, ValidationError, state_hash, validate
 from .sample_assets import write
@@ -165,7 +166,8 @@ def short_audition_project(project, groove_end_tick):
 
 def choose_sources(project, assignments, shortlist, adapter, defaults,
                    native, sound_assets, stage, *, duration, timeout, library=None,
-                   pad_rescue=False, pad_review=None):
+                   pad_rescue=False, pad_review=None,
+                   groove_body_review=False, groove_body_audition=False):
     """One baseline + at most two conditional groove alternatives; no full-length renders.
 
     Preconditions: original private Vital patches are bound, conservative gain staging
@@ -173,6 +175,9 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
     """
     if type(pad_rescue) is not bool or (pad_rescue and type(pad_review) is not dict):
         raise ValidationError("opt-in pad rescue requires a verified pad review receipt")
+    if (type(groove_body_review) is not bool or type(groove_body_audition) is not bool
+            or (groove_body_audition and not groove_body_review)):
+        raise ValidationError("groove-body-audition requires groove-body-review")
     if not (isinstance(shortlist,dict) and set(shortlist) <= {"bass","chord","pad"}):
         raise ValidationError("invalid same-prompt shortlist")
     if not 16 <= project.bars <= 32:
@@ -208,6 +213,9 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
     baseline_fit=fit_diagnostics(project,window,stems["kick"],stems["bass"],
                                  None,baseline_crop)
     baseline_meter=measure(baseline_crop,library=library)
+    body_before=(groove_body(project,window,stems["kick"],stems["bass"])
+                 if groove_body_review else None)
+    body_candidates=[]
     selected=dict(assignments)
     baseline_hard=HARD_FLAGS.intersection(baseline_fit['warnings'])
     # Only genuine hard technical faults authorize expensive alternative
@@ -296,6 +304,62 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
             observations.append(pad_outcome)
             if replacement is not None:
                 selected["track-pad"]=replacement
+    if groove_body_audition:
+        # Audition is advisory: without listening evidence no artistic source
+        # choice is made, and the original project's complete MIDI stays fixed.
+        options=shortlist.get("bass",[])
+        if len(options)!=1 or options[0].get("status")!="accepted" or options[0].get("runtime_verified") is not True:
+            body_candidates.append({"status":"NO_VERIFIED_BASS_RUNNER_UP"})
+        elif any(x.get("chosen") for x in observations):
+            body_candidates.append({"status":"SKIPPED_OTHER_SOURCE_ALREADY_REPLACED"})
+        else:
+            entry=options[0]
+            originals=[v for v in adapter.selection.values()
+                       if v.get("role")=="bass" and
+                       v.get("source_sha256")!=entry["source_sha256"] and v.get("status")=="accepted"]
+            if len(originals)!=1:
+                raise ValidationError("exactly one original verified bass source required")
+            audition_gate=upper_body_audition_gate(
+                originals[0].get("features",{}),entry.get("features",{}))
+            if not audition_gate["audition_warranted"]:
+                body_candidates.append({
+                    "status":"SKIPPED_ALTERNATIVE_NOT_UPPER_BASS_DISTINCT",
+                    "source_sha256":entry["source_sha256"],"chosen":False,
+                    "audition_gate":audition_gate})
+            else:
+                prepared=_prepare(adapter,entry,defaults,scratch/"patch-bass-body",timeout)
+                changed=_bind(project,{"track-bass":prepared},adapter)
+                if state_hash(project)!=original:
+                    raise ValidationError("original musical project mutated")
+                alternate=dict(assignments);alternate["track-bass"]=prepared
+                short_changed=short_audition_project(changed,window["end_tick"])
+                alt_bass=stem(short_changed,"bass",alternate,"body-alt-bass")
+                measured=groove_body(changed,window,stems["kick"],alt_bass)
+                comparison=compare_bass_sources(body_before,measured)
+                folder=scratch/"body-candidate-mix"
+                folder.mkdir(mode=0o700)
+                native.export(short_changed,sound_assets,alternate,folder/"native")
+                native.save(folder/"native",folder/"reopened")
+                if native.inspect(folder/"reopened")["canonical_hash"]!=state_hash(short_changed):
+                    raise ValidationError("candidate source corrupted on native save/reopen")
+                native.render(folder/"native",folder/"mix.wav",end_seconds=excerpt_seconds)
+                measured_audio=measure(folder/"mix.wav",library=library)
+                if measured_audio["clipped_samples"] or measured_audio["true_peak_dbtp"]>-1.:
+                    raise ValidationError("bass candidate audio safety failure")
+                kept=root/"groove-body-audition"
+                kept.mkdir(mode=0o700)
+                shutil.copyfile(baseline_crop,kept/"original.wav")
+                shutil.copyfile(folder/"mix.wav",kept/"candidate.wav")
+                body_candidates.append({
+                    "status":"NATIVE_AUDITION_REQUIRES_LISTENING",
+                    "source_sha256":entry["source_sha256"],
+                    "candidate_name":entry["source_preset_name"],
+                    "candidate_context":measured,"comparison":comparison,
+                    "audition_gate":audition_gate,
+                    "native_true_peak_dbtp":measured_audio["true_peak_dbtp"],
+                    "same_midi":True,"chosen":False,
+                    "audio_files":{"original":"groove-body-audition/original.wav",
+                                   "candidate":"groove-body-audition/candidate.wav"}})
     if state_hash(project)!=original:
         raise ValidationError("audition changed source composition")
     evidence={"version":VERSION,"source_project_sha256":original,
@@ -312,6 +376,9 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
               "full_length_rendered_for_candidates":False,
               "selection_mode":"conditional native technical compatibility repair, not perceptual ranking",
               "pad_context_rescue_requested":pad_rescue,
+              "groove_body_review_requested":groove_body_review,
+              "groove_body_original":body_before,
+              "groove_body_alternatives":body_candidates,
               "quality_judgment":"NOT_EVALUATED"}
     write(root/"context-shortlist-evidence.json",evidence)
     # Keep only chosen private patches; discard temporary native render artifacts.

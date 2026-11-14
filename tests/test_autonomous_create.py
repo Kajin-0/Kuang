@@ -33,6 +33,20 @@ class AutonomousCreateTests(unittest.TestCase):
         return ac.create('deep house in C minor no lead',self.catalog,self.plugin,self.host,
                          self.root/'output',**kw)
 
+    def test_groove_body_mode_requires_verified_shortlist(self):
+        with patch.object(ac,"select_palette") as picker:
+            for flags in [
+                {"groove_body_review":True},
+                {"groove_body_audition":True},
+                {"groove_template":True,"groove_body_review":True},
+                {"groove_template":True,"groove_body_audition":True},
+                {"groove_template":True,"contextual_shortlist":True,
+                 "groove_body_review":"yes"},
+            ]:
+                with self.subTest(flags=flags),self.assertRaises(ValidationError):
+                    self.call(private=True,**flags)
+            picker.assert_not_called()
+
     def test_pad_level_calibration_fails_closed_without_groove_template(self):
         with patch.object(ac,"select_palette") as selection:
             with self.assertRaisesRegex(ValidationError,"pad-level-calibration requires"):
