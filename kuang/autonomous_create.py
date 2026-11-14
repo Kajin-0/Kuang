@@ -237,7 +237,8 @@ def _bind(project, assignments, adapter):
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
            full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
-           groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False):
+           groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
+           groove_pocket_diagnostics=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -261,6 +262,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('--chord-level-calibration requires --groove-template')
     if type(groove_impact) is not bool or (groove_impact and (not groove_template or sample_pack is None)):
         raise ValidationError('--groove-impact requires --groove-template and licensed --sample-pack')
+    if type(groove_pocket_diagnostics) is not bool or (groove_pocket_diagnostics and not groove_template):
+        raise ValidationError("groove pocket diagnostics require a house groove template")
     if type(musical_plan_v2) is not bool or (musical_plan_v2 and not groove_template):
         raise ValidationError('--musical-plan-v2 requires --groove-template and boolean option')
     if preferred_bass_source_sha is not None and (
@@ -398,6 +401,11 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             hashlib.sha256(_bounded_read(catalog,MAX_CATALOG_BYTES)).hexdigest() != selection['catalog_sha256'] or
             _plugin_info(plugin)['module_sha256'] != adapter.plugin_sha):
             raise ValidationError('catalog, palette evidence or plugin changed during production')
+        pocket_receipt = None
+        if groove_pocket_diagnostics:
+            from .house_groove_pocket import evaluate_pocket
+            pocket_receipt=evaluate_pocket(project,stage/'preview.wav')
+            write(stage/'groove-pocket-evidence.json',pocket_receipt)
         save(project,stage/'project.kuang.json'); (stage/'song.mid').write_bytes(midi.export_bytes(project))
         write(stage/'song-spec.json',asdict(spec))
         if plan_receipt is not None: write(stage/'musical-plan-evidence.json',plan_receipt)
@@ -427,6 +435,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'contextual_shortlist_requested':contextual_shortlist,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
+            **({'groove_pocket_evidence':'groove-pocket-evidence.json'} if pocket_receipt else {}),
             **({'musical_plan_v2_requested': True,
                 'musical_plan_evidence': 'musical-plan-evidence.json'} if plan_receipt else {})})
         if master_preview:
@@ -469,6 +478,8 @@ def main(argv=None):
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
     parser.add_argument('--preferred-bass-source-sha',
                         help='private user-approved Vital source SHA256; opt-in human-producer bass priority after independent audition, not a generic quality score')
+    parser.add_argument('--groove-pocket-diagnostics',action='store_true',
+                        help='opt-in fullmix 25-90/90-250Hz kick-to-offbeat pocket diagnostics; not musical quality')
     parser.add_argument('--musical-plan-v2',action='store_true',
                         help='experimental style-conditioned harmonic planning on existing SongSpec; preserves explicit Roman progression')
     parser.add_argument('--groove-impact',action='store_true',
@@ -492,6 +503,7 @@ def main(argv=None):
                       chord_level_calibration=args.chord_level_calibration,
                       groove_impact=args.groove_impact,
                       musical_plan_v2=args.musical_plan_v2,
+                      groove_pocket_diagnostics=args.groove_pocket_diagnostics,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
