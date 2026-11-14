@@ -77,6 +77,36 @@ class PaletteTests(unittest.TestCase):
                                         None, self.root / name, renderer=renderer, **kwargs)
         return result, renderer
 
+    def test_explicit_human_approved_keys_preset_can_be_auditioned_as_bass(self):
+        """Original Phase bass was cataloged as Keys, not Bass."""
+        approved=self.rows[0]['sha256']
+        self.assertNotIn(approved,{x[2]['sha256'] for x in palette._role_candidates(
+            self.rows,'bass',palette._intent('warm deep house bass and chords'),17)})
+        result,renderer=self.run_selection('approved-bass',seed=17,per_role=2,
+            max_candidates=8,preferred_bass_source_sha=approved)
+        self.assertEqual(result['status'],'complete')
+        s=json.loads((self.root/'approved-bass/selection.json').read_text())
+        self.assertTrue(s['preferred_bass_source']['verified_and_selected'])
+        self.assertEqual(s['roles']['bass']['source_sha256'],approved)
+        self.assertEqual(renderer.calls[2],('bass',approved))
+        self.assertEqual(s['roles']['bass']['license'],'unknown; private use only')
+        with self.assertRaisesRegex(ValidationError,'approved bass source'):
+            self.run_selection('nonexistent-bass',seed=17,per_role=2,
+                max_candidates=8,preferred_bass_source_sha='0'*64)
+        self.assertFalse((self.root/'nonexistent-bass').exists())
+
+    def test_requested_approved_source_rejected_instead_of_silent_fallback(self):
+        """An approved source with an unsupported embedded resource fails closed."""
+        approved=self.rows[0]
+        data=json.dumps(preset("unsafe preference",sample_on=1)).encode()
+        (self.presets/approved['path']).write_bytes(data)
+        approved.update(sha256=hashlib.sha256(data).hexdigest(),size=len(data))
+        self.write_catalog()
+        with self.assertRaisesRegex(ValidationError,'refused silent substitution'):
+            self.run_selection('unsafe-preference',seed=17,per_role=2,max_candidates=8,
+                               preferred_bass_source_sha=approved['sha256'])
+        self.assertFalse((self.root/'unsafe-preference').exists())
+
     def test_determinism_and_private_output(self):
         a, ra = self.run_selection('one', seed=17, per_role=2, max_candidates=8)
         b, rb = self.run_selection('two', seed=17, per_role=2, max_candidates=8)

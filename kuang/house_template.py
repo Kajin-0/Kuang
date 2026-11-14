@@ -67,15 +67,16 @@ def _bass_pattern(profile: str, alternate: bool):
 
 
 def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
-             harmony_profile: str = "extended"):
+             harmony_profile: str = "extended", impact_pocket: bool = False):
     """Build a separate production; preserve established sketch/refined behavior."""
     spec = validate_spec(spec)
     if spec.genre != "house" or spec.arrangement != "song":
         raise ValidationError("groove-template requires house song intent")
     if not {"kick", "snare", "hats", "bass", "harmony"} <= set(spec.instruments):
         raise ValidationError("groove-template requires kick, snare, hats, bass and harmony")
-    if profile not in PROFILES or type(include_pad) is not bool:
-        raise ValidationError("invalid groove profile or pad option")
+    if (profile not in PROFILES or type(include_pad) is not bool or
+        type(impact_pocket) is not bool):
+        raise ValidationError("invalid groove profile, pad or impact option")
 
     # Explicitly omit the failed/future melody engine, rather than merely muting it.
     spec = deepcopy(spec)
@@ -151,7 +152,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
                         add(base + 11 * step_ticks + 25, 70, 38, 38)
                 elif role == "hats" and hats_active:
                     for beat in range(4):
-                        offset = 12 if profile not in ("jackin", "deep") else 20
+                        offset = ((-2, 10, 22, -2)[beat] if impact_pocket else
+                                  (12 if profile not in ("jackin", "deep") else 20))
                         add(base + beat * PPQ + PPQ // 2 + offset, 75,
                             46 if beat == 3 and full else 42,
                             65 if beat % 2 else 56)
@@ -159,25 +161,54 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
                         for step in (3, 7, 11, 15):
                             add(base + step * step_ticks + 24, 60, 42, 35)
                 elif role == "percussion" and full and profile != "minimal":
-                    for step in ((1, 7, 13) if profile == "jackin" else (3, 11)):
-                        add(base + step * step_ticks + (18 if bar % 2 else -8),
-                            75, 42, 40 if step == 3 else 34)
+                    steps = ((1, 3, 5, 7, 9, 11, 13, 15) if impact_pocket else
+                             ((1, 7, 13) if profile == "jackin" else (3, 11)))
+                    for step in steps:
+                        offset = ((-16, 12, 16, -4)[step % 4] if impact_pocket else
+                                  (18 if bar % 2 else -8))
+                        add(base + step * step_ticks + offset,
+                            75 if not impact_pocket else 58, 42,
+                            (37 if step % 4 == 1 else 48) if impact_pocket else (40 if step == 3 else 34))
                 elif role == "bass" and bass_active:
                     degree = spec.progression[(bar // 2) % 4]
                     root = pitch(degree, 3)
                     if root > 40 + spec.tonic:
                         root -= 12
                     alternate = (bar + spec.seed) % 2 == 1
-                    for step, length, note_degree in _bass_pattern(profile, alternate):
+                    if impact_pocket:
+                        # Phase43/44 user-approved reference: offbeat roots at
+                        # 2/6/10 sixteenths and sparse octave pickup on 13.
+                        # Vary accents by profile/bar without copying one song.
+                        motif = ((2, 2, 0), (6, 2, 0), (10, 2, 0))
+                        if (profile != 'minimal' or alternate) and (bar % 2 == 0 or profile == 'jackin'):
+                            motif += ((13, 1, 7),)
+                    else:
+                        motif = _bass_pattern(profile, alternate)
+                    for step, length, note_degree in motif:
                         note = root if note_degree == 0 else (
                             root + pitch(degree + note_degree, 3) - pitch(degree, 3))
-                        add(base + step * step_ticks + 12, length * step_ticks - 52,
-                            note, 87 if step in (2, 10) else 77)
+                        length_tick = (326 if length == 2 else 211) if impact_pocket else length * step_ticks - 52
+                        velocity = ((95, 90, 94, 80)[(2,6,10,13).index(step)]
+                                    if impact_pocket else (87 if step in (2, 10) else 77))
+                        add(base + step * step_ticks + (0 if impact_pocket else 12), length_tick,
+                            note, velocity)
             if notes:
                 t.clips.append(Clip(f"house-tpl-clip-{role}-{si}",
                                     t.name + " / " + section.name,
                                     "midi", section.start, section.length, notes, None))
 
+    if impact_pocket:
+        # Small low-frequency shaping only, following the user's own Phase44
+        # reference. Native source licensing and fader changes happen later.
+        kick = tracks['kick']
+        for fx in kick.effects:
+            if 'soundcraft.low_shelf_gain' in fx.parameters:
+                fx.parameters['soundcraft.low_shelf_gain'] = 2.0
+                fx.parameters['soundcraft.low_shelf_freq'] = 65.0
+            if 'soundcraft.drive' in fx.parameters:
+                fx.parameters['soundcraft.drive'] = max(5.0,fx.parameters['soundcraft.drive'])
+                if 'effect.wet' in fx.parameters:
+                    fx.parameters['effect.wet'] = min(.4,fx.parameters['effect.wet']+.1)
     # Recalculate scheduled pumping after the new kick grid, rather than
     # retaining envelopes computed from the old refined-composer kick.
     kick_onsets = sorted({c.start + n.start for c in tracks["kick"].clips for n in c.notes})
@@ -227,6 +258,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     if not all(gates.values()):
         raise ValidationError("groove-template structural gate failed")
     p.metadata["composer"] = VERSION
+    if impact_pocket:
+        p.metadata['groove_impact_pocket'] = 'phase43-derived-v1'
     p.metadata["groove_profile"] = profile
     p.metadata["groove_gates"] = json.dumps(gates, sort_keys=True)
     validate(p)
@@ -236,6 +269,7 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     }
     receipt = {
         "version": VERSION, "selected_profile": profile,
+        "groove_impact_pocket": impact_pocket,
         "seed": spec.seed, "full_groove_bars": width,
         "technical_gates": gates, "technical_pass": True,
         "perceptual_quality": "NEEDS_LISTENING",

@@ -157,13 +157,22 @@ def _to_48k_pcm(src, dest):
             "safety_attenuation_db": -1}
 
 
-def prepare_kit(project, pack, library, profile, index=0):
+def prepare_kit(project, pack, library, profile, index=0, impact_pocket=False):
     """Install an original four/five-drum-role kit without changing MIDI events."""
-    if profile not in PREFER or type(index) is not int or index not in (0, 1):
-        raise ValidationError("unknown kit candidate")
+    if (profile not in PREFER or type(index) is not int or index not in (0, 1)
+            or type(impact_pocket) is not bool):
+        raise ValidationError("unknown kit or impact candidate")
     library = Path(library)
     library.mkdir(parents=True, exist_ok=False)
     candidates = _source_candidates(pack, profile)
+    # The user's approved Phase44 kick is an explicitly CC0-audited source
+    # already present in this same pack, not a private sample redistribution.
+    approved_kick = None
+    if impact_pocket and profile in ('straight','deep','jackin'):
+        approved_kick = next((c for c in _source_candidates(pack,'straight')['kick']
+                              if c[1] == 'house.kick.punch-02'),None)
+        if approved_kick is None:
+            raise ValidationError('audited Phase44 kick punch-02 missing from pack')
     # The canonical groove intentionally contains MIDI 42 (closed) and 46
     # (open). The native sampler supports only one sample per track, so split
     # articulations into two editable sampler roles without adding MIDI hits.
@@ -207,7 +216,8 @@ def prepare_kit(project, pack, library, profile, index=0):
             if role == "percussion":
                 continue
             raise ValidationError("required drum role missing: " + role)
-        _, key, meta, src = candidates[role][index]
+        _, key, meta, src = (approved_kick if role == 'kick' and approved_kick else
+                             candidates[role][index])
         item = library / role
         wav = item.with_suffix(".wav")
         stats = _to_48k_pcm(src, wav)
@@ -244,7 +254,18 @@ def prepare_kit(project, pack, library, profile, index=0):
         # on these drum tracks in the groove template.
         track.controls["mixer.gain_db"] -= {"kick": 5, "snare": 6, "hats": 6,
                                             "open_hat": 7, "percussion": 7}[role]
+        if role == 'kick' and impact_pocket:
+            track.controls['mixer.gain_db'] += 8.0
     validate(result)
+    if impact_pocket:
+        receipt['groove_impact_pocket'] = {
+            'version':'phase44-derived-kick-balance-v1',
+            'requested':True,
+            'kick_relative_gain_delta_db':8.0,
+            'kick_source':receipt['kick']['source_id'],
+            'source_license':'CC0-1.0',
+            'note':'No perceptual verdict; retains editable source and safe native output validation',
+        }
     return result, bindings, receipt
 
 

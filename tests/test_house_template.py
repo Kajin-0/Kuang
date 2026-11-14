@@ -59,6 +59,36 @@ class GrooveTemplateTests(unittest.TestCase):
             self.assertIn(bar * BAR + PPQ + 14, clap)
             self.assertIn(bar * BAR + 3 * PPQ + 14, clap)
 
+    def test_opt_in_phase_reference_pocket_is_deterministic_and_default_is_unchanged(self):
+        spec,_=rules_plan("deep house in C minor, 16 bars",41)
+        baseline,_=template(spec,profile="deep",include_pad=False)
+        impact,evidence=template(spec,profile="deep",include_pad=False,impact_pocket=True)
+        repeat,_=template(spec,profile="deep",include_pad=False,impact_pocket=True)
+        self.assertFalse(state_hash(baseline)==state_hash(impact))
+        self.assertEqual(state_hash(impact),state_hash(repeat))
+        validate(impact)
+        self.assertEqual(evidence["groove_impact_pocket"],True)
+        self.assertEqual(evidence["perceptual_quality"],"NEEDS_LISTENING")
+        self.assertTrue(all(evidence["technical_gates"].values()))
+        self.assertEqual(len(evidence["full_groove_onsets"]["kick"]),16)
+        bass=next(t for t in impact.tracks if t.id=="track-bass")
+        groove=impact.sections[1]
+        counts=[len([n for c in bass.clips for n in c.notes
+                     if groove.start+i*BAR<=c.start+n.start<groove.start+(i+1)*BAR])
+                for i in range(4)]
+        self.assertTrue(all(x>=3 for x in counts))
+        old_bass=next(t for t in baseline.tracks if t.id=="track-bass")
+        old_count=sum(1 for c in old_bass.clips for n in c.notes
+                      if groove.start<=c.start+n.start<groove.start+groove.length)
+        self.assertGreaterEqual(sum(counts),old_count)
+        self.assertTrue(all(n.duration<=326 for c in bass.clips for n in c.notes))
+        impact_perc=next(t for t in impact.tracks if t.id=="track-percussion")
+        old_perc=next(t for t in baseline.tracks if t.id=="track-percussion")
+        self.assertGreater(sum(len(c.notes) for c in impact_perc.clips),
+                           sum(len(c.notes) for c in old_perc.clips))
+        self.assertEqual(evidence["source_selection"],"built-in SoundCraft instruments only; no real sample audition")
+        self.assertEqual(template(spec,profile="deep",include_pad=False)[0].metadata.get("groove_impact_pocket"),None)
+
     def test_seed_determinism_and_meaningful_variation(self):
         a, _ = rules_plan("house in F# minor, 32 bars", 7)
         b, _ = rules_plan("house in F# minor, 32 bars", 8)

@@ -42,6 +42,27 @@ class AutonomousCreateTests(unittest.TestCase):
                           chord_level_calibration="true")
         selection.assert_not_called()
 
+    def test_preferred_bass_requires_explicit_reference_mode_and_hash(self):
+        with patch.object(ac,'select_palette') as selector:
+            with self.assertRaisesRegex(ValidationError,'preferred-bass-source-sha requires'):
+                self.call(private=True,preferred_bass_source_sha='a'*64)
+            with self.assertRaisesRegex(ValidationError,'preferred-bass-source-sha requires'):
+                self.call(private=True,groove_template=True,
+                    groove_impact=True,sample_pack=self.root,
+                    preferred_bass_source_sha='not-a-sha')
+        selector.assert_not_called()
+
+    def test_groove_impact_requires_explicit_cc0_source(self):
+        with patch.object(ac,'select_palette') as selector:
+            with self.assertRaisesRegex(ValidationError,'groove-impact requires'):
+                self.call(private=True,groove_impact=True)
+            with self.assertRaisesRegex(ValidationError,'groove-impact requires'):
+                self.call(private=True,groove_template=True,groove_impact=True)
+            with self.assertRaisesRegex(ValidationError,'groove-impact requires'):
+                self.call(private=True,groove_impact='yes',
+                          groove_template=True,sample_pack=self.root)
+        selector.assert_not_called()
+
     def test_master_preview_requires_groove_template_before_private_work(self):
         with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'requires --groove-template'):
             self.call(private=True,master_preview=True)

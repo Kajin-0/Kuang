@@ -57,6 +57,46 @@ class HouseSourceTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
+    def test_opt_in_approved_kick_is_license_audited_and_gain_bounded(self):
+        """Explicit approved Phase sample must be in the locally audited pack."""
+        import hashlib
+        source=self.pack/"samples/kick-1.wav"
+        self.samples["house.kick.punch-02"]={
+            "path":"samples/kick-1.wav","type":"kick",
+            "character_tags":["punchy","solid"],
+            "license_source":"Own synthesized CC0 sample"}
+        (self.pack/"manifest.json").write_text(json.dumps({
+            "name":"house-core","license":"CC0-1.0","samples":self.samples}))
+        spec,_=rules_plan("deep house in C minor 16 bars",41)
+        project,_=template(spec,profile="deep",harmony_profile="simple",
+                            impact_pocket=True,include_pad=False)
+        original,_,_=prepare_kit(project,self.pack,self.root/"original-kit","deep",0)
+        impact,assets,evidence=prepare_kit(
+            project,self.pack,self.root/"impact-kit","deep",0,impact_pocket=True)
+        validate(impact)
+        self.assertEqual(evidence["kick"]["source_id"],"house.kick.punch-02")
+        self.assertEqual(evidence["groove_impact_pocket"]["kick_relative_gain_delta_db"],8.)
+        t=next(t for t in impact.tracks if t.id=="track-kick")
+        old=next(t for t in original.tracks if t.id=="track-kick")
+        self.assertEqual(t.controls["mixer.gain_db"],old.controls["mixer.gain_db"]+8)
+        self.assertEqual(t.clips,old.clips)
+        self.assertEqual(evidence["kick"]["resample"]["src_sha256"],
+                         hashlib.sha256(source.read_bytes()).hexdigest())
+        for role in ("track-bass","track-harmony","track-snare"):
+            a=next(t for t in impact.tracks if t.id==role)
+            b=next(t for t in original.tracks if t.id==role)
+            self.assertEqual(a.clips,b.clips)
+        with self.assertRaisesRegex(ValidationError,"punch-02"):
+            self._bad_reference_kit(project)
+
+    def _bad_reference_kit(self,project):
+        # Keep all other fixture sources; eliminate explicit approved kick.
+        new=dict(self.samples)
+        del new["house.kick.punch-02"]
+        (self.pack/"manifest.json").write_text(json.dumps({
+            "name":"house-core","license":"CC0-1.0","samples":new}))
+        prepare_kit(project,self.pack,self.root/"bad-kit","deep",0,impact_pocket=True)
+
     def test_exact_deterministic_resample_and_valid_native_format(self):
         source = self.pack / "samples/kick-0.wav"
         a = self.root / "first.wav"

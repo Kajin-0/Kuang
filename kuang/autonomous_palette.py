@@ -272,12 +272,14 @@ def _semantic_score(row, role, intent):
     return round(min(1., (hits + role_bonus) / 8.), 6)
 
 
-def _role_candidates(rows, role, intent, seed):
+def _role_candidates(rows, role, intent, seed, preferred_source_sha=None):
     candidates = []
     for row in rows:
         if type(row) is not dict or type(row.get('preset_style')) is not str:
             continue
-        if row['preset_style'].strip().lower() not in ROLE_STYLES[role]:
+        approved = (role == 'bass' and preferred_source_sha is not None
+                    and row.get('sha256') == preferred_source_sha)
+        if not approved and row['preset_style'].strip().lower() not in ROLE_STYLES[role]:
             continue
         if row.get('compatibility') != 'version_candidate':
             continue
@@ -287,7 +289,9 @@ def _role_candidates(rows, role, intent, seed):
         score = _semantic_score(row, role, intent)
         tie = _sha(f'{seed}\0{role}\0{path}'.encode('utf-8', errors='replace'))
         candidates.append((score, tie, row))
-    return sorted(candidates, key=lambda item: (-item[0], item[1]))
+    return sorted(candidates, key=lambda item: (
+        0 if (preferred_source_sha and item[2].get('sha256') == preferred_source_sha) else 1,
+        -item[0],item[1]))
 
 
 def score_features(role, f):
@@ -415,9 +419,14 @@ def _catalog_sources(catalog):
     return result
 
 
-def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max_candidates=12, timeout=15, renderer=None, musical_spec=None):
+def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max_candidates=12, timeout=15, renderer=None, musical_spec=None,
+                   preferred_bass_source_sha=None):
     """Select a private palette; an injected renderer is for offline tests only."""
     check_prompt(prompt)
+    if preferred_bass_source_sha is not None and (
+            type(preferred_bass_source_sha) is not str or
+            not SHA.fullmatch(preferred_bass_source_sha)):
+        raise ValidationError('preferred bass source must be 64-digit SHA256')
     if type(seed) is not int or not 0 <= seed < 2**32:
         raise ValidationError('seed must be a 32-bit unsigned integer')
     if type(per_role) is not int or not 1 <= per_role <= 5:
@@ -437,6 +446,10 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
     rows = catalog_data.get('presets')
     if catalog_data.get('catalog_version') != 1 or type(rows) is not list or len(rows) > MAX_ROWS:
         raise ValidationError('unsupported or oversized catalog')
+    if preferred_bass_source_sha and not any(
+            type(row) is dict and row.get('sha256') == preferred_bass_source_sha and
+            row.get('compatibility') == 'version_candidate' for row in rows):
+        raise ValidationError('approved bass source missing or unsupported in private catalog')
     sources = _catalog_sources(catalog_data)
     destination = Path(out_dir).expanduser()
     if destination.is_symlink() or destination.exists():
@@ -459,7 +472,9 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
             raise ValidationError('explicit audition key conflicts with musical_spec')
         intent.update(tonic=musical_spec.tonic, mode=musical_spec.mode,
                       key_defaulted=False, key_source='validated SongSpec')
-    pools = {r: _role_candidates(rows, r, intent, seed) for r in intent['roles']}
+    pools = {r: _role_candidates(rows, r, intent, seed,
+               preferred_bass_source_sha if r == 'bass' else None)
+             for r in intent['roles']}
     counters = {r: 0 for r in intent['roles']}
     accepted = {r: [] for r in intent['roles']}
     decisions = []
@@ -519,7 +534,10 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
         # Source references are published only if their bytes still match after audition.
         selected = {}
         for role, entries in accepted.items():
-            ranked = sorted(entries, key=lambda e: (e['combined_score'], e['semantic_score'],
+            ranked = sorted(entries, key=lambda e: (
+                            1 if (role == 'bass' and preferred_bass_source_sha
+                                  and e.get('source_sha256') == preferred_bass_source_sha) else 0,
+                            e['combined_score'], e['semantic_score'],
                             _sha(f"{seed}\0{role}\0{e['path']}".encode('utf-8'))), reverse=True)
             for entry in ranked:
                 try:
@@ -530,6 +548,8 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
                     continue
                 selected[role] = entry
                 break
+        if preferred_bass_source_sha and selected.get('bass',{}).get('source_sha256') != preferred_bass_source_sha:
+            raise ValidationError('requested approved bass source failed secure runtime audition; refused silent substitution')
         if renderer is None and _plugin_info(plugin)['module_sha256'] != info['module_sha256']:
             raise ValidationError('plugin changed during audition')
         complete = len(selected) == len(intent['roles'])
@@ -543,6 +563,12 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
             shortlist[role] = sorted(eligible,
                 key=lambda e: (-e['combined_score'], -e['semantic_score'],e['source_sha256']))[:1]
         selection = {'version': 'autonomous-palette-selection-1', 'prompt': prompt, 'seed': seed,
+                     'preferred_bass_source':{
+                         'source_sha256':preferred_bass_source_sha,
+                         'verified_and_selected': bool(preferred_bass_source_sha and
+                            selected.get('bass',{}).get('source_sha256') == preferred_bass_source_sha),
+                         'reason':'explicit user-approved bass audition preference; still requires native pitch/audio verification',
+                     } if preferred_bass_source_sha else None,
                      'status': 'complete' if complete else 'incomplete', 'roles': selected,
                      'shortlist': shortlist,
                      'catalog_sha256': catalog_sha256, 'catalog_path': str(catalog), 'library_root': str(library),

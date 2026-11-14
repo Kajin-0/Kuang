@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -234,7 +235,8 @@ def _bind(project, assignments, adapter):
 
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
-           full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False):
+           full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
+           groove_impact=False, preferred_bass_source_sha=None):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -256,9 +258,14 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('chord_level_calibration must be boolean')
     if chord_level_calibration and not groove_template:
         raise ValidationError('--chord-level-calibration requires --groove-template')
+    if type(groove_impact) is not bool or (groove_impact and (not groove_template or sample_pack is None)):
+        raise ValidationError('--groove-impact requires --groove-template and licensed --sample-pack')
+    if preferred_bass_source_sha is not None and (
+            not groove_impact or type(preferred_bass_source_sha) is not str or
+            not re.fullmatch(r'[0-9a-f]{64}',preferred_bass_source_sha)):
+        raise ValidationError('--preferred-bass-source-sha requires --groove-impact and valid SHA256')
     if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
         raise ValidationError('--contextual-shortlist requires groove-template, per-role>=2, max-candidates>=4')
-    import re
     planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
     spec,notes = rules_plan(planning_prompt,seed)
     if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
@@ -281,7 +288,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('this house composer requires chord and bass roles')
     with tempfile.TemporaryDirectory(prefix='.autonomous-create-',dir=dest.parent) as temp:
         stage = Path(temp); os.chmod(stage,0o700)
-        select_palette(prompt,catalog,plugin,stage/'palette',seed=seed,per_role=per_role,max_candidates=max_candidates,timeout=timeout, musical_spec=spec)
+        palette_kw=({'preferred_bass_source_sha':preferred_bass_source_sha}
+                    if preferred_bass_source_sha else {})
+        select_palette(prompt,catalog,plugin,stage/'palette',seed=seed,per_role=per_role,
+                       max_candidates=max_candidates,timeout=timeout,musical_spec=spec,**palette_kw)
         selection = _read_json(stage/'palette/selection.json')
         if selection['status'] != 'complete' or set(selection['roles']) != expected_roles:
             raise ValidationError('complete selection for every requested role required')
@@ -303,13 +313,15 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         drum_evidence = None
         if groove_template:
             project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
-                                               include_pad='pad' in expected_roles)
+                                               include_pad='pad' in expected_roles,
+                                               impact_pocket=groove_impact)
             if full_length and not contextual_shortlist:
                 project,arrangement_receipt = arrange_full_song(project,bars=full_length,
                                                                profile=gp,seed=seed)
             if sample_pack is not None:
                 project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
-                                               stage/'drum-assets',gp,drum_variant)
+                                               stage/'drum-assets',gp,drum_variant,
+                                               impact_pocket=groove_impact)
         else:
             project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
         # Generous pre-fader headroom for independent third-party patch levels.
@@ -399,6 +411,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
             'quality_judgment':'unreviewed; no professional audio quality established',
             'master_preview_requested':master_preview,
+            'groove_impact_requested':groove_impact,
+            'preferred_bass_source_sha':preferred_bass_source_sha,
             'chord_level_calibration_requested':chord_level_calibration,
             'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
             'contextual_shortlist_requested':contextual_shortlist,
@@ -442,6 +456,10 @@ def main(argv=None):
     parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
     parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
+    parser.add_argument('--preferred-bass-source-sha',
+                        help='private user-approved Vital source SHA256; opt-in human-producer bass priority after independent audition, not a generic quality score')
+    parser.add_argument('--groove-impact',action='store_true',
+                        help='opt-in Phase44-reference-derived kick/sample balance, rhythmic bass accents and shuffled hats; not a music quality guarantee')
     parser.add_argument('--chord-level-calibration',action='store_true',
                         help='experimental bounded +/-3dB chord-source audition RMS gain trim, no creative quality claim')
     parser.add_argument('--contextual-shortlist',action='store_true',
@@ -458,7 +476,9 @@ def main(argv=None):
                       harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
                       full_song_bars=args.full_song_bars,master_preview=args.master_preview,
                       contextual_shortlist=args.contextual_shortlist,
-                      chord_level_calibration=args.chord_level_calibration)
+                      chord_level_calibration=args.chord_level_calibration,
+                      groove_impact=args.groove_impact,
+                      preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0
