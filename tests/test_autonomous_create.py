@@ -33,6 +33,62 @@ class AutonomousCreateTests(unittest.TestCase):
         return ac.create('deep house in C minor no lead',self.catalog,self.plugin,self.host,
                          self.root/'output',**kw)
 
+    def test_pad_level_calibration_fails_closed_without_groove_template(self):
+        with patch.object(ac,"select_palette") as selection:
+            with self.assertRaisesRegex(ValidationError,"pad-level-calibration requires"):
+                self.call(private=True,pad_level_calibration=True)
+            with self.assertRaisesRegex(ValidationError,"pad-level-calibration requires"):
+                self.call(private=True,groove_template=True,
+                          pad_level_calibration="yes")
+        selection.assert_not_called()
+
+    def test_full_song_pad_level_calibration_fails_before_private_selection(self):
+        with patch.object(ac,"select_palette") as selection:
+            with self.assertRaisesRegex(ValidationError,"short song nucleus"):
+                ac.create("deep house in C minor, 128 bars",self.catalog,
+                          self.plugin,self.host,self.root/"output",private=True,
+                          groove_template=True,pad_level_calibration=True,
+                          full_song_bars=128)
+        selection.assert_not_called()
+
+    def test_chord_level_calibration_is_explicit_optin(self):
+        with patch.object(ac,"select_palette") as selection:
+            with self.assertRaisesRegex(ValidationError,"requires --groove-template"):
+                self.call(private=True,chord_level_calibration=True)
+            with self.assertRaisesRegex(ValidationError,"must be boolean"):
+                self.call(private=True,groove_template=True,
+                          chord_level_calibration="true")
+        selection.assert_not_called()
+
+    def test_preferred_bass_requires_explicit_reference_mode_and_hash(self):
+        with patch.object(ac,'select_palette') as selector:
+            with self.assertRaisesRegex(ValidationError,'preferred-bass-source-sha requires'):
+                self.call(private=True,preferred_bass_source_sha='a'*64)
+            with self.assertRaisesRegex(ValidationError,'preferred-bass-source-sha requires'):
+                self.call(private=True,groove_template=True,
+                    groove_impact=True,sample_pack=self.root,
+                    preferred_bass_source_sha='not-a-sha')
+        selector.assert_not_called()
+
+    def test_groove_impact_requires_explicit_cc0_source(self):
+        with patch.object(ac,'select_palette') as selector:
+            with self.assertRaisesRegex(ValidationError,'groove-impact requires'):
+                self.call(private=True,groove_impact=True)
+            with self.assertRaisesRegex(ValidationError,'groove-impact requires'):
+                self.call(private=True,groove_template=True,groove_impact=True)
+            with self.assertRaisesRegex(ValidationError,'groove-impact requires'):
+                self.call(private=True,groove_impact='yes',
+                          groove_template=True,sample_pack=self.root)
+        selector.assert_not_called()
+
+    def test_master_preview_requires_groove_template_before_private_work(self):
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'requires --groove-template'):
+            self.call(private=True,master_preview=True)
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'must be boolean'):
+            self.call(private=True,groove_template=True,master_preview='true')
+        select.assert_not_called()
+
     def test_explicit_private_consent_required(self):
         with patch.object(ac,'select_palette') as select, self.assertRaises(ValidationError): self.call()
         select.assert_not_called()
@@ -76,6 +132,42 @@ class AutonomousCreateTests(unittest.TestCase):
                       self.root/'output',private=True,seed=19)
         self.assertEqual((recorded['musical_spec'].tonic, recorded['musical_spec'].mode), (0,'minor'))
         self.assertEqual(recorded['musical_spec'].seed, 19)
+        self.assertFalse((self.root/'output').exists())
+
+    def test_sample_drum_source_requires_explicit_groove_mode(self):
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'require --groove-template'):
+            self.call(private=True,sample_pack=self.root/'not-available')
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'require --groove-template'):
+            self.call(private=True,harmony_profile='simple')
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'drum_variant'):
+            self.call(private=True,groove_template=True,drum_variant=2)
+        select.assert_not_called()
+
+    def test_groove_harmony_modes_fail_before_private_audition(self):
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'does not support'):
+            ac.create('deep house in A Phrygian',self.catalog,self.plugin,self.host,self.root/'output',
+                      private=True,groove_template=True)
+        select.assert_not_called()
+        with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'conflicts'):
+            ac.create('house with simple triads',self.catalog,self.plugin,self.host,self.root/'output',
+                      private=True,groove_template=True,harmony_profile='extended')
+        select.assert_not_called()
+        self.assertFalse((self.root/'output').exists())
+
+    def test_groove_sample_mode_passes_validated_spec_to_private_selector(self):
+        captured={}
+        def selector(prompt,catalog,plugin,out,**kw):
+            captured.update(kw); out.mkdir()
+            (out/'selection.json').write_text(json.dumps({'status':'incomplete','roles':{}}))
+        with patch.object(ac,'select_palette',side_effect=selector), self.assertRaisesRegex(ValidationError,'complete selection'):
+            ac.create('deep house in D minor, 16 bars, no lead, without pad',self.catalog,self.plugin,self.host,
+                      self.root/'output',private=True,groove_template=True,
+                      sample_pack=self.root/'placeholder-pack',harmony_profile='simple',seed=17)
+        self.assertEqual(captured['musical_spec'].tonic,2)
+        self.assertEqual(captured['musical_spec'].mode,'minor')
+        self.assertEqual(captured['musical_spec'].seed,17)
         self.assertFalse((self.root/'output').exists())
 
     def test_private_manifest_cannot_enter_original_adapter(self):

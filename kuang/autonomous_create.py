@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -26,6 +27,12 @@ from .external_synth import (ExternalSynthAdapter, HOST_SHA, CONTRACT, LAYOUT_SH
 from .generator import generate
 from .loudness import measure
 from .production import refine_house
+from .house_template import template as groove_template_project, select_profile
+from .house_full_arranger import arrange_full_song, parse_long_form
+from .house_master_preview import render_previews
+from .house_harmony import select_harmony
+from .house_musical_plan import enrich_house_spec
+from .house_sources import prepare_kit
 from .production_host import ProductionAdapter
 from .schema import BAR, Clip, Instrument, Note, ParameterSpec, Section, ValidationError, save, strict_json, validate
 from .song import rules_plan, validate_spec
@@ -227,7 +234,13 @@ def _bind(project, assignments, adapter):
     validate(p); return p
 
 
-def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15):
+def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
+           groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
+           full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
+           groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
+           groove_pocket_diagnostics=False, groove_identity_v2=False,
+           timbre_source_review=False, contextual_pad_rescue=False,
+           pad_level_calibration=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -237,28 +250,114 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     library = catalog.parent.parent.resolve()
     if dest.resolve().is_relative_to(library) or dest.resolve().is_relative_to(plugin.resolve()):
         raise ValidationError('output cannot be inside preset library or plugin')
-    spec,notes = rules_plan(prompt,seed)
+    if full_song_bars is not None and not groove_template:
+        raise ValidationError('--full-song-bars requires --groove-template')
+    if type(timbre_source_review) is not bool or (timbre_source_review and not groove_template):
+        raise ValidationError("--timbre-source-review requires --groove-template")
+    if type(master_preview) is not bool:
+        raise ValidationError('master_preview must be boolean')
+    if master_preview and not groove_template:
+        raise ValidationError('--master-preview requires --groove-template')
+    if type(contextual_shortlist) is not bool:
+        raise ValidationError('contextual_shortlist must be boolean')
+    if type(chord_level_calibration) is not bool:
+        raise ValidationError('chord_level_calibration must be boolean')
+    if chord_level_calibration and not groove_template:
+        raise ValidationError('--chord-level-calibration requires --groove-template')
+    if type(groove_impact) is not bool or (groove_impact and (not groove_template or sample_pack is None)):
+        raise ValidationError('--groove-impact requires --groove-template and licensed --sample-pack')
+    if (type(groove_identity_v2) is not bool or
+            (groove_identity_v2 and
+             (not groove_template or not groove_impact or sample_pack is None))):
+        raise ValidationError("--groove-identity-v2 requires groove-template, groove-impact and audited sample-pack")
+    if type(groove_pocket_diagnostics) is not bool or (groove_pocket_diagnostics and not groove_template):
+        raise ValidationError("groove pocket diagnostics require a house groove template")
+    if type(musical_plan_v2) is not bool or (musical_plan_v2 and not groove_template):
+        raise ValidationError('--musical-plan-v2 requires --groove-template and boolean option')
+    if preferred_bass_source_sha is not None and (
+            not groove_impact or type(preferred_bass_source_sha) is not str or
+            not re.fullmatch(r'[0-9a-f]{64}',preferred_bass_source_sha)):
+        raise ValidationError('--preferred-bass-source-sha requires --groove-impact and valid SHA256')
+    if type(pad_level_calibration) is not bool or (pad_level_calibration and not groove_template):
+        raise ValidationError("--pad-level-calibration requires --groove-template")
+    if type(contextual_pad_rescue) is not bool or (contextual_pad_rescue and not contextual_shortlist):
+        raise ValidationError("--contextual-pad-rescue requires --contextual-shortlist")
+    if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
+        raise ValidationError('--contextual-shortlist requires groove-template, per-role>=2, max-candidates>=4')
+    planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
+    spec,notes = rules_plan(planning_prompt,seed)
     if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
-    import re
+    full_length,_ = parse_long_form(prompt,full_song_bars,bpm=spec.bpm) if groove_template else (None,prompt)
+    if pad_level_calibration and full_length is not None:
+        raise ValidationError('--pad-level-calibration requires a short song nucleus')
+    if groove_pocket_diagnostics and full_length is not None:
+        raise ValidationError('--groove-pocket-diagnostics supports short groove nuclei only, not full songs')
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
-    if explicit and int(explicit.group(1)) != bars: raise ValidationError('prompt bar count conflicts with --bars')
-    spec.bars = bars; validate_spec(spec)
+    if not full_length and explicit and int(explicit.group(1)) != bars:
+        raise ValidationError('prompt bar count conflicts with --bars')
+    spec.bars = 32 if full_length else bars
+    validate_spec(spec)
+    if type(groove_template) is not bool:
+        raise ValidationError('groove_template must be boolean')
+    if (sample_pack is not None or groove_profile != 'auto' or harmony_profile != 'auto' or drum_variant != 0) and not groove_template:
+        raise ValidationError('sample pack and groove/harmony options require --groove-template')
+    if type(drum_variant) is not int or drum_variant not in (0,1):
+        raise ValidationError('drum_variant must be 0 or 1')
+    gp = select_profile(prompt,seed,groove_profile) if groove_template else None
+    hp = select_harmony(prompt,gp,harmony_profile) if groove_template else None
+    plan_receipt = None
+    if musical_plan_v2:
+        spec,plan_receipt = enrich_house_spec(spec,prompt,gp)
     expected_roles = set(_intent(prompt)['roles'])
     if not {'chord','bass'} <= expected_roles:
         raise ValidationError('this house composer requires chord and bass roles')
     with tempfile.TemporaryDirectory(prefix='.autonomous-create-',dir=dest.parent) as temp:
         stage = Path(temp); os.chmod(stage,0o700)
-        select_palette(prompt,catalog,plugin,stage/'palette',seed=seed,per_role=per_role,max_candidates=max_candidates,timeout=timeout, musical_spec=spec)
+        palette_kw=({'preferred_bass_source_sha':preferred_bass_source_sha}
+                    if preferred_bass_source_sha else {})
+        select_palette(prompt,catalog,plugin,stage/'palette',seed=seed,per_role=per_role,
+                       max_candidates=max_candidates,timeout=timeout,musical_spec=spec,**palette_kw)
         selection = _read_json(stage/'palette/selection.json')
         if selection['status'] != 'complete' or set(selection['roles']) != expected_roles:
             raise ValidationError('complete selection for every requested role required')
         palette_before = inventory(stage/'palette')
+        timbre_review = None
+        if timbre_source_review or contextual_pad_rescue:
+            from .house_timbre_suitability import source_names
+            timbre_review = source_names(selection)
+            if timbre_source_review: write(stage/'timbre-source-review.json', timbre_review)
         adapter = PrivateExternal(plugin,soundcraft,workspace,stage/'scratch',selection)
+        if contextual_shortlist:
+            for role, candidates in selection.get('shortlist',{}).items():
+                for entry in candidates:
+                    if entry.get('status') != 'accepted' or entry.get('runtime_verified') is not True:
+                        raise ValidationError('one-prompt source must be verified before binding')
+                    adapter.selection[entry['source_sha256']] = entry
         adapter.capabilities(); defaults = _probe_defaults(adapter,stage)
         role_tracks = {'chord':'track-harmony','pad':'track-pad','bass':'track-bass'}
         assignments = {role_tracks[r]:_prepare(adapter,selection['roles'][r],defaults,stage/('prepare-'+r),timeout)
                        for r in selection['roles']}
-        project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
+        groove_receipt = None
+        arrangement_receipt = None
+        sound_assets = {}
+        drum_evidence = None
+        if groove_template:
+            project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
+                                               include_pad='pad' in expected_roles,
+                                               impact_pocket=groove_impact,
+                                               groove_identity_v2=groove_identity_v2)
+            if full_length and not contextual_shortlist:
+                project,arrangement_receipt = arrange_full_song(project,bars=full_length,
+                                                               profile=gp,seed=seed)
+            if sample_pack is not None:
+                project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
+                                               stage/'drum-assets',gp,drum_variant,
+                                               impact_pocket=groove_impact,
+                                               groove_identity_v2=groove_identity_v2)
+        else:
+            project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
+        if plan_receipt is not None:
+            project.metadata['musical_plan_version'] = plan_receipt['version']
         # Generous pre-fader headroom for independent third-party patch levels.
         for track in project.tracks:
             track.controls['mixer.gain_db'] -= 15
@@ -269,9 +368,43 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         native = ProductionAdapter(soundcraft,workspace=workspace,scratch=stage/'scratch')
         native.external = adapter; native.samples.base = adapter.base; native.base = adapter.base
         duration = project.length/project.ppq*60/project.tempo_bpm
-        native.export(project,{},assignments,stage/'calibration-native')
-        native.render(stage/'calibration-native',stage/'calibration.wav',end_seconds=duration+12)
+        if contextual_shortlist:
+            from .house_one_prompt_context import short_audition_project
+            from .house_mix_roles import _window
+            audition=short_audition_project(project,_window(project)['end_tick'])
+            audition_duration=audition.length/audition.ppq*60/audition.tempo_bpm+6
+        else:
+            audition=project
+            audition_duration=duration+12
+        native.export(audition,sound_assets,assignments,stage/'calibration-native')
+        native.render(stage/'calibration-native',stage/'calibration.wav',end_seconds=audition_duration)
         library_path = workspace/'.local/producer/libebur128.so'
+        context_receipt = None
+        if contextual_shortlist:
+            from .house_one_prompt_context import choose_sources
+            assignments,context_receipt=choose_sources(project,assignments,
+                    selection.get('shortlist',{}),adapter,defaults,native,
+                    sound_assets,stage,duration=audition_duration,timeout=timeout,
+                    library=str(library_path) if library_path.is_file() else None,
+                    pad_rescue=contextual_pad_rescue,
+                    pad_review=(timbre_review["roles"].get("pad")
+                                if contextual_pad_rescue else None))
+            project = _bind(project,assignments,adapter)
+            for comparison in context_receipt['comparisons']:
+                if comparison.get('chosen'):
+                    selection['roles'][comparison['role']]=next(
+                        e for e in selection['shortlist'][comparison['role']]
+                        if e['source_sha256']==comparison['source_sha256'])
+            write(stage/'palette/selection.json',selection)
+            palette_before=inventory(stage/'palette')
+        role_level_evidence = None
+        if chord_level_calibration:
+            from .house_role_level import apply_chord_calibration
+            project,role_level_evidence=apply_chord_calibration(project,selection)
+        if full_length and contextual_shortlist:
+            project,arrangement_receipt=arrange_full_song(project,bars=full_length,
+                                                         profile=gp,seed=seed)
+            duration=project.length/project.ppq*60/project.tempo_bpm
         calibration = measure(stage/'calibration.wav',library=str(library_path) if library_path.is_file() else None)
         if calibration['clipped_samples'] or calibration['rms'] < 1e-6:
             raise ValidationError('calibration render clipped or silent')
@@ -284,31 +417,95 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             if lane.parameter_id == 'mixer.gain_db':
                 for point in lane.points: point.value += adjustment
         validate(project)
-        native.export(project,{},assignments,stage/'native')
+        native.export(project,sound_assets,assignments,stage/'native')
         native.save(stage/'native',stage/'reopened')
         render = native.render(stage/'native',stage/'preview.wav',end_seconds=duration+12)
         audio = measure(stage/'preview.wav',library=str(library_path) if library_path.is_file() else None)
         if audio['clipped_samples'] or audio['true_peak_dbtp'] > -1 or audio['rms'] < 1e-6:
             raise ValidationError('render failed true-peak, clipping or silence gate')
+        pad_level_evidence = None
+        if pad_level_calibration:
+            from .house_pad_native_level import native_pad_balance
+            revised,level_audio,level_render,pad_level_evidence=native_pad_balance(
+                project,native,assignments,sound_assets,stage,
+                duration_seconds=duration,
+                library=str(library_path) if library_path.is_file() else None)
+            if level_audio is not None:
+                # Both temporary artifacts are verified before publication.
+                # Everything here is still in the isolated private staging tree.
+                # Move the complete private native directory without exposing
+                # individual third-party patches outside the workspace.
+                shutil.rmtree(stage/'native')
+                (stage/'pad-level-native').rename(stage/'native')
+                (stage/'preview.wav').unlink()
+                (stage/'pad-level-preview.wav').rename(stage/'preview.wav')
+                project=revised;audio=level_audio;render=level_render
+            write(stage/'pad-level-evidence.json',pad_level_evidence)
         if (inventory(stage/'palette') != palette_before or
             hashlib.sha256(_bounded_read(catalog,MAX_CATALOG_BYTES)).hexdigest() != selection['catalog_sha256'] or
             _plugin_info(plugin)['module_sha256'] != adapter.plugin_sha):
             raise ValidationError('catalog, palette evidence or plugin changed during production')
+        pocket_receipt = None
+        if groove_pocket_diagnostics:
+            from .house_groove_pocket import evaluate_pocket
+            pocket_receipt=evaluate_pocket(project,stage/'preview.wav')
+            write(stage/'groove-pocket-evidence.json',pocket_receipt)
         save(project,stage/'project.kuang.json'); (stage/'song.mid').write_bytes(midi.export_bytes(project))
         write(stage/'song-spec.json',asdict(spec))
+        if plan_receipt is not None: write(stage/'musical-plan-evidence.json',plan_receipt)
+        if groove_receipt is not None: write(stage/'groove-evidence.json',groove_receipt)
+        if arrangement_receipt is not None: write(stage/'arrangement-evidence.json',arrangement_receipt)
+        if drum_evidence is not None: write(stage/'sample-selection.json',drum_evidence)
+        if context_receipt is not None: write(stage/'context-shortlist-evidence.json',context_receipt)
+        if role_level_evidence is not None: write(stage/'chord-level-evidence.json',role_level_evidence)
         write(stage/'report.json',{'version':'private-autonomous-create-1','prompt':prompt,'seed':seed,
             'composition':'rules-based house template, not neural music generation','selection':'palette/selection.json',
             'native':'native/session.scraft','audio':'preview.wav','render':render,'measurement':audio,
             'native_save_reopen_equal':True,'calibration_true_peak_dbtp':calibration['true_peak_dbtp'],
             'native_track_gain_adjustment_db':adjustment,
-            'source_presets':'license unknown; private use only','notes':notes})
+            'source_presets':'license unknown; private use only','notes':notes,
+            **({'timbre_source_review':'timbre-source-review.json'} if timbre_review else {}),
+            'groove_template':groove_template,'groove_profile':gp,'harmony_profile':hp,
+            'groove_evidence':'groove-evidence.json' if groove_receipt else None,
+            'arrangement_evidence':'arrangement-evidence.json' if arrangement_receipt else None,
+            'actual_project_bars':project.bars,'source_nucleus_bars':spec.bars,
+            'sample_selection':'sample-selection.json' if drum_evidence else None,
+            'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
+            'quality_judgment':'unreviewed; no professional audio quality established',
+            'master_preview_requested':master_preview,
+            'groove_impact_requested':groove_impact,
+            'groove_identity_v2_requested':groove_identity_v2,
+            'preferred_bass_source_sha':preferred_bass_source_sha,
+            'chord_level_calibration_requested':chord_level_calibration,
+            'pad_level_calibration_requested':pad_level_calibration,
+            'pad_level_evidence':'pad-level-evidence.json' if pad_level_evidence else None,
+            'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
+            'contextual_shortlist_requested':contextual_shortlist,
+            'contextual_pad_rescue_requested':contextual_pad_rescue,
+            'contextual_audition_bars':audition.bars if contextual_shortlist else None,
+            'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
+            **({'groove_pocket_evidence':'groove-pocket-evidence.json'} if pocket_receipt else {}),
+            **({'musical_plan_v2_requested': True,
+                'musical_plan_evidence': 'musical-plan-evidence.json'} if plan_receipt else {})})
+        if master_preview:
+            # The standalone mastering API deliberately forbids modifying its
+            # source tree. Use a separate scratch root and import the verified
+            # derivatives only after both pass their independent PCM gates.
+            with tempfile.TemporaryDirectory(prefix='.private-preview-',dir=dest.parent) as preview_temp:
+                pending = Path(preview_temp)/'verified'
+                render_previews(stage,pending,
+                                library=str(library_path) if library_path.is_file() else None)
+                shutil.move(str(pending),str(stage/'master-preview'))
         # The native bundle contains copies of third-party states and must remain private.
         for name in ['scratch','probe','probe-vital.scraft','commands.txt','reopened','calibration-native','calibration.wav',
+                     'drum-assets','context-shortlist',
                      'cache','config','data','documents']:
             path=stage/name
             if path.is_dir(): shutil.rmtree(path)
             elif path.exists(): path.unlink()
         for path in stage.glob('prepare-*'): shutil.rmtree(path)
+        for path in stage.glob('pad-measure-*'): shutil.rmtree(path)
+        if (stage/'pad-level-reopened').is_dir(): shutil.rmtree(stage/'pad-level-reopened')
         dest.mkdir(mode=0o700)
         try:
             for child in stage.iterdir(): child.rename(dest/child.name)
@@ -325,10 +522,52 @@ def main(argv=None):
     parser.add_argument('--seed',type=int,default=17); parser.add_argument('--bars',type=int,choices=(16,32),default=16)
     parser.add_argument('--private-third-party-presets',action='store_true'); parser.add_argument('--per-role',type=int,default=3)
     parser.add_argument('--max-candidates',type=int,default=12); parser.add_argument('--timeout',type=float,default=15)
+    parser.add_argument('--groove-template',action='store_true',help='use the curated groove-first MIDI template')
+    parser.add_argument('--sample-pack',help='optional locally audited CC0 house-core pack for native drums')
+    parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
+    parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
+    parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
+    parser.add_argument('--preferred-bass-source-sha',
+                        help='private user-approved Vital source SHA256; opt-in human-producer bass priority after independent audition, not a generic quality score')
+    parser.add_argument('--timbre-source-review',action='store_true',
+                        help='opt-in conservative role-aware preset review flags; no automatic source replacement')
+    parser.add_argument('--groove-identity-v2',action='store_true',
+                        help='opt-in distinct bass motifs and audited style-specific kick; requires --groove-impact and --sample-pack')
+    parser.add_argument('--groove-pocket-diagnostics',action='store_true',
+                        help='opt-in fullmix 25-90/90-250Hz kick-to-offbeat pocket diagnostics; not musical quality')
+    parser.add_argument('--musical-plan-v2',action='store_true',
+                        help='experimental style-conditioned harmonic planning on existing SongSpec; preserves explicit Roman progression')
+    parser.add_argument('--groove-impact',action='store_true',
+                        help='opt-in Phase44-reference-derived kick/sample balance, rhythmic bass accents and shuffled hats; not a music quality guarantee')
+    parser.add_argument('--chord-level-calibration',action='store_true',
+                        help='experimental bounded +/-3dB chord-source audition RMS gain trim, no creative quality claim')
+    parser.add_argument('--pad-level-calibration',action='store_true',
+                        help='opt-in measured per-section native pad balance against chords at 100/400ms and sample peaks')
+    parser.add_argument('--contextual-pad-rescue',action='store_true',
+                        help='opt-in native pad rescue for severe lower-mid masking; requires --contextual-shortlist')
+    parser.add_argument('--contextual-shortlist',action='store_true',
+                        help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
+    parser.add_argument('--master-preview',action='store_true',
+                        help='produce measured transparent and gentle-compression WAV derivatives')
+    parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
+                        help='opt-in full-length editable arrangement from 32-bar nucleus')
     args=parser.parse_args(argv)
     try:
         result=create(args.prompt,args.catalog,args.plugin,args.soundcraft,args.out_dir,seed=args.seed,bars=args.bars,
-                      private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout)
+                      private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout,
+                      groove_template=args.groove_template,sample_pack=args.sample_pack,groove_profile=args.groove_profile,
+                      harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
+                      full_song_bars=args.full_song_bars,master_preview=args.master_preview,
+                      contextual_shortlist=args.contextual_shortlist,
+                      chord_level_calibration=args.chord_level_calibration,
+                      groove_impact=args.groove_impact,
+                      musical_plan_v2=args.musical_plan_v2,
+                      groove_pocket_diagnostics=args.groove_pocket_diagnostics,
+                      groove_identity_v2=args.groove_identity_v2,
+                      timbre_source_review=args.timbre_source_review,
+                      contextual_pad_rescue=args.contextual_pad_rescue,
+                      pad_level_calibration=args.pad_level_calibration,
+                      preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0
