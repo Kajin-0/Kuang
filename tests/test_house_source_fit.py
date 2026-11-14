@@ -77,12 +77,22 @@ class SourceFitTests(unittest.TestCase):
             region={'start_tick':0,'end_tick':3840,'start_seconds':0.,'end_seconds':2.}
             e=fit_diagnostics(proj,region,kick,bass,chord,full)
             self.assertEqual(e['onset_count'],4)
+            self.assertAlmostEqual(e['bass_late_vs_early_offbeat_power_db'],0,delta=.1)
+            self.assertEqual(e['bass_offbeat_windows_ms'],[[150,250],[250,350]])
             self.assertEqual(e['technical_status'],'MEASURED')
             self.assertLess(e['linear_sum_kick_bass_sub_interference_db'],-50)
             self.assertLess(e['full_mix_sub_mono_retention_db'],-50)
             self.assertIn('kick_bass_sub_destructive_summation',e['warnings'])
             self.assertIn('full_mix_sub_mono_folddown_loss',e['warnings'])
             self.assertEqual(e['perceptual_quality'],'NOT_EVALUATED')
+
+    def test_offbeat_body_diagnostics_compare_equal_duration_energy(self):
+        # A source with constant power across the two 100 ms offbeat windows
+        # has 0 dB change; a source whose late power is quartered has -6 dB.
+        from kuang.house_source_fit import _db_ratio
+        self.assertEqual(_db_ratio(4.0,4.0),0.0)
+        self.assertAlmostEqual(_db_ratio(1.0,4.0),-6.021,places=3)
+        self.assertIsNone(_db_ratio(0.0,0.0))
 
     def test_rejects_invalid_audio_and_unsafe_count(self):
         with tempfile.TemporaryDirectory() as tmp:
