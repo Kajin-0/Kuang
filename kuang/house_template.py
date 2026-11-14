@@ -15,7 +15,7 @@ from .composer import SCALES, compose
 from .house_harmony import apply_harmony
 from .production import refine_house
 from .schema import (
-    BAR, PPQ, AutomationLane, AutomationPoint, Clip, Effect, Note, ParameterSpec, Send, Track,
+    BAR, PPQ, AutomationLane, AutomationPoint, Clip, Note,
     ValidationError, validate,
 )
 from .song import SongSpec, validate_spec
@@ -32,146 +32,6 @@ LIMITATIONS = [
     "Programmed ducking uses actual kick MIDI onsets, not audio-triggered compression.",
     "No per-role audio-calibrated mastering or learned perceptual gate yet.",
 ]
-
-
-
-def _phase44_derived_mix_architecture(p):
-    """Opt-in editable separation policy from the approved Phase39-44 evolution.
-
-    Transfer techniques, not the approved song's notes or external patch state.
-    Independent returns prevent the foreground chord insert from continuously
-    masking the rhythmic section; 100% wet auxiliary FX are never dry-doubled.
-    """
-    existing = {x.id for x in p.parameters}
-    for name, unit, lo, hi, default in (
-        ("soundcraft.mid_freq", "Hz", 20., 20000., 600.),
-        ("soundcraft.mid_gain", "dB", -24., 24., 0.),
-        ("soundcraft.sc_hpf_on", "boolean", 0., 1., 0.),
-        ("soundcraft.sc_hpf_freq", "Hz", 20., 20000., 80.),
-    ):
-        if name not in existing:
-            p.parameters.append(ParameterSpec(name, unit, lo, hi, default, ["effect"]))
-    tracks = {t.id: t for t in p.tracks}
-    kick, bass, chord = (tracks["track-" + role] for role in ("kick", "bass", "harmony"))
-    all_kicks = sorted({c.start + n.start for c in kick.clips for n in c.notes})
-    all_bass = sorted({c.start + n.start for c in bass.clips for n in c.notes})
-
-    # The original bass pocket and drum onsets remain untouched. Move chord
-    # strikes off simultaneous bass accents by a 16th note (120 ms @ 125 BPM).
-    shifted = 0
-    for clip in chord.clips:
-        for note in clip.notes:
-            at = clip.start + note.start
-            if any(abs(at - b) <= 24 for b in all_bass):
-                if note.start + 240 + note.duration <= clip.length:
-                    note.start += 240
-                    shifted += 1
-
-    # Filter the harmonic source above the bass body, retain intelligible
-    # midrange, and avoid broad bright chord wash at each offbeat bass note.
-    chord.controls["mixer.gain_db"] -= 2.5
-    for lane in p.automation:
-        if lane.target_id == chord.id and lane.parameter_id == "mixer.gain_db":
-            for point in lane.points:
-                point.value -= 2.5
-    for fx in chord.effects:
-        if fx.plugin_ref == "soundcraft:eq_7band":
-            fx.parameters.update({"soundcraft.hpf_freq": 230.,
-                "soundcraft.lpf_freq": 7500., "soundcraft.lpf_on": 1.,
-                "soundcraft.low_mid_freq": 330., "soundcraft.low_mid_gain": -1.9})
-        if fx.plugin_ref == "soundcraft:plate_reverb":
-            # Recreate the effect as a 100%-wet independently ducked return.
-            fx.parameters["effect.bypass"] = 1.
-    for fx in bass.effects:
-        if fx.plugin_ref == "soundcraft:eq_7band":
-            fx.parameters.update({"soundcraft.hpf_freq": 32.,
-                "soundcraft.lpf_freq": 1800., "soundcraft.lpf_on": 1.,
-                "soundcraft.low_mid_freq": 150., "soundcraft.low_mid_gain": .5,
-                "soundcraft.mid_freq": 600., "soundcraft.mid_gain": 1.25})
-        elif fx.plugin_ref == "soundcraft:saturator":
-            fx.parameters.update({"soundcraft.drive": 9.3, "soundcraft.output": 1.5,
-                "soundcraft.tone": 4000., "effect.wet": .58})
-        elif fx.plugin_ref == "soundcraft:compressor":
-            fx.parameters.update({"soundcraft.threshold": -21.,
-                "soundcraft.attack": 18., "soundcraft.release": 110.,
-                "soundcraft.makeup": 0., "effect.wet": .7})
-
-    def fx(id, plugin, **parameters):
-        controls = {"effect.bypass": 0.,
-                    **{"soundcraft." + k: v for k, v in parameters.items()}}
-        if plugin != "eq_7band":
-            controls["effect.wet"] = 1.
-        return Effect(id, "soundcraft:" + plugin, None, controls)
-
-    def bus(id, name, gain, effects):
-        result = Track(id, name, "bus", None,
-                       {"mixer.gain_db": gain, "mixer.pan": 0., "mixer.mute": 0.},
-                       effects, [], [], True)
-        p.tracks.append(result)
-        return result
-
-    drum = bus("phase44-derived-drum-bus", "Drum group / glue",
-               0., [fx("phase44-derived-drum-glue", "compressor",
-                          threshold=-30., attack=28., release=105., makeup=2.,
-                          sc_hpf_on=1., sc_hpf_freq=80.),
-                    fx("phase44-derived-drum-color", "saturator",
-                       drive=2., output=-1., tone=9000.)])
-    drum.effects[0].parameters["effect.wet"] = .5
-    drum.effects[1].parameters["effect.wet"] = .23
-    for role in ("kick", "snare", "hats", "percussion", "open_hat"):
-        channel = tracks.get("track-" + role)
-        if channel is not None:
-            channel.output_master = False
-            channel.sends.append(Send("phase44-derived-"+role+"-drums", drum.id,
-                                      0., 0., "post_fader"))
-
-    plate = bus("phase44-derived-space-return", "Filtered chord/pad plate",
-                -7., [fx("phase44-derived-space-filter", "eq_7band",
-                           hpf_on=1., hpf_freq=600., lpf_on=1., lpf_freq=8000.),
-                      fx("phase44-derived-space-plate", "plate_reverb",
-                         damping=6000., decay_ms=2600., low_cut=700.,
-                         pre_delay=42., width=1.)])
-    chord.sends.append(Send("phase44-derived-chord-plate-send", plate.id,
-                            -14., 0., "post_fader"))
-    if "track-pad" in tracks:
-        pad = tracks["track-pad"]
-        for effect in pad.effects:
-            if effect.plugin_ref == "soundcraft:plate_reverb":
-                effect.parameters["effect.bypass"] = 1.
-        pad.sends.append(Send("phase44-derived-pad-plate-send", plate.id,
-                              -11., 0., "post_fader"))
-
-    delays = []
-    for name, fraction, pan, gain in (("eighth", .5, -.35, -10.),
-                                       ("dotted", .75, .35, -12.)):
-        delay_ms = fraction * 60000. / p.tempo_bpm
-        ret = bus("phase44-derived-chord-" + name,
-                  "Filtered " + name + " chord echo", gain,
-                  [fx("phase44-derived-" + name + "-filter", "eq_7band",
-                      hpf_on=1., hpf_freq=450., lpf_on=1., lpf_freq=4400.),
-                   fx("phase44-derived-" + name + "-delay", "mod_delay",
-                      time=delay_ms, feedback=.35, mod_depth=0.,
-                      mod_rate=.2, lpf=4400.)])
-        ret.controls["mixer.pan"] = pan
-        chord.sends.append(Send("phase44-derived-chord-"+name+"-send", ret.id,
-                                -10., 0., "post_fader"))
-        delays.append(ret.id)
-
-    # Programmed MIDI-onset ducking, not claimed as audio sidechain detection.
-    # Independent spatial tail recovers while the dry note remains audible.
-    base = plate.controls["mixer.gain_db"]
-    points = [(0, base)]
-    for onset in all_kicks:
-        if onset > 0: points.append((onset - 1, base))
-        points.extend(((onset, base - 2.),
-                       (min(onset + 288, p.length), base)))
-    p.automation.append(AutomationLane("phase44-derived-space-pump", plate.id,
-        "mixer.gain_db", [AutomationPoint("phase44-derived-space-point-" + str(i),
-        tick, value, "linear") for i, (tick, value) in enumerate(sorted(dict(points).items()))]))
-    return {"chord_notes_offset_from_bass": shifted,
-            "routing": [drum.id, plate.id, *delays],
-            "separation": "filtered harmonics, wet return buses, controlled space, drum glue",
-            "reference_song_copied": False}
 
 
 def select_profile(prompt: str, seed: int, requested: str = "auto") -> str:
@@ -375,8 +235,6 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     # Adjust chord vocabulary without touching the approved kick/bass rhythm.
     harmonic_evidence = apply_harmony(p, spec, harmony_profile)
 
-    separation_evidence = (_phase44_derived_mix_architecture(p) if impact_pocket else None)
-
     # Machine-checkable G1 structural gates, **not** a listening approval.
     groove = p.sections[1]
     onset_by_role = {
@@ -402,7 +260,6 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     p.metadata["composer"] = VERSION
     if impact_pocket:
         p.metadata['groove_impact_pocket'] = 'phase43-derived-v1'
-        p.metadata['phase44_derived_mix'] = json.dumps(separation_evidence, sort_keys=True)
     p.metadata["groove_profile"] = profile
     p.metadata["groove_gates"] = json.dumps(gates, sort_keys=True)
     validate(p)
@@ -413,7 +270,6 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     receipt = {
         "version": VERSION, "selected_profile": profile,
         "groove_impact_pocket": impact_pocket,
-        "phase44_derived_mix": separation_evidence,
         "seed": spec.seed, "full_groove_bars": width,
         "technical_gates": gates, "technical_pass": True,
         "perceptual_quality": "NEEDS_LISTENING",

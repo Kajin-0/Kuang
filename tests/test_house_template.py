@@ -89,34 +89,6 @@ class GrooveTemplateTests(unittest.TestCase):
         self.assertEqual(evidence["source_selection"],"built-in SoundCraft instruments only; no real sample audition")
         self.assertEqual(template(spec,profile="deep",include_pad=False)[0].metadata.get("groove_impact_pocket"),None)
 
-    def test_phase44_derived_mix_has_editable_separate_buses(self):
-        spec,_ = rules_plan("deep house in C minor, 16 bars", 43)
-        standard,_ = template(spec, profile="deep", include_pad=True)
-        refined,receipt = template(spec, profile="deep", include_pad=True, impact_pocket=True)
-        validate(refined)
-        mix = receipt["phase44_derived_mix"]
-        self.assertFalse(mix["reference_song_copied"])
-        self.assertEqual(len(mix["routing"]), 4)
-        self.assertGreater(mix["chord_notes_offset_from_bass"], 0)
-        byid = {t.id:t for t in refined.tracks}
-        for name in mix["routing"]:
-            self.assertEqual(byid[name].kind, "bus")
-            self.assertTrue(byid[name].output_master)
-        self.assertFalse(byid["track-kick"].output_master)
-        self.assertFalse(byid["track-snare"].output_master)
-        self.assertTrue(any(s.target_track_id == "phase44-derived-drum-bus"
-                            for s in byid["track-kick"].sends))
-        chord = byid["track-harmony"]
-        self.assertEqual(len([s for s in chord.sends
-                              if s.target_track_id in mix["routing"]]), 3)
-        self.assertTrue(any(e.plugin_ref == "soundcraft:plate_reverb" and
-                            e.parameters.get("effect.bypass") == 1.
-                            for e in chord.effects))
-        self.assertTrue(any(a.target_id == "phase44-derived-space-return" and
-                            a.parameter_id == "mixer.gain_db" for a in refined.automation))
-        self.assertTrue(any(t.id == "track-bass" for t in standard.tracks))
-        self.assertFalse(any(t.kind == "bus" for t in standard.tracks))
-
     def test_seed_determinism_and_meaningful_variation(self):
         a, _ = rules_plan("house in F# minor, 32 bars", 7)
         b, _ = rules_plan("house in F# minor, 32 bars", 8)
