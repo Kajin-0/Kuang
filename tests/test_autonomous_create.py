@@ -33,6 +33,15 @@ class AutonomousCreateTests(unittest.TestCase):
         return ac.create('deep house in C minor no lead',self.catalog,self.plugin,self.host,
                          self.root/'output',**kw)
 
+    def test_chord_level_calibration_is_explicit_optin(self):
+        with patch.object(ac,"select_palette") as selection:
+            with self.assertRaisesRegex(ValidationError,"requires --groove-template"):
+                self.call(private=True,chord_level_calibration=True)
+            with self.assertRaisesRegex(ValidationError,"must be boolean"):
+                self.call(private=True,groove_template=True,
+                          chord_level_calibration="true")
+        selection.assert_not_called()
+
     def test_master_preview_requires_groove_template_before_private_work(self):
         with patch.object(ac,'select_palette') as select, self.assertRaisesRegex(ValidationError,'requires --groove-template'):
             self.call(private=True,master_preview=True)

@@ -234,7 +234,7 @@ def _bind(project, assignments, adapter):
 
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
-           full_song_bars=None, master_preview=False, contextual_shortlist=False):
+           full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -252,6 +252,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('--master-preview requires --groove-template')
     if type(contextual_shortlist) is not bool:
         raise ValidationError('contextual_shortlist must be boolean')
+    if type(chord_level_calibration) is not bool:
+        raise ValidationError('chord_level_calibration must be boolean')
+    if chord_level_calibration and not groove_template:
+        raise ValidationError('--chord-level-calibration requires --groove-template')
     if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
         raise ValidationError('--contextual-shortlist requires groove-template, per-role>=2, max-candidates>=4')
     import re
@@ -344,6 +348,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                         if e['source_sha256']==comparison['source_sha256'])
             write(stage/'palette/selection.json',selection)
             palette_before=inventory(stage/'palette')
+        role_level_evidence = None
+        if chord_level_calibration:
+            from .house_role_level import apply_chord_calibration
+            project,role_level_evidence=apply_chord_calibration(project,selection)
         if full_length and contextual_shortlist:
             project,arrangement_receipt=arrange_full_song(project,bars=full_length,
                                                          profile=gp,seed=seed)
@@ -376,6 +384,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if arrangement_receipt is not None: write(stage/'arrangement-evidence.json',arrangement_receipt)
         if drum_evidence is not None: write(stage/'sample-selection.json',drum_evidence)
         if context_receipt is not None: write(stage/'context-shortlist-evidence.json',context_receipt)
+        if role_level_evidence is not None: write(stage/'chord-level-evidence.json',role_level_evidence)
         write(stage/'report.json',{'version':'private-autonomous-create-1','prompt':prompt,'seed':seed,
             'composition':'rules-based house template, not neural music generation','selection':'palette/selection.json',
             'native':'native/session.scraft','audio':'preview.wav','render':render,'measurement':audio,
@@ -390,6 +399,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
             'quality_judgment':'unreviewed; no professional audio quality established',
             'master_preview_requested':master_preview,
+            'chord_level_calibration_requested':chord_level_calibration,
+            'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
             'contextual_shortlist_requested':contextual_shortlist,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None})
@@ -431,6 +442,8 @@ def main(argv=None):
     parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
     parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
+    parser.add_argument('--chord-level-calibration',action='store_true',
+                        help='experimental bounded +/-3dB chord-source audition RMS gain trim, no creative quality claim')
     parser.add_argument('--contextual-shortlist',action='store_true',
                         help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
     parser.add_argument('--master-preview',action='store_true',
@@ -444,7 +457,8 @@ def main(argv=None):
                       groove_template=args.groove_template,sample_pack=args.sample_pack,groove_profile=args.groove_profile,
                       harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
                       full_song_bars=args.full_song_bars,master_preview=args.master_preview,
-                      contextual_shortlist=args.contextual_shortlist)
+                      contextual_shortlist=args.contextual_shortlist,
+                      chord_level_calibration=args.chord_level_calibration)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0
