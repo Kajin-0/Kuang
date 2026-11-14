@@ -12,6 +12,7 @@ from . import midi
 from .composer import COMPOSER, compose
 from .production import REFINED_COMPOSER, REFINED_LIMITATIONS, refine_house
 from .house_harmony import select_harmony
+from .house_musical_plan import enrich_house_spec
 from .house_full_arranger import parse_long_form, arrange_full_song
 from .house_template import (LIMITATIONS as GROOVE_LIMITATIONS, VERSION as GROOVE_VERSION,
                              select_profile, template)
@@ -30,6 +31,8 @@ def add_parser(commands):
                          help="groove-template: opt-in curated, melody-free house MIDI with structural gates")
     command.add_argument("--groove-profile", choices=("auto", "straight", "deep", "jackin", "minimal"),
                          default="auto", help="curated rhythm family for --production groove-template")
+    command.add_argument("--musical-plan-v2", action="store_true",
+                         help="opt-in coherent progression families; retains existing SongSpec/composer and explicit Roman progressions")
     command.add_argument("--harmony-profile", choices=("auto", "simple", "extended"),
                          default="auto", help="triads or diatonic sevenths in groove-template mode")
     command.add_argument("--full-song-bars",type=int,choices=(96,112,128,160),
@@ -48,7 +51,8 @@ def _write(path, data):
 
 def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, ollama_timeout=120,
            soundcraft=None, soundcraft_timeout=120, render=False, production="sketch",
-           groove_profile="auto", harmony_profile="auto", full_song_bars=None):
+           groove_profile="auto", harmony_profile="auto", full_song_bars=None,
+           musical_plan_v2=False):
     raw_output = Path(output).expanduser()
     if raw_output.is_symlink():
         raise ValidationError("output already exists or is a symlink; choose a new directory")
@@ -58,6 +62,10 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
     selected = soundcraft or os.environ.get("KUANG_SOUNDCRAFT")
     if render and not selected:
         raise ValidationError("--render requires --soundcraft /absolute/path/to/soundcraft-cli or KUANG_SOUNDCRAFT")
+    if type(musical_plan_v2) is not bool or (musical_plan_v2 and production != "groove-template"):
+        raise ValidationError("musical-plan-v2 requires groove-template production and boolean option")
+    if musical_plan_v2 and model != "rules":
+        raise ValidationError("musical-plan-v2 currently requires deterministic rules planner")
     if full_song_bars is not None and production != "groove-template":
         raise ValidationError("full-song-bars requires --production groove-template")
     import re
@@ -78,6 +86,7 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
         raise ValidationError("--groove-profile is only valid with --production groove-template")
     groove_receipt = None
     arrangement_receipt = None
+    plan_receipt = None
     if production == "groove-template":
         full_length, _ = parse_long_form(prompt, full_song_bars, bpm=spec.bpm)
         if full_length:
@@ -93,6 +102,8 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
         include_pad = not bool(re.search(r"\b(?:no|without)\s+(?:a\s+)?pads?\b", prompt.lower()))
         selected_groove = select_profile(prompt, seed, groove_profile)
         selected_harmony = select_harmony(prompt, selected_groove, harmony_profile)
+        if musical_plan_v2:
+            spec,plan_receipt = enrich_house_spec(spec,prompt,selected_groove)
         project, groove_receipt = template(spec, profile=selected_groove,
                                            include_pad=include_pad,
                                            harmony_profile=selected_harmony)
@@ -106,6 +117,8 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
         elif production != "sketch":
             raise ValidationError("production must be sketch, refined or groove-template")
     project.metadata.update({"prompt": prompt, "planner": provenance["planner"], "ai_plan": str(provenance["ai_plan"]).lower()})
+    if plan_receipt is not None:
+        project.metadata["musical_plan_version"] = plan_receipt["version"]
     if model == "ollama":
         project.metadata.update({"model": provenance["model"], "model_digest": provenance["model_digest"]})
     adapter = SoundCraftAdapter(selected, timeout=soundcraft_timeout) if selected else None
@@ -119,12 +132,16 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
         (stage / "project.kuang.json").write_text(dumps(project), encoding="utf-8")
         (stage / "song.mid").write_bytes(midi.export_bytes(project))
         _write(stage / "song-spec.json", asdict(spec))
+        if plan_receipt is not None:
+            _write(stage / "musical-plan-evidence.json", plan_receipt)
         if groove_receipt is not None:
             _write(stage / "groove-evidence.json", groove_receipt)
         if arrangement_receipt is not None:
             _write(stage / "arrangement-evidence.json", arrangement_receipt)
         artifacts = {"canonical": str(destination / "project.kuang.json"), "midi": str(destination / "song.mid"),
                      "song_spec": str(destination / "song-spec.json"), "report": str(destination / "report.json")}
+        if plan_receipt is not None:
+            artifacts["musical_plan_evidence"] = str(destination / "musical-plan-evidence.json")
         if groove_receipt is not None:
             artifacts["groove_evidence"] = str(destination / "groove-evidence.json")
         if arrangement_receipt is not None:
@@ -158,6 +175,7 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
                   "artifacts": artifacts, "capabilities": capabilities, "validation": validation,
                   "native_export": export, "render": audio, "groove": groove_receipt,
                   "arrangement": arrangement_receipt, "actual_project_bars": project.bars,
+                  **({"musical_plan": plan_receipt} if plan_receipt else {}),
                   "interpretation_notes": messages,
                   "limitations": GROOVE_LIMITATIONS if production == "groove-template" else
                                  REFINED_LIMITATIONS if production == "refined" else LIMITATIONS, "tracks": len(project.tracks),
@@ -182,6 +200,7 @@ def run(args):
                     ollama_timeout=args.ollama_timeout, soundcraft=args.soundcraft,
                     soundcraft_timeout=args.soundcraft_timeout, render=args.render, production=args.production,
                     groove_profile=args.groove_profile, harmony_profile=args.harmony_profile,
-                    full_song_bars=args.full_song_bars)
+                    full_song_bars=args.full_song_bars,
+                    musical_plan_v2=args.musical_plan_v2)
     print(json.dumps(result, sort_keys=True, indent=2, ensure_ascii=False, allow_nan=False))
     return 0
