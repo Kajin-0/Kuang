@@ -120,8 +120,10 @@ def fit_diagnostics(project, region, kick_path, bass_path, chord_path,
     opened=[]
     try:
         streams={}
-        for role,path in (("kick",kick_path),("bass",bass_path),
-                          ("chords",chord_path),("fullmix",fullmix_path)):
+        sources=[("kick",kick_path),("bass",bass_path),("fullmix",fullmix_path)]
+        if chord_path is not None:
+            sources.append(("chords",chord_path))
+        for role,path in sources:
             path=Path(path)
             if path.is_symlink() or not path.is_file():
                 raise ValidationError("missing or symlinked source-fit WAV")

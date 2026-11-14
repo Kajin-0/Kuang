@@ -234,7 +234,7 @@ def _bind(project, assignments, adapter):
 
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
-           full_song_bars=None, master_preview=False):
+           full_song_bars=None, master_preview=False, contextual_shortlist=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -250,11 +250,19 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('master_preview must be boolean')
     if master_preview and not groove_template:
         raise ValidationError('--master-preview requires --groove-template')
+    if type(contextual_shortlist) is not bool:
+        raise ValidationError('contextual_shortlist must be boolean')
+    if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
+        raise ValidationError('--contextual-shortlist requires groove-template, per-role>=2, max-candidates>=4')
+    if contextual_shortlist and full_song_bars is not None:
+        raise ValidationError('full-length contextual-shortlist audition integration is not yet verified')
     import re
     planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
     spec,notes = rules_plan(planning_prompt,seed)
     if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
     full_length,_ = parse_long_form(prompt,full_song_bars,bpm=spec.bpm) if groove_template else (None,prompt)
+    if contextual_shortlist and full_length:
+        raise ValidationError('full-length contextual shortlist integration requires independent end-to-end validation')
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
     if not full_length and explicit and int(explicit.group(1)) != bars:
         raise ValidationError('prompt bar count conflicts with --bars')
@@ -279,6 +287,12 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             raise ValidationError('complete selection for every requested role required')
         palette_before = inventory(stage/'palette')
         adapter = PrivateExternal(plugin,soundcraft,workspace,stage/'scratch',selection)
+        if contextual_shortlist:
+            for role, candidates in selection.get('shortlist',{}).items():
+                for entry in candidates:
+                    if entry.get('status') != 'accepted' or entry.get('runtime_verified') is not True:
+                        raise ValidationError('one-prompt source must be verified before binding')
+                    adapter.selection[entry['source_sha256']] = entry
         adapter.capabilities(); defaults = _probe_defaults(adapter,stage)
         role_tracks = {'chord':'track-harmony','pad':'track-pad','bass':'track-bass'}
         assignments = {role_tracks[r]:_prepare(adapter,selection['roles'][r],defaults,stage/('prepare-'+r),timeout)
@@ -311,6 +325,21 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         native.export(project,sound_assets,assignments,stage/'calibration-native')
         native.render(stage/'calibration-native',stage/'calibration.wav',end_seconds=duration+12)
         library_path = workspace/'.local/producer/libebur128.so'
+        context_receipt = None
+        if contextual_shortlist:
+            from .house_one_prompt_context import choose_sources
+            assignments,context_receipt=choose_sources(project,assignments,
+                    selection.get('shortlist',{}),adapter,defaults,native,
+                    sound_assets,stage,duration=duration+12,timeout=timeout,
+                    library=str(library_path) if library_path.is_file() else None)
+            project = _bind(project,assignments,adapter)
+            for comparison in context_receipt['comparisons']:
+                if comparison.get('chosen'):
+                    selection['roles'][comparison['role']]=next(
+                        e for e in selection['shortlist'][comparison['role']]
+                        if e['source_sha256']==comparison['source_sha256'])
+            write(stage/'palette/selection.json',selection)
+            palette_before=inventory(stage/'palette')
         calibration = measure(stage/'calibration.wav',library=str(library_path) if library_path.is_file() else None)
         if calibration['clipped_samples'] or calibration['rms'] < 1e-6:
             raise ValidationError('calibration render clipped or silent')
@@ -338,6 +367,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if groove_receipt is not None: write(stage/'groove-evidence.json',groove_receipt)
         if arrangement_receipt is not None: write(stage/'arrangement-evidence.json',arrangement_receipt)
         if drum_evidence is not None: write(stage/'sample-selection.json',drum_evidence)
+        if context_receipt is not None: write(stage/'context-shortlist-evidence.json',context_receipt)
         write(stage/'report.json',{'version':'private-autonomous-create-1','prompt':prompt,'seed':seed,
             'composition':'rules-based house template, not neural music generation','selection':'palette/selection.json',
             'native':'native/session.scraft','audio':'preview.wav','render':render,'measurement':audio,
@@ -351,7 +381,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'sample_selection':'sample-selection.json' if drum_evidence else None,
             'sample_pack':'locally supplied CC0 house-core' if drum_evidence else None,
             'quality_judgment':'unreviewed; no professional audio quality established',
-            'master_preview_requested':master_preview})
+            'master_preview_requested':master_preview,
+            'contextual_shortlist_requested':contextual_shortlist,
+            'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None})
         if master_preview:
             # The standalone mastering API deliberately forbids modifying its
             # source tree. Use a separate scratch root and import the verified
@@ -363,7 +395,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                 shutil.move(str(pending),str(stage/'master-preview'))
         # The native bundle contains copies of third-party states and must remain private.
         for name in ['scratch','probe','probe-vital.scraft','commands.txt','reopened','calibration-native','calibration.wav',
-                     'drum-assets',
+                     'drum-assets','context-shortlist',
                      'cache','config','data','documents']:
             path=stage/name
             if path.is_dir(): shutil.rmtree(path)
@@ -390,6 +422,8 @@ def main(argv=None):
     parser.add_argument('--groove-profile',choices=('auto','straight','deep','jackin','minimal'),default='auto')
     parser.add_argument('--harmony-profile',choices=('auto','simple','extended'),default='auto')
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
+    parser.add_argument('--contextual-shortlist',action='store_true',
+                        help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
     parser.add_argument('--master-preview',action='store_true',
                         help='produce measured transparent and gentle-compression WAV derivatives')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
@@ -400,7 +434,8 @@ def main(argv=None):
                       private=args.private_third_party_presets,per_role=args.per_role,max_candidates=args.max_candidates,timeout=args.timeout,
                       groove_template=args.groove_template,sample_pack=args.sample_pack,groove_profile=args.groove_profile,
                       harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
-                      full_song_bars=args.full_song_bars,master_preview=args.master_preview)
+                      full_song_bars=args.full_song_bars,master_preview=args.master_preview,
+                      contextual_shortlist=args.contextual_shortlist)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
     print(json.dumps(result,indent=2,sort_keys=True)); return 0

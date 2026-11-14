@@ -533,8 +533,18 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
         if renderer is None and _plugin_info(plugin)['module_sha256'] != info['module_sha256']:
             raise ValidationError('plugin changed during audition')
         complete = len(selected) == len(intent['roles'])
+        # Preserve the *already independently auditioned* runner-up for a
+        # bounded same-prompt, locked-MIDI source compatibility check. This
+        # does not elevate the isolated heuristic into a perceptual verdict.
+        shortlist = {}
+        for role, entries in accepted.items():
+            eligible = [entry for entry in entries if entry['status'] == 'accepted'
+                        and entry['source_sha256'] != selected.get(role,{}).get('source_sha256')]
+            shortlist[role] = sorted(eligible,
+                key=lambda e: (-e['combined_score'], -e['semantic_score'],e['source_sha256']))[:1]
         selection = {'version': 'autonomous-palette-selection-1', 'prompt': prompt, 'seed': seed,
                      'status': 'complete' if complete else 'incomplete', 'roles': selected,
+                     'shortlist': shortlist,
                      'catalog_sha256': catalog_sha256, 'catalog_path': str(catalog), 'library_root': str(library),
                      'preset_root': str(preset_root), 'plugin': info,
                      'usage': 'Private local source references only; not an external_synth binding or a rendered song.',
