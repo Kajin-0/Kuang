@@ -37,3 +37,12 @@ These are degree sequences, not measured musical-quality scores. Distinct progre
 4. Enrich coherent voice leading and full-song thematic development through the existing harmony and arrangement modules, not a separate composer.
 
 Product intent: one prompt produces different, reliably strong-sounding, mostly finished editable house templates. Stop if this work breaks earlier host/source integrity or silently changes the default path.
+## Completed real private native smoke test: E-major deep house
+
+- Original independent baseline: E major, 123 BPM, seed 67, [0,4,5,3]. New V2: **same exact prompt/seed/key/tempo**, planned [0,3,0,4] under tonic_pedal family. Both use the same privately verified source SHA256 identities for Biow Bass 2, SNFKFutureBounce - Loaded Chords and minimal house pad 2; no extra catalog or native platform was introduced.
+- Native SoundCraft 0.11.0 + Vitalium **export/save/reopen/render passed** on both. The V2 native output measured **-23.7058 LUFS, -5.4292 dBTP, zero clipped samples**; baseline **-23.6279 LUFS, -5.4292 dBTP, zero clips**. Same 16-bar duration, 48 kHz/24-bit stereo.
+- The groove harmony interlock emitted a different chord MIDI fingerprint; progression choice reached the actual MIDI/native path rather than staying an unused report field.
+- Two 16-bar gain-only comparison WAVs were matched to approximately -20.077 LUFS each, with true peaks -1.878 and -1.800 dBTP and zero clips, packaged together. Original WAVs/native sessions and SHA256 evidence remain preserved privately under .local/independent-deep-E-harmony-20261114/, .local/independent-deep-E-musicalplan-v2-20261114/ and .local/musical-plan-v2-listening-20261114/.
+- Private listening bundle: https://gofile.io/d/2VuIinCb (external share subject to host retention). **No human musical-quality verdict** has been obtained for V2; the native smoke test only confirms compatible, playable project generation.
+
+**Status:** symbolic matrix gate and first native one-prompt V2 gate passed; keep flag opt-in. Further keys/styles, effect-preset contextual compatibility and listener quality comparisons remain open.
