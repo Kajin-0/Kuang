@@ -239,7 +239,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
            groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
            groove_pocket_diagnostics=False, groove_identity_v2=False,
-           timbre_source_review=False, contextual_pad_rescue=False):
+           timbre_source_review=False, contextual_pad_rescue=False,
+           pad_level_calibration=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -277,6 +278,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             not groove_impact or type(preferred_bass_source_sha) is not str or
             not re.fullmatch(r'[0-9a-f]{64}',preferred_bass_source_sha)):
         raise ValidationError('--preferred-bass-source-sha requires --groove-impact and valid SHA256')
+    if type(pad_level_calibration) is not bool or (pad_level_calibration and not groove_template):
+        raise ValidationError("--pad-level-calibration requires --groove-template")
     if type(contextual_pad_rescue) is not bool or (contextual_pad_rescue and not contextual_shortlist):
         raise ValidationError("--contextual-pad-rescue requires --contextual-shortlist")
     if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
@@ -285,6 +288,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     spec,notes = rules_plan(planning_prompt,seed)
     if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
     full_length,_ = parse_long_form(prompt,full_song_bars,bpm=spec.bpm) if groove_template else (None,prompt)
+    if pad_level_calibration and full_length is not None:
+        raise ValidationError('--pad-level-calibration requires a short song nucleus')
     if groove_pocket_diagnostics and full_length is not None:
         raise ValidationError('--groove-pocket-diagnostics supports short groove nuclei only, not full songs')
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
@@ -418,6 +423,24 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         audio = measure(stage/'preview.wav',library=str(library_path) if library_path.is_file() else None)
         if audio['clipped_samples'] or audio['true_peak_dbtp'] > -1 or audio['rms'] < 1e-6:
             raise ValidationError('render failed true-peak, clipping or silence gate')
+        pad_level_evidence = None
+        if pad_level_calibration:
+            from .house_pad_native_level import native_pad_balance
+            revised,level_audio,level_render,pad_level_evidence=native_pad_balance(
+                project,native,assignments,sound_assets,stage,
+                duration_seconds=duration,
+                library=str(library_path) if library_path.is_file() else None)
+            if level_audio is not None:
+                # Both temporary artifacts are verified before publication.
+                # Everything here is still in the isolated private staging tree.
+                # Move the complete private native directory without exposing
+                # individual third-party patches outside the workspace.
+                shutil.rmtree(stage/'native')
+                (stage/'pad-level-native').rename(stage/'native')
+                (stage/'preview.wav').unlink()
+                (stage/'pad-level-preview.wav').rename(stage/'preview.wav')
+                project=revised;audio=level_audio;render=level_render
+            write(stage/'pad-level-evidence.json',pad_level_evidence)
         if (inventory(stage/'palette') != palette_before or
             hashlib.sha256(_bounded_read(catalog,MAX_CATALOG_BYTES)).hexdigest() != selection['catalog_sha256'] or
             _plugin_info(plugin)['module_sha256'] != adapter.plugin_sha):
@@ -454,6 +477,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'groove_identity_v2_requested':groove_identity_v2,
             'preferred_bass_source_sha':preferred_bass_source_sha,
             'chord_level_calibration_requested':chord_level_calibration,
+            'pad_level_calibration_requested':pad_level_calibration,
+            'pad_level_evidence':'pad-level-evidence.json' if pad_level_evidence else None,
             'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
             'contextual_shortlist_requested':contextual_shortlist,
             'contextual_pad_rescue_requested':contextual_pad_rescue,
@@ -479,6 +504,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             if path.is_dir(): shutil.rmtree(path)
             elif path.exists(): path.unlink()
         for path in stage.glob('prepare-*'): shutil.rmtree(path)
+        for path in stage.glob('pad-measure-*'): shutil.rmtree(path)
+        if (stage/'pad-level-reopened').is_dir(): shutil.rmtree(stage/'pad-level-reopened')
         dest.mkdir(mode=0o700)
         try:
             for child in stage.iterdir(): child.rename(dest/child.name)
@@ -514,6 +541,8 @@ def main(argv=None):
                         help='opt-in Phase44-reference-derived kick/sample balance, rhythmic bass accents and shuffled hats; not a music quality guarantee')
     parser.add_argument('--chord-level-calibration',action='store_true',
                         help='experimental bounded +/-3dB chord-source audition RMS gain trim, no creative quality claim')
+    parser.add_argument('--pad-level-calibration',action='store_true',
+                        help='opt-in measured per-section native pad balance against chords at 100/400ms and sample peaks')
     parser.add_argument('--contextual-pad-rescue',action='store_true',
                         help='opt-in native pad rescue for severe lower-mid masking; requires --contextual-shortlist')
     parser.add_argument('--contextual-shortlist',action='store_true',
@@ -537,6 +566,7 @@ def main(argv=None):
                       groove_identity_v2=args.groove_identity_v2,
                       timbre_source_review=args.timbre_source_review,
                       contextual_pad_rescue=args.contextual_pad_rescue,
+                      pad_level_calibration=args.pad_level_calibration,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2

@@ -33,6 +33,24 @@ class AutonomousCreateTests(unittest.TestCase):
         return ac.create('deep house in C minor no lead',self.catalog,self.plugin,self.host,
                          self.root/'output',**kw)
 
+    def test_pad_level_calibration_fails_closed_without_groove_template(self):
+        with patch.object(ac,"select_palette") as selection:
+            with self.assertRaisesRegex(ValidationError,"pad-level-calibration requires"):
+                self.call(private=True,pad_level_calibration=True)
+            with self.assertRaisesRegex(ValidationError,"pad-level-calibration requires"):
+                self.call(private=True,groove_template=True,
+                          pad_level_calibration="yes")
+        selection.assert_not_called()
+
+    def test_full_song_pad_level_calibration_fails_before_private_selection(self):
+        with patch.object(ac,"select_palette") as selection:
+            with self.assertRaisesRegex(ValidationError,"short song nucleus"):
+                ac.create("deep house in C minor, 128 bars",self.catalog,
+                          self.plugin,self.host,self.root/"output",private=True,
+                          groove_template=True,pad_level_calibration=True,
+                          full_song_bars=128)
+        selection.assert_not_called()
+
     def test_chord_level_calibration_is_explicit_optin(self):
         with patch.object(ac,"select_palette") as selection:
             with self.assertRaisesRegex(ValidationError,"requires --groove-template"):
