@@ -111,9 +111,52 @@ def _bass_pattern(profile: str, alternate: bool):
         (6, 2, 0), (14, 2, 0))
 
 
+
+def _bass_groove_identity(profile: str, seed: int, bar: int):
+    """Four musically distinct, bounded bass rhythm families.
+
+    Intentional offbeat roots are retained, but profile and phrase define the
+    movement. This is not a musical quality score or a Phase44 transcription.
+    Each pattern contains (sixteenth-step, note-gate-kind, diatonic offset).
+    """
+    if profile not in PROFILES or type(seed) is not int or type(bar) is not int:
+        raise ValidationError("invalid groove identity request")
+    phrase = (seed + bar // 4) % 3
+    if profile == "deep":
+        patterns = (
+            ((2,3,0),(6,2,0),(10,3,0)),
+            ((2,2,0),(7,1,0),(10,3,0),(14,1,7)),
+            ((2,3,0),(6,1,0),(10,2,0),(13,1,0)),
+        )
+    elif profile == "straight":
+        patterns = (
+            ((2,3,0),(6,2,0),(10,3,0),(14,1,0)),
+            ((2,2,0),(6,2,0),(10,2,0),(14,1,7)),
+            ((2,3,0),(6,2,0),(11,2,0),(14,1,0)),
+        )
+    elif profile == "jackin":
+        patterns = (
+            ((2,2,0),(5,1,4),(9,2,0),(13,1,0)),
+            ((2,2,0),(6,1,0),(9,2,4),(14,1,0)),
+            ((2,2,0),(5,1,0),(10,2,4),(13,1,0)),
+        )
+    else:  # Minimal house relies on pauses rather than constant dense bass.
+        patterns = (
+            ((2,3,0),(10,3,0)),
+            ((6,2,0),(14,2,0)),
+            ((2,3,0),(10,2,0),(14,1,0)),
+        )
+    motif = patterns[phrase]
+    # A selective bar-end pickup changes an established phrase rather than
+    # randomly changing every note and weakening the recognizable motif.
+    if profile in ("deep","straight") and bar % 8 == 7 and motif[-1][0] < 13:
+        motif += ((14,1,0),)
+    return motif
+
+
 def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
              harmony_profile: str = "extended", impact_pocket: bool = False,
-             harmony_interlock: bool = True):
+             harmony_interlock: bool = True, groove_identity_v2: bool = False):
     """Build a separate production; preserve established sketch/refined behavior."""
     spec = validate_spec(spec)
     if spec.genre != "house" or spec.arrangement != "song":
@@ -121,7 +164,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     if not {"kick", "snare", "hats", "bass", "harmony"} <= set(spec.instruments):
         raise ValidationError("groove-template requires kick, snare, hats, bass and harmony")
     if (profile not in PROFILES or type(include_pad) is not bool or
-        type(impact_pocket) is not bool or type(harmony_interlock) is not bool):
+        type(impact_pocket) is not bool or type(harmony_interlock) is not bool or
+        type(groove_identity_v2) is not bool or (groove_identity_v2 and not impact_pocket)):
         raise ValidationError("invalid groove profile, pad or impact option")
 
     # Explicitly omit the failed/future melody engine, rather than merely muting it.
@@ -221,10 +265,10 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
                     if root > 40 + spec.tonic:
                         root -= 12
                     alternate = (bar + spec.seed) % 2 == 1
-                    if impact_pocket:
-                        # Phase43/44 user-approved reference: offbeat roots at
-                        # 2/6/10 sixteenths and sparse octave pickup on 13.
-                        # Vary accents by profile/bar without copying one song.
+                    if groove_identity_v2:
+                        motif = _bass_groove_identity(profile, spec.seed, bar)
+                    elif impact_pocket:
+                        # Legacy Phase44-inspired offbeat pocket retained unchanged.
                         motif = ((2, 2, 0), (6, 2, 0), (10, 2, 0))
                         if (profile != 'minimal' or alternate) and (bar % 2 == 0 or profile == 'jackin'):
                             motif += ((13, 1, 7),)
@@ -233,9 +277,17 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
                     for step, length, note_degree in motif:
                         note = root if note_degree == 0 else (
                             root + pitch(degree + note_degree, 3) - pitch(degree, 3))
-                        length_tick = (326 if length == 2 else 211) if impact_pocket else length * step_ticks - 52
-                        velocity = ((95, 90, 94, 80)[(2,6,10,13).index(step)]
-                                    if impact_pocket else (87 if step in (2, 10) else 77))
+                        if groove_identity_v2:
+                            # Longer offbeat body, capped before the next beat.
+                            length_tick = {1: 190, 2: 342, 3: 420}[length]
+                            velocity = 91 if note_degree == 0 else 77
+                            if step >= 13:
+                                velocity -= 8
+                        else:
+                            length_tick = ((326 if length == 2 else 211)
+                                           if impact_pocket else length * step_ticks - 52)
+                            velocity = ((95, 90, 94, 80)[(2,6,10,13).index(step)]
+                                        if impact_pocket else (87 if step in (2, 10) else 77))
                         add(base + step * step_ticks + (0 if impact_pocket else 12), length_tick,
                             note, velocity)
             if notes:
@@ -315,6 +367,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     p.metadata["composer"] = VERSION
     if impact_pocket:
         p.metadata['groove_impact_pocket'] = 'source-preserving-impact-v2'
+        if groove_identity_v2:
+            p.metadata['groove_identity_version'] = 'style-dependent-bass-pocket-v2'
         p.metadata['ducking_policy'] = 'bass-tail-3db-115ms; pad-1.25db-143ms; harmony-dry-0db'
     p.metadata["groove_profile"] = profile
     if interlock_evidence is not None:
@@ -329,6 +383,7 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         "version": VERSION, "selected_profile": profile,
         "groove_impact_pocket": impact_pocket,
         "impact_ducking_policy": ("source-preserving-impact-v2" if impact_pocket else "legacy"),
+        "groove_identity_v2": groove_identity_v2,
         "seed": spec.seed, "full_groove_bars": width,
         "technical_gates": gates, "technical_pass": True,
         "perceptual_quality": "NEEDS_LISTENING",

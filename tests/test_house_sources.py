@@ -97,6 +97,31 @@ class HouseSourceTests(unittest.TestCase):
             "name":"house-core","license":"CC0-1.0","samples":new}))
         prepare_kit(project,self.pack,self.root/"bad-kit","deep",0,impact_pocket=True)
 
+    def test_opt_in_identity_uses_profile_kick_not_global_phase44_kick(self):
+        # Demonstrate that the new generator is not forced to sound like the
+        # same source pairing for unrelated house profiles.
+        self.samples["house.kick.punch-02"]={
+            "path":"samples/kick-1.wav","type":"kick",
+            "character_tags":["punchy","solid"],
+            "license_source":"Own synthesized CC0 sample"}
+        (self.pack/"manifest.json").write_text(json.dumps({
+            "name":"house-core","license":"CC0-1.0","samples":self.samples}))
+        spec,_=rules_plan("deep house in C minor 16 bars",43)
+        legacy,_=template(spec,profile="deep",impact_pocket=True)
+        new,_=template(spec,profile="deep",impact_pocket=True,
+                       groove_identity_v2=True)
+        _,_,first=prepare_kit(legacy,self.pack,self.root/"old-kit","deep",
+                              impact_pocket=True)
+        _,_,second=prepare_kit(new,self.pack,self.root/"identity-kit","deep",
+                               impact_pocket=True,groove_identity_v2=True)
+        self.assertEqual(first["kick"]["source_id"],"house.kick.punch-02")
+        self.assertEqual(second["kick"]["source_id"],"house.kick.deep-0")
+        self.assertNotEqual(first["kick"]["source_id"],second["kick"]["source_id"])
+        self.assertTrue(second["kick"]["source_kind"].startswith("locally provided"))
+        with self.assertRaises(ValidationError):
+            prepare_kit(new,self.pack,self.root/"bad-identity-kit","deep",
+                        impact_pocket=False,groove_identity_v2=True)
+
     def test_exact_deterministic_resample_and_valid_native_format(self):
         source = self.pack / "samples/kick-0.wav"
         a = self.root / "first.wav"

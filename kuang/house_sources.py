@@ -157,10 +157,12 @@ def _to_48k_pcm(src, dest):
             "safety_attenuation_db": -1}
 
 
-def prepare_kit(project, pack, library, profile, index=0, impact_pocket=False):
+def prepare_kit(project, pack, library, profile, index=0, impact_pocket=False,
+                groove_identity_v2=False):
     """Install an original four/five-drum-role kit without changing MIDI events."""
     if (profile not in PREFER or type(index) is not int or index not in (0, 1)
-            or type(impact_pocket) is not bool):
+            or type(impact_pocket) is not bool or type(groove_identity_v2) is not bool
+            or (groove_identity_v2 and not impact_pocket)):
         raise ValidationError("unknown kit or impact candidate")
     library = Path(library)
     library.mkdir(parents=True, exist_ok=False)
@@ -168,7 +170,7 @@ def prepare_kit(project, pack, library, profile, index=0, impact_pocket=False):
     # The user's approved Phase44 kick is an explicitly CC0-audited source
     # already present in this same pack, not a private sample redistribution.
     approved_kick = None
-    if impact_pocket and profile in ('straight','deep','jackin'):
+    if impact_pocket and not groove_identity_v2 and profile in ('straight','deep','jackin'):
         approved_kick = next((c for c in _source_candidates(pack,'straight')['kick']
                               if c[1] == 'house.kick.punch-02'),None)
         if approved_kick is None:

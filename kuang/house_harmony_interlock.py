@@ -54,6 +54,12 @@ def _choose_positions(bar, count, bass_ticks, profile, seed):
         else:
             steps = pattern
         anchors = [step * STEP for step in steps]
+        # A pattern with two adjacent sixteenths can cause overlapping
+        # same-pitch chord voices when source patches have 300-tick gates.
+        # Skip those candidates before comparing bass-relative positions.
+        # This is a validator correction, not a musical-quality ranking.
+        if any(y-x < 330 for x,y in zip(anchors,anchors[1:])):
+            continue
         # 80 ticks = 42ms at 126BPM. This deliberately measures only
         # simultaneous attack collisions, not musical sustain/psychoacoustics.
         near = sum(min((abs((bar * BAR + x) - t) for t in bass_ticks), default=BAR)

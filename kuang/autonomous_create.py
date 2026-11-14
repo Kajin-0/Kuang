@@ -238,7 +238,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
            full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
            groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
-           groove_pocket_diagnostics=False):
+           groove_pocket_diagnostics=False, groove_identity_v2=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -262,6 +262,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('--chord-level-calibration requires --groove-template')
     if type(groove_impact) is not bool or (groove_impact and (not groove_template or sample_pack is None)):
         raise ValidationError('--groove-impact requires --groove-template and licensed --sample-pack')
+    if (type(groove_identity_v2) is not bool or
+            (groove_identity_v2 and
+             (not groove_template or not groove_impact or sample_pack is None))):
+        raise ValidationError("--groove-identity-v2 requires groove-template, groove-impact and audited sample-pack")
     if type(groove_pocket_diagnostics) is not bool or (groove_pocket_diagnostics and not groove_template):
         raise ValidationError("groove pocket diagnostics require a house groove template")
     if type(musical_plan_v2) is not bool or (musical_plan_v2 and not groove_template):
@@ -325,14 +329,16 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if groove_template:
             project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
                                                include_pad='pad' in expected_roles,
-                                               impact_pocket=groove_impact)
+                                               impact_pocket=groove_impact,
+                                               groove_identity_v2=groove_identity_v2)
             if full_length and not contextual_shortlist:
                 project,arrangement_receipt = arrange_full_song(project,bars=full_length,
                                                                profile=gp,seed=seed)
             if sample_pack is not None:
                 project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
                                                stage/'drum-assets',gp,drum_variant,
-                                               impact_pocket=groove_impact)
+                                               impact_pocket=groove_impact,
+                                               groove_identity_v2=groove_identity_v2)
         else:
             project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
         if plan_receipt is not None:
@@ -431,6 +437,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'quality_judgment':'unreviewed; no professional audio quality established',
             'master_preview_requested':master_preview,
             'groove_impact_requested':groove_impact,
+            'groove_identity_v2_requested':groove_identity_v2,
             'preferred_bass_source_sha':preferred_bass_source_sha,
             'chord_level_calibration_requested':chord_level_calibration,
             'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
@@ -480,6 +487,8 @@ def main(argv=None):
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
     parser.add_argument('--preferred-bass-source-sha',
                         help='private user-approved Vital source SHA256; opt-in human-producer bass priority after independent audition, not a generic quality score')
+    parser.add_argument('--groove-identity-v2',action='store_true',
+                        help='opt-in distinct bass motifs and audited style-specific kick; requires --groove-impact and --sample-pack')
     parser.add_argument('--groove-pocket-diagnostics',action='store_true',
                         help='opt-in fullmix 25-90/90-250Hz kick-to-offbeat pocket diagnostics; not musical quality')
     parser.add_argument('--musical-plan-v2',action='store_true',
@@ -506,6 +515,7 @@ def main(argv=None):
                       groove_impact=args.groove_impact,
                       musical_plan_v2=args.musical_plan_v2,
                       groove_pocket_diagnostics=args.groove_pocket_diagnostics,
+                      groove_identity_v2=args.groove_identity_v2,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
