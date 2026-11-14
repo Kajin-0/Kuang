@@ -39,6 +39,65 @@ class OnePromptContextTests(unittest.TestCase):
                     mock.assert_not_called()
                 self.assertFalse((self.root/"out").exists())
 
+    def test_pad_rescue_requires_explicit_context_mode_and_valid_boolean(self):
+        for opts in (
+            {"contextual_pad_rescue":True},
+            {"groove_template":True,"contextual_pad_rescue":True},
+            {"groove_template":True,"contextual_shortlist":True,
+             "contextual_pad_rescue":"yes"},
+        ):
+            with self.subTest(opts=opts):
+                with patch.object(ac,"select_palette") as selector:
+                    with self.assertRaises(ValidationError):
+                        self.try_create(**opts)
+                    selector.assert_not_called()
+                self.assertFalse((self.root/"out").exists())
+
+    def test_no_pad_source_review_skips_without_auto_adding_pad(self):
+        from kuang.house_timbre_suitability import source_names
+        # Source review remains purely opt-in; no new song role is introduced.
+        selection={"status":"complete","roles":{}}
+        receipt=source_names(selection)
+        self.assertEqual(receipt["roles"],{})
+        self.assertIsNone(receipt["winner"])
+
+    def test_pad_context_screening_skips_clean_songs_without_native_render(self):
+        from kuang.house_one_prompt_context import _pad_candidate
+        from unittest.mock import Mock
+        candidate={"status":"accepted","runtime_verified":True,
+                   "source_sha256":"b"*64,"source_preset_name":"verified other pad"}
+        native=Mock()
+        # This models the normal A/B situation: verified pad present but no
+        # isolated-source review flag indicating excess lower-mid congestion.
+        result,receipt=_pad_candidate(
+            project=None,assignments={"track-pad":"private-patch"},
+            shortlist={"pad":[candidate]},adapter=None,defaults=None,native=native,
+            sound_assets=None,scratch=None,window=None,excerpt_seconds=None,
+            timeout=None,library=None,baseline_meter=None,
+            original_bass_stem=None,
+            pad_review={"source_sha256":"a"*64,"review_flags":[],
+                        "source_name":"existing suitable pad"},
+            original_hash=None,baseline_hard=set())
+        self.assertIsNone(result)
+        self.assertEqual(receipt["status"],"SKIPPED_NO_PAD_CONFLICT_FLAG")
+        self.assertFalse(receipt["chosen"])
+        native.export.assert_not_called()
+        native.render.assert_not_called()
+
+    def test_pad_context_does_not_insert_missing_pad(self):
+        from kuang.house_one_prompt_context import _pad_candidate
+        from unittest.mock import Mock
+        native=Mock()
+        candidate,observation=_pad_candidate(
+            project=None,assignments={},shortlist={},adapter=None,
+            defaults=None,native=native,sound_assets=None,scratch=None,
+            window=None,excerpt_seconds=None,timeout=None,library=None,
+            baseline_meter=None,original_bass_stem=None,
+            pad_review=None,original_hash=None,baseline_hard=set())
+        self.assertIsNone(candidate)
+        self.assertEqual(observation["status"],"SKIPPED_NO_PAD")
+        native.render.assert_not_called()
+
     def test_full_length_context_mode_uses_same_prompt_short_nucleus(self):
         """Long-form requests must now reach native-palette preflight.
 

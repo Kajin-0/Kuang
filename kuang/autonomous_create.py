@@ -239,7 +239,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
            groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
            groove_pocket_diagnostics=False, groove_identity_v2=False,
-           timbre_source_review=False):
+           timbre_source_review=False, contextual_pad_rescue=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -277,6 +277,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             not groove_impact or type(preferred_bass_source_sha) is not str or
             not re.fullmatch(r'[0-9a-f]{64}',preferred_bass_source_sha)):
         raise ValidationError('--preferred-bass-source-sha requires --groove-impact and valid SHA256')
+    if type(contextual_pad_rescue) is not bool or (contextual_pad_rescue and not contextual_shortlist):
+        raise ValidationError("--contextual-pad-rescue requires --contextual-shortlist")
     if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
         raise ValidationError('--contextual-shortlist requires groove-template, per-role>=2, max-candidates>=4')
     planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
@@ -315,10 +317,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             raise ValidationError('complete selection for every requested role required')
         palette_before = inventory(stage/'palette')
         timbre_review = None
-        if timbre_source_review:
+        if timbre_source_review or contextual_pad_rescue:
             from .house_timbre_suitability import source_names
             timbre_review = source_names(selection)
-            write(stage/'timbre-source-review.json', timbre_review)
+            if timbre_source_review: write(stage/'timbre-source-review.json', timbre_review)
         adapter = PrivateExternal(plugin,soundcraft,workspace,stage/'scratch',selection)
         if contextual_shortlist:
             for role, candidates in selection.get('shortlist',{}).items():
@@ -378,7 +380,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             assignments,context_receipt=choose_sources(project,assignments,
                     selection.get('shortlist',{}),adapter,defaults,native,
                     sound_assets,stage,duration=audition_duration,timeout=timeout,
-                    library=str(library_path) if library_path.is_file() else None)
+                    library=str(library_path) if library_path.is_file() else None,
+                    pad_rescue=contextual_pad_rescue,
+                    pad_review=(timbre_review["roles"].get("pad")
+                                if contextual_pad_rescue else None))
             project = _bind(project,assignments,adapter)
             for comparison in context_receipt['comparisons']:
                 if comparison.get('chosen'):
@@ -451,6 +456,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'chord_level_calibration_requested':chord_level_calibration,
             'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
             'contextual_shortlist_requested':contextual_shortlist,
+            'contextual_pad_rescue_requested':contextual_pad_rescue,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
             **({'groove_pocket_evidence':'groove-pocket-evidence.json'} if pocket_receipt else {}),
@@ -508,6 +514,8 @@ def main(argv=None):
                         help='opt-in Phase44-reference-derived kick/sample balance, rhythmic bass accents and shuffled hats; not a music quality guarantee')
     parser.add_argument('--chord-level-calibration',action='store_true',
                         help='experimental bounded +/-3dB chord-source audition RMS gain trim, no creative quality claim')
+    parser.add_argument('--contextual-pad-rescue',action='store_true',
+                        help='opt-in native pad rescue for severe lower-mid masking; requires --contextual-shortlist')
     parser.add_argument('--contextual-shortlist',action='store_true',
                         help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
     parser.add_argument('--master-preview',action='store_true',
@@ -528,6 +536,7 @@ def main(argv=None):
                       groove_pocket_diagnostics=args.groove_pocket_diagnostics,
                       groove_identity_v2=args.groove_identity_v2,
                       timbre_source_review=args.timbre_source_review,
+                      contextual_pad_rescue=args.contextual_pad_rescue,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
