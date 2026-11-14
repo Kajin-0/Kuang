@@ -238,7 +238,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
            full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
            groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False,
-           groove_pocket_diagnostics=False, groove_identity_v2=False):
+           groove_pocket_diagnostics=False, groove_identity_v2=False,
+           timbre_source_review=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -250,6 +251,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('output cannot be inside preset library or plugin')
     if full_song_bars is not None and not groove_template:
         raise ValidationError('--full-song-bars requires --groove-template')
+    if type(timbre_source_review) is not bool or (timbre_source_review and not groove_template):
+        raise ValidationError("--timbre-source-review requires --groove-template")
     if type(master_preview) is not bool:
         raise ValidationError('master_preview must be boolean')
     if master_preview and not groove_template:
@@ -311,6 +314,11 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if selection['status'] != 'complete' or set(selection['roles']) != expected_roles:
             raise ValidationError('complete selection for every requested role required')
         palette_before = inventory(stage/'palette')
+        timbre_review = None
+        if timbre_source_review:
+            from .house_timbre_suitability import source_names
+            timbre_review = source_names(selection)
+            write(stage/'timbre-source-review.json', timbre_review)
         adapter = PrivateExternal(plugin,soundcraft,workspace,stage/'scratch',selection)
         if contextual_shortlist:
             for role, candidates in selection.get('shortlist',{}).items():
@@ -428,6 +436,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'native_save_reopen_equal':True,'calibration_true_peak_dbtp':calibration['true_peak_dbtp'],
             'native_track_gain_adjustment_db':adjustment,
             'source_presets':'license unknown; private use only','notes':notes,
+            **({'timbre_source_review':'timbre-source-review.json'} if timbre_review else {}),
             'groove_template':groove_template,'groove_profile':gp,'harmony_profile':hp,
             'groove_evidence':'groove-evidence.json' if groove_receipt else None,
             'arrangement_evidence':'arrangement-evidence.json' if arrangement_receipt else None,
@@ -487,6 +496,8 @@ def main(argv=None):
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
     parser.add_argument('--preferred-bass-source-sha',
                         help='private user-approved Vital source SHA256; opt-in human-producer bass priority after independent audition, not a generic quality score')
+    parser.add_argument('--timbre-source-review',action='store_true',
+                        help='opt-in conservative role-aware preset review flags; no automatic source replacement')
     parser.add_argument('--groove-identity-v2',action='store_true',
                         help='opt-in distinct bass motifs and audited style-specific kick; requires --groove-impact and --sample-pack')
     parser.add_argument('--groove-pocket-diagnostics',action='store_true',
@@ -516,6 +527,7 @@ def main(argv=None):
                       musical_plan_v2=args.musical_plan_v2,
                       groove_pocket_diagnostics=args.groove_pocket_diagnostics,
                       groove_identity_v2=args.groove_identity_v2,
+                      timbre_source_review=args.timbre_source_review,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
