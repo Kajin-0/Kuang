@@ -13,6 +13,7 @@ from dataclasses import asdict
 
 from .composer import SCALES, compose
 from .house_harmony import apply_harmony
+from .house_harmony_interlock import apply_interlock
 from .production import refine_house
 from .schema import (
     BAR, PPQ, AutomationLane, AutomationPoint, Clip, Note,
@@ -111,7 +112,8 @@ def _bass_pattern(profile: str, alternate: bool):
 
 
 def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
-             harmony_profile: str = "extended", impact_pocket: bool = False):
+             harmony_profile: str = "extended", impact_pocket: bool = False,
+             harmony_interlock: bool = True):
     """Build a separate production; preserve established sketch/refined behavior."""
     spec = validate_spec(spec)
     if spec.genre != "house" or spec.arrangement != "song":
@@ -119,7 +121,7 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     if not {"kick", "snare", "hats", "bass", "harmony"} <= set(spec.instruments):
         raise ValidationError("groove-template requires kick, snare, hats, bass and harmony")
     if (profile not in PROFILES or type(include_pad) is not bool or
-        type(impact_pocket) is not bool):
+        type(impact_pocket) is not bool or type(harmony_interlock) is not bool):
         raise ValidationError("invalid groove profile, pad or impact option")
 
     # Explicitly omit the failed/future melody engine, rather than merely muting it.
@@ -285,6 +287,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
 
     # Adjust chord vocabulary without touching the approved kick/bass rhythm.
     harmonic_evidence = apply_harmony(p, spec, harmony_profile)
+    interlock_evidence = (apply_interlock(p, profile, spec.seed)
+                          if impact_pocket and harmony_interlock else None)
 
     # Machine-checkable G1 structural gates, **not** a listening approval.
     groove = p.sections[1]
@@ -313,6 +317,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         p.metadata['groove_impact_pocket'] = 'source-preserving-impact-v2'
         p.metadata['ducking_policy'] = 'bass-tail-3db-115ms; pad-1.25db-143ms; harmony-dry-0db'
     p.metadata["groove_profile"] = profile
+    if interlock_evidence is not None:
+        p.metadata["harmony_interlock_version"] = interlock_evidence["version"]
     p.metadata["groove_gates"] = json.dumps(gates, sort_keys=True)
     validate(p)
     groove_events = {
@@ -331,7 +337,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         "groove_fingerprint_sha256": hashlib.sha256(json.dumps(
             groove_events, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         "full_groove_onsets": groove_events,
-        "melody_roles": [], "harmony": harmonic_evidence, "limitations": LIMITATIONS,
+        "melody_roles": [], "harmony": harmonic_evidence,
+        "harmony_interlock": interlock_evidence, "limitations": LIMITATIONS,
         "song_spec": asdict(spec),
     }
     return p, receipt
