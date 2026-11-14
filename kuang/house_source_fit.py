@@ -139,6 +139,7 @@ def fit_diagnostics(project, region, kick_path, bass_path, chord_path,
         # Use two independent time windows relative to actual kick onset.
         # No BPM hardcoding and no arbitrary beat subdivision assumptions.
         near,between,kick_early,kick_late = [],[],[],[]
+        early_offbeat,late_offbeat = [],[]
         used_ticks=[]
         summed=separate=0.
         for tick,t in zip(ticks,samples):
@@ -151,6 +152,11 @@ def fit_diagnostics(project, region, kick_path, bass_path, chord_path,
             separate+=b
             near.append(_rms(_at(streams["bass"],t,round(.10*RATE)))**2)
             between.append(_rms(_at(streams["bass"],t+round(.15*RATE),round(.20*RATE)))**2)
+            # Two equal offbeat windows separate the attack portion from the
+            # subsequent bass body. These are absolute kick-relative windows,
+            # not a subjective sustain or groove quality score.
+            early_offbeat.append(_rms(_at(streams["bass"],t+round(.15*RATE),round(.10*RATE)))**2)
+            late_offbeat.append(_rms(_at(streams["bass"],t+round(.25*RATE),round(.10*RATE)))**2)
             kick_early.append(max(abs(v) for pair in kick_fft[:round(.035*RATE)] for v in pair))
             kick_late.append(_rms(_at(streams["kick"],t+round(.035*RATE),round(.085*RATE))))
         if len(near)<4:
@@ -170,6 +176,10 @@ def fit_diagnostics(project, region, kick_path, bass_path, chord_path,
         kick_transient=sum(kick_early)/len(kick_early)
         kick_body=sum(kick_late)/len(kick_late)
         bass_duck=_db_ratio(mean_near,mean_between)
+        # A negative value signals falling energy from 150-250 ms to 250-350
+        # ms after kick, but does NOT prove a weak musical groove. A bass note
+        # may intentionally enter late or retrigger in either interval.
+        bass_offbeat_body=_db_ratio(sum(late_offbeat),sum(early_offbeat))
         sub_summation=_db_ratio(summed,separate)
         mono_retention=_db_ratio(mid_power,stereo_power)
         kick_attack=(round(20*math.log10(kick_transient/kick_body),3)
@@ -189,6 +199,8 @@ def fit_diagnostics(project, region, kick_path, bass_path, chord_path,
             "sub_fft_bin_range_hz":[2*RATE/FFT,10*RATE/FFT],
             "source_stems_exactly_frame_aligned":True,
             "bass_on_kick_vs_between_power_db":bass_duck,
+            "bass_late_vs_early_offbeat_power_db":bass_offbeat_body,
+            "bass_offbeat_windows_ms":[[150,250],[250,350]],
             "linear_sum_kick_bass_sub_interference_db":sub_summation,
             "full_mix_sub_mono_retention_db":mono_retention,
             "kick_early_peak_vs_late_rms_db":kick_attack,
@@ -199,6 +211,7 @@ def fit_diagnostics(project, region, kick_path, bass_path, chord_path,
                 "Native isolated stems include wet FX but nonlinear mix-bus interaction is not reconstructed.",
                 "FFT analysis uses 23.4–117.2 Hz bins, not exact continuous 20–120 Hz.",
                 "Onset-average energies depend on source notes, sample timbre, groove and ducking envelope.",
+                "Late-vs-early offbeat power is a source-dependent envelope descriptor, not a sustain or musical quality verdict.",
                 "No single numeric target decides sound-source quality or subjective masking."
             ]
         }
