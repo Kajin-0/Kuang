@@ -89,6 +89,30 @@ class GrooveTemplateTests(unittest.TestCase):
         self.assertEqual(evidence["source_selection"],"built-in SoundCraft instruments only; no real sample audition")
         self.assertEqual(template(spec,profile="deep",include_pad=False)[0].metadata.get("groove_impact_pocket"),None)
 
+    def test_impact_duck_preserves_dry_harmony_and_tightens_bass_recovery(self):
+        spec,_=rules_plan("deep house in C minor, 16 bars",43)
+        p,proof=template(spec,profile="deep",include_pad=True,impact_pocket=True)
+        validate(p)
+        self.assertEqual(proof["impact_ducking_policy"],"source-preserving-impact-v2")
+        self.assertFalse(any(a.id=="production-harmony-duck" for a in p.automation))
+        tracks={t.id:t for t in p.tracks}
+        kick=tracks["track-kick"]
+        ticks=sorted({c.start+n.start for c in kick.clips for n in c.notes})
+        self.assertTrue(ticks)
+        for role,depth_ms in (("bass",(3.,115.)),("pad",(1.25,143.))):
+            lane=next(a for a in p.automation if a.id==f"production-{role}-duck")
+            bytick={q.tick:q.value for q in lane.points}
+            base=tracks[f"track-{role}"].controls["mixer.gain_db"]
+            depth,ms=depth_ms
+            recovery=round(ms*p.tempo_bpm*p.ppq/60000)
+            for at in ticks[:4]:
+                self.assertAlmostEqual(bytick[at],base-depth)
+                self.assertAlmostEqual(bytick[at+recovery],base)
+            self.assertTrue(any(point.tick == p.length for point in lane.points))
+        noimpact,_=template(spec,profile="deep",include_pad=True)
+        self.assertNotEqual(state_hash(p),state_hash(noimpact))
+        self.assertTrue(any(a.id=="production-harmony-duck" for a in noimpact.automation))
+
     def test_seed_determinism_and_meaningful_variation(self):
         a, _ = rules_plan("house in F# minor, 32 bars", 7)
         b, _ = rules_plan("house in F# minor, 32 bars", 8)

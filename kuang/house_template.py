@@ -34,6 +34,50 @@ LIMITATIONS = [
 ]
 
 
+
+def _reschedule_impact_duck(project):
+    """Bounded source-preserving impact duck: bass tail + optional pad only.
+
+    A kick's onset is the timing reference, not a measured envelope detector.
+    Deliberately avoid pumping foreground chords: those already have their
+    own rhythmic articulation and can turn a bass offbeat into a masked hit.
+    Recovery duration is defined in milliseconds, invariant across BPM.
+    """
+    tracks = {track.id: track for track in project.tracks}
+    kick = tracks.get("track-kick")
+    if kick is None:
+        raise ValidationError("impact duck requires kick MIDI")
+    onsets = sorted({c.start + note.start for c in kick.clips for note in c.notes})
+    if not onsets:
+        raise ValidationError("impact duck requires at least one kick onset")
+    for role in ("bass", "harmony", "pad"):
+        lane_id = f"production-{role}-duck"
+        project.automation = [lane for lane in project.automation if lane.id != lane_id]
+        channel = tracks.get(f"track-{role}")
+        if channel is None or role == "harmony":
+            continue
+        depth_db, recovery_ms = ((3., 115.) if role == "bass" else (1.25, 143.))
+        recovery = max(1, round(recovery_ms * project.tempo_bpm * PPQ / 60000.))
+        baseline = channel.controls["mixer.gain_db"]
+        values = [(0, baseline)]
+        for at in onsets:
+            if at > 0:
+                values.append((at - 1, baseline))
+            values.extend(((at, baseline - depth_db),
+                           (min(at + recovery, project.length), baseline)))
+        values.extend(((project.length - PPQ // 2, baseline),
+                       (project.length, baseline - 18)))
+        # Preserve the usual end fade and exact zero-time kick duck.
+        points = sorted(dict(values).items())
+        project.automation.append(AutomationLane(lane_id, channel.id,
+            "mixer.gain_db", [AutomationPoint(f"{lane_id}-{i}", tick,
+                                      value, "linear") for i, (tick,value) in enumerate(points)]))
+    return {"bass_depth_db": 3., "bass_recovery_ms": 115.,
+            "pad_depth_db": 1.25, "pad_recovery_ms": 143.,
+            "dry_harmony_duck_db": 0., "kick_onset_count": len(onsets),
+            "source_envelope_detector": False}
+
+
 def select_profile(prompt: str, seed: int, requested: str = "auto") -> str:
     """Choose a recognizable style family, not independent random drum events."""
     if requested not in ("auto", *PROFILES):
@@ -209,28 +253,35 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
                 fx.parameters['soundcraft.drive'] = max(5.0,fx.parameters['soundcraft.drive'])
                 if 'effect.wet' in fx.parameters:
                     fx.parameters['effect.wet'] = min(.4,fx.parameters['effect.wet']+.1)
-    # Recalculate scheduled pumping after the new kick grid, rather than
-    # retaining envelopes computed from the old refined-composer kick.
-    kick_onsets = sorted({c.start + n.start for c in tracks["kick"].clips for n in c.notes})
-    for role in ("bass", "harmony", "pad"):
-        if role not in tracks:
-            continue
-        lane_id = f"production-{role}-duck"
-        p.automation = [lane for lane in p.automation if lane.id != lane_id]
-        baseline = tracks[role].controls["mixer.gain_db"]
-        values = [(0, baseline)]
-        for onset in kick_onsets:
-            if onset > 0:
-                values.append((onset - 1, baseline))
-            values.extend(((onset, baseline - 5),
-                           (min(onset + 100, spec.bars * BAR), baseline - 4),
-                           (min(onset + 420, spec.bars * BAR), baseline)))
-        values.extend(((spec.bars * BAR - PPQ // 2, baseline),
-                       (spec.bars * BAR, baseline - 18)))
-        ticks = sorted(dict(values).items())
-        p.automation.append(AutomationLane(lane_id, tracks[role].id, "mixer.gain_db",
-            [AutomationPoint(f"{lane_id}-{i}", tick, value, "linear")
-             for i, (tick, value) in enumerate(ticks)]))
+    # Recalculate ducking against the actual newly generated kick onsets.
+    # The strong uniform five-dB duck remains the historical non-impact default.
+    # Impact mode instead preserves dry chord transients and ducks only the
+    # bass tail and (when present) the background pad; independent editable
+    # gain lanes preserve the source preset's attack and internal FX behavior.
+    impact_duck = _reschedule_impact_duck if impact_pocket else None
+    if impact_pocket:
+        impact_duck(p)
+    else:
+        kick_onsets = sorted({c.start + n.start for c in tracks["kick"].clips for n in c.notes})
+        for role in ("bass", "harmony", "pad"):
+            if role not in tracks:
+                continue
+            lane_id = f"production-{role}-duck"
+            p.automation = [lane for lane in p.automation if lane.id != lane_id]
+            baseline = tracks[role].controls["mixer.gain_db"]
+            values = [(0, baseline)]
+            for onset in kick_onsets:
+                if onset > 0:
+                    values.append((onset - 1, baseline))
+                values.extend(((onset, baseline - 5),
+                               (min(onset + 100, spec.bars * BAR), baseline - 4),
+                               (min(onset + 420, spec.bars * BAR), baseline)))
+            values.extend(((spec.bars * BAR - PPQ // 2, baseline),
+                           (spec.bars * BAR, baseline - 18)))
+            ticks = sorted(dict(values).items())
+            p.automation.append(AutomationLane(lane_id, tracks[role].id, "mixer.gain_db",
+                [AutomationPoint(f"{lane_id}-{i}", tick, value, "linear")
+                 for i, (tick, value) in enumerate(ticks)]))
 
     # Adjust chord vocabulary without touching the approved kick/bass rhythm.
     harmonic_evidence = apply_harmony(p, spec, harmony_profile)
@@ -259,7 +310,8 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         raise ValidationError("groove-template structural gate failed")
     p.metadata["composer"] = VERSION
     if impact_pocket:
-        p.metadata['groove_impact_pocket'] = 'phase43-derived-v1'
+        p.metadata['groove_impact_pocket'] = 'source-preserving-impact-v2'
+        p.metadata['ducking_policy'] = 'bass-tail-3db-115ms; pad-1.25db-143ms; harmony-dry-0db'
     p.metadata["groove_profile"] = profile
     p.metadata["groove_gates"] = json.dumps(gates, sort_keys=True)
     validate(p)
@@ -270,6 +322,7 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     receipt = {
         "version": VERSION, "selected_profile": profile,
         "groove_impact_pocket": impact_pocket,
+        "impact_ducking_policy": ("source-preserving-impact-v2" if impact_pocket else "legacy"),
         "seed": spec.seed, "full_groove_bars": width,
         "technical_gates": gates, "technical_pass": True,
         "perceptual_quality": "NEEDS_LISTENING",
