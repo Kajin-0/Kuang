@@ -1,5 +1,11 @@
 # Operational context
 
+## Highest current musical-quality priority: LOW-END GROOVE FIRST (Nov 14, 2026)
+
+User's latest feedback: Musical Planning V2 and harmony-interlock audibly improved results, **but the generated low-end groove is still not receiving enough priority**. The user previously supplied a Suno-produced song and its five stems for explicit comparison. **Before further harmonic features, new effects or long-form rendering, validate/improve the combined kick+bass pocket on multiple independent one-prompt house songs.** Recover the evidence from `docs/HOUSE_SUNO_PHASE44_GROOVE_PRIORITY_20261114.md`, `docs/HOUSE_PHASE44_GROOVE_ANCHOR_20261114.md`, historical `Suno_Stem_Production_Audit.md` and `Suno_Musical_Logic_and_Kuang_Recovery.md`; do not claim the exact Suno source is in the repo without verifying private audio locations.
+
+**Engineering approach:** reuse existing secure source-pair audition, source-fit metrics and native SoundCraft/Vitalium tools to compare 2–4 real kick/bass choices at the actual song notes and register. Characterize kick decay, bass attack/release and offbeat continuity, 25–90/90–250 Hz energy, mono low end and clarity with chords present; use level-matched active-groove windows. Do not impose static Suno/Phase44 EQ or mixer values on unrelated patches. Keep V2 musical planning and the approved D pairing as experimental references, not a universal template. Require user listening evidence before promoting perceived groove quality. Do not rewrite Kuang or optimize only one song.
+
 ## Mandatory handoff: incremental Kuang upgrades, not a rebuild (Nov 14, 2026)
 
 **READ FIRST:** [docs/KUANG_INCREMENTAL_ARCHITECTURE_HANDOFF_20261114.md](docs/KUANG_INCREMENTAL_ARCHITECTURE_HANDOFF_20261114.md), then [docs/PRODUCER_READY_TEMPLATE_PRODUCT.md](docs/PRODUCER_READY_TEMPLATE_PRODUCT.md), then this historical ledger. The user explicitly directed: *"Just make sure you are building on the existing work and not starting over from scratch. Revise whatever you need but ... do this without neglecting the previous work."*
