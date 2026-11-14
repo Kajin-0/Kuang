@@ -276,6 +276,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     spec,notes = rules_plan(planning_prompt,seed)
     if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
     full_length,_ = parse_long_form(prompt,full_song_bars,bpm=spec.bpm) if groove_template else (None,prompt)
+    if groove_pocket_diagnostics and full_length is not None:
+        raise ValidationError('--groove-pocket-diagnostics supports short groove nuclei only, not full songs')
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
     if not full_length and explicit and int(explicit.group(1)) != bars:
         raise ValidationError('prompt bar count conflicts with --bars')
