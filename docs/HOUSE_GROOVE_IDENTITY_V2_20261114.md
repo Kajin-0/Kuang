@@ -75,3 +75,17 @@ The listening archive was shared externally at https://gofile.io/d/WRofVfRl (tem
 3. In deep and jackin styles, evaluate tempo-aligned bass attack/release and kick decay against their actual chords, while preserving the improved separate riff families. When source pairs sound convincing, propagate bounded source selection into the one-shot path. Avoid chasing a single-song reference or using arbitrary diversity quotas.
 
 **This experiment isolated MIDI articulation + style-driven CC0 kick source choice as the generator-level change. It did not claim that more kick boost or a +3 dB bass gain was appropriate.**
+
+
+## User listening verdict — three independent Groove Identity V2 songs (2026-11-14)
+
+The user listened to the three matched-loudness native renders (A = deep E-major, B = jackin B-flat major, C = minimal F-sharp minor) and reported:
+
+- **Overall:** "Not bad. I think there has been an improvement." This is positive direction-level listening evidence, **not** certification of professional/studio quality.
+- **A and B:** perceived as having more energy than C. Retain as current comparison incumbents; do not infer that their shared bass/chord Vital presets are globally optimal.
+- **C:** perceived as having a "strange growling sound," possibly from one of its presets, and **less energy** than A/B. Do **not** assert which instrument caused the growl without listening to isolated sources.
+- **C source identities:** `LD Bass` (bass), `minimal house dub stab 23` (chord), `In the Dark` (pad), and `house.kick.tight-01` (CC0 kick). Each is a candidate for targeted isolation; source identity alone is not cause attribution.
+
+**Actionable next gate, not song-specific hardcoding:** isolate C's kick/bass/chord/pad native stems with the existing SoundCraft role-solo workflow, identify which role produces unwanted growl, check whether it originates in Vital source timbre or interaction/effects, and compare a *bounded* vetted alternate under fixed F-sharp-minor MIDI. Preserve existing C for reference. If a source is inappropriate, translate the findings into general **timbre suitability / role-aware source compatibility checks** and re-test across other keys/styles. Treat lower-energy minimal house partly as an intended stylistic distinction, but investigate whether excessive sparseness, weak bass harmonic body or arrangement density harms groove. Compare at matched LUFS and listen to both solo and in-mix render; no random preset swaps or universal +dB fixes. Do not promote an automatic sound-quality ranking from spectral proxies alone.
+
+**Status:** A/B directional improvement supported by user listening; C timbre/energy quality gate remains unresolved. All three references preserved, no default source or musical engine changed by this feedback.
