@@ -40,3 +40,18 @@ Next experiment, if simply raising bass does not help: a small, bounded **real k
 New `tests/test_house_groove_pocket.py` runs three tests: deterministic near-equal bandpower for constant input, negative ratios for controlled stronger offbeats, and fail-closed invalid section/WAV/window. All tests are signal-processing checks, **not musical approval**. Existing house template/autonomous source tests also continue to run.
 
 **Acceptance:** a substantially stronger low-end groove across at least two independent one-prompt songs, as judged at matched loudness by the user. Recording another passing metric or a successful PCM render does not close the music-quality gate.
+
+## Completed private two-song native bass-level counterfactual
+
+The bounded +3 dB bass-fader study is **complete** on independent E-major deep-house V2 and B-flat jackin-house one-prompt projects. The experiment preserved original MIDI bytes, source VST identities, drum assets, all FX/other-track controls and arrangement; gain automation on bass was shifted with the fader. Both alternative SoundCraft bundles saved/reopened and rendered at 48 kHz/24-bit without clipping. The original source inventory and projects were left unchanged.
+
+| Actual source | 25–90 Hz near/offbeat (original) | 25–90 Hz (+3 dB bass) | 90–250 Hz (original) | 90–250 Hz (+3 dB bass) |
+| --- | ---: | ---: | ---: | ---: |
+| Deep E-major / 123 BPM | +15.293 | +14.996 | +4.737 | +4.646 |
+| Jackin B-flat / 128 BPM | +14.525 | +13.667 | +7.593 | +6.074 |
+
+Both alternative renders retained original preview true peaks around −5.43 dBTP and −5.53 dBTP respectively, passed the peak/clipping safety gate, and remained private. Four 4-bar active-groove WAV excerpts were gain-only matched to **−18.5 LUFS**, with true peaks between −4.29 and −3.26 dBTP and zero clipped samples. Full private native experiment receipt and original WAVs: `.local/lowend-groove-two-song-20261114/`; A/B audio archive: `.local/lowend-groove-two-song-20261114/lowend-two-song-A-B.zip`; externally shared link https://gofile.io/d/uNp0EKkM (retention unguaranteed).
+
+**Interpretation:** A bounded bass-gain increase only modestly improved the measured full-mix sub/offbeat contrast (by 0.297 dB and 0.858 dB in these two songs), and the 90–250 Hz relationship remains substantially different from the approved Phase44 groove. This does **not** prove the gain change sounds better. **Do not adopt +3 dB as the generator default**. The next priority is an equally controlled real bass-sound **attack/sustain and source-pair** experiment using existing native audition/FFT tools, with the incumbent retained.
+
+Additional safety: `--groove-pocket-diagnostics` now explicitly rejects full-length arranged tracks before invoking the expensive private native pipeline, since this initial instrument only supports a unique `Groove` nucleus. Retain short-song diagnostics until the long-form sectional mapping is generalized.
