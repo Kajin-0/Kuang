@@ -26,7 +26,7 @@ FORMS = {
 }
 NAMES = ("Intro", "Groove A", "Groove B", "Breakdown", "Build",
          "Main Drop", "Return", "Outro")
-ROLES = ("kick", "snare", "hats", "bass", "harmony", "pad", "percussion")
+ROLES = ("kick", "snare", "hats", "open_hat", "bass", "harmony", "pad", "percussion")
 
 
 def parse_long_form(prompt, requested=None, *, bpm=126):
@@ -87,34 +87,36 @@ def _present(role, kind, bar, duration, profile, block):
     half = duration // 2
     if kind == "Intro":
         return (role == "pad" or role == "hats" or
+                role == "open_hat" and bar >= duration - 4 or
                 role == "harmony" and bar >= half or
                 role == "kick" and bar >= half or
                 role == "snare" and bar >= duration - 4 or
                 role == "bass" and bar >= duration - 2)
     if kind == "Groove A":
-        return role in ("kick","snare","hats","bass","harmony") or (
+        return role in ("kick","snare","hats","open_hat","bass","harmony") or (
             role == "percussion" and profile == "jackin" and block % 2 == 1)
     if kind == "Groove B":
-        return role in ("kick","snare","hats","bass","harmony") or (
+        return role in ("kick","snare","hats","open_hat","bass","harmony") or (
             role == "percussion" and profile != "minimal")
     if kind == "Breakdown":
         return (role in ("pad","harmony") or
-                role == "hats" and bar >= duration - 1 or
+                role in ("hats","open_hat") and bar >= duration - 1 or
                 role == "snare" and bar >= duration - 1)
     if kind == "Build":
         return (role in ("pad","harmony") or
-                role == "hats" and bar >= half or
+                role in ("hats","open_hat") and bar >= half or
                 role == "snare" and bar >= duration - 2 or
                 role == "kick" and bar >= duration - 2)
     if kind == "Main Drop":
-        return role in ("kick","snare","hats","bass","harmony") or (
+        return role in ("kick","snare","hats","open_hat","bass","harmony") or (
             role == "percussion" and profile != "minimal") or (
             role == "pad" and bar >= half and profile == "deep")
     if kind == "Return":
-        return role in ("kick","snare","hats","bass","harmony") or (
+        return role in ("kick","snare","hats","open_hat","bass","harmony") or (
             role == "percussion" and profile != "minimal" and block % 2 == 0)
     if kind == "Outro":
         return role in ("kick","snare","hats") or (
+                role == "open_hat" and bar < half or
             role == "bass" and bar < half) or (
             role == "harmony" and bar < min(8,half)) or (
             role == "percussion" and bar < 8 and profile == "jackin")
@@ -244,7 +246,7 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
                         continue
                     # No added notes or new pitch content; slight seeded
                     # velocity variation is limited to tops and percussion.
-                    if role in ("hats","percussion","snare"):
+                    if role in ("hats","open_hat","percussion","snare"):
                         digest=hashlib.sha256(
                           f"{seed}:{profile}:{name}:{block}:{role}:{local}:{pitch}".encode()).digest()
                         velocity=max(1,min(127,velocity+(digest[0]%5-2)))

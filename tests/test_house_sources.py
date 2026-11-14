@@ -107,6 +107,32 @@ class HouseSourceTests(unittest.TestCase):
         self.assertEqual(original.metadata["composer"], a.metadata["composer"])
         self.assertEqual(proof["harmony"]["profile"], "simple")
 
+    def test_full_arranger_preserves_independent_cc0_open_hat_role(self):
+        """Regression: source splitting a hat sampler must survive long form."""
+        from kuang.house_full_arranger import arrange_full_song
+        from kuang.schema import state_hash
+        spec,_=rules_plan("deep house in D minor, 32 bars",51)
+        nucleus,_=template(spec,profile="deep",harmony_profile="simple",
+                            include_pad=False)
+        bound,assets,receipt=prepare_kit(nucleus,self.pack,self.root/"full-kit","deep",0)
+        prior=state_hash(bound)
+        p,evidence=arrange_full_song(bound,bars=96,profile="deep",seed=51)
+        validate(p)
+        self.assertEqual(state_hash(bound),prior)
+        self.assertTrue(evidence["technical_pass"])
+        self.assertIn("track-open_hat",{t.id for t in p.tracks})
+        open_hat=next(t for t in p.tracks if t.id=="track-open_hat")
+        self.assertEqual(open_hat.instrument.plugin_ref,"soundcraft:sampler")
+        self.assertGreater(sum(len(c.notes) for c in open_hat.clips),0)
+        self.assertTrue(all(n.pitch==46 for c in open_hat.clips for n in c.notes))
+        sections={s["name"]:s["events"] for s in evidence["sections"]}
+        self.assertGreater(sections["Groove A"]["open_hat"],0)
+        self.assertGreater(sections["Main Drop"]["open_hat"],0)
+        self.assertEqual(p.bars,96)
+        self.assertEqual(set(assets),
+                         {"track-kick","track-snare","track-hats",
+                          "track-open_hat","track-percussion"})
+
     def test_minimal_profile_omits_inactive_percussion_without_invented_hits(self):
         from kuang.house_full_arranger import arrange_full_song
         spec, _ = rules_plan("minimal house in D minor, 32 bars", 17)

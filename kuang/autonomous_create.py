@@ -254,15 +254,11 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('contextual_shortlist must be boolean')
     if contextual_shortlist and (not groove_template or per_role < 2 or max_candidates < 4):
         raise ValidationError('--contextual-shortlist requires groove-template, per-role>=2, max-candidates>=4')
-    if contextual_shortlist and full_song_bars is not None:
-        raise ValidationError('full-length contextual-shortlist audition integration is not yet verified')
     import re
     planning_prompt = re.sub(r'\b(96|112|128|160)\s*bars?\b','32 bars',prompt,flags=re.I) if groove_template else prompt
     spec,notes = rules_plan(planning_prompt,seed)
     if spec.genre != 'house': raise ValidationError('this opt-in workflow currently supports house only')
     full_length,_ = parse_long_form(prompt,full_song_bars,bpm=spec.bpm) if groove_template else (None,prompt)
-    if contextual_shortlist and full_length:
-        raise ValidationError('full-length contextual shortlist integration requires independent end-to-end validation')
     explicit = re.search(r'\b(\d+)\s*bars?\b',prompt.lower())
     if not full_length and explicit and int(explicit.group(1)) != bars:
         raise ValidationError('prompt bar count conflicts with --bars')
@@ -304,7 +300,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if groove_template:
             project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
                                                include_pad='pad' in expected_roles)
-            if full_length:
+            if full_length and not contextual_shortlist:
                 project,arrangement_receipt = arrange_full_song(project,bars=full_length,
                                                                profile=gp,seed=seed)
             if sample_pack is not None:
@@ -322,15 +318,23 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         native = ProductionAdapter(soundcraft,workspace=workspace,scratch=stage/'scratch')
         native.external = adapter; native.samples.base = adapter.base; native.base = adapter.base
         duration = project.length/project.ppq*60/project.tempo_bpm
-        native.export(project,sound_assets,assignments,stage/'calibration-native')
-        native.render(stage/'calibration-native',stage/'calibration.wav',end_seconds=duration+12)
+        if contextual_shortlist:
+            from .house_one_prompt_context import short_audition_project
+            from .house_mix_roles import _window
+            audition=short_audition_project(project,_window(project)['end_tick'])
+            audition_duration=audition.length/audition.ppq*60/audition.tempo_bpm+6
+        else:
+            audition=project
+            audition_duration=duration+12
+        native.export(audition,sound_assets,assignments,stage/'calibration-native')
+        native.render(stage/'calibration-native',stage/'calibration.wav',end_seconds=audition_duration)
         library_path = workspace/'.local/producer/libebur128.so'
         context_receipt = None
         if contextual_shortlist:
             from .house_one_prompt_context import choose_sources
             assignments,context_receipt=choose_sources(project,assignments,
                     selection.get('shortlist',{}),adapter,defaults,native,
-                    sound_assets,stage,duration=duration+12,timeout=timeout,
+                    sound_assets,stage,duration=audition_duration,timeout=timeout,
                     library=str(library_path) if library_path.is_file() else None)
             project = _bind(project,assignments,adapter)
             for comparison in context_receipt['comparisons']:
@@ -340,6 +344,10 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                         if e['source_sha256']==comparison['source_sha256'])
             write(stage/'palette/selection.json',selection)
             palette_before=inventory(stage/'palette')
+        if full_length and contextual_shortlist:
+            project,arrangement_receipt=arrange_full_song(project,bars=full_length,
+                                                         profile=gp,seed=seed)
+            duration=project.length/project.ppq*60/project.tempo_bpm
         calibration = measure(stage/'calibration.wav',library=str(library_path) if library_path.is_file() else None)
         if calibration['clipped_samples'] or calibration['rms'] < 1e-6:
             raise ValidationError('calibration render clipped or silent')
@@ -383,6 +391,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'quality_judgment':'unreviewed; no professional audio quality established',
             'master_preview_requested':master_preview,
             'contextual_shortlist_requested':contextual_shortlist,
+            'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None})
         if master_preview:
             # The standalone mastering API deliberately forbids modifying its

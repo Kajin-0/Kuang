@@ -53,10 +53,10 @@ def short_audition_project(project, groove_end_tick):
 
 def choose_sources(project, assignments, shortlist, adapter, defaults,
                    native, sound_assets, stage, *, duration, timeout, library=None):
-    """One baseline + up to two same-groove alternatives; no full-length renders.
+    """One baseline + at most two conditional groove alternatives; no full-length renders.
 
-    Preconditions: project already has initial private Vital patches bound,
-    conservative gain staging and a verified baseline 'calibration.wav'.
+    Preconditions: original private Vital patches are bound, conservative gain staging
+    and a fully rendered 8/16-bar native calibration WAV exist.
     """
     if not (isinstance(shortlist,dict) and set(shortlist) <= {"bass","chord","pad"}):
         raise ValidationError("invalid same-prompt shortlist")
@@ -94,8 +94,10 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
                                  None,baseline_crop)
     baseline_meter=measure(baseline_crop,library=library)
     selected=dict(assignments)
-    # A single role substitution is measured against an identical baseline.
-    # A second alternative is not allowed to modify the first candidate.
+    baseline_hard=HARD_FLAGS.intersection(baseline_fit['warnings'])
+    # Only genuine hard technical faults authorize expensive alternative
+    # native renders. A passing baseline cannot benefit from sound-choice
+    # reranking based on uncalibrated audio-quality proxies.
     observations=[]
     for role in ("bass","chord"):
         options=shortlist.get(role,[])
@@ -105,6 +107,19 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
         if len(options)!=1 or options[0].get("status")!="accepted" or options[0].get("runtime_verified") is not True:
             raise ValidationError("one vetted private runner-up per role required")
         entry=options[0]
+        # Hard-fault repair is the only evidence-backed reason to replace the
+        # original isolated-audition winner. When it passes, rendering extra
+        # candidates cannot change the decision and only wastes CPU.
+        if not baseline_hard:
+            observations.append({
+                'role':role,'status':'SKIPPED_BASELINE_TECHNICALLY_ACCEPTABLE',
+                'alternative_name':entry['source_preset_name'],
+                'source_sha256':entry['source_sha256'],
+                'runtime_verified_alternative':True,
+                'evaluated_in_native_mix':False,'chosen':False,
+                'reason':'original had no hard technical compatibility faults; no supported artistic ranking',
+            })
+            continue
         role_id=ROLE_TRACK[role]
         prepared=_prepare(adapter,entry,defaults,scratch/("patch-"+role),timeout)
         alt=_bind(project,{role_id:prepared},adapter)
@@ -154,7 +169,9 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
     if state_hash(project)!=original:
         raise ValidationError("audition changed source composition")
     evidence={"version":VERSION,"source_project_sha256":original,
-              "candidate_count":sum(x["status"]!="NO_RUNNER_UP" for x in observations),
+              "candidate_count":sum(x.get('evaluated_in_native_mix', x['status'] not in ('NO_RUNNER_UP','SKIPPED_BASELINE_TECHNICALLY_ACCEPTABLE')) for x in observations),
+              "verified_runner_ups":sum(x['status']!='NO_RUNNER_UP' for x in observations),
+              "skipped_native_replacements":sum(x['status']=='SKIPPED_BASELINE_TECHNICALLY_ACCEPTABLE' for x in observations),
               "audition_render_seconds":excerpt_seconds,
               "audition_bars":audition_source.bars,
               "audition_source_canonical_sha256":state_hash(audition_source),
@@ -163,9 +180,10 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
               "source_policy":"initial independently vetted palette retained unless an alternative resolves a measured hard fault",
               "no_perceptual_winner":True,
               "full_length_rendered_for_candidates":False,
+              "selection_mode":"conditional hard-fault remediation, not automatic perceptual ranking",
               "quality_judgment":"NOT_EVALUATED"}
     write(root/"context-shortlist-evidence.json",evidence)
-    # Keep prepared selected patches, discard short-rendering artifacts.
+    # Keep only chosen private patches; discard temporary native render artifacts.
     for folder in scratch.iterdir():
         if folder.name.startswith("patch-") and folder/"patch" in selected.values():
             continue
