@@ -28,3 +28,39 @@ Each opts in to Groove Identity V2, Musical Plan V2, verified sample-pack, conte
 Never claim a source is musically preferable on spectral proxy alone. Retain original bass unless the user explicitly approves an independent matched-volume source audition. Run regression tests on source safety, mode preflight, envelope/frequency logic, no unintended auto-switch, legacy compatibility, source integrity and native export. If a prompt fails in the private pipeline, stop and report it rather than silently substituting weaker audio. Three new valid outputs do not, by themselves, certify studio-grade groove or producer readiness.
 
 Status: implementation underway; actual native three-prompt receipts and listening archive to be added after verified completion.
+
+ 
+## Completed three fresh native one-prompt outputs and quality gates
+
+The complete three-prompt pilot finished with three independent **new**, verified native SoundCraft projects and 16-bar stereo 48-kHz/24-bit WAVs. All three confirmed native save/reopen equality, zero clipped samples and true peak below -1 dBTP. No previous source output or Phase44 reference was modified.
+
+| Independent prompt | Key/tempo/seed | Actual Vital bass | Actual chord source | CC0 kick | Actual pad | Automatic pad attenuation |
+| --- | --- | --- | --- | --- | --- | ---: |
+| Deep | D minor / 124 BPM / 118 | Biow Bass 2 | string stabs | deep-01 | Strings of Cygnus | -12.000 dB |
+| Jackin | G major / 127 BPM / 217 | Biow Bass 2 | WIP-D - Retro Piano | punch-01 | Strings of Cygnus | -12.000 dB |
+| Straight | A major / 125 BPM / 313 | LD Bass | key to my heart | punch-01 | Strings of Cygnus | -9.927 dB |
+
+Each song has a distinct generated bass note onset/duration/pitch-class fingerprint, different harmonic progressions and distinct native chord source identities. Two of three use the same bass and ALL three use the same pad: **source identity diversity remains inadequate** despite different genre and musical structure. The pad-level system found significant imbalances in all three, but there is **no listener approval** for the large attenuation in these new songs. This should NOT trigger automatic promotion to defaults.
+
+### Actual native spectral groove evidence
+
+Ratios are mean measured bass band energy in 100ms windows relative to the *same song's kick energy during the first 100ms following a kick*:
+
+| Track | 25-90Hz early / late offbeat vs kick | 90-250Hz early / late offbeat vs kick | Bass late vs early, 90-250Hz |
+| --- | --- | --- | ---: |
+| Deep Dm | -15.79 / -9.62 dB | -16.13 / -7.08 dB | +9.05 dB |
+| Jackin G | -14.17 / -11.13 dB | -8.64 / -2.89 dB | +5.75 dB |
+| Straight A | -17.61 / -13.05 dB | -17.19 / -5.04 dB | +12.15 dB |
+
+All candidate comparisons reported **SKIPPED_ALTERNATIVE_NOT_UPPER_BASS_DISTINCT**: the sole prequalified runner-up in each verified per-role-2 shortlist was not at least 8 percentage points richer in isolated 90-250Hz spectral proxy, or showed a decrease. Consequently, **no bass-source candidate A/B WAV was rendered and no bass source changed automatically**. This is the intended conservative CPU safety rule, but it demonstrates a larger algorithmic gap: broadening the *verified* source candidate pool is necessary before conditional native sound selection can materially improve groove on diverse prompts.
+
+Raw full-song final mix measurements:
+- Deep: -27.24 LUFS / -5.90 dBTP / 0 clips.
+- Jackin: -28.04 LUFS / -5.63 dBTP / 0 clips.
+- Straight: -26.89 LUFS / -5.34 dBTP / 0 clips.
+
+Three native outputs were prepared as **gain-only** 16-bar listening excerpts at -24.169 LUFS each; true peaks -2.85, -1.80, -2.65 dBTP; no clipping. Private VPS archive: .local/gmi-v1-listening-20261114/Kuang_GMI_V1_Three_Songs.wav.zip. Verified external listening link: https://gofile.io/d/2NlZq7xV (temporary host retention; WAVs preserved privately). Private source outputs: .local/gmi-v1-deep-Dm-20261114, .local/gmi-v1-jackin-G-20261114, .local/gmi-v1-straight-A-20261114.
+
+**Engineering test result:** 88 focused tests passed, including synthetic native 48k PCM signal tests, band/beat spectral change checks, strict source timeline validation, fail-closed CLI preflight and existing groove/harmony/pad/Source safety regressions. Algorithm code delivered in commit 83b8026. Native rendering passed for all three songs.
+
+**Musical status:** NEEDS USER LISTENING. The new module can quantify and prioritize bass-pocket problems and safely propose a conditional A/B, but the three-song run did **not** demonstrate an accepted source-swap improvement. Keep new controls optional. Next priority: broaden suitable verified bass candidate selection across the original role catalog (without random diversity quotas), evaluate exact MIDI and register before release, render short native mix candidates, compare at matched loudness and only promote changes that repeatedly improve groove. Do not chase individual Dm/G/A song master settings or arbitrarily crank bass.
