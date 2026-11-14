@@ -31,6 +31,7 @@ from .house_template import template as groove_template_project, select_profile
 from .house_full_arranger import arrange_full_song, parse_long_form
 from .house_master_preview import render_previews
 from .house_harmony import select_harmony
+from .house_musical_plan import enrich_house_spec
 from .house_sources import prepare_kit
 from .production_host import ProductionAdapter
 from .schema import BAR, Clip, Instrument, Note, ParameterSpec, Section, ValidationError, save, strict_json, validate
@@ -236,7 +237,7 @@ def _bind(project, assignments, adapter):
 def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=False,max_candidates=12,per_role=3,timeout=15,
            groove_template=False, sample_pack=None, groove_profile='auto', harmony_profile='auto', drum_variant=0,
            full_song_bars=None, master_preview=False, contextual_shortlist=False, chord_level_calibration=False,
-           groove_impact=False, preferred_bass_source_sha=None):
+           groove_impact=False, preferred_bass_source_sha=None, musical_plan_v2=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -260,6 +261,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('--chord-level-calibration requires --groove-template')
     if type(groove_impact) is not bool or (groove_impact and (not groove_template or sample_pack is None)):
         raise ValidationError('--groove-impact requires --groove-template and licensed --sample-pack')
+    if type(musical_plan_v2) is not bool or (musical_plan_v2 and not groove_template):
+        raise ValidationError('--musical-plan-v2 requires --groove-template and boolean option')
     if preferred_bass_source_sha is not None and (
             not groove_impact or type(preferred_bass_source_sha) is not str or
             not re.fullmatch(r'[0-9a-f]{64}',preferred_bass_source_sha)):
@@ -283,6 +286,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('drum_variant must be 0 or 1')
     gp = select_profile(prompt,seed,groove_profile) if groove_template else None
     hp = select_harmony(prompt,gp,harmony_profile) if groove_template else None
+    plan_receipt = None
+    if musical_plan_v2:
+        spec,plan_receipt = enrich_house_spec(spec,prompt,gp)
     expected_roles = set(_intent(prompt)['roles'])
     if not {'chord','bass'} <= expected_roles:
         raise ValidationError('this house composer requires chord and bass roles')
@@ -324,6 +330,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                                                impact_pocket=groove_impact)
         else:
             project = refine_house(spec,compose(spec),include_pad='pad' in expected_roles,kick_aligned_ducking=True)
+        if plan_receipt is not None:
+            project.metadata['musical_plan_version'] = plan_receipt['version']
         # Generous pre-fader headroom for independent third-party patch levels.
         for track in project.tracks:
             track.controls['mixer.gain_db'] -= 15
@@ -392,6 +400,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             raise ValidationError('catalog, palette evidence or plugin changed during production')
         save(project,stage/'project.kuang.json'); (stage/'song.mid').write_bytes(midi.export_bytes(project))
         write(stage/'song-spec.json',asdict(spec))
+        if plan_receipt is not None: write(stage/'musical-plan-evidence.json',plan_receipt)
         if groove_receipt is not None: write(stage/'groove-evidence.json',groove_receipt)
         if arrangement_receipt is not None: write(stage/'arrangement-evidence.json',arrangement_receipt)
         if drum_evidence is not None: write(stage/'sample-selection.json',drum_evidence)
@@ -417,7 +426,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'chord_level_evidence':'chord-level-evidence.json' if role_level_evidence else None,
             'contextual_shortlist_requested':contextual_shortlist,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
-            'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None})
+            'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
+            **({'musical_plan_v2_requested': True,
+                'musical_plan_evidence': 'musical-plan-evidence.json'} if plan_receipt else {})})
         if master_preview:
             # The standalone mastering API deliberately forbids modifying its
             # source tree. Use a separate scratch root and import the verified
@@ -458,6 +469,8 @@ def main(argv=None):
     parser.add_argument('--drum-variant',type=int,choices=(0,1),default=0)
     parser.add_argument('--preferred-bass-source-sha',
                         help='private user-approved Vital source SHA256; opt-in human-producer bass priority after independent audition, not a generic quality score')
+    parser.add_argument('--musical-plan-v2',action='store_true',
+                        help='experimental style-conditioned harmonic planning on existing SongSpec; preserves explicit Roman progression')
     parser.add_argument('--groove-impact',action='store_true',
                         help='opt-in Phase44-reference-derived kick/sample balance, rhythmic bass accents and shuffled hats; not a music quality guarantee')
     parser.add_argument('--chord-level-calibration',action='store_true',
@@ -478,6 +491,7 @@ def main(argv=None):
                       contextual_shortlist=args.contextual_shortlist,
                       chord_level_calibration=args.chord_level_calibration,
                       groove_impact=args.groove_impact,
+                      musical_plan_v2=args.musical_plan_v2,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
