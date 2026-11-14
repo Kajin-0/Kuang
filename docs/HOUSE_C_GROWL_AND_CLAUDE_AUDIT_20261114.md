@@ -67,3 +67,10 @@ Claude's report primarily analyzed the older default `sketch/refined` and histor
 4. **Never infer professional quality from technical scores.** Require matched-loudness producer listening, locked-MIDI native safety, and preserved baseline evidence.
 
 **Status:** diagnostic prototype and one real C pad-only controlled A/B complete. Suspect identified for review, but causal attribution and musical improvement remain open.
+
+
+## Listening update: user favors alternate-pad C (November 14, 2026)
+
+The user listened to the actual matched-loudness C pad-substitution comparison and said **"Sounds like you fixed C with alternate pad. Not bad. Pretty good."** Treat this as **positive, moderate user listening acceptance of the alternate-pad version relative to the prior growly C**, not evidence that the track is now professionally finished, that Strings of Cygnus is universally preferable, or that the original In the Dark pad was conclusively the sole source of the growl. The preserved native counterfactual changed only the pad to verified **Strings of Cygnus**; its MIDI, kick, LD Bass, chords, routing and other FX were locked. Both comparisons were gain-only matched at approximately −22.01 LUFS. Keep the alternate-pad C as the current **preferred C test variant** and preserve the original project and source-specific receipts. The generic `--timbre-source-review` flags still do not automatically replace instruments.
+
+**Generalization rule:** Test role-/register-dependent low-mid occupancy and audible timbre against actual kick, bass and chord context on independent prompts before promoting an automatic pad-selection policy. The next step is to reproduce improved clarity on multiple unrelated songs without hard-coding the alternate pad or manually patching one specific arrangement. The user’s latest listening feedback establishes the usefulness of the particular native pad substitution, **not yet general-purpose algorithm performance**.
