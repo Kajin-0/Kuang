@@ -86,6 +86,42 @@ class PhraseCoherenceV2Tests(unittest.TestCase):
         self.assertEqual(receipt["harmony_phrase_v2"]["musical_quality"],
                          "NOT_EVALUATED")
 
+    def test_final_canonical_project_drives_groove_evidence_after_copy(self):
+        """Regression: template's original role map must not feed post-copy diagnostics."""
+        import hashlib
+        import json
+        from kuang.schema import BAR
+
+        revisions = 0
+        for profile, key, seed in self.CASES:
+            with self.subTest(profile=profile, key=key, seed=seed):
+                original, original_evidence = house(profile, key=key, seed=seed)
+                final, report = house(profile, key=key, seed=seed,
+                                      phrase_stable_chords_v2=True)
+                groove = next(section for section in final.sections
+                              if section.name == "Groove")
+                expected = {}
+                for role in report["full_groove_onsets"]:
+                    track = next(t for t in final.tracks
+                                 if t.id == "track-" + role)
+                    expected[role] = sorted(
+                        c.start + n.start - groove.start
+                        for c in track.clips for n in c.notes
+                        if groove.start <= c.start + n.start <
+                        groove.start + groove.length)
+                self.assertEqual(report["full_groove_onsets"], expected)
+                actual_digest = hashlib.sha256(json.dumps(
+                    expected, sort_keys=True,
+                    separators=(",", ":")).encode()).hexdigest()
+                self.assertEqual(report["groove_fingerprint_sha256"],
+                                 actual_digest)
+                self.assertEqual([s.start for s in original.sections],
+                                 [s.start for s in final.sections])
+                before = original_evidence["full_groove_onsets"]["harmony"]
+                after = report["full_groove_onsets"]["harmony"]
+                revisions += int(before != after)
+        self.assertGreater(revisions, 0, "No sampled case exercises changed chord timing")
+
     def test_full_song_arrangement_preserves_native_ready_structure(self):
         for profile in ("deep", "straight", "jackin", "minimal"):
             with self.subTest(profile=profile):
