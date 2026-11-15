@@ -1,0 +1,1107 @@
+{
+  "additional_audio_statistics": {
+    "all_main_drop_groove_a_difference_abs_at_most_db": 0.225,
+    "breakdown_louder_than_groove_a_count": 3,
+    "breakdown_minus_groove_a_median_db": -1.053,
+    "median_25_to_250hz_sampled_midband_energy_fraction_pct": 64.215,
+    "range_25_to_250hz_sampled_midband_energy_fraction_pct": [
+      40.59,
+      88.28
+    ],
+    "range_native_integrated_lufs": [
+      -28.163,
+      -23.025
+    ]
+  },
+  "all_songs_full_native_valid": true,
+  "date": "2026-11-15",
+  "delivery": {
+    "bundle": "https://gofile.io/d/18tJioFp",
+    "gain_only_common_listening_target_lufs": -21.0,
+    "lossless_24bit_48khz_stereo": true,
+    "no_compressor_or_limiter": true,
+    "private_vital_patch_states_in_bundle": false
+  },
+  "experiment_type": "stratified random draw frozen before any audio rendering, zero subjective exclusions",
+  "original_manifest_preserved_on_private_vps": true,
+  "preflight_violations_corrected_without_redraw": [
+    {
+      "case_id": "04",
+      "effective_harmony_profile": "extended",
+      "not_a_subjective_cherry_pick": true,
+      "original_manifest_unchanged": true,
+      "original_random_harmony_profile": "simple",
+      "prompt_seed_key_tempo_style_preserved": true,
+      "reason": "randomized simple conflicts with explicit extended-chords prompt"
+    }
+  ],
+  "quality_judgment": "NEEDS_LISTENING: objective difference does not certify musical quality",
+  "song_count": 10,
+  "songs": [
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -6.844,
+        "digital_tail_seconds": 11.828,
+        "last_sample_over_minus_90dBFS_seconds": 256.172,
+        "length_seconds": 268.0,
+        "main_drop_minus_groove_a_db": -0.073,
+        "outro_minus_groove_a_db": -0.558,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 1.5,
+          "bass_body_120_250": 32.66,
+          "low_mid_250_1000": 8.91,
+          "presence_1000_6000": 2.69,
+          "sub_25_120": 54.25
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -35.43,
+          "Build": -32.657,
+          "Groove A": -28.586,
+          "Groove B": -28.763,
+          "Intro": -30.703,
+          "Main Drop": -28.659,
+          "Outro": -29.144,
+          "Return": -28.734
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -6.844,
+          "Build": -4.071,
+          "Groove A": 0.0,
+          "Groove B": -0.177,
+          "Intro": -2.117,
+          "Main Drop": -0.073,
+          "Outro": -0.558,
+          "Return": -0.148
+        },
+        "stereo_lr_corr": 0.999625,
+        "stereo_side_to_mid_db": -37.23
+      },
+      "bass_GrooveA_note_count": 32,
+      "bpm": 120,
+      "drum_variant": 0,
+      "effective_harmony_profile": "extended",
+      "harmony_GrooveA_note_count": 80,
+      "harmony_profile": "extended",
+      "id": "01",
+      "kick_sample": "house.kick.punch-01",
+      "lossless_listening_share": "https://gofile.io/d/hOlZ3VoC",
+      "mode": "minor",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "dd66a80b44f3fe9b12bf38b8709947bddd13169d3433b9170351263b98d8438a",
+          "rhythm": "b9022fc19868076c97e2d4b95000693d27668a6f2e6df48fd359318b85e656a2",
+          "tonic_relative_pitch_and_rhythm": "3e34cfc9f758f5e759165d8a42ffb919971ebaf2f11c7a60304ed810ce41ff16"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "6e8333fe1c95da189f6ee054f8cb5b418202496063e431cce6df1577077be5b7",
+          "rhythm": "19714c3173790c047bdb7d2dbed1792194644a084808a8fbe6751c307f01843b",
+          "tonic_relative_pitch_and_rhythm": "1b6d6c6c0a48228b13e59c6ed2e3320f0ef14463575ebe15c5729f67a87ce2fa"
+        },
+        "hats": {
+          "full_pitch_rhythm": "9ac4d7d65e3213b46b6f419949c600b0e5fab5261a725986140a3424f2c41a15",
+          "rhythm": "b0a0d05ed404e581d76286812510615b0cd43fd8e42cb6009844d84a42956c23",
+          "tonic_relative_pitch_and_rhythm": "624d2a499a8ee3f9a86c21476583dbf618c75b3efd183f41289b59c8af22fb8e"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "52e68a7d55aba7988a397c9fcd2bde88d648da581678de5f72dc6850861fb4b1"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "b760f5beeb85fe00432c2e5b8d0ba870b5d2907b35bbbec829ed4208de4a3e40",
+          "rhythm": "8dd89737cb915d75ed758e5f2f2701937a305eb1877deda4a1f444cbb77b0687",
+          "tonic_relative_pitch_and_rhythm": "d901ec0a0bfd5e2c7fa6ed4c0b835ff2e994747bdf8d89f7b73808cf9e69d7ca"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -28.163,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -10.507,
+      "profile": "straight",
+      "progression": [
+        0,
+        3,
+        0,
+        6
+      ],
+      "prompt": "straight house in F minor, 120 bpm, 128 bars, full deep rounded bass, wide sustained chords, driving snare and shaker, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 10942499,
+      "selected_presets": {
+        "bass": "LD Bass",
+        "chord": "string stabs",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "F"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -0.591,
+        "digital_tail_seconds": 11.861,
+        "last_sample_over_minus_90dBFS_seconds": 251.943,
+        "length_seconds": 263.803,
+        "main_drop_minus_groove_a_db": 0.005,
+        "outro_minus_groove_a_db": -1.298,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 2.9,
+          "bass_body_120_250": 22.16,
+          "low_mid_250_1000": 29.67,
+          "presence_1000_6000": 14.91,
+          "sub_25_120": 30.36
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -27.079,
+          "Build": -26.223,
+          "Groove A": -26.488,
+          "Groove B": -26.522,
+          "Intro": -27.631,
+          "Main Drop": -26.483,
+          "Outro": -27.786,
+          "Return": -26.523
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -0.591,
+          "Build": 0.265,
+          "Groove A": 0.0,
+          "Groove B": -0.034,
+          "Intro": -1.143,
+          "Main Drop": 0.005,
+          "Outro": -1.298,
+          "Return": -0.035
+        },
+        "stereo_lr_corr": 0.99187,
+        "stereo_side_to_mid_db": -21.631
+      },
+      "bass_GrooveA_note_count": 32,
+      "bpm": 122,
+      "drum_variant": 0,
+      "effective_harmony_profile": "simple",
+      "harmony_GrooveA_note_count": 60,
+      "harmony_profile": "simple",
+      "id": "02",
+      "kick_sample": "house.kick.punch-01",
+      "lossless_listening_share": "https://gofile.io/d/b4ftUypb",
+      "mode": "minor",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "28f2c5fa6b837e9d3b8c2e7bd89bf5048a3f76f3e5fe4370e1e18f4075ce759f",
+          "rhythm": "a1388f6ee597dcee4d0961cc4984b4c669c359acd182ba97ad15d1a48cb348d6",
+          "tonic_relative_pitch_and_rhythm": "9b4163595a0ade486c5d4a6a4743868c0d9a6ca2543cd88c7d1317b2afb36710"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "e62313d055199a242df439af2bd312ea6384fb6d48878d074c9a55da933788be",
+          "rhythm": "0a8a36deea58dc6db233569d450d04477eb32833197a36d366f07acc3df9f3ca",
+          "tonic_relative_pitch_and_rhythm": "7189c9f739078b1bcfe7764cbe1394a005e7da4e9b84e71092c3de93405725fc"
+        },
+        "hats": {
+          "full_pitch_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0",
+          "rhythm": "fb017f2e70bb1e06a67e7807696327606f1a391d6efc51b9c31adebaff629f13",
+          "tonic_relative_pitch_and_rhythm": "95fb6b64d8f2155b6454791adc0232076cdf348619fba0223d070085c0304e25"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "ba40ece37e6afa2bdcd28befb97485fd1c3df9e943dc938035d6c94d2bbd4e39"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7",
+          "rhythm": "2653bd18721311967a5f4ca2fc0009c636121460d9f4a8831a73b2ad8eb5f93d",
+          "tonic_relative_pitch_and_rhythm": "48ae5223a7db3be2b6d7f5f31cfbafc34c111571d11e7494c76cdb1246eb075b"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -24.108,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -7.215,
+      "profile": "jackin",
+      "progression": [
+        0,
+        3,
+        4,
+        3
+      ],
+      "prompt": "jackin house in G minor, 122 bpm, 128 bars, bouncy rubber bass, short piano house stabs, lively snare and percussion, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 985785935,
+      "selected_presets": {
+        "bass": "Biow Bass 2",
+        "chord": "SNFKFutureBounce - Loaded Chords",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "G"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -6.263,
+        "digital_tail_seconds": 11.808,
+        "last_sample_over_minus_90dBFS_seconds": 242.082,
+        "length_seconds": 253.89,
+        "main_drop_minus_groove_a_db": 0.002,
+        "outro_minus_groove_a_db": -0.386,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 2.37,
+          "bass_body_120_250": 31.16,
+          "low_mid_250_1000": 12.99,
+          "presence_1000_6000": 3.21,
+          "sub_25_120": 50.27
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -34.409,
+          "Build": -31.814,
+          "Groove A": -28.146,
+          "Groove B": -28.073,
+          "Intro": -30.242,
+          "Main Drop": -28.144,
+          "Outro": -28.532,
+          "Return": -28.021
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -6.263,
+          "Build": -3.668,
+          "Groove A": 0.0,
+          "Groove B": 0.073,
+          "Intro": -2.096,
+          "Main Drop": 0.002,
+          "Outro": -0.386,
+          "Return": 0.125
+        },
+        "stereo_lr_corr": 0.997522,
+        "stereo_side_to_mid_db": -28.931
+      },
+      "bass_GrooveA_note_count": 32,
+      "bpm": 127,
+      "drum_variant": 0,
+      "effective_harmony_profile": "extended",
+      "harmony_GrooveA_note_count": 80,
+      "harmony_profile": "extended",
+      "id": "03",
+      "kick_sample": "house.kick.punch-01",
+      "lossless_listening_share": "https://gofile.io/d/keFpysex",
+      "mode": "major",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "fceda77bfe2d181954dd3275f2c12561f244352c1c84b92389d171375c85c623",
+          "rhythm": "a1388f6ee597dcee4d0961cc4984b4c669c359acd182ba97ad15d1a48cb348d6",
+          "tonic_relative_pitch_and_rhythm": "bfe5f6a7afb0b887bd7e5f589fe8e8b5c9411a9372ec1b752f551cee30e7420e"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "86ee7e29ac95e0feda1a4b0a62165de0427e1fd0ac763b03f9fb7bef44245dd6",
+          "rhythm": "0bf8048faff15760a53c8471f3453633dbb2d63fac9d155f713d5e821928d810",
+          "tonic_relative_pitch_and_rhythm": "3a66d05f44e275d63fe511488b261aef867a764e243b9ed45c9d078a9a79277e"
+        },
+        "hats": {
+          "full_pitch_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0",
+          "rhythm": "fb017f2e70bb1e06a67e7807696327606f1a391d6efc51b9c31adebaff629f13",
+          "tonic_relative_pitch_and_rhythm": "617de8787f4d2afce0bbf4bb64cc3f74203269e2470aafaf2252a3034fd1c10e"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "ad97165f4b816430451e9902d7512731ad1743d563fa2595b4e8db6f05b53959"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7",
+          "rhythm": "2653bd18721311967a5f4ca2fc0009c636121460d9f4a8831a73b2ad8eb5f93d",
+          "tonic_relative_pitch_and_rhythm": "3a00bb09b14cc3eb705fc1110fa80fe55ddaa42824d6829cfc9151cc946708d4"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -27.421,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -11.535,
+      "profile": "jackin",
+      "progression": [
+        0,
+        3,
+        5,
+        4
+      ],
+      "prompt": "jackin house in E major, 127 bpm, 128 bars, bouncy rubber bass, short piano house stabs, lively snare and percussion, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 2048914727,
+      "selected_presets": {
+        "bass": "Biow Bass 2",
+        "chord": "WIP-D - Retro Piano",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "E"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -10.699,
+        "digital_tail_seconds": 11.81,
+        "last_sample_over_minus_90dBFS_seconds": 243.999,
+        "length_seconds": 255.81,
+        "main_drop_minus_groove_a_db": 0.123,
+        "outro_minus_groove_a_db": -0.39,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 1.76,
+          "bass_body_120_250": 31.98,
+          "low_mid_250_1000": 7.36,
+          "presence_1000_6000": 2.6,
+          "sub_25_120": 56.3
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -38.509,
+          "Build": -33.021,
+          "Groove A": -27.81,
+          "Groove B": -27.881,
+          "Intro": -30.664,
+          "Main Drop": -27.687,
+          "Outro": -28.2,
+          "Return": -27.865
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -10.699,
+          "Build": -5.211,
+          "Groove A": 0.0,
+          "Groove B": -0.071,
+          "Intro": -2.854,
+          "Main Drop": 0.123,
+          "Outro": -0.39,
+          "Return": -0.055
+        },
+        "stereo_lr_corr": 0.999477,
+        "stereo_side_to_mid_db": -35.803
+      },
+      "bass_GrooveA_note_count": 32,
+      "bpm": 126,
+      "drum_variant": 0,
+      "effective_harmony_profile": "extended",
+      "harmony_GrooveA_note_count": 80,
+      "harmony_profile": "simple",
+      "id": "04",
+      "kick_sample": "house.kick.deep-01",
+      "lossless_listening_share": "https://gofile.io/d/xX6mtU9t",
+      "mode": "minor",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "57203297e28afb2319d2d311b2f41ad9bdd04e0fa50b6c9b167647cb5995f886",
+          "rhythm": "b6d946b2861d1c425ba1c106ca01f7e3d821b91787640c517704217ee4ff2bdd",
+          "tonic_relative_pitch_and_rhythm": "1f55ea2272d8135d2b8b9008fbd15f45c90c29bbd9f54315255d4637809597de"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "f32b4cf7f4b2d76ad57165628e8eb8966f426c1f68baaaf772ad091d29822e25",
+          "rhythm": "2ff463615bad9118db8ba13ca54c447507f19529cb48ed87636d235667d184b5",
+          "tonic_relative_pitch_and_rhythm": "f2108935c488e7d561d774fa9669283a270b89bd71d5841cdf95d932208837a3"
+        },
+        "hats": {
+          "full_pitch_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0",
+          "rhythm": "fb017f2e70bb1e06a67e7807696327606f1a391d6efc51b9c31adebaff629f13",
+          "tonic_relative_pitch_and_rhythm": "aa95ed1a1361d5d04e92e174d78b53f093b39f7fa48e8b850bc3d34e380c6f98"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "851d70ace8d18b404f32822c4448f6825a8b6bf266e2bcc3575817f4b7b0f15c"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7",
+          "rhythm": "2653bd18721311967a5f4ca2fc0009c636121460d9f4a8831a73b2ad8eb5f93d",
+          "tonic_relative_pitch_and_rhythm": "60a46bb33ef6c43deae093a5de5df4b69bdc2a8615f54c6cbc1e8ca21417549b"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -26.849,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -11.501,
+      "profile": "deep",
+      "progression": [
+        0,
+        5,
+        2,
+        6
+      ],
+      "prompt": "deep house in B minor, 126 bpm, 128 bars, warm rolling bass, soulful extended chords, late-night spacious percussion, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 180681617,
+      "selected_presets": {
+        "bass": "Biow Bass",
+        "chord": "string stabs",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "B"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": 0.262,
+        "digital_tail_seconds": 11.827,
+        "last_sample_over_minus_90dBFS_seconds": 243.983,
+        "length_seconds": 255.81,
+        "main_drop_minus_groove_a_db": 0.034,
+        "outro_minus_groove_a_db": -0.507,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 1.96,
+          "bass_body_120_250": 25.54,
+          "low_mid_250_1000": 28.19,
+          "presence_1000_6000": 3.33,
+          "sub_25_120": 40.98
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -27.922,
+          "Build": -27.408,
+          "Groove A": -28.184,
+          "Groove B": -28.114,
+          "Intro": -26.683,
+          "Main Drop": -28.15,
+          "Outro": -28.691,
+          "Return": -28.186
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": 0.262,
+          "Build": 0.776,
+          "Groove A": 0.0,
+          "Groove B": 0.07,
+          "Intro": 1.501,
+          "Main Drop": 0.034,
+          "Outro": -0.507,
+          "Return": -0.002
+        },
+        "stereo_lr_corr": 0.998021,
+        "stereo_side_to_mid_db": -29.944
+      },
+      "bass_GrooveA_note_count": 32,
+      "bpm": 126,
+      "drum_variant": 0,
+      "effective_harmony_profile": "extended",
+      "harmony_GrooveA_note_count": 80,
+      "harmony_profile": "extended",
+      "id": "05",
+      "kick_sample": "house.kick.punch-01",
+      "lossless_listening_share": "https://gofile.io/d/Kskuku7w",
+      "mode": "minor",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "07a8fd3ca553ab4dca5c797d8cefa8ac6a0af553639d35bd42a83e751a56bd3e",
+          "rhythm": "022249208e3949a6d5e401683ace97171fe1624f84dbe119a10e06b00b763fe2",
+          "tonic_relative_pitch_and_rhythm": "07a8fd3ca553ab4dca5c797d8cefa8ac6a0af553639d35bd42a83e751a56bd3e"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "58566bd27db6768b4f278f896c34d76dfde2eec4900a3c52defc60af9e1d7648",
+          "rhythm": "2b182bdfb5c48f1eee48572a45d97722ca20e84cb25adf9570e4eaf70d04e021",
+          "tonic_relative_pitch_and_rhythm": "58566bd27db6768b4f278f896c34d76dfde2eec4900a3c52defc60af9e1d7648"
+        },
+        "hats": {
+          "full_pitch_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0",
+          "rhythm": "fb017f2e70bb1e06a67e7807696327606f1a391d6efc51b9c31adebaff629f13",
+          "tonic_relative_pitch_and_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7",
+          "rhythm": "2653bd18721311967a5f4ca2fc0009c636121460d9f4a8831a73b2ad8eb5f93d",
+          "tonic_relative_pitch_and_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -26.371,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -10.165,
+      "profile": "jackin",
+      "progression": [
+        0,
+        6,
+        3,
+        4
+      ],
+      "prompt": "jackin house in C minor, 126 bpm, 128 bars, bouncy rubber bass, short piano house stabs, lively snare and percussion, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 993821455,
+      "selected_presets": {
+        "bass": "Biow Bass 2",
+        "chord": "WIP-D - Retro Piano",
+        "pad": "Strings of Cygnus"
+      },
+      "tonic": "C"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -0.971,
+        "digital_tail_seconds": 11.792,
+        "last_sample_over_minus_90dBFS_seconds": 236.516,
+        "length_seconds": 248.308,
+        "main_drop_minus_groove_a_db": 0.091,
+        "outro_minus_groove_a_db": -1.238,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 2.73,
+          "bass_body_120_250": 17.64,
+          "low_mid_250_1000": 29.97,
+          "presence_1000_6000": 16.7,
+          "sub_25_120": 32.97
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -26.649,
+          "Build": -25.365,
+          "Groove A": -25.678,
+          "Groove B": -25.771,
+          "Intro": -26.808,
+          "Main Drop": -25.587,
+          "Outro": -26.916,
+          "Return": -25.774
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -0.971,
+          "Build": 0.313,
+          "Groove A": 0.0,
+          "Groove B": -0.093,
+          "Intro": -1.13,
+          "Main Drop": 0.091,
+          "Outro": -1.238,
+          "Return": -0.096
+        },
+        "stereo_lr_corr": 0.992033,
+        "stereo_side_to_mid_db": -21.64
+      },
+      "bass_GrooveA_note_count": 29,
+      "bpm": 130,
+      "drum_variant": 0,
+      "effective_harmony_profile": "extended",
+      "harmony_GrooveA_note_count": 80,
+      "harmony_profile": "extended",
+      "id": "06",
+      "kick_sample": "house.kick.deep-01",
+      "lossless_listening_share": "https://gofile.io/d/aDF83bZM",
+      "mode": "major",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "5ae479b3f70afb6c5caea70d77c01b229b2a185086e05d0b87239b8909de4fb0",
+          "rhythm": "66b3d09c770f91b17710c8b887fabf1396b6f08daa8d4baea9f871d3920b0841",
+          "tonic_relative_pitch_and_rhythm": "cd020d43173c104e924f9b620c1fbcacf6c7cb9a16cc53d1bd8112129fc2cbdd"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "c9274165179a47591a9e5fc6a61783a4c056b8564a0cb0a1905db0b716977237",
+          "rhythm": "4957a62f7d6f425a9bc1efd7588e25e5a1923054aa26d0daa50f6b4e0a2abf96",
+          "tonic_relative_pitch_and_rhythm": "6a66bfdc66e28042588c0d124b4e09c0563c5b1f1fb6df47983bcddd3765fdad"
+        },
+        "hats": {
+          "full_pitch_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0",
+          "rhythm": "fb017f2e70bb1e06a67e7807696327606f1a391d6efc51b9c31adebaff629f13",
+          "tonic_relative_pitch_and_rhythm": "79d27b6108bc07f67768e903fe24e526fcbde5aadb8dd3d576af92c1d8fd8e29"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "757ace555a4722cccb341289a0ffc9ee6a718f585b337c64c5a81b2fb9dcd1a5"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7",
+          "rhythm": "2653bd18721311967a5f4ca2fc0009c636121460d9f4a8831a73b2ad8eb5f93d",
+          "tonic_relative_pitch_and_rhythm": "1d01e30a05070e3ad7eebb18f2a150a0a4ea06b8d92ab39a42322c2e93354925"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -23.025,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -6.765,
+      "profile": "deep",
+      "progression": [
+        5,
+        3,
+        0,
+        4
+      ],
+      "prompt": "deep house in Bb major, 130 bpm, 128 bars, subby round bass, floating warm pads, minimal crisp percussion, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 1576966947,
+      "selected_presets": {
+        "bass": "gentle pluck bass",
+        "chord": "SNFKFutureBounce - Loaded Chords",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "Bb"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": 1.617,
+        "digital_tail_seconds": 11.683,
+        "last_sample_over_minus_90dBFS_seconds": 242.207,
+        "length_seconds": 253.89,
+        "main_drop_minus_groove_a_db": -0.006,
+        "outro_minus_groove_a_db": -0.752,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 0.85,
+          "bass_body_120_250": 24.34,
+          "low_mid_250_1000": 42.57,
+          "presence_1000_6000": 7.74,
+          "sub_25_120": 24.5
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -27.516,
+          "Build": -27.214,
+          "Groove A": -29.133,
+          "Groove B": -29.138,
+          "Intro": -26.943,
+          "Main Drop": -29.139,
+          "Outro": -29.885,
+          "Return": -29.154
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": 1.617,
+          "Build": 1.919,
+          "Groove A": 0.0,
+          "Groove B": -0.005,
+          "Intro": 2.19,
+          "Main Drop": -0.006,
+          "Outro": -0.752,
+          "Return": -0.021
+        },
+        "stereo_lr_corr": 0.995804,
+        "stereo_side_to_mid_db": -26.16
+      },
+      "bass_GrooveA_note_count": 20,
+      "bpm": 127,
+      "drum_variant": 1,
+      "effective_harmony_profile": "extended",
+      "harmony_GrooveA_note_count": 80,
+      "harmony_profile": "extended",
+      "id": "07",
+      "kick_sample": "house.kick.tight-02",
+      "lossless_listening_share": "https://gofile.io/d/PsUXU2it",
+      "mode": "minor",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "b2705a264488b89dba17d49ea0fdd7a2882012eb3291f4d9a143afdc2792368d",
+          "rhythm": "b0bf4ef202b4bb1a7a10ce0116e6852d6e242f6f15303a9b0522ead0137968fd",
+          "tonic_relative_pitch_and_rhythm": "a79446023bbf3c608f56484bd82899fb58b5d100601a9890b3db08ebdf42eced"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "828412efb688bc6e292dda2b7ba47022ce499b774b1936521c14f490c97a2320",
+          "rhythm": "5344a9058000b3e91c7f178814e71f660114da6ba410dbafefa0783bb1d9d80e",
+          "tonic_relative_pitch_and_rhythm": "83517919ff2102cc3599b84d5fd31e66d10b8d24ad0d8e2644a3a9a44a43d5b3"
+        },
+        "hats": {
+          "full_pitch_rhythm": "9ac4d7d65e3213b46b6f419949c600b0e5fab5261a725986140a3424f2c41a15",
+          "rhythm": "b0a0d05ed404e581d76286812510615b0cd43fd8e42cb6009844d84a42956c23",
+          "tonic_relative_pitch_and_rhythm": "6ca8d3751296d68f7c07e00259f63daa575e555a4bb122151e0ba0083595caf5"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "8c06676cb23b8abe567710d7010a7be37dc66bdf68b6c013404ad0dc5582341e"
+        },
+        "snare": {
+          "full_pitch_rhythm": "b760f5beeb85fe00432c2e5b8d0ba870b5d2907b35bbbec829ed4208de4a3e40",
+          "rhythm": "8dd89737cb915d75ed758e5f2f2701937a305eb1877deda4a1f444cbb77b0687",
+          "tonic_relative_pitch_and_rhythm": "445266b26a5baaed13a05174e689cc1d984830cc34e1e3676b7fd5aee35c9089"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -26.526,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -8.43,
+      "profile": "minimal",
+      "progression": [
+        0,
+        3,
+        0,
+        3
+      ],
+      "prompt": "minimal house in Db minor, 127 bpm, 128 bars, syncopated sub bass, spacey sustained chords, understated hats, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 1794109088,
+      "selected_presets": {
+        "bass": "gentle pluck bass",
+        "chord": "minimal house dub stab 23",
+        "pad": "Strings of Cygnus"
+      },
+      "tonic": "Db"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": 5.229,
+        "digital_tail_seconds": 11.724,
+        "last_sample_over_minus_90dBFS_seconds": 256.276,
+        "length_seconds": 268.0,
+        "main_drop_minus_groove_a_db": 0.008,
+        "outro_minus_groove_a_db": -0.811,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 0.55,
+          "bass_body_120_250": 24.01,
+          "low_mid_250_1000": 53.55,
+          "presence_1000_6000": 5.3,
+          "sub_25_120": 16.58
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -23.917,
+          "Build": -23.327,
+          "Groove A": -29.146,
+          "Groove B": -29.25,
+          "Intro": -23.444,
+          "Main Drop": -29.138,
+          "Outro": -29.957,
+          "Return": -29.349
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": 5.229,
+          "Build": 5.819,
+          "Groove A": 0.0,
+          "Groove B": -0.104,
+          "Intro": 5.702,
+          "Main Drop": 0.008,
+          "Outro": -0.811,
+          "Return": -0.203
+        },
+        "stereo_lr_corr": 0.99725,
+        "stereo_side_to_mid_db": -28.244
+      },
+      "bass_GrooveA_note_count": 20,
+      "bpm": 120,
+      "drum_variant": 1,
+      "effective_harmony_profile": "simple",
+      "harmony_GrooveA_note_count": 60,
+      "harmony_profile": "simple",
+      "id": "08",
+      "kick_sample": "house.kick.tight-02",
+      "lossless_listening_share": "https://gofile.io/d/CxsnmOSM",
+      "mode": "major",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "b6e7ddec13f1f95d0235b794f897a703c823351e5b233713c0348cf98553115d",
+          "rhythm": "b0bf4ef202b4bb1a7a10ce0116e6852d6e242f6f15303a9b0522ead0137968fd",
+          "tonic_relative_pitch_and_rhythm": "a79446023bbf3c608f56484bd82899fb58b5d100601a9890b3db08ebdf42eced"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "65aa003c8ad9aa9b4056b1778e7f5a9001ea8625b1cb88696cda21f53dd1d605",
+          "rhythm": "0b711d56684f1cc44b82046c3de12dc8fc35eb11569718629c2a2863e5d6242f",
+          "tonic_relative_pitch_and_rhythm": "a4480888016d6fcd67e2a40ff0eb67b0839de4206bbba4d59ca70af5c42d2835"
+        },
+        "hats": {
+          "full_pitch_rhythm": "9ac4d7d65e3213b46b6f419949c600b0e5fab5261a725986140a3424f2c41a15",
+          "rhythm": "b0a0d05ed404e581d76286812510615b0cd43fd8e42cb6009844d84a42956c23",
+          "tonic_relative_pitch_and_rhythm": "94f7791e9fe36a0bf2e7dec10fce23d9856ec887f344e893c2d9ad043f192790"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "cf71f6960c92dc25f666b269b89d66f71effe8d3414c0dc9ff33099f581f7e04"
+        },
+        "snare": {
+          "full_pitch_rhythm": "b760f5beeb85fe00432c2e5b8d0ba870b5d2907b35bbbec829ed4208de4a3e40",
+          "rhythm": "8dd89737cb915d75ed758e5f2f2701937a305eb1877deda4a1f444cbb77b0687",
+          "tonic_relative_pitch_and_rhythm": "611c28ba03a6f3bd117c925c6bbb7c147b69747f91f780c410d5257631618143"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -24.831,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -7.246,
+      "profile": "minimal",
+      "progression": [
+        0,
+        3,
+        0,
+        3
+      ],
+      "prompt": "minimal house in Gb major, 120 bpm, 128 bars, rolling sparse bass, dark muted chord hits, tight micro percussion, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 1496159534,
+      "selected_presets": {
+        "bass": "Biow Bass 2",
+        "chord": "minimal house dub stab 23",
+        "pad": "In the Dark"
+      },
+      "tonic": "Gb"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -7.599,
+        "digital_tail_seconds": 11.735,
+        "last_sample_over_minus_90dBFS_seconds": 250.021,
+        "length_seconds": 261.756,
+        "main_drop_minus_groove_a_db": 0.225,
+        "outro_minus_groove_a_db": -0.519,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 1.88,
+          "bass_body_120_250": 28.8,
+          "low_mid_250_1000": 18.66,
+          "presence_1000_6000": 4.24,
+          "sub_25_120": 46.42
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -35.097,
+          "Build": -32.021,
+          "Groove A": -27.498,
+          "Groove B": -27.403,
+          "Intro": -30.439,
+          "Main Drop": -27.273,
+          "Outro": -28.017,
+          "Return": -27.486
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -7.599,
+          "Build": -4.523,
+          "Groove A": 0.0,
+          "Groove B": 0.095,
+          "Intro": -2.941,
+          "Main Drop": 0.225,
+          "Outro": -0.519,
+          "Return": 0.012
+        },
+        "stereo_lr_corr": 0.995913,
+        "stereo_side_to_mid_db": -26.427
+      },
+      "bass_GrooveA_note_count": 28,
+      "bpm": 123,
+      "drum_variant": 1,
+      "effective_harmony_profile": "simple",
+      "harmony_GrooveA_note_count": 60,
+      "harmony_profile": "simple",
+      "id": "09",
+      "kick_sample": "house.kick.deep-02",
+      "lossless_listening_share": "https://gofile.io/d/6UjystYW",
+      "mode": "major",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "e383a28aa55b6d47e1525b94b65a570f4fa202e3e61914cf390fd6952fda54e1",
+          "rhythm": "09bde7e248a344591b176007b8142ba362e1ee312d28b9688b22d89a70b4ff3a",
+          "tonic_relative_pitch_and_rhythm": "808436ab4162bd3b2d472c7e50438b115b3b326a486e0b20baf741b6c66f97d2"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "a53acb58f4ae7dc332356e06a6137aa65dac53b6feed709ed4aaed64ff5b4cc9",
+          "rhythm": "b93ab5c54ad073da4496aa18cdfe86cb546f6fa876e6349989049375cdc8e6f8",
+          "tonic_relative_pitch_and_rhythm": "2c5d491f27689aacf2f655e4b9bc2cae55a7c5af477ea5d9201114e3bb75e613"
+        },
+        "hats": {
+          "full_pitch_rhythm": "41eccf6f1278748700fc60f69d4cffa6bcb1d03ee24e2bff62664d0ee5b3b1e0",
+          "rhythm": "fb017f2e70bb1e06a67e7807696327606f1a391d6efc51b9c31adebaff629f13",
+          "tonic_relative_pitch_and_rhythm": "7d0b3f1415c79900afc252082a95fb5a75fbd069302df3e6051bf7549a8906d7"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "51c77da405985541471d4dd688e996e3e78da5cca0c84555e29e7f5bad284767"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "4957eb4b3d4aed4b7a88255b8ced5058c46beb3191367eee95a98a393d1d55c7",
+          "rhythm": "2653bd18721311967a5f4ca2fc0009c636121460d9f4a8831a73b2ad8eb5f93d",
+          "tonic_relative_pitch_and_rhythm": "5d4b54d65970c7dd7a8c851f82fedf9ef24e46ee3c45a4164131d58608e1b7cb"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -26.247,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -10.85,
+      "profile": "deep",
+      "progression": [
+        0,
+        3,
+        0,
+        4
+      ],
+      "prompt": "deep house in A major, 123 bpm, 128 bars, muted rubber bass, hypnotic minor-key stabs, soft shuffling hats, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 1854690625,
+      "selected_presets": {
+        "bass": "gentle pluck bass",
+        "chord": "minimal house dub stab 23",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "A"
+    },
+    {
+      "audio": {
+        "breakdown_minus_groove_a_db": -1.136,
+        "digital_tail_seconds": 11.782,
+        "last_sample_over_minus_90dBFS_seconds": 240.218,
+        "length_seconds": 252.0,
+        "main_drop_minus_groove_a_db": -0.034,
+        "outro_minus_groove_a_db": -1.244,
+        "sampled_band_energy_pct": {
+          "air_6000_20000": 2.15,
+          "bass_body_120_250": 28.87,
+          "low_mid_250_1000": 23.2,
+          "presence_1000_6000": 12.74,
+          "sub_25_120": 33.04
+        },
+        "section_fullmix_rms_dbfs": {
+          "Breakdown": -27.712,
+          "Build": -26.453,
+          "Groove A": -26.576,
+          "Groove B": -26.604,
+          "Intro": -27.887,
+          "Main Drop": -26.61,
+          "Outro": -27.82,
+          "Return": -26.655
+        },
+        "section_relative_to_groove_a_db": {
+          "Breakdown": -1.136,
+          "Build": 0.123,
+          "Groove A": 0.0,
+          "Groove B": -0.028,
+          "Intro": -1.311,
+          "Main Drop": -0.034,
+          "Outro": -1.244,
+          "Return": -0.079
+        },
+        "stereo_lr_corr": 0.992321,
+        "stereo_side_to_mid_db": -22.142
+      },
+      "bass_GrooveA_note_count": 32,
+      "bpm": 128,
+      "drum_variant": 0,
+      "effective_harmony_profile": "simple",
+      "harmony_GrooveA_note_count": 60,
+      "harmony_profile": "simple",
+      "id": "10",
+      "kick_sample": "house.kick.punch-01",
+      "lossless_listening_share": "https://gofile.io/d/8Vb1TOip",
+      "mode": "major",
+      "musical_signatures": {
+        "bass": {
+          "full_pitch_rhythm": "44e8477aaeab74b47cff7ce416a85654f1d93937f66f6e7c04d3d843a9384868",
+          "rhythm": "b9022fc19868076c97e2d4b95000693d27668a6f2e6df48fd359318b85e656a2",
+          "tonic_relative_pitch_and_rhythm": "1c37b560ee6c1c649de86caf32ab11df857556d1f7c8d97a851ea5a2b74b021e"
+        },
+        "harmony": {
+          "full_pitch_rhythm": "110fff4415e2f3c991977208d3c803f01451fbf938baea72a3fac1d043e3884c",
+          "rhythm": "86045c4d2d950480a26d6e9dbba662347d69f93b25f23009018cf39452fb05a7",
+          "tonic_relative_pitch_and_rhythm": "3080e8b1bffcac46fdcaeb9e848c3dd673773366b32f51b7e06836a8e7c2b0b1"
+        },
+        "hats": {
+          "full_pitch_rhythm": "9ac4d7d65e3213b46b6f419949c600b0e5fab5261a725986140a3424f2c41a15",
+          "rhythm": "b0a0d05ed404e581d76286812510615b0cd43fd8e42cb6009844d84a42956c23",
+          "tonic_relative_pitch_and_rhythm": "dd37e5cbbbe945f2f540f2f9093b22634925cc1f1c19d9c94f85fb3f3b7d6ec4"
+        },
+        "kick": {
+          "full_pitch_rhythm": "d6d024ea81f09460586287799d42fd28551451b9a0fcc180fafa93296df4333b",
+          "rhythm": "047901324f266281ad2b064c45b9afbcb0a06e863c630b7d675a392e8216059c",
+          "tonic_relative_pitch_and_rhythm": "1234ade866c5836072e9a69386db4c7e7678060484b50c1b039cae5a950be485"
+        },
+        "percussion": {
+          "full_pitch_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "tonic_relative_pitch_and_rhythm": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "snare": {
+          "full_pitch_rhythm": "b760f5beeb85fe00432c2e5b8d0ba870b5d2907b35bbbec829ed4208de4a3e40",
+          "rhythm": "8dd89737cb915d75ed758e5f2f2701937a305eb1877deda4a1f444cbb77b0687",
+          "tonic_relative_pitch_and_rhythm": "e95a5172174f19228acd3f55164a5a619a36bd87324e0b2652135d2e427500b5"
+        }
+      },
+      "native_clipped_samples": 0,
+      "native_integrated_lufs": -24.561,
+      "native_save_reopen": true,
+      "native_true_peak_dbtp": -7.936,
+      "profile": "straight",
+      "progression": [
+        0,
+        3,
+        0,
+        4
+      ],
+      "prompt": "straight house in D major, 128 bpm, 128 bars, punchy low end, bright clipped keyboard chords, clean dancefloor drums, atmospheric supporting pad, no lead or arpeggio",
+      "seed": 625183415,
+      "selected_presets": {
+        "bass": "Biow Bass 2",
+        "chord": "SNFKFutureBounce - Loaded Chords",
+        "pad": "minimal house pad 2"
+      },
+      "tonic": "D"
+    }
+  ],
+  "summary": {
+    "distinct_source_midi_signatures": {
+      "bass": {
+        "rhythm": 7,
+        "tonic_relative_pitch_and_rhythm": 9
+      },
+      "harmony": {
+        "rhythm": 10,
+        "tonic_relative_pitch_and_rhythm": 10
+      },
+      "hats": {
+        "rhythm": 2,
+        "tonic_relative_pitch_and_rhythm": 10
+      },
+      "kick": {
+        "rhythm": 1,
+        "tonic_relative_pitch_and_rhythm": 10
+      },
+      "snare": {
+        "rhythm": 2,
+        "tonic_relative_pitch_and_rhythm": 10
+      }
+    },
+    "drop_minus_groove_rms_db": {
+      "max": 0.225,
+      "median": 0.006500000000000001,
+      "min": -0.073
+    },
+    "key_counts": {
+      "A major": 1,
+      "B minor": 1,
+      "Bb major": 1,
+      "C minor": 1,
+      "D major": 1,
+      "Db minor": 1,
+      "E major": 1,
+      "F minor": 1,
+      "G minor": 1,
+      "Gb major": 1
+    },
+    "limits": [
+      "Different key and BPM are not evidence of different composition; tonic-relative MIDI and rhythm were checked.",
+      "Exact MIDI signatures ignore velocity/fx, but do not establish audible melodic or timbral difference.",
+      "Section RMS is not EBU gated LUFS and should not be called a commercial mastering target.",
+      "Actual source selection is limited by the catalog; repeated presets indicate unresolved sound-palette diversity.",
+      "No audio recognition, human preference or professional-quality evaluation was performed.",
+      "Band power is frequency-limited total sampled power, not a perceptual equal-loudness spectrum."
+    ],
+    "pair_count": 45,
+    "share_pairs_same_bass_preset": 0.2889,
+    "share_pairs_same_bass_rhythm": 0.0667,
+    "share_pairs_same_chord_preset": 0.1778,
+    "share_pairs_same_chord_rhythm": 0.0,
+    "share_pairs_same_pad_preset": 0.4889,
+    "song_count": 10,
+    "stereo_side_to_mid_db": {
+      "max": -21.631,
+      "median": -27.3355,
+      "min": -37.23
+    },
+    "style_counts": {
+      "deep": 3,
+      "jackin": 3,
+      "minimal": 2,
+      "straight": 2
+    },
+    "unique_kick_samples": 4,
+    "unique_presets": {
+      "bass": 4,
+      "chord": 4,
+      "pad": 3
+    },
+    "unique_progressions": 8
+  },
+  "version": "ten-full-native-random-house-diversity-public-diagnostics-v1"
+}
