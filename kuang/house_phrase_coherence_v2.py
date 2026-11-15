@@ -75,11 +75,6 @@ def regularize_chord_phrases(source, *, profile, seed):
     harmony = next((t for t in source.tracks if t.id == "track-harmony"), None)
     if bass is None or harmony is None:
         raise ValidationError("source bass and harmony tracks required")
-    if source.metadata.get("harmony_interlock_version") is None:
-        # The template does not set this metadata until after its interlock.
-        # If called directly on the pre-metadata project, exact interlock
-        # timing remains independently verifiable via its chord events.
-        pass
     original = state_hash(source)
     candidate = deepcopy(source)
     target = next(t for t in candidate.tracks if t.id == "track-harmony")
