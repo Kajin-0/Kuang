@@ -16,7 +16,9 @@ VERSION="house-context-palette-native-probe-v2"
 ROLES=("kick","bass","harmony")
 
 
-def probe_native_roles(project,native,session,private_scratch,*,bars=16):
+def probe_native_roles(project,native,session,private_scratch,*,bars=16,include_waveform=False):
+    if type(include_waveform) is not bool:
+        raise ValidationError("explicit waveform fingerprint flag required")
     validate(project)
     if type(bars) is not int or not 4<=bars<=16:
         raise ValidationError("native source probe limited to 4–16 bars")
@@ -33,6 +35,7 @@ def probe_native_roles(project,native,session,private_scratch,*,bars=16):
     start=section.start/project.ppq*60/project.tempo_bpm
     duration=bars*4*60/project.tempo_bpm
     levels={}
+    fingerprints={}
     for role in ROLES:
         track=next((x for x in project.tracks if x.id=="track-"+role),None)
         if track is None:raise ValidationError("missing expected real native role "+role)
@@ -49,9 +52,23 @@ def probe_native_roles(project,native,session,private_scratch,*,bars=16):
                "path":str(target),"format":"wav","bit_depth":24,"dither":False,
                "start":{"seconds":start},"end":{"seconds":start+duration}}))
             native.base._run(ops,folder,source=copy/"session.scraft")
-            meter=_rms_region(target,{"start_seconds":0.,"end_seconds":duration})
+            # Host bounce rounds end time to an integer frame. At e.g.
+            # 127 BPM the returned PCM may be one frame shorter than the
+            # ideal fractional-duration request. Measure the *actual* tail,
+            # rejecting a materially truncated bounce.
+            import wave
+            with wave.open(str(target),"rb") as pcm:
+                actual=pcm.getnframes()/pcm.getframerate()
+            if actual<duration-.01:
+                raise ValidationError("native role bounce materially truncated")
+            meter=_rms_region(target,{"start_seconds":0.,
+                                      "end_seconds":min(duration,actual)-1e-6})
             levels[role]={"rms_dbfs":round(meter["rms_dbfs"],3),
                           "peak_dbfs":round(meter["sample_peak_dbfs"],3)}
+            if include_waveform:
+                from .house_sound_fingerprint import fingerprint
+                fingerprints[role]=fingerprint(target,start_seconds=0.,
+                                                 duration_seconds=min(duration,actual)-1e-6,windows=16)
     if native.inspect(session)["canonical_hash"]!=original_hash:
         raise ValidationError("private native probe unexpectedly altered project")
     return {
@@ -59,4 +76,5 @@ def probe_native_roles(project,native,session,private_scratch,*,bars=16):
       "source_preserved":True,"measured_region":section.name+" first "+str(bars)+" bars",
       "role_stems":levels,"actual_native_host":True,
       "physical_stem_files_retained":False,
+      "waveform_fingerprints":fingerprints if include_waveform else None,
     }

@@ -461,7 +461,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if context_palette_v2:
             from .house_context_palette_native_probe import probe_native_roles
             from .house_context_palette_v2 import review_source
-            role_probe=probe_native_roles(project,native,stage/'native',stage/'scratch',bars=16)
+            role_probe=probe_native_roles(project,native,stage/'native',stage/'scratch',bars=16,include_waveform=True)
             entry=selection['roles']['chord']
             context_palette_receipt=review_source(
                 project,prompt=prompt,profile=gp,
