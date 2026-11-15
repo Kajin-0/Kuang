@@ -36,6 +36,7 @@ def probe_native_roles(project,native,session,private_scratch,*,bars=16,include_
     duration=bars*4*60/project.tempo_bpm
     levels={}
     fingerprints={}
+    note_envelopes={}
     for role in ROLES:
         track=next((x for x in project.tracks if x.id=="track-"+role),None)
         if track is None:raise ValidationError("missing expected real native role "+role)
@@ -69,6 +70,10 @@ def probe_native_roles(project,native,session,private_scratch,*,bars=16,include_
                 from .house_sound_fingerprint import fingerprint
                 fingerprints[role]=fingerprint(target,start_seconds=0.,
                                                  duration_seconds=min(duration,actual)-1e-6,windows=16)
+                if role in ("bass","harmony"):
+                    from .house_note_envelope_v1 import native_note_envelope
+                    note_envelopes[role]=native_note_envelope(
+                        project,target,role=role,section=section.name,bars=bars)
     if native.inspect(session)["canonical_hash"]!=original_hash:
         raise ValidationError("private native probe unexpectedly altered project")
     return {
@@ -77,4 +82,5 @@ def probe_native_roles(project,native,session,private_scratch,*,bars=16,include_
       "role_stems":levels,"actual_native_host":True,
       "physical_stem_files_retained":False,
       "waveform_fingerprints":fingerprints if include_waveform else None,
+      "note_envelopes":note_envelopes if include_waveform else None,
     }
