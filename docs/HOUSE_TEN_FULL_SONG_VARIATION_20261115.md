@@ -33,13 +33,16 @@ All songs are original 128-bar editable native SoundCraft/Vitalium house product
 | Measured property | Ten-song result |
 | --- | ---: |
 | Distinct first-eight-bar bass rhythm fingerprints (velocity and note IDs excluded) | 7/10 |
-| Distinct first-eight-bar chord rhythm fingerprints | 10/10 |
+| Distinct note-level chord onset/duration fingerprints (counts stacked voices) | 10/10 |
+| Distinct chord stab attack patterns (stacked voices grouped within 32 ticks) | **7/10** |
 | Distinct tonic-relative bass note/duration/onset fingerprints | 9/10 |
 | Distinct four-chord progressions | 8/10 |
 | Distinct selected bass/chord/pad presets | 4 / 4 / 3 |
 | Distinct kick samples | 4/10 |
 | Pairwise repeated bass source among 45 comparisons | 28.9% |
 | Pairwise repeated pad source among 45 comparisons | 48.9% |
+
+**Additional necessary distinction:** Although all ten songs have different note-level chord event fingerprints (stacked chord voices counted separately), grouping simultaneous/staggered chord voices into musical stabs reveals only **seven distinct actual chord attack patterns**. Songs 01 and 10, 02 and 03, and 07 and 08 share the same first-eight-bar chord attack grid despite different keys and sound choices. All ten use exactly **20 chord stabs in those eight bars**. Chord pattern identity is therefore LESS varied than 10/10 might suggest.
 
 Every song has a distinct tonic and seed, but those alone are not evidence of musical originality. The audit therefore compares key-normalized note/duration/onset motifs and role source identities. Differences in chord attacks and bass articulation are real symbolic changes; perceptually different musical identities still require producer listening. Seven of the ten songs use "minimal house pad 2", indicating a persistent tendency to reuse the same pad.
 
