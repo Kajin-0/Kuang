@@ -241,7 +241,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            groove_pocket_diagnostics=False, groove_identity_v2=False,
            timbre_source_review=False, contextual_pad_rescue=False,
            pad_level_calibration=False, groove_body_review=False,
-           groove_body_audition=False):
+           groove_body_audition=False, phrase_development_v1=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -253,6 +253,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('output cannot be inside preset library or plugin')
     if full_song_bars is not None and not groove_template:
         raise ValidationError('--full-song-bars requires --groove-template')
+    if (type(phrase_development_v1) is not bool or
+            (phrase_development_v1 and (not groove_template or full_song_bars is None))):
+        raise ValidationError('--phrase-development-v1 requires --groove-template and --full-song-bars')
     if type(timbre_source_review) is not bool or (timbre_source_review and not groove_template):
         raise ValidationError("--timbre-source-review requires --groove-template")
     if type(master_preview) is not bool:
@@ -353,7 +356,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                                                groove_identity_v2=groove_identity_v2)
             if full_length and not contextual_shortlist:
                 project,arrangement_receipt = arrange_full_song(project,bars=full_length,
-                                                               profile=gp,seed=seed)
+                                                               profile=gp,seed=seed,
+                                                               phrase_development_v1=phrase_development_v1)
             if sample_pack is not None:
                 project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
                                                stage/'drum-assets',gp,drum_variant,
@@ -410,7 +414,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             project,role_level_evidence=apply_chord_calibration(project,selection)
         if full_length and contextual_shortlist:
             project,arrangement_receipt=arrange_full_song(project,bars=full_length,
-                                                         profile=gp,seed=seed)
+                                                         profile=gp,seed=seed,
+                                                         phrase_development_v1=phrase_development_v1)
             duration=project.length/project.ppq*60/project.tempo_bpm
         calibration = measure(stage/'calibration.wav',library=str(library_path) if library_path.is_file() else None)
         if calibration['clipped_samples'] or calibration['rms'] < 1e-6:
@@ -491,6 +496,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'contextual_pad_rescue_requested':contextual_pad_rescue,
             'groove_body_review_requested':groove_body_review,
             'groove_body_audition_requested':groove_body_audition,
+            'phrase_development_v1_requested':phrase_development_v1,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
             **({'groove_pocket_evidence':'groove-pocket-evidence.json'} if pocket_receipt else {}),
@@ -562,6 +568,8 @@ def main(argv=None):
                         help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
     parser.add_argument('--master-preview',action='store_true',
                         help='produce measured transparent and gentle-compression WAV derivatives')
+    parser.add_argument('--phrase-development-v1',action='store_true',
+                        help='opt-in paired Groove/Drop eight-bar phrase development in full-house arranger')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
                         help='opt-in full-length editable arrangement from 32-bar nucleus')
     args=parser.parse_args(argv)
@@ -582,6 +590,7 @@ def main(argv=None):
                       pad_level_calibration=args.pad_level_calibration,
                       groove_body_review=args.groove_body_review,
                       groove_body_audition=args.groove_body_audition,
+                      phrase_development_v1=args.phrase_development_v1,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2

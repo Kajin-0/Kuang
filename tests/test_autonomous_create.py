@@ -47,6 +47,16 @@ class AutonomousCreateTests(unittest.TestCase):
                     self.call(private=True,**flags)
             picker.assert_not_called()
 
+    def test_phrase_development_fails_closed_without_full_song(self):
+        with patch.object(ac,"select_palette") as picker:
+            for kw in ({"phrase_development_v1":True},
+                       {"groove_template":True,"phrase_development_v1":True},
+                       {"groove_template":True,"full_song_bars":128,
+                        "phrase_development_v1":"yes"}):
+                with self.subTest(kw=kw),self.assertRaises(ValidationError):
+                    self.call(private=True,**kw)
+            picker.assert_not_called()
+
     def test_pad_level_calibration_fails_closed_without_groove_template(self):
         with patch.object(ac,"select_palette") as selection:
             with self.assertRaisesRegex(ValidationError,"pad-level-calibration requires"):

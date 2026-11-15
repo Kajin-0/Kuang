@@ -35,6 +35,8 @@ def add_parser(commands):
                          help="opt-in coherent progression families; retains existing SongSpec/composer and explicit Roman progressions")
     command.add_argument("--harmony-profile", choices=("auto", "simple", "extended"),
                          default="auto", help="triads or diatonic sevenths in groove-template mode")
+    command.add_argument("--phrase-development-v1",action="store_true",
+                         help="opt-in paired eight-bar Groove/Drop phrase evolution for long house arrangements")
     command.add_argument("--full-song-bars",type=int,choices=(96,112,128,160),
                          help="optional full-length original house arrangement from 32-bar nucleus")
     command.add_argument("--model", choices=("rules", "ollama"), default="rules")
@@ -52,7 +54,7 @@ def _write(path, data):
 def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, ollama_timeout=120,
            soundcraft=None, soundcraft_timeout=120, render=False, production="sketch",
            groove_profile="auto", harmony_profile="auto", full_song_bars=None,
-           musical_plan_v2=False):
+           musical_plan_v2=False, phrase_development_v1=False):
     raw_output = Path(output).expanduser()
     if raw_output.is_symlink():
         raise ValidationError("output already exists or is a symlink; choose a new directory")
@@ -68,6 +70,9 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
         raise ValidationError("musical-plan-v2 currently requires deterministic rules planner")
     if full_song_bars is not None and production != "groove-template":
         raise ValidationError("full-song-bars requires --production groove-template")
+    if (type(phrase_development_v1) is not bool or
+            (phrase_development_v1 and (production != "groove-template" or full_song_bars is None))):
+        raise ValidationError("phrase development requires groove-template and explicit full-song-bars")
     import re
     planning_prompt = re.sub(r"\b(96|112|128|160)\s*bars?\b", "32 bars", prompt, flags=re.I) if production == "groove-template" else prompt
     if model == "ollama":
@@ -109,7 +114,8 @@ def create(prompt, output, *, seed=7, model="rules", ollama_model=LOCAL_MODEL, o
                                            harmony_profile=selected_harmony)
         if full_length:
             project, arrangement_receipt = arrange_full_song(project,bars=full_length,
-                                                              profile=selected_groove,seed=seed)
+                                                              profile=selected_groove,seed=seed,
+                                                              phrase_development_v1=phrase_development_v1)
     else:
         project = compose(spec)
         if production == "refined":
@@ -201,6 +207,7 @@ def run(args):
                     soundcraft_timeout=args.soundcraft_timeout, render=args.render, production=args.production,
                     groove_profile=args.groove_profile, harmony_profile=args.harmony_profile,
                     full_song_bars=args.full_song_bars,
-                    musical_plan_v2=args.musical_plan_v2)
+                    musical_plan_v2=args.musical_plan_v2,
+                    phrase_development_v1=args.phrase_development_v1)
     print(json.dumps(result, sort_keys=True, indent=2, ensure_ascii=False, allow_nan=False))
     return 0

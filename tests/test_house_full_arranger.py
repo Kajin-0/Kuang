@@ -42,6 +42,74 @@ class FullHouseFormTests(unittest.TestCase):
                             self.assertNotIn("track-arp",{t.id for t in p.tracks})
                             self.assertGreater(len(export_bytes(p)),1000)
 
+    def test_optin_development_reuses_source_drop_phrase_and_keeps_groove(self):
+        from kuang.house_gates import evaluate
+        from kuang.house_full_arranger import DEVELOPMENT_VERSION
+        spec,_=rules_plan("jackin house in G major 32 bars, 127 bpm",217)
+        source,_=template(spec,profile="jackin",impact_pocket=True,
+                          groove_identity_v2=True)
+        old=state_hash(source)
+        legacy,old_receipt=arrange_full_song(source,bars=128,profile="jackin",seed=217)
+        changed,receipt=arrange_full_song(source,bars=128,profile="jackin",
+                                           seed=217,phrase_development_v1=True)
+        self.assertEqual(state_hash(source),old)
+        self.assertNotIn("phrase_development_version",legacy.metadata)
+        self.assertEqual(receipt["phrase_development"]["version"],DEVELOPMENT_VERSION)
+        self.assertEqual(receipt["technical_gates"],old_receipt["technical_gates"])
+        self.assertEqual(changed.metadata["phrase_development_version"],DEVELOPMENT_VERSION)
+        self.assertNotEqual(export_bytes(legacy),export_bytes(changed))
+        self.assertEqual([(x.name,x.start,x.length) for x in legacy.sections],
+                         [(x.name,x.start,x.length) for x in changed.sections])
+        def section_events(p,role,section):
+            track=next(t for t in p.tracks if t.id=="track-"+role)
+            region=next(s for s in p.sections if s.name==section)
+            return [(c.start+n.start-region.start,n.duration,n.pitch,n.velocity)
+                    for c in track.clips for n in c.notes
+                    if region.start<=c.start+n.start<region.start+region.length]
+        for role in ("bass","harmony","kick"):
+            self.assertEqual(section_events(legacy,role,"Groove A"),
+                             section_events(changed,role,"Groove A"))
+        self.assertEqual(section_events(legacy,"kick","Main Drop"),
+                         section_events(changed,"kick","Main Drop"))
+        self.assertNotEqual(section_events(legacy,"bass","Main Drop"),
+                            section_events(changed,"bass","Main Drop"))
+        self.assertNotEqual(section_events(legacy,"harmony","Main Drop"),
+                            section_events(changed,"harmony","Main Drop"))
+        old_gate=evaluate(legacy,expected_no_lead_arp=True)
+        new_gate=evaluate(changed,expected_no_lead_arp=True)
+        self.assertEqual(old_gate["hard_failures"],[])
+        self.assertEqual(new_gate["hard_failures"],[])
+        self.assertEqual(old_gate["diagnostics"]["D02_core_groove_drop_equal_fraction"]["bass"],1.)
+        self.assertLess(new_gate["diagnostics"]["D02_core_groove_drop_equal_fraction"]["bass"],.5)
+        self.assertFalse(receipt["phrase_development"]["new_melodic_notes_added"])
+
+    def test_development_matrix_profiles_and_source_immutability(self):
+        from kuang.house_gates import evaluate
+        for profile in PROFILES:
+            for key in ("C major","D minor"):
+                spec,_=rules_plan(f"{profile} house in {key}, 32 bars, 126 bpm",17)
+                original,_=template(spec,profile=profile,impact_pocket=True,
+                                    groove_identity_v2=True)
+                snapshot=dumps(original)
+                for bars in (96,128,160):
+                    with self.subTest(profile=profile,key=key,bars=bars):
+                        p,proof=arrange_full_song(original,bars=bars,profile=profile,
+                             seed=17,phrase_development_v1=True)
+                        self.assertTrue(proof["technical_pass"])
+                        self.assertEqual(snapshot,dumps(original))
+                        score=evaluate(p,expected_no_lead_arp=True)
+                        self.assertEqual(score["hard_failures"],[])
+                        self.assertEqual(score["diagnostics"]["D02_core_groove_drop_equal_fraction"]["bass"],0.)
+                        self.assertTrue(all(
+                            x["kick_source"]=="Groove" and
+                            x["bass_source"]==x["harmony_source"]
+                            for x in proof["phrase_development"]["source_eight_bar_blocks"]))
+                        self.assertGreater(len(export_bytes(p)),1000)
+
+    def test_explicit_bool_required_for_development(self):
+        with self.assertRaises(ValidationError):
+            arrange_full_song(source(),phrase_development_v1="yes")
+
     def test_same_prompt_seed_exact_and_other_seed_musically_varied(self):
         s=source("jackin","G minor",17)
         a,ar=arrange_full_song(s,bars=128,seed=17)

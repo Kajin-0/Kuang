@@ -185,12 +185,46 @@ def _build_lanes(result):
         _reschedule_impact_duck(result)
 
 
-def arrange_full_song(source, *, bars=128, profile=None, seed=17):
+# Opt-in: reuse pairs of already authored eight-bar source motifs.
+# Keeping chord and bass choices together avoids an incoherent cross-groove
+# rhythmic collage. No stochastic note moves, pitch edits or kick loss.
+DEVELOPMENT_VERSION = "house-full-phrase-development-v1"
+
+
+def _developed_source(section, role, block):
+    """Select existing, source-generated Groove/Drop phrase (not new MIDI).
+
+    Groove A is the original pocket. The second eight bars of Groove B
+    foreshadow the alternate motif. Main Drop introduces that motif for
+    sixteen bars and recalls the original on its third block. This is
+    deterministic eight-bar call/response, with existing four-bar internal
+    source phrasing. It does not alter chord voicings or their timing relative
+    to the paired bass source. Kick always stays Groove for uninterrupted 4/4.
+    """
+    if role not in ("bass", "harmony", "percussion", "hats", "open_hat", "snare"):
+        return "Groove"
+    if section == "Groove B" and block % 2 == 1:
+        return "Drop" if role in ("bass", "harmony", "percussion") else "Groove"
+    if section == "Main Drop":
+        # Never break the principal kick pocket. Bass and chords travel as a
+        # coherent source pair, not independent random role permutations.
+        if role in ("bass", "harmony", "percussion"):
+            return "Drop" if block % 3 in (0, 1) else "Groove"
+        # High percussion uses the authored drop phrase only during the
+        # middle block so early drop transients are not over-decorated.
+        return "Drop" if block % 3 == 1 else "Groove"
+    return "Groove"
+
+
+def arrange_full_song(source, *, bars=128, profile=None, seed=17,
+                      phrase_development_v1=False):
     """Build eight configurable sections using eight-bar core cells.
 
     No original user reference song is used; source can be ANY supported
     32-bar generated groove with the standard four named sections.
     """
+    if type(phrase_development_v1) is not bool:
+        raise ValidationError("phrase development opt-in must be an explicit boolean")
     validate(source)
     if bars not in FORMS or type(bars) is not int:
         raise ValidationError("full-song bars must be 96,112,128,160")
@@ -227,6 +261,7 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
     } for role in ROLES}
 
     role_matrix=[]
+    source_phrase_map=[]
     for track in result.tracks:
         track.clips=[]
 
@@ -234,6 +269,7 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
         name=section.name
         length=section.length//BAR
         for block in range(length//CYCLE):
+            block_sources={}
             for role in ROLES:
                 track=next((t for t in result.tracks if t.id=="track-"+role),None)
                 if track is None:continue
@@ -243,6 +279,10 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
                                "Breakdown" if name == "Build" and role in ("harmony","pad","snare") else
                                "Intro" if name == "Intro" and role in ("harmony","pad") else
                                "Groove")
+                if (phrase_development_v1 and source_kind == "Groove"
+                        and name in ("Groove B", "Main Drop")):
+                    source_kind=_developed_source(name,role,block)
+                block_sources[role]=source_kind
                 events=origins[role][source_kind]
                 # Pads are present in Intro/Breakdown but may be absent from
                 # the Groove segment; use the existing generated pad voice.
@@ -268,6 +308,16 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
                         f"{name} / {role} / {block+1:02d}",
                         "midi",section.start+block*CYCLE*BAR,CYCLE*BAR,
                         notes,None))
+            if phrase_development_v1:
+                # Auditable provenance; do not claim the source timbre was
+                # scored for quality or transformed into newly composed music.
+                if name in ("Groove B", "Main Drop"):
+                    source_phrase_map.append({"section":name,"block_8bar":block,
+                           "first_bar_1based":section.start//BAR+block*CYCLE+1,
+                           "bass_source":block_sources.get("bass"),
+                           "harmony_source":block_sources.get("harmony"),
+                           "kick_source":block_sources.get("kick"),
+                           "percussion_source":block_sources.get("percussion")})
         role_counts={role:sum(len(c.notes) for t in result.tracks
                               if t.id=="track-"+role for c in t.clips
                               if section.start<=c.start<section.start+section.length)
@@ -326,6 +376,8 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
     if not all(gates.values()):
         raise ValidationError("full-song structural gate failed: "+str(gates))
     result.metadata["arranger"]=VERSION
+    if phrase_development_v1:
+        result.metadata["phrase_development_version"]=DEVELOPMENT_VERSION
     result.metadata["arrangement_source_hash"]=original_hash
     result.metadata["arrangement_full_bars"]=str(bars)
     result.metadata["arrangement_seed"]=str(seed)
@@ -349,4 +401,21 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17):
             "Role entrances, fades and filters are deliberately formulaic and fully editable.",
             "Native rendering, source compatibility, mastering and subjective acceptance are separate gates.",
         ]}
+    if phrase_development_v1:
+        # The original output keeps its receipt and metadata byte-stable.
+        # New receipts explicitly label intentional motif borrowing.
+        evidence["phrase_development"]={
+            "version":DEVELOPMENT_VERSION,
+            "source":"Original generated Groove/Drop eight-bar motif pairs only",
+            "source_eight_bar_blocks":source_phrase_map,
+            "groove_a_and_kick_preserved":True,
+            "paired_harmony_and_bass_unchanged_relative_to_source":True,
+            "new_melodic_notes_added":False,
+            "quality_judgment":"NEEDS_LISTENING",
+            "limitations":[
+                "A different MIDI motif is not proof of more exciting dance-floor energy.",
+                "The eight-bar source nucleus is intentionally reused, not fully recomposed.",
+                "No audio, licensed sample or private preset selection is performed here."
+            ]
+        }
     return result,evidence

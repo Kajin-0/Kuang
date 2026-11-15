@@ -30,7 +30,8 @@ def make(profile,key,bars,seed,variant):
         return template(spec,profile=profile,impact_pocket=True,groove_identity_v2=True)[0]
     raise ValidationError("unsupported composer variant")
 
-def benchmark(*,profiles=PROFILES,keys=KEYS,lengths=LENGTHS,seeds=SEEDS,variants=VARIANTS,long_form=False):
+def benchmark(*,profiles=PROFILES,keys=KEYS,lengths=LENGTHS,seeds=SEEDS,variants=VARIANTS,
+              long_form=False, developed_long_form=False):
     rows=[];errors=[]
     for variant in variants:
         for profile in profiles:
@@ -43,19 +44,24 @@ def benchmark(*,profiles=PROFILES,keys=KEYS,lengths=LENGTHS,seeds=SEEDS,variants
                             rows.append({**desc,"gates":evaluate(project,expected_no_lead_arp=variant=="groove-v2")})
                         except (ValidationError,AssertionError,ValueError) as err:
                             errors.append({**desc,"exception":str(err)})
-    if long_form:
-        for profile in profiles:
-            for key in keys:
-                for seed in seeds[:1]:
-                    desc=dict(variant="groove-full-128",profile=profile,key=key,bars=128,seed=seed)
-                    try:
-                        source=make(profile,key,32,seed,"groove-v2")
-                        project,_=arrange_full_song(source,bars=128,profile=profile,seed=seed)
-                        rows.append({**desc,"gates":evaluate(project,expected_no_lead_arp=True)})
-                    except (ValidationError,AssertionError,ValueError) as err:
-                        errors.append({**desc,"exception":str(err)})
+    if long_form or developed_long_form:
+        for developed in (False, True):
+            if (developed and not developed_long_form) or (not developed and not long_form):
+                continue
+            for profile in profiles:
+                for key in keys:
+                    for seed in seeds[:1]:
+                        variant="groove-full-developed-128" if developed else "groove-full-128"
+                        desc=dict(variant=variant,profile=profile,key=key,bars=128,seed=seed)
+                        try:
+                            source=make(profile,key,32,seed,"groove-v2")
+                            project,_=arrange_full_song(source,bars=128,profile=profile,seed=seed,
+                                                        phrase_development_v1=developed)
+                            rows.append({**desc,"gates":evaluate(project,expected_no_lead_arp=True)})
+                        except (ValidationError,AssertionError,ValueError) as err:
+                            errors.append({**desc,"exception":str(err)})
     summary={}
-    for variant in (*variants,"groove-full-128"):
+    for variant in (*variants,"groove-full-128","groove-full-developed-128"):
         group=[row for row in rows if row["variant"]==variant]
         if not group:continue
         def fraction(values):return round(sum(bool(x) for x in values)/len(values),4) if values else None
@@ -88,7 +94,8 @@ def benchmark(*,profiles=PROFILES,keys=KEYS,lengths=LENGTHS,seeds=SEEDS,variants
     return {
         "version":"house-musical-benchmark-v1","gates_version":VERSION,
         "matrix":{"profiles":list(profiles),"keys":list(keys),"lengths":list(lengths),
-                  "seeds":list(seeds),"variants":list(variants),"long_form":long_form},
+                  "seeds":list(seeds),"variants":list(variants),"long_form":long_form,
+                  "developed_long_form":developed_long_form},
         "summary":summary,"cases":rows,"errors":errors,
         "notes":"Source-only. No external VST, host, renderer, audio, or perceptual success claims. Key-specific benchmark with controlled seed matrix."
     }
@@ -124,10 +131,13 @@ def main():
     cli.add_argument("--out-dir",required=True)
     cli.add_argument("--smoke",action="store_true")
     cli.add_argument("--full-form",action="store_true")
+    cli.add_argument("--developed",action="store_true",
+                     help="add opt-in developed long-form candidates; does not change frozen baseline")
     a=cli.parse_args()
     data=benchmark(profiles=PROFILES[:2] if a.smoke else PROFILES,
           keys=KEYS[:1] if a.smoke else KEYS,seeds=SEEDS[:2] if a.smoke else SEEDS,
-          long_form=a.full_form and not a.smoke)
+          long_form=a.full_form and not a.smoke,
+          developed_long_form=a.developed and not a.smoke)
     out=Path(a.out_dir)
     if out.exists() or out.is_symlink():raise ValidationError("output exists: frozen benchmark must not be overwritten")
     out.mkdir(parents=True)
