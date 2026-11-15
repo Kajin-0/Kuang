@@ -348,6 +348,10 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     if phrase_stable_chords_v2:
         from .house_phrase_coherence_v2 import regularize_chord_phrases
         p, phrase_receipt = regularize_chord_phrases(p, profile=profile, seed=spec.seed)
+        # The regularizer returns a deep-copied canonical project. Rebind the
+        # role view to that actual output before measuring groove onsets; the
+        # original dictionary still points at the pre-candidate objects.
+        tracks = {t.id.removeprefix("track-"): t for t in p.tracks}
 
     # Machine-checkable G1 structural gates, **not** a listening approval.
     groove = p.sections[1]
