@@ -1,0 +1,38 @@
+# Kuang — GROOVE-FIRST quality gate using Phase44 and the user's Suno reference (Nov 14, 2026)
+
+## Producer direction / immediate priority
+
+User's latest listening feedback: new Musical Planning V2 sounds better and progress is appreciated, **but the low-end groove is STILL under-prioritized**. Kuang spent ~45 earlier phases establishing its stronger low end; the user also supplied a Suno-produced recording and five individual stems for reference. Do not redirect the next engineering milestone to another set of chord families, layered effects, or full-song arrangement changes until the groove pocket improves convincingly **across independently generated songs**.
+
+**Product goal remains one prompt -> different, reliably high-quality, editable house productions.** Protect the existing SongSpec, groove-template, harmony-interlock, V2 plan, secure Vital/CC0 source pipeline, native SoundCraft render, and full-song arranger. Do not start over or freeze a Suno recording or Phase44's MIDI/audio as the generated content.
+
+## Source evidence already in the user's prior Kuang work
+
+**Suno stem report:** `Suno_Stem_Production_Audit.md`, authored from the user's `B-Phase30-MATCHED.mp3` (3:44.832, 48 kHz) and `B-Phase30-MATCHED Stems.zip` (Drums/Bass/Keyboard/Synth/Other). Also inspect `Suno_Musical_Logic_and_Kuang_Recovery.md`. Both are historical work; locate those actual audio files and provenance before running a new analysis. A clean FFmpeg decoder aligns the five full-song stems after approximately 23 ms of MP3 delay correction; relative waveform correlation with the original was reported ~0.985, not lossless. Do not claim the stems reveal exact plug-in settings or a verified MIDI transcription.
+
+Observed Suno rhythmic properties (descriptive, NOT normative targets):
+
+- Tempo approximately 126 BPM; beat 476.2 ms; offbeat 238.1 ms; 16th 119.0 ms. Prominent kick every beat in active sections. Several bass attacks ~230–238 ms after a kick, with other syncopations, varied gaps, and a stable root-anchored part rather than a busy wandering bassline.
+- Spectral audit reported within the Drums stem **80.0% of analyzed broad-band energy below 90 Hz**, and within the Bass stem **55.9%**. These are **stem-specific reference measurements**, not a prescribed whole-mix proportion or proof that more sub-bass is better. A separate early comparison of different song versions had different percentages; never combine them without the correct normalization/section/band.
+- Centered foundation: measured side-energy fraction below 90 Hz ~0% for Drums and ~2.3% for Bass in the reported study. Upper bass / 90–250 Hz harmonics provide translation and audibility on less capable playback systems. Avoid mandatory separate sub layers, arbitrary gain boosts, or global stereo widening.
+- The prior analysis of Suno bars 17–24, 25–40 and 81–104 found intentional alternation of groove foreground and synth foreground. The rhythm section must retain the physical pulse even when richer harmony is present.
+- Full-song Drums stem RMS was approximately -16.32 dBFS; Bass stem approximately -22.32 dBFS. These are **stem-specific RMS under the reported extraction/gain alignment**, not a direct recipe for new generated fader gain or integrated LUFS targets. Comparisons must use controlled passage selection and matched full-mix loudness.
+
+**Approved internal Phase44 benchmark:** `docs/HOUSE_PHASE44_GROOVE_ANCHOR_20261114.md` and exact private original projects/audio from Phase43/44/45. Phase44 is a superior human-refined C-minor reference with complementary kick/bass articulation, improved punch/sample selection, supporting swung hats/percussion, and clearer harmony separation. The actual approved **kick-to-between-kicks bass power ratio** was previously estimated at +1.63 dB, versus +9.59 dB in a new straight-house test and +16.83 dB in a new deep-house test. These ratios are imperfect, passage-dependent diagnostics, not invariant mixing targets; they warned that the new generator's kick might dominate the rolling bass. The user selected candidate D (CC0 Deep-01 kick + private Bass - Insanity) as best among four pairings; that's a **local subjective ranking**, not a universal source prescription.
+
+## Stop using these as substitutes for musical improvement
+
+- Full-mix LUFS, true peak, number of unit tests, native save/reopen, spectral ratios and mono fold-down are **technical safety and diagnostic gates**. None certifies felt groove, clarity or quality.
+- A common static bass-synth preset, arbitrary chord transposition or absolute kick gain cannot consistently work for all song keys and sound families.
+- Do not paste Phase44's compressor, saturator, EQ, fixed chord offsets or reverb FX values onto unrelated Vital patches. This failed audibly in the already reverted Phase44 fixed-effects experiment.
+- Do not build lengthy 96–160-bar songs while the 8–16-bar groove-and-harmony nucleus remains below the user's reference.
+
+## Decisive next engineering milestone: contextual, source-aware low-end gate
+
+1. **Inventory and verify original files only once.** Use the existing Suno stem audit, Phase44 native/audio and the previously approved D pairing, preserving hashes and rights. Reuse `kuang/house_source_fit.py`, `kuang/house_native_pair_audition.py`, `kuang/house_template.py`, `kuang/house_role_level.py`, and real SoundCraft/Vitalium rendering. Do not add duplicate renderers or a parallel composer.
+2. **Measure the actual rhythmic pocket, not just overall FFT power:** analyze kick onset/attack, 25–90/90–250 Hz energy versus time, kick decay, bass-note attack/release, energy in the 150–350 ms after each kick, bass harmonic continuity across notes, mono sub retention, and role-specific dynamics. Measure comparable active groove windows, meter/normalization settings and preserve uncertainty; do not set fixed universal target values based on the single Suno example.
+3. **Compare real source pairings** across multiple independent prompts/keys/styles, with actual MIDI/registers and 2–4 bounded verified native candidates per case. The incumbent is always one candidate. Do not enforce different preset names merely for diversity. Tune relative bass/kick presence and envelope *within each actual source pair*, avoiding the earlier overly uniform five-dB ducking and excessive short flat notes.
+4. **Protect the groove under harmony:** render both drums+bass only and the complete nucleus. Listen whether the low-end movement remains felt when chords/pads appear; measure masking from changes in the rendered mix (including side-effects and groove dynamics). Use the existing harmony-interlock and V2 progression plan unchanged as the controlled context unless the test directly isolates a harmonic change.
+5. **Quality gate:** supply matched-loudness 8–16-bar A/B WAVs against Phase44 and the Suno reference, plus 2+ independent generated songs. Explicit user listening verdict on the groove and clarity is required before default-promoting or advancing to long-form. Keep the results fully editable, source identities verifiable, failures preserved, and prior recordings untouched.
+
+Next agent should favor a **small native low-end improvement demonstrable in listening** rather than an expanded feature list. This priority coexists with, but temporarily gates, new harmonic planning work. The Suno recording provides a model of **relationships**, not a sound to bake into the output.
