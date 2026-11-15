@@ -390,6 +390,16 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         role: [(onset - groove.start) for onset in events]
         for role, events in onset_by_role.items()
     }
+    # Harmony is intentionally not a member of the template's hard-gated
+    # drum/bass ROLES. Report it separately only in the opt-in candidate.
+    # Measure final canonical p, never the stale pre-deepcopy track objects.
+    phrase_harmony_events = None
+    if phrase_receipt is not None:
+        chords = next(t for t in p.tracks if t.id == "track-harmony")
+        phrase_harmony_events = sorted(
+            c.start + n.start - groove.start
+            for c in chords.clips for n in c.notes
+            if groove.start <= c.start + n.start < groove.start + groove.length)
     receipt = {
         "version": VERSION, "selected_profile": profile,
         "groove_impact_pocket": impact_pocket,
@@ -405,7 +415,9 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         "full_groove_onsets": groove_events,
         "melody_roles": [], "harmony": harmonic_evidence,
         "harmony_interlock": interlock_evidence, "limitations": LIMITATIONS,
-        **({"harmony_phrase_v2": phrase_receipt} if phrase_receipt is not None else {}),
+        **({"harmony_phrase_v2": phrase_receipt,
+            "harmony_phrase_v2_groove_note_onsets": phrase_harmony_events}
+           if phrase_receipt is not None else {}),
         "song_spec": asdict(spec),
     }
     return p, receipt

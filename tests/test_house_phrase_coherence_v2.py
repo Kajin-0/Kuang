@@ -117,9 +117,20 @@ class PhraseCoherenceV2Tests(unittest.TestCase):
                                  actual_digest)
                 self.assertEqual([s.start for s in original.sections],
                                  [s.start for s in final.sections])
-                before = original_evidence["full_groove_onsets"]["harmony"]
-                after = report["full_groove_onsets"]["harmony"]
-                revisions += int(before != after)
+                chords = next(t for t in final.tracks if t.id == "track-harmony")
+                reported = sorted(c.start + n.start - groove.start
+                                  for c in chords.clips for n in c.notes
+                                  if groove.start <= c.start + n.start <
+                                  groove.start + groove.length)
+                self.assertEqual(
+                    report["harmony_phrase_v2_groove_note_onsets"], reported)
+                original_chords = next(t for t in original.tracks
+                                       if t.id == "track-harmony")
+                old = sorted(c.start + n.start - groove.start
+                             for c in original_chords.clips for n in c.notes
+                             if groove.start <= c.start + n.start <
+                             groove.start + groove.length)
+                revisions += int(old != reported)
         self.assertGreater(revisions, 0, "No sampled case exercises changed chord timing")
 
     def test_full_song_arrangement_preserves_native_ready_structure(self):
