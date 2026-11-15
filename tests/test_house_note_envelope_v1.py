@@ -124,3 +124,33 @@ class HouseNoteEnvelopeV1Tests(unittest.TestCase):
 
 if __name__=="__main__":
     unittest.main()
+
+
+class ChordStrumGroupingTests(unittest.TestCase):
+    def test_microstaggered_chord_is_one_onset_not_four(self):
+        from kuang.house_note_envelope_v1 import _rollups
+        chords={240:[(300,51)],245:[(300,55)],250:[(300,58)],255:[(300,60)],
+                1680:[(300,51)],1685:[(300,55)],1690:[(300,58)],1695:[(300,60)]}
+        merged=_rollups(chords,group_strummed_chords=True)
+        self.assertEqual(len(merged),2)
+        self.assertEqual([x["voices"] for x in merged],[4,4])
+        self.assertEqual([x["max_strum_spread_ticks"] for x in merged],[15,15])
+        self.assertEqual([x["duration_ticks"] for x in merged],[315,315])
+        self.assertEqual(len(_rollups(chords)),8)
+
+    def test_tight_separate_repeated_note_not_collapsed(self):
+        from kuang.house_note_envelope_v1 import _rollups
+        notes={240:[(130,60)],245:[(130,64)],250:[(130,60)]}
+        merged=_rollups(notes,group_strummed_chords=True)
+        self.assertEqual(len(merged),2)
+        self.assertEqual(merged[0]["voices"],2)
+        self.assertEqual(merged[1]["voices"],1)
+        notes={240:[(130,60)],265:[(130,64)]}
+        self.assertEqual(len(_rollups(notes,group_strummed_chords=True)),2)
+
+    def test_existing_long_house_chords_are_4voice_clusters(self):
+        p=HouseNoteEnvelopeV1Tests.project()
+        events,_,_=_note_onsets(p,"harmony","Groove A",bars=8)
+        self.assertGreaterEqual(len(events),6)
+        self.assertTrue(all(x["voices"]>=2 for x in events[:5]),events[:5])
+        self.assertTrue(all(x["max_strum_spread_ticks"]<=24 for x in events))

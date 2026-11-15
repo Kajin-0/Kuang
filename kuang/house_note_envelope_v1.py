@@ -23,11 +23,35 @@ MAX_EVENTS=20
 ROLE_IDS=("harmony","bass","pad")
 
 
-def _rollups(groups):
+CHORD_STRUM_SPREAD_TICKS=24  # 12.5ms at 120 BPM, not across separate stabs
+
+
+def _rollups(groups, *, group_strummed_chords=False):
+    """Cluster tiny, intentional polyphonic MIDI note staggering.
+
+    Source generation offsets each chord voice by 5 PPQ ticks. Treating these
+    as four distinct musical stabs led to ZERO eligible onsets in original
+    128-bar songs. Use a fixed max 24-tick distance from the cluster anchor,
+    never chain neighboring offsets into wider and wider "chords." Two notes
+    of identical pitch cannot share a chord attack by this heuristic.
+    """
     events=[]
     for at, items in sorted(groups.items()):
-        duration=max(d for d in items)
-        events.append({"tick":at,"duration_ticks":duration,"voices":len(items)})
+        for dur,pitch in items:
+            last=events[-1] if events else None
+            if (group_strummed_chords and last is not None
+                and at-last["tick"]<=CHORD_STRUM_SPREAD_TICKS
+                and pitch not in last["_pitches"]):
+                last["duration_ticks"]=max(last["duration_ticks"],dur+(at-last["tick"]))
+                last["voices"]+=1
+                last["_pitches"].add(pitch)
+                last["max_strum_spread_ticks"]=max(last["max_strum_spread_ticks"],
+                                                  at-last["tick"])
+            else:
+                events.append({"tick":at,"duration_ticks":dur,"voices":1,
+                               "max_strum_spread_ticks":0,"_pitches":{pitch}})
+    for event in events:
+        event.pop("_pitches")
     return events
 
 
@@ -49,8 +73,8 @@ def _note_onsets(project, role, section, bars):
         for note in clip.notes:
             when=clip.start+note.start
             if start<=when<end:
-                groups.setdefault(when,[]).append(note.duration)
-    merged=_rollups(groups)
+                groups.setdefault(when,[]).append((note.duration,note.pitch))
+    merged=_rollups(groups,group_strummed_chords=(role=="harmony"))
     return merged,start,end
 
 
@@ -166,6 +190,7 @@ def native_note_envelope(project,wav,*,role,section,bars=16,max_events=MAX_EVENT
                     release_delta=db_ratio(right_r,left_r)
         enough.append({
           "onset_tick":event["tick"],"polyphonic_voices":event["voices"],
+          "max_strum_spread_ticks":event["max_strum_spread_ticks"],
           "attack_10_90_ms":round((ninety-ten)*HOP_MS,2),
           "time_to_90pct_ms":ninety*HOP_MS,
           "first30_vs_30to100_db":db_ratio(e030,e30100),
@@ -183,6 +208,7 @@ def native_note_envelope(project,wav,*,role,section,bars=16,max_events=MAX_EVENT
       "version":VERSION,
       "role":role,"region":section+" first "+str(bars)+" bars",
       "midi_onset_groups":len(events),
+      "strummed_chord_grouping_max_ticks":CHORD_STRUM_SPREAD_TICKS if role=="harmony" else 0,
       "qualified_isolated_events":len(enough),
       "minimum_valid_events_for_diagnosis":3,
       "evidence_sufficient":len(enough)>=3,
