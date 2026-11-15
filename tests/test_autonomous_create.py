@@ -47,6 +47,25 @@ class AutonomousCreateTests(unittest.TestCase):
                     self.call(private=True,**flags)
             picker.assert_not_called()
 
+    def test_predrop_tension_requires_full_native_groove_form(self):
+        with patch.object(ac,"select_palette") as palette:
+            for kwargs in (
+                {"predrop_tension_v1":True},
+                {"groove_template":True,"predrop_tension_v1":True},
+                {"groove_template":True,"full_song_bars":128,"predrop_tension_v1":"yes"},
+            ):
+                with self.subTest(kwargs=kwargs),self.assertRaisesRegex(
+                    ValidationError,"predrop-tension-v1 requires"):
+                    self.call(private=True,**kwargs)
+            palette.assert_not_called()
+
+    def test_predrop_rejects_unverified_style_before_expensive_selection(self):
+        with patch.object(ac,"select_palette") as picker:
+            with self.assertRaisesRegex(ValidationError,"native-validated only for jackin"):
+                self.call(private=True,groove_template=True,full_song_bars=128,
+                          predrop_tension_v1=True,groove_profile="minimal")
+            picker.assert_not_called()
+
     def test_context_palette_v2_requires_full_song_and_explicit_opt_in(self):
         with patch.object(ac,"select_palette") as select:
             for options in (

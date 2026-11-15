@@ -242,7 +242,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            timbre_source_review=False, contextual_pad_rescue=False,
            pad_level_calibration=False, groove_body_review=False,
            groove_body_audition=False, phrase_development_v1=False,
-           context_palette_v2=False):
+           context_palette_v2=False, predrop_tension_v1=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -257,6 +257,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     if (type(phrase_development_v1) is not bool or
             (phrase_development_v1 and (not groove_template or full_song_bars is None))):
         raise ValidationError('--phrase-development-v1 requires --groove-template and --full-song-bars')
+    if (type(predrop_tension_v1) is not bool or
+            (predrop_tension_v1 and (not groove_template or full_song_bars is None))):
+        raise ValidationError("--predrop-tension-v1 requires full-song groove-template")
     if (type(context_palette_v2) is not bool or
             (context_palette_v2 and (not groove_template or full_song_bars is None))):
         raise ValidationError("--context-palette-v2 requires a full-length groove-template house song")
@@ -316,6 +319,11 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     if type(drum_variant) is not int or drum_variant not in (0,1):
         raise ValidationError('drum_variant must be 0 or 1')
     gp = select_profile(prompt,seed,groove_profile) if groove_template else None
+    # Experimental native evidence: one-bar jackin withdrawal cleared the
+    # pre-registered 2dB gate. Minimal one-beat and jackin two-beat trials
+    # failed; no automatic blanket deployment to unverified styles.
+    if predrop_tension_v1 and gp!="jackin":
+        raise ValidationError("--predrop-tension-v1 currently native-validated only for jackin house")
     hp = select_harmony(prompt,gp,harmony_profile) if groove_template else None
     plan_receipt = None
     if musical_plan_v2:
@@ -421,6 +429,11 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                                                          profile=gp,seed=seed,
                                                          phrase_development_v1=phrase_development_v1)
             duration=project.length/project.ppq*60/project.tempo_bpm
+        predrop_receipt=None
+        if predrop_tension_v1:
+            from .house_predrop_tension_v1 import withdraw_predrop
+            project,predrop_receipt=withdraw_predrop(project)
+            write(stage/'predrop-tension-v1-evidence.json',predrop_receipt)
         calibration = measure(stage/'calibration.wav',library=str(library_path) if library_path.is_file() else None)
         if calibration['clipped_samples'] or calibration['rms'] < 1e-6:
             raise ValidationError('calibration render clipped or silent')
@@ -518,6 +531,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'groove_body_review_requested':groove_body_review,
             'groove_body_audition_requested':groove_body_audition,
             'phrase_development_v1_requested':phrase_development_v1,
+            'predrop_tension_v1_requested':predrop_tension_v1,
+            'predrop_tension_v1_evidence':'predrop-tension-v1-evidence.json' if predrop_receipt else None,
             'context_palette_v2_requested':context_palette_v2,
             'context_palette_v2_evidence':'context-palette-v2-evidence.json' if context_palette_receipt else None,
             'context_palette_v2_decision':context_palette_receipt['action'] if context_palette_receipt else None,
@@ -594,6 +609,8 @@ def main(argv=None):
                         help='produce measured transparent and gentle-compression WAV derivatives')
     parser.add_argument('--context-palette-v2',action='store_true',
                         help='opt-in genuine native 16-bar isolated-role audition review; no unapproved preset swap')
+    parser.add_argument('--predrop-tension-v1',action='store_true',
+                        help='opt-in profile-conditioned one/two-beat pre-drop drum withdrawal; no master gain lift')
     parser.add_argument('--phrase-development-v1',action='store_true',
                         help='opt-in paired Groove/Drop eight-bar phrase development in full-house arranger')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
@@ -617,6 +634,7 @@ def main(argv=None):
                       groove_body_review=args.groove_body_review,
                       groove_body_audition=args.groove_body_audition,
                       phrase_development_v1=args.phrase_development_v1,
+                      predrop_tension_v1=args.predrop_tension_v1,
                       context_palette_v2=args.context_palette_v2,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
