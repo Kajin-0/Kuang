@@ -47,6 +47,18 @@ class AutonomousCreateTests(unittest.TestCase):
                     self.call(private=True,**flags)
             picker.assert_not_called()
 
+    def test_context_palette_v2_requires_full_song_and_explicit_opt_in(self):
+        with patch.object(ac,"select_palette") as select:
+            for options in (
+                {"context_palette_v2":True},
+                {"groove_template":True,"context_palette_v2":True},
+                {"groove_template":True,"full_song_bars":128,"context_palette_v2":"yes"},
+            ):
+                with self.subTest(options=options),self.assertRaisesRegex(
+                        ValidationError,"context-palette-v2 requires"):
+                    self.call(private=True,**options)
+            select.assert_not_called()
+
     def test_phrase_development_fails_closed_without_full_song(self):
         with patch.object(ac,"select_palette") as picker:
             for kw in ({"phrase_development_v1":True},

@@ -241,7 +241,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            groove_pocket_diagnostics=False, groove_identity_v2=False,
            timbre_source_review=False, contextual_pad_rescue=False,
            pad_level_calibration=False, groove_body_review=False,
-           groove_body_audition=False, phrase_development_v1=False):
+           groove_body_audition=False, phrase_development_v1=False,
+           context_palette_v2=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -256,6 +257,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     if (type(phrase_development_v1) is not bool or
             (phrase_development_v1 and (not groove_template or full_song_bars is None))):
         raise ValidationError('--phrase-development-v1 requires --groove-template and --full-song-bars')
+    if (type(context_palette_v2) is not bool or
+            (context_palette_v2 and (not groove_template or full_song_bars is None))):
+        raise ValidationError("--context-palette-v2 requires a full-length groove-template house song")
     if type(timbre_source_review) is not bool or (timbre_source_review and not groove_template):
         raise ValidationError("--timbre-source-review requires --groove-template")
     if type(master_preview) is not bool:
@@ -453,6 +457,23 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                 (stage/'pad-level-preview.wav').rename(stage/'preview.wav')
                 project=revised;audio=level_audio;render=level_render
             write(stage/'pad-level-evidence.json',pad_level_evidence)
+        context_palette_receipt=None
+        if context_palette_v2:
+            from .house_context_palette_native_probe import probe_native_roles
+            from .house_context_palette_v2 import review_source
+            role_probe=probe_native_roles(project,native,stage/'native',stage/'scratch',bars=16)
+            entry=selection['roles']['chord']
+            context_palette_receipt=review_source(
+                project,prompt=prompt,profile=gp,
+                stems=role_probe['role_stems'],
+                source_verified=(entry.get('runtime_verified') is True),
+                source_sha256=entry['source_sha256'],
+                source_name=entry['source_preset_name'],
+                runner_up_count=len(selection.get('shortlist',{}).get('chord',[])))
+            context_palette_receipt['native_probe']=role_probe
+            context_palette_receipt['automatic_source_replacement']=False
+            context_palette_receipt['perceptual_quality']='NOT_EVALUATED'
+            write(stage/'context-palette-v2-evidence.json',context_palette_receipt)
         if (inventory(stage/'palette') != palette_before or
             hashlib.sha256(_bounded_read(catalog,MAX_CATALOG_BYTES)).hexdigest() != selection['catalog_sha256'] or
             _plugin_info(plugin)['module_sha256'] != adapter.plugin_sha):
@@ -497,6 +518,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'groove_body_review_requested':groove_body_review,
             'groove_body_audition_requested':groove_body_audition,
             'phrase_development_v1_requested':phrase_development_v1,
+            'context_palette_v2_requested':context_palette_v2,
+            'context_palette_v2_evidence':'context-palette-v2-evidence.json' if context_palette_receipt else None,
+            'context_palette_v2_decision':context_palette_receipt['action'] if context_palette_receipt else None,
             'contextual_audition_bars':audition.bars if contextual_shortlist else None,
             'contextual_source_decisions':context_receipt['comparisons'] if context_receipt else None,
             **({'groove_pocket_evidence':'groove-pocket-evidence.json'} if pocket_receipt else {}),
@@ -568,6 +592,8 @@ def main(argv=None):
                         help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
     parser.add_argument('--master-preview',action='store_true',
                         help='produce measured transparent and gentle-compression WAV derivatives')
+    parser.add_argument('--context-palette-v2',action='store_true',
+                        help='opt-in genuine native 16-bar isolated-role audition review; no unapproved preset swap')
     parser.add_argument('--phrase-development-v1',action='store_true',
                         help='opt-in paired Groove/Drop eight-bar phrase development in full-house arranger')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
@@ -591,6 +617,7 @@ def main(argv=None):
                       groove_body_review=args.groove_body_review,
                       groove_body_audition=args.groove_body_audition,
                       phrase_development_v1=args.phrase_development_v1,
+                      context_palette_v2=args.context_palette_v2,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
