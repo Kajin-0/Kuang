@@ -174,6 +174,15 @@ def _build_lanes(result):
             result.automation.append(AutomationLane(label,eq.id,"soundcraft.lpf_freq",
                 [AutomationPoint(f"{label}-{i}",tick,float(value),"linear")
                  for i,(tick,value) in enumerate(points)]))
+    # The long-form arranger used to replace the source groove-impact ducking
+    # with a legacy 5 dB per-kick duck on *all* musical roles, including dry
+    # chord stabs. For impact-profile sources, preserve the established
+    # short-form policy: no chord duck, 3 dB/115 ms bass, 1.25 dB/143 ms pad.
+    # Recalculate only against the actual 128-bar kick onsets. The legacy
+    # long-form recipe stays intact for non-impact sources.
+    if result.metadata.get("groove_impact_pocket") == "source-preserving-impact-v2":
+        from .house_template import _reschedule_impact_duck
+        _reschedule_impact_duck(result)
 
 
 def arrange_full_song(source, *, bars=128, profile=None, seed=17):

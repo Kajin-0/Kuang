@@ -60,6 +60,36 @@ class FullHouseFormTests(unittest.TestCase):
                                    for cl in t.clips for n in cl.notes)
             self.assertEqual(notes(ta),notes(tc))
 
+    def test_impact_full_form_preserves_source_harmony_attack_and_bass_pad_duck(self):
+        from kuang.house_template import _reschedule_impact_duck
+        spec,_=rules_plan("jackin house in G major 32 bars, 127 bpm",217)
+        source,source_receipt=template(spec,profile="jackin",include_pad=True,
+                                       impact_pocket=True,groove_identity_v2=True)
+        self.assertEqual(source.metadata["ducking_policy"],
+                         "bass-tail-3db-115ms; pad-1.25db-143ms; harmony-dry-0db")
+        self.assertFalse(any(a.id=="production-harmony-duck" for a in source.automation))
+        original=state_hash(source)
+        full,report=arrange_full_song(source,bars=128,profile="jackin",seed=217)
+        self.assertEqual(original,state_hash(source))
+        self.assertTrue(report["technical_pass"])
+        self.assertFalse(any(a.id=="production-harmony-duck" for a in full.automation))
+        bass=next(a for a in full.automation if a.id=="production-bass-duck")
+        pad=next(a for a in full.automation if a.id=="production-pad-duck")
+        self.assertIn(next(t for t in full.tracks if t.id=="track-bass").controls["mixer.gain_db"]-3,
+                      [v.value for v in bass.points])
+        self.assertIn(next(t for t in full.tracks if t.id=="track-pad").controls["mixer.gain_db"]-1.25,
+                      [v.value for v in pad.points])
+        self.assertGreater(len(bass.points),500)
+        self.assertEqual(report["perceptual_quality"],"NEEDS_LISTENING")
+
+    def test_non_impact_full_form_retains_legacy_harmony_duck(self):
+        baseline=source("jackin","G major",217,include_pad=True)
+        p,receipt=arrange_full_song(baseline,bars=128,seed=217)
+        chord=next(t for t in p.tracks if t.id=="track-harmony")
+        lane=next(a for a in p.automation if a.id=="production-harmony-duck")
+        self.assertEqual(lane.points[2].value,chord.controls["mixer.gain_db"]-5)
+        self.assertTrue(receipt["technical_pass"])
+
     def test_break_main_drop_outro_no_pad(self):
         s=source("minimal","E major",19,include_pad=False)
         p,proof=arrange_full_song(s,bars=112,seed=19)
