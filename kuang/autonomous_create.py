@@ -242,7 +242,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            timbre_source_review=False, contextual_pad_rescue=False,
            pad_level_calibration=False, groove_body_review=False,
            groove_body_audition=False, phrase_development_v1=False,
-           context_palette_v2=False, predrop_tension_v1=False):
+           context_palette_v2=False, predrop_tension_v1=False,
+            phrase_stable_chords_v2=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -281,6 +282,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             (groove_identity_v2 and
              (not groove_template or not groove_impact or sample_pack is None))):
         raise ValidationError("--groove-identity-v2 requires groove-template, groove-impact and audited sample-pack")
+    if (type(phrase_stable_chords_v2) is not bool or
+            (phrase_stable_chords_v2 and (not groove_template or not groove_impact))):
+        raise ValidationError("--phrase-stable-chords-v2 requires --groove-template and --groove-impact")
     if type(groove_pocket_diagnostics) is not bool or (groove_pocket_diagnostics and not groove_template):
         raise ValidationError("groove pocket diagnostics require a house groove template")
     if type(musical_plan_v2) is not bool or (musical_plan_v2 and not groove_template):
@@ -365,7 +369,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             project,groove_receipt = groove_template_project(spec,profile=gp,harmony_profile=hp,
                                                include_pad='pad' in expected_roles,
                                                impact_pocket=groove_impact,
-                                               groove_identity_v2=groove_identity_v2)
+                                               groove_identity_v2=groove_identity_v2,
+                                               phrase_stable_chords_v2=phrase_stable_chords_v2)
             if full_length and not contextual_shortlist:
                 project,arrangement_receipt = arrange_full_song(project,bars=full_length,
                                                                profile=gp,seed=seed,
@@ -531,6 +536,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'groove_body_review_requested':groove_body_review,
             'groove_body_audition_requested':groove_body_audition,
             'phrase_development_v1_requested':phrase_development_v1,
+            **({'phrase_stable_chords_v2_evidence':'groove-evidence.json'} if phrase_stable_chords_v2 else {}),
             'predrop_tension_v1_requested':predrop_tension_v1,
             'predrop_tension_v1_evidence':'predrop-tension-v1-evidence.json' if predrop_receipt else None,
             'context_palette_v2_requested':context_palette_v2,
@@ -613,6 +619,8 @@ def main(argv=None):
                         help='opt-in profile-conditioned one/two-beat pre-drop drum withdrawal; no master gain lift')
     parser.add_argument('--phrase-development-v1',action='store_true',
                         help='opt-in paired Groove/Drop eight-bar phrase development in full-house arranger')
+    parser.add_argument('--phrase-stable-chords-v2',action='store_true',
+                        help='experimental four-bar chord rhythm coherence; preserves bass, chord pitches, and source assets')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
                         help='opt-in full-length editable arrangement from 32-bar nucleus')
     args=parser.parse_args(argv)
@@ -636,6 +644,7 @@ def main(argv=None):
                       phrase_development_v1=args.phrase_development_v1,
                       predrop_tension_v1=args.predrop_tension_v1,
                       context_palette_v2=args.context_palette_v2,
+                      phrase_stable_chords_v2=args.phrase_stable_chords_v2,
                       preferred_bass_source_sha=args.preferred_bass_source_sha)
     except (ValidationError,OSError,ValueError,KeyError,TypeError) as exc:
         print('autonomous-create: '+str(exc),file=sys.stderr); return 2
