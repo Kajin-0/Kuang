@@ -140,7 +140,7 @@ def evaluate_note_aligned_pocket(project, kick_wav, bass_wav, *, section="Groove
                        "Do not use the kick-relative 150-250ms window to infer onset quality"]}
 
 
-def block_severe_native_source_faults(result):
+def block_severe_native_source_faults(result, *, articulation_intent="driving"):
     """Conservative screening: never auto-promotes a source or claims 'sounds good'.
 
     Bass sub mono retention below -6dB (at real bass attacks/body) can signal
@@ -150,7 +150,10 @@ def block_severe_native_source_faults(result):
     """
     if type(result) is not dict or result.get("version")!=VERSION:
         raise ValidationError("note-aligned native evidence required")
+    if articulation_intent not in ("driving", "sustained"):
+        raise ValidationError("explicit driving or sustained bass articulation intent required")
     flags=[]
+    review_flags=[]
     # At a true bass MIDI onset, both sub and upper-bass attacks more than
     # 24/30dB below the kick's initial 40ms are a severe rhythmic articulation
     # deficiency. These conservative provisional limits are *review gates*,
@@ -158,10 +161,26 @@ def block_severe_native_source_faults(result):
     rel=result.get("between_role",{})
     attack_sub=rel.get("bass_attack_0_40_ms_versus_kick_attack_sub_25_90_db")
     attack_body=rel.get("bass_attack_0_40_ms_versus_kick_attack_body_90_250_db")
-    if (type(attack_sub) in (int,float) and type(attack_body) in (int,float)
-            and math.isfinite(attack_sub) and math.isfinite(attack_body)
-            and attack_sub < -24 and attack_body < -30):
-        flags.append("bass_onset_attack_severely_masked_by_kick")
+    weak_onset = (type(attack_sub) in (int,float) and
+                  type(attack_body) in (int,float) and
+                  math.isfinite(attack_sub) and math.isfinite(attack_body) and
+                  attack_sub < -24 and attack_body < -30)
+    if weak_onset:
+        # A deliberately sustained bass may have no initial pluck. Only
+        # *defer* the driving-onset fault when both 40-140ms source bands
+        # independently recover enough against the same kick reference.
+        # Never mark deferred bass musically approved: context/masking still
+        # requires the native mix and phrase-level audio evaluation.
+        body_sub=rel.get("bass_body_40_140_ms_versus_kick_attack_sub_25_90_db")
+        body_mid=rel.get("bass_body_40_140_ms_versus_kick_attack_body_90_250_db")
+        recovered=(articulation_intent=="sustained" and
+                   type(body_sub) in (int,float) and type(body_mid) in (int,float) and
+                   math.isfinite(body_sub) and math.isfinite(body_mid) and
+                   body_sub >= -18 and body_mid >= -26)
+        if recovered:
+            review_flags.append("bass_slow_attack_requires_fullmix_context_review")
+        else:
+            flags.append("bass_onset_attack_severely_masked_by_kick")
     bass=result.get("roles",{}).get("bass",{}).get("windows",{})
     for stage in ("attack_0_40_ms","body_40_140_ms"):
         for band in ("sub_25_90","body_90_250"):
@@ -175,5 +194,8 @@ def block_severe_native_source_faults(result):
             if m is not None and m < -6:
                 flags.append("severe_sub_mono_or_body_loss_"+stage+"_"+band)
     return {"version":VERSION,"hard_flags":flags,
+            "review_flags":review_flags,
+            "articulation_intent":articulation_intent,
             "eligible_for_more_context_review":not flags,
+            "requires_fullmix_context_review":bool(review_flags),
             "musical_winner":None,"automatic_preset_promotion":False}

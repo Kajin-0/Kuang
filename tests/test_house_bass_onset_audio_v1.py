@@ -66,6 +66,39 @@ class BassNoteOnsetAuditTests(unittest.TestCase):
             self.assertNotIn("bass_onset_attack_severely_masked_by_kick",
                              block_severe_native_source_faults(r)["hard_flags"])
 
+    def test_slow_sustained_source_does_not_get_false_driving_fault(self):
+        import copy
+        with tempfile.TemporaryDirectory() as temp:
+            a=Path(temp)/"kick.wav";b=Path(temp)/"bass.wav"
+            write(a,role="kick");write(b,role="bass")
+            source=evaluate_note_aligned_pocket(project(),a,b)
+            slow=copy.deepcopy(source)
+            r=slow["between_role"]
+            r["bass_attack_0_40_ms_versus_kick_attack_sub_25_90_db"]=-34.742
+            r["bass_attack_0_40_ms_versus_kick_attack_body_90_250_db"]=-48.440
+            r["bass_body_40_140_ms_versus_kick_attack_sub_25_90_db"]=-12.757
+            r["bass_body_40_140_ms_versus_kick_attack_body_90_250_db"]=-20.641
+            driving=block_severe_native_source_faults(slow)
+            self.assertIn("bass_onset_attack_severely_masked_by_kick",driving["hard_flags"])
+            sustained=block_severe_native_source_faults(slow,articulation_intent="sustained")
+            self.assertNotIn("bass_onset_attack_severely_masked_by_kick",sustained["hard_flags"])
+            self.assertTrue(sustained["requires_fullmix_context_review"])
+            self.assertIn("bass_slow_attack_requires_fullmix_context_review",
+                          sustained["review_flags"])
+            self.assertFalse(sustained["automatic_preset_promotion"])
+            self.assertIsNone(sustained["musical_winner"])
+            # A bass without adequate mid-note body still fails even when
+            # deliberately labelled sustained.
+            r["bass_body_40_140_ms_versus_kick_attack_body_90_250_db"]=-32
+            bad=block_severe_native_source_faults(slow,articulation_intent="sustained")
+            self.assertIn("bass_onset_attack_severely_masked_by_kick",bad["hard_flags"])
+            self.assertFalse(bad["requires_fullmix_context_review"])
+
+    def test_invalid_articulation_intent_fails_closed(self):
+        with self.assertRaises(ValidationError):
+            block_severe_native_source_faults({"version":"house-bass-native-note-onset-audit-v1"},
+                                             articulation_intent="always_pass")
+
     def test_mono_cancellation_is_detected(self):
         with tempfile.TemporaryDirectory() as temp:
             a=Path(temp)/'kick.wav';b=Path(temp)/'bass.wav'
