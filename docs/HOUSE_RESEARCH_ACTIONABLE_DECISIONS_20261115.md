@@ -2,6 +2,32 @@
 
 Review date: 2026-11-15. Source supplied by user: `deep-research-report.md`, *Professional House Music Production: Technical Research Review* (185 lines). This document is a **distilled actionable interpretation**, not a reproduction of the entire third-party research report and not evidence that all claims in it have been independently validated.
 
+## Priority reset: high-impact House production before more bass micro-optimization
+
+**Decision:** The user's supplied independent architecture review is directionally supported by the frozen ten-song native audit. Stop prioritizing marginal bass note-onset, fader, and tiny-parameter changes while full-song role presence, stereo space, energy arc and master are deficient. Keep the producer's rejected-growling-preset veto absolute. This review is a design critique, **not** an independent listening certification.
+
+**Measured baseline:** The ten full songs have Main Drop vs Groove A median **+0.007 dB RMS**, Breakdown vs Groove A **−1.053 dB RMS**, whole-song side/mid **−27.34 dB**, and unmastered integrated loudness **−28.16 to −23.02 LUFS**. The 3-seed independent opt-in source-rescue batch completed only **1/3** productions. Compare Phase44 and Kuang in *matching music windows*; do not equate premaster with mastered LUFS or whole-track side/mid with groove-only side/mid. Claude's numerical chord-presence and register claims require independent same-method confirmation.
+
+**Architecture correction:** `production_host.py` already implements auxiliary buses, post-fader sends and send automation; `master_bus.py` implements a terminal stereo bus; `house_master_preview.py` has peak-safe gain and restrained compression candidates. The deficiency is the lack of a high-quality **default usable House production recipe** connecting these capabilities. Avoid unnecessary new host abstractions.
+
+### Ordered roadmap and measurable stop gates
+
+**P0 — Reference fingerprint, no new DSP yet.** Compose the existing section/RMS, loudness, spectral and stereo analyzers into one reproducible CLI. On the **ten frozen native songs and Phase44**, report identical 4/8-bar windows for Groove, Breakdown and Main Drop: short-term LUFS plus RMS, 25–250Hz power, side/mid **by band**, mono fold-down below ~120Hz, role-stem 1–4kHz chord/pad audibility *when stems are verified*, true peak and crest. Keep premaster/master separate. ChordChord export comparison is worthwhile once a controlled same-prompt audio sample exists; it is a **product/workflow comparator**, not an assumed professionally mastered quality reference.
+
+**P1 — High-effect native space and presence scene.** On **three existing frozen songs**, retain original kick, bass, MIDI, chord timing and source choices and test genuinely audible native shared-room/plate and chord echo/width scenes, rather than only very quiet −19/−15dB sends. Measure dry/wet levels, chord presence, stereo side/mid per band, onset smear and sub mono compatibility. No blind sub widening. **Stop after at most three qualified scene pairs** if none has demonstrably better signal behavior or if masking/phase loss dominates. No global default until cross-style evidence.
+
+**P2 — Measured section energy and multiple forms.** The existing eight-section arranger is a baseline, not an adequate energy arc. Develop independent intro/build/break/drop/outro role scenes, pre-drop withdrawal where stylistically justified, actual hat/percussion/fill changes, and 2–3 arrangement grammars. Aim for *meaningful* breakdown withdrawal and a measurable drop step, subject to style and matched native short-term loudness. Do not treat a fixed LU target as a musical law.
+
+**P3 — Premaster and master as separate verified artifacts.** Extend existing terminal bus and safe preview DSP to source-aware mix/master decisions; retain both, measure true peak, gated LUFS, crest/PLR, short-term dynamics and mono compatibility. Phase44 is a quality reference, not an EQ curve or universal LUFS preset. Loudness alone never certifies quality.
+
+**P4 — Qualification and consolidation.** Release candidate remains opt-in `house-v3`, leaving legacy untouched. Use a fixed independent batch of at least 15 complete songs across multiple House styles/keys/seeds and report **all** attempts, failures, mix metrics, source diversity and section arcs. Keep corrupted project/asset violations, rejected-source identities, clipping and unsafe audio as hard failures; produce a **flagged draft** instead of no audio for unproven musical preference thresholds. Proposed exit criteria: at least **90% technically complete** and **80% acceptable in a separately calibrated consolidated listening review**. The producer should not be asked to judge intermediate variants.
+
+**Bass subproject is parked unless a reference-calibrated mix demonstrates a dominant failure.** Preserve its strict safety checks, negative examples, native receipts and validated source rejection. No further arbitrary millisecond, fader or note-length sweeps to optimize a narrow ratio. Avoid another standalone document for every small change; update this roadmap and one scoped release report.
+
+**Immediate next task:** run the common fingerprint on the ten frozen full tracks plus Phase44, then choose the largest demonstrated production gap for a bounded native 3-song A/B. Do not enable new defaults merely because software tests pass.
+
+---
+
 ## Product objective and most recent listening context
 
 Kuang is a local-first, one-prompt, native-editable house producer. The desired workflow is deterministic musical scaffold -> standard production -> context-aware producer analysis and reversible candidate adjustment -> genuine mix/master verification. First-pass sound quality must substantially exceed the user's perceived quality of ChordChord and approach the user-approved, painstakingly developed Phase44 sound **without requiring 45 manual phases**.
