@@ -352,7 +352,23 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
             "chosen":replace,
         })
     if bass_onset_rescue and onset_fault and not rescued_bass:
-        raise ValidationError("bass native onset fault had no safe verified source rescue")
+        # Preserve status-only diagnostic reasons for failed autonomous runs.
+        # Never put private preset paths, bytes or names into an exception.
+        failures = []
+        for outcome in observations:
+            if outcome.get("role") != "bass":
+                continue
+            context = outcome.get("native_fullmix_bass_repair")
+            reason = (context.get("status") if isinstance(context,dict)
+                      else outcome.get("status", "UNKNOWN"))
+            onset = outcome.get("native_note_onset_gate")
+            onset_flags = onset.get("hard_flags",[]) if isinstance(onset,dict) else []
+            context_flags = outcome.get("review_flags",[])
+            details = [str(reason)] + [str(x) for x in onset_flags[:2]] + [
+                str(x) for x in context_flags[:2]]
+            failures.append("/".join(details))
+        raise ValidationError("bass native onset fault had no safe verified source rescue; "
+                              "candidate statuses: "+",".join(failures[:2]))
     if pad_rescue:
         if "track-pad" not in assignments:
             observations.append({"role":"pad","status":"SKIPPED_NO_PAD",
