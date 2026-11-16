@@ -111,3 +111,19 @@ On the saved native 122-BPM minimal F♯ evidence, Biow Bass 2 had −34.742/−
 This is a safe **counterexample protocol**, not authorization for the one-prompt composer to infer sustained intent merely from a `deep` style label. Automatic switching to sustained classification must wait until the song plan explicitly supplies a supported articulation role, and contextual fullmix evaluation is wired to consume and close its review flag. Until then, the existing default remains **driving**, and the safe technical rescue operates unchanged. Regression tests check both intent branches, body-deficient sustained failure, and fail-closed invalid intents.
 
 The system continues to operate without intermediate listening requests. A technically deferred result is NOT a released or approved production outcome.
+
+## Actual native three-style intent recheck (same dated milestone)
+
+The finalized intent-aware screening was run *without new renders* on three independently retained, frame-aligned SoundCraft bass/kick stem pairs and their actual canonical projects:
+
+| Native case | 0–40ms bass 25–90 / 90–250 Hz vs kick | 40–140ms bass 25–90 / 90–250 Hz vs kick | Driving hard fault | Explicit sustained outcome |
+|---|---|---|---|---|
+| Deep E, 123 BPM | −26.593 / −49.388 dB | −7.275 / −25.123 dB | Weak onset | Fullmix review required |
+| Jackin G, 127 BPM | −24.362 / −45.703 dB | −13.092 / −21.778 dB | Weak onset | Fullmix review required |
+| Minimal F♯, 122 BPM, earlier LD Bass source | −7.503 / −12.919 dB | −14.232 / −22.198 dB | None | No onset review flag |
+
+All outcomes are reproducible from the retained private real 48-kHz/24-bit SoundCraft isolated stems. Private evidence path: `/home/User/Kuang/.local/bass-audio-cross-style-20261115/native-role-attack-recheck.json`.
+
+**Important source-policy precedence:** The minimal F♯ instrument here is the previously **producer-rejected growling LD Bass**. It passes the technical attack criterion but remains prohibited by its SHA256 identity; technical waveform properties never override an explicit negative source preference. Similarly, jackin must not silently become a sustained role merely to bypass a weak-attack fault. The sustained path is an explicit opt-in *diagnostic status*, not an automatic source selector or proof of aesthetics.
+
+Cross-style stop condition: no source or gain was changed in these three sessions; no mainline production default was altered. Automatic intent selection and fullmix contextual closure remain future implementation requirements.
