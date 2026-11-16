@@ -28,6 +28,59 @@ from .sample_assets import write
 VERSION = "one-prompt-native-context-v1"
 ROLE_TRACK = {"bass":"track-bass","chord":"track-harmony"}
 
+def _bass_failure_summary(observations):
+    """Bounded, source-anonymous audio evidence for fail-closed runs.
+
+    This lets a failed seed be diagnosed without a second full native render
+    solely to discover the measured offbeat-energy deltas.
+    """
+    if type(observations) is not list:
+        return "NO_VERIFIED_CANDIDATE"
+    safe_status = {
+        "NO_RUNNER_UP", "REVIEW", "BASELINE_RETAINED",
+        "REJECT_UNSAFE_AUDIO", "SKIPPED_BASELINE_TECHNICALLY_ACCEPTABLE",
+        "REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR",
+        "REJECT_NO_ABSOLUTE_OFFBEAT_ENERGY_GAIN",
+        "REJECT_KICK_NEAR_ENERGY_COLLAPSE",
+        "REJECT_CANDIDATE_HARD_ONSET_FAULT",
+        "REJECT_PRODUCER_SOURCE_VETO",
+        "REJECT_NATIVE_SUB_OR_MONO_FAULT",
+        "DEFER_UNRESOLVED_SOURCE_ARTICULATION_REVIEW",
+    }
+    items=[]
+    for receipt in observations:
+        if type(receipt) is not dict or receipt.get("role")!="bass":
+            continue
+        context=receipt.get("native_fullmix_bass_repair")
+        status=(context.get("status") if type(context) is dict else
+                receipt.get("status"))
+        if status not in safe_status:
+            status="UNKNOWN"
+        factors=[status]
+        if type(context) is dict:
+            for key,short in (
+                ("relative_offbeat_gain_db","relative"),
+                ("absolute_offbeat_energy_gain_db","absolute"),
+                ("near_kick_energy_change_db","near_kick"),
+            ):
+                value=context.get(key)
+                if (type(value) is list and len(value)==2 and
+                    all(type(v) in (float,int) and math.isfinite(v)
+                        for v in value)):
+                    factors.append(short+"="+"/".join(f"{x:+.3f}" for x in value))
+        gate=receipt.get("native_note_onset_gate")
+        if type(gate) is dict:
+            known={"bass_onset_attack_severely_masked_by_kick",
+                   "bass_native_note_onset_low_body",
+                   "silent_bass"}
+            flagged=[x for x in gate.get("hard_flags",[])
+                     if type(x) is str and x in known]
+            if flagged:
+                factors.append("onset_faults="+str(len(flagged)))
+        items.append(";".join(factors))
+    return ",".join(items[:2]) if items else "NO_VERIFIED_CANDIDATE"
+
+
 def _pad_solo(project):
     """Existing project/FX/routing; only the pad is audible."""
     q=deepcopy(project)
@@ -352,23 +405,11 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
             "chosen":replace,
         })
     if bass_onset_rescue and onset_fault and not rescued_bass:
-        # Preserve status-only diagnostic reasons for failed autonomous runs.
-        # Never put private preset paths, bytes or names into an exception.
-        failures = []
-        for outcome in observations:
-            if outcome.get("role") != "bass":
-                continue
-            context = outcome.get("native_fullmix_bass_repair")
-            reason = (context.get("status") if isinstance(context,dict)
-                      else outcome.get("status", "UNKNOWN"))
-            onset = outcome.get("native_note_onset_gate")
-            onset_flags = onset.get("hard_flags",[]) if isinstance(onset,dict) else []
-            context_flags = outcome.get("review_flags",[])
-            details = [str(reason)] + [str(x) for x in onset_flags[:2]] + [
-                str(x) for x in context_flags[:2]]
-            failures.append("/".join(details))
+        # A failed song is NOT a successful source rescue. Emit only native
+        # numerical evidence and whitelisted diagnostics, never private
+        # preset names, catalog paths, source samples or song content.
         raise ValidationError("bass native onset fault had no safe verified source rescue; "
-                              "candidate statuses: "+",".join(failures[:2]))
+                              "candidate evidence: "+_bass_failure_summary(observations))
     if pad_rescue:
         if "track-pad" not in assignments:
             observations.append({"role":"pad","status":"SKIPPED_NO_PAD",

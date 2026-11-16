@@ -64,3 +64,13 @@ Before another expensive batch:
 4. Only then repeat a fresh frozen multi-seed batch. Do not enable normal one-prompt bass rescue until the batch yield and quality criteria are actually met.
 
 **No intermediate producer listening requested.** Current result is a valid *failed* acceptance gate that narrows the causal work, not a claim that the final Kuang objective has been reached.
+
+## Failure observability patch (after frozen batch, no new music claims)
+
+The batch uncovered a further efficiency defect: the one-prompt pipeline removed temporary native A/B renders after refusing an unsafe bass rescue, while its exception contained only the high-level refusal class. This made an identical multi-minute rerun necessary to determine **which measured low-frequency condition failed**.
+
+The opt-in private contextual rescue now writes a bounded **source-anonymous** numerical failure reason into its fail-closed status. Per attempted bass source it records at most one whitelisted source-repair status, the two-band *relative* kick-window/offbeat changes, the two-band **absolute offbeat energy changes**, the two-band near-kick energy changes and the number of known onset faults when present. Values are rounded to 0.001 dB. It excludes preset names, paths, raw samples, private patch bytes and audio. Invalid/untrusted statuses become `UNKNOWN`. A failure still refuses the track; this patch merely makes engineering analysis reproducible without an unnecessary second native render.
+
+This status format was added **after** the frozen 3-song acceptance run and therefore **does not retroactively change its outcomes or assert unmeasured values**. The exact diagnostic replay that identified `REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR` on deep seed 41 occurred before numerical failure reporting; its precise deltas remain unknown and are not fabricated.
+
+The next experiments can now distinguish a relative offbeat failure from an absolute-power or kick-preservation failure using one original native render, improving Kuang's autonomous diagnostic efficiency.
