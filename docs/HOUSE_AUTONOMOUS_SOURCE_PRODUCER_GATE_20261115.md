@@ -72,3 +72,19 @@ The first end-to-end native automatic rescue verification is recorded separately
 This is the first concrete AI/algorithmic production **self-correction**, not a solved one-shot professional House system. Full closure needs multi-key/style native cross-validation, explicit style-dependent bass articulation expectations, diverse *qualified* bass presets (some low-pass plucks may sound dull), a learned preference model calibrated on real professional stems/references, arrangement and mix/master tests. Avoid relying on a single bass energy scalar to rank aesthetic quality. Preserve the original and negative examples as regression fixtures, not “wins”.
 
 **No intermediate user listening requests.** Only report consolidated milestones, with evidence and failures.
+
+## Completed fresh end-to-end native automatic rescue
+
+The first FULL fresh one-prompt source-selection recovery **completed successfully**, with real pinned Vitalium, SoundCraft 0.11, verified private presets, audited CC0 kicks and the user-preferred coherent four-bar chord rhythm. Source session: `/home/User/Kuang/.local/source-policy-native-auto-rescue-minimal-Fsharp-20261115`. A new output directory was used and original songs were preserved.
+
+The selector excluded user-rejected `LD Bass` and the previously problematically low-heavy `In the Dark` pad. It initially selected `Biow Bass 2` and `Strings of Cygnus` for this 122 BPM minimal F-sharp-minor seed-29 song. The native isolated-stem stage automatically detected `bass_onset_attack_severely_masked_by_kick` on the actual Biow notes.
+
+The pipeline then evaluated the one independently verified bass runner-up `gentle pluck bass` on **exactly the same MIDI**, preserving kick, chords, pad, processing, timing and note pitches, and verified native candidate save/reopen, peak, clipping and source-fit integrity. The candidate note-aligned gate returned `hard_flags=[]`. The one-prompt system automatically selected it with `TECHNICAL_BASS_ONSET_RESCUE` and completed the final production render. No human audition was required.
+
+Final canonical project SHA256: `2bd0055e1c5c7a2ff2d0dd3488b51523584a6415fc6710fb670ba563ab3e57c5`. `native_save_reopen_equal=true`. Final bass = gentle pluck bass, chord = minimal house dub stab 23, pad = Strings of Cygnus. Final WAV: integrated −23.774453 LUFS, true peak −5.204235 dBTP, zero clipped samples. The bass has two offbeat notes/bar and 100% offbeat onset fraction, unchanged from its composition.
+
+The rejected Biow+Strings complete native mix was +24.496 dB (25–90 Hz) / +16.513 dB (90–250 Hz) kick-window to offbeat power. The **automatically rescued final mix** was +12.061 / +6.288 dB on these same bands (relative reduction 12.435 dB / 10.225 dB). This is a substantial physical/temporal improvement *within the same song*, not a claim of human-preferred sound or a professional mastered result. The previous LD+In the Dark source may show lower ratios but remains rejected on explicit growling timbre feedback.
+
+Full evidence JSON (private VPS): `/home/User/Kuang/.local/source-policy-native-auto-rescue-minimal-Fsharp-20261115/native-auto-rescue-final-evidence.json`. The complete source receipt records baseline hard fault, candidate cleared faults, chosen source identity and native roundtrip status. **92 focused and related regression tests passed** on the VPS, followed by a clean code commit `d9079f7` pushed to the draft experimental branch. No mainline/default change.
+
+**Next acceptance gate:** broader multi-key/style checks of the source policy and native onset rescue; verify that a soft bass with legitimate slow attack is not incorrectly rejected across deep-house contexts. Improve bass source diversity and harmonic translation using professionally grounded references and hard stop conditions before full-song output. Do not ask the user to listen to intermediate samples; provide only a consolidated result near final-quality acceptance.
