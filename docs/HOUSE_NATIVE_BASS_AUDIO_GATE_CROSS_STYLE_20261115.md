@@ -60,3 +60,13 @@ Compare within each style's A/B; the minimal and jackin pairs are **not at the s
 5. Automatic production promotion remains blocked pending repeated source-aware phase/spectral checks and human listening; this code **does not modify the one-prompt generator by default**.
 
 Private output evidence is stored under /home/User/Kuang/.local/bass-audio-cross-style-20261115, including canonical source hashes, rendered native bundles, raw WAVs, gate JSON, and actual isolated-stem analysis.
+
+## Deep-house follow-up: reject simple note shortening
+
+The deep-house source used the **same verified bass patch** as the jackin G source, but the bass MIDI distributions differed. Deep E has four offbeat notes/bar with leading beat positions 0.5, 1.5, 2.5 and 3.25; its principal long notes were 420 ticks (0.4375 quarter note), leaving roughly 30 ms before the next kick, excluding synth release. Jackin instead has an early accent at 1.25 beats and shorter 342-tick principal notes. Both have exact quarter-kick coverage 1.0 and no bass onsets directly coincident with the kick.
+
+Actual isolated deep-house native stems (SoundCraft, original chord B and groove-v2): kick RMS −28.744 dBFS, bass RMS −36.303 dBFS, kick sub-band −29.781 dBFS, bass sub-band −36.695 dBFS. The bass near-kick vs between-kick power was −1.696 dB, compared with −3.842 dB for jackin and −5.820 dB for minimal. Kick+bass linear sub summation +0.030 dB, fullmix mono loss approximately zero. Thus there is no evidence of substantial destructive low-frequency phase cancellation in the tested windows; the poor responsiveness to gain suggests temporal or spectral context.
+
+A separate, single-variable private candidate shortened the 10 existing principal 420-tick bass notes to 342 ticks (same MIDI note onsets, pitches, velocities, FX, sample/patch and all other tracks), with zero gain change. Native export, save/reopen, full WAV render, clipped-sample and true-peak checks all passed. Measured beat/offbeat 25–90 Hz ratio changed from +9.508 to +9.429 dB (only 0.079 dB improvement) and 90–250 Hz from +7.407 to +7.261 dB (only 0.146 dB improvement). Near-kick bass versus between-kick power changed from −1.696 to −1.675 dB, **not an improvement**. Sub-band summation after shortening was −0.106 dB with no warning; source inventory remained intact.
+
+**Decision:** reject principal-note shortening as an effective low-end fix for this source. The next bounded experiment should examine actual native patch envelope/ducking and spectral harmonic balance, one factor at a time, before adding MIDI complexity or boosting its fader again. No automatic defaults changed.
