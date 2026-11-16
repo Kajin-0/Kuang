@@ -167,12 +167,15 @@ def short_audition_project(project, groove_end_tick):
 def choose_sources(project, assignments, shortlist, adapter, defaults,
                    native, sound_assets, stage, *, duration, timeout, library=None,
                    pad_rescue=False, pad_review=None,
-                   groove_body_review=False, groove_body_audition=False):
+                   groove_body_review=False, groove_body_audition=False,
+                   bass_onset_rescue=False):
     """One baseline + at most two conditional groove alternatives; no full-length renders.
 
     Preconditions: original private Vital patches are bound, conservative gain staging
     and a fully rendered 8/16-bar native calibration WAV exist.
     """
+    if type(bass_onset_rescue) is not bool:
+        raise ValidationError("bass_onset_rescue must be a bool")
     if type(pad_rescue) is not bool or (pad_rescue and type(pad_review) is not dict):
         raise ValidationError("opt-in pad rescue requires a verified pad review receipt")
     if (type(groove_body_review) is not bool or type(groove_body_audition) is not bool
@@ -218,11 +221,28 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
     body_candidates=[]
     selected=dict(assignments)
     baseline_hard=HARD_FLAGS.intersection(baseline_fit['warnings'])
+    onset_baseline = None
+    onset_baseline_gate = None
+    onset_fault = False
+    if bass_onset_rescue:
+        from .house_bass_onset_audio_v1 import (
+            evaluate_note_aligned_pocket, block_severe_native_source_faults)
+        onset_baseline=evaluate_note_aligned_pocket(
+            audition_source,stems["kick"],stems["bass"],section="Groove")
+        onset_baseline_gate=block_severe_native_source_faults(onset_baseline)
+        onset_fault=bool(onset_baseline_gate["hard_flags"])
+        if onset_fault:
+            baseline_hard.add("bass_native_onset_deficit")
+    rescued_bass = False
     # Only genuine hard technical faults authorize expensive alternative
     # native renders. A passing baseline cannot benefit from sound-choice
     # reranking based on uncalibrated audio-quality proxies.
     observations=[]
     for role in ("bass","chord"):
+        if bass_onset_rescue and onset_fault and role=="chord":
+            observations.append({"role":role,"status":"SKIPPED_BASS_ONSET_RESCUE_IS_ROLE_LOCKED",
+                                 "chosen":False})
+            continue
         options=shortlist.get(role,[])
         if not options:
             observations.append({"role":role,"status":"NO_RUNNER_UP"})
@@ -251,7 +271,12 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
         alternate=dict(assignments);alternate[role_id]=prepared
         folder=scratch/("candidate-"+role)
         folder.mkdir()
-        native.export(short_audition_project(alt,window["end_tick"]),sound_assets,alternate,folder/"native")
+        short_alt=short_audition_project(alt,window["end_tick"])
+        native.export(short_alt,sound_assets,alternate,folder/"native")
+        if bass_onset_rescue and role=="bass" and onset_fault:
+            native.save(folder/"native",folder/"reopened")
+            if native.inspect(folder/"reopened")["canonical_hash"]!=state_hash(short_alt):
+                raise ValidationError("bass onset rescue native save/reopen drift")
         native.render(folder/"native",folder/"mix.wav",end_seconds=excerpt_seconds)
         alternative_meter=measure(folder/"mix.wav",library=library)
         if alternative_meter["clipped_samples"] or alternative_meter["true_peak_dbtp"] > -1.:
@@ -264,14 +289,24 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
                              None,folder/"mix.wav")
         flags=contextual_review_flags(baseline_meter["integrated_lufs"],
                                        alternative_meter["integrated_lufs"],fit)
-        original_hard=HARD_FLAGS.intersection(baseline_fit["warnings"])
+        original_hard=set(baseline_hard)
         candidate_hard=HARD_FLAGS.intersection(flags)
+        onset_candidate=None
+        onset_candidate_gate=None
+        if bass_onset_rescue and role=="bass" and onset_fault:
+            onset_candidate=evaluate_note_aligned_pocket(
+                short_alt,stems["kick"],bass_stem,section="Groove")
+            onset_candidate_gate=block_severe_native_source_faults(onset_candidate)
+            if onset_candidate_gate["hard_flags"]:
+                candidate_hard.update(onset_candidate_gate["hard_flags"])
         # Purely technical fallback. If both are sound, retain the independently
         # auditioned initial winner. No uncalibrated "best groove" score.
         replace=bool(original_hard and not candidate_hard and
                      "large_premix_loudness_change_same_locked_midi" not in flags)
         if replace:
             selected[role_id]=prepared
+            if bass_onset_rescue and role=="bass" and onset_fault:
+                rescued_bass=True
         observations.append({
             "role":role,
             "original_name":adapter.selection.get(
@@ -284,11 +319,16 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
             "baseline_integrated_lufs":baseline_meter["integrated_lufs"],
             "alternative_integrated_lufs":alternative_meter["integrated_lufs"],
             "candidate_context":fit,
+            "native_note_onset_gate":onset_candidate_gate,
+            "native_note_onset_evidence":onset_candidate,
             "review_flags":flags,
-            "status":"TECHNICAL_RESCUE" if replace else
+            "status":("TECHNICAL_BASS_ONSET_RESCUE" if replace and rescued_bass else
+                      "TECHNICAL_RESCUE") if replace else
                      ("REVIEW" if flags else "BASELINE_RETAINED"),
             "chosen":replace,
         })
+    if bass_onset_rescue and onset_fault and not rescued_bass:
+        raise ValidationError("bass native onset fault had no safe verified source rescue")
     if pad_rescue:
         if "track-pad" not in assignments:
             observations.append({"role":"pad","status":"SKIPPED_NO_PAD",
@@ -370,6 +410,10 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
               "audition_bars":audition_source.bars,
               "audition_source_canonical_sha256":state_hash(audition_source),
               "baseline_context":baseline_fit,
+              "bass_onset_rescue_requested":bass_onset_rescue,
+              "bass_onset_baseline":onset_baseline,
+              "bass_onset_baseline_gate":onset_baseline_gate,
+              "bass_onset_rescued":rescued_bass,
               "comparisons":observations,
               "source_policy":"initial independently vetted palette retained unless an alternative resolves a measured hard fault",
               "no_perceptual_winner":True,

@@ -243,7 +243,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            pad_level_calibration=False, groove_body_review=False,
            groove_body_audition=False, phrase_development_v1=False,
            context_palette_v2=False, predrop_tension_v1=False,
-            phrase_stable_chords_v2=False):
+            phrase_stable_chords_v2=False, native_bass_onset_rescue=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
     workspace = Path.cwd().resolve(); dest = Path(out_dir).absolute()
@@ -272,6 +272,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         raise ValidationError('--master-preview requires --groove-template')
     if type(contextual_shortlist) is not bool:
         raise ValidationError('contextual_shortlist must be boolean')
+    if (type(native_bass_onset_rescue) is not bool or
+            (native_bass_onset_rescue and not contextual_shortlist)):
+        raise ValidationError("native-bass-onset-rescue requires contextual-shortlist")
     if type(chord_level_calibration) is not bool:
         raise ValidationError('chord_level_calibration must be boolean')
     if chord_level_calibration and not groove_template:
@@ -416,7 +419,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
                     pad_review=(timbre_review["roles"].get("pad")
                                 if contextual_pad_rescue else None),
                     groove_body_review=groove_body_review,
-                    groove_body_audition=groove_body_audition)
+                    groove_body_audition=groove_body_audition,
+                    bass_onset_rescue=native_bass_onset_rescue)
             project = _bind(project,assignments,adapter)
             for comparison in context_receipt['comparisons']:
                 if comparison.get('chosen'):
@@ -609,6 +613,8 @@ def main(argv=None):
                         help='optionally audition one upper-bass-distinct verified candidate; no automatic musical choice')
     parser.add_argument('--contextual-pad-rescue',action='store_true',
                         help='opt-in native pad rescue for severe lower-mid masking; requires --contextual-shortlist')
+    parser.add_argument('--native-bass-onset-rescue',action='store_true',
+                        help='opt-in real native bass MIDI-onset aligned 25-90/90-250Hz hard-fault rescue using one verified alternate')
     parser.add_argument('--contextual-shortlist',action='store_true',
                         help='evaluate up to 1 additional independently vetted Vital preset per bass/chord role on the locked groove')
     parser.add_argument('--master-preview',action='store_true',
@@ -631,6 +637,7 @@ def main(argv=None):
                       harmony_profile=args.harmony_profile,drum_variant=args.drum_variant,
                       full_song_bars=args.full_song_bars,master_preview=args.master_preview,
                       contextual_shortlist=args.contextual_shortlist,
+                      native_bass_onset_rescue=args.native_bass_onset_rescue,
                       chord_level_calibration=args.chord_level_calibration,
                       groove_impact=args.groove_impact,
                       musical_plan_v2=args.musical_plan_v2,
