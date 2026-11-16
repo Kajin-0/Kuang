@@ -42,3 +42,42 @@ Full reproducible private receipts:
 `tests/test_house_bass_fullmix_repair_v1.py` covers a correct technical rescue, producer veto superseding gains, inadequate/offbeat-worsening changes, active onset and mono faults, unverified native state, mismatched kick timebase and corrupted/silent metrics. Companion existing native-source, bass-onset and autonomous integration suites must pass before promotion.
 
 This milestone is **source-context technical validation only**. Do not claim the whole track is professional or ask the producer to approve short A/B files. Next work should generalize native source and contextual comparisons across independent keys and bass roles, including negative/no-improvement cases, before attempting a complete final House track quality audit.
+
+## Bounded real native cross-style expansion: independent source-swap A/B
+
+The source-aware gate was independently evaluated against two further **existing real native 16-bar SoundCraft productions** with different tempi, keys, arrangements and drum sounds. These two are *controlled replacement experiments*, not fresh one-prompt generations; the fresh end-to-end minimal-F♯ case above remains the sole one-prompt case in this milestone.
+
+The verified, previously selected `gentle pluck bass` Vital source from the fresh minimal song was applied as a *single* bass-source replacement to deep E and jackin G. The source `Biow Bass 2` was the original in both. Other canonical tracks, kick/drums, chord-B note timing, bass MIDI note onsets, pitches, durations, velocities, faders and effects stayed identical; all source presets remained on the private VPS. Before any selection, the real original native onset stems confirmed a hard attack deficit in each source. Both candidates passed actual native export, save/reopen, full 48-kHz/24-bit rendered WAV, zero clipping, true peak safety, separate bass stem MIDI-onset measurements, and fullmix phase/mono warning screens. Both original sources and the replacement source were inventoried before and after.
+
+| Native, source-locked real case | Initial bass-onset fault | Replacement fault | Fullmix 25–90 Hz ratio improvement | Fullmix 90–250 Hz ratio improvement | Complete LUFS A / B | Gate |
+|---|---|---|---:|---:|---:|---|
+| Deep E, 123 BPM | Yes | None | **2.738 dB** | **1.210 dB** | −23.432 / −23.453 | Technical eligible |
+| Jackin G, 127 BPM | Yes | None | **1.425 dB** | **4.561 dB** | −28.044 / −28.206 | Technical eligible |
+| Minimal F♯, 122 BPM (fresh one-prompt) | Yes | None | **12.430 dB** | **12.049 dB** | Complete final −27.706 LUFS | Technical eligible |
+
+**Important refinement:** reducing onbeat/offbeat ratio is not enough if this occurs by attenuating the kick. Each candidate now also needs a **≥1.0 dB increase in ABSOLUTE offbeat band power** in each band and **no more than 1.5 dB loss in near-kick band power**. The gate uses the independent native `near_mean_power` and `offbeat_mean_power` measurements and checks that these reconcile with the reported band ratio within 0.01 dB. The source preserves the kick MIDI and sampler; this final waveform condition protects against bus-level changes.
+
+| Real source swap | Absolute offbeat 25–90 / 90–250 Hz gain | Near-kick 25–90 / 90–250 Hz change |
+|---|---|---|
+| Deep E | +2.570 / +1.101 dB | −0.169 / −0.108 dB |
+| Jackin G | +1.112 / +4.209 dB | −0.314 / −0.352 dB |
+| Minimal F♯ one-prompt | +21.374 / +20.327 dB | +8.944 / +8.277 dB |
+
+These are **signal energy measurements**, not human groove ratings. The minimal source's near-kick energy increased strongly despite the same kick source, so this result must *not* be taken as evidence that the kick itself became stronger or that bass/kick masking is subjectively optimal.
+
+### Negative controls and quality safeguards
+
+The earlier **real native gain-only deep E +3 dB trial** had only 0.507/0.117 dB improvements in the two relative beat/offbeat ratios, with only 0.701/0.211 dB absolute offbeat increases. Even in the intentionally favorable **counterfactual assumption** that its isolated onset hard fault cleared (not measured for this control), the fullmix reviewer rejected it as `REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR`. It is **NOT** a real preset swap or an end-to-end repair, and should never be labeled as one. This makes explicit the earlier determination that gain-only is not the right lever for every source.
+
+Separately, synthetic adversarial unit cases explicitly reject (i) a seemingly improved ratio achieved by reducing both near and offbeat energy, (ii) a near-kick energy collapse greater than 1.5 dB even with absolute offbeat gain, (iii) inconsistent reported ratio versus power, (iv) any producer-vetoed source identity, (v) unresolved sustained-source review, (vi) mono/phase faults, (vii) remaining onset faults, and (viii) stale or missing native provenance.
+
+The quantitative native receipts from all three source contexts, plus the exact **negative real WAV-derived spectra**, have been preserved as a **no-private-audio numeric regression fixture**:
+`tests/fixtures/house_bass_native_fullmix_crossstyle_20261115.json`.
+The fixture documents its negative source as a gain-only counterfactual and contains no redistributable or license-unknown Vital source bytes.
+
+All private real native WAVs, session files, and full evidence JSON remain separately under the VPS:
+`/home/User/Kuang/.local/bass-fullmix-source-crossstyle-20261115/`,
+`/home/User/Kuang/.local/bass-audio-cross-style-20261115/`,
+and the original fresh minimal one-prompt directory. None are published externally.
+
+**Exit decision:** the fullmix technical repair gate now has a verified source-locked positive example in **three different House styles**, explicit negative examples, and waveform-level anti-metric-gaming tests. It still does not assert that Kuang understands or can independently guarantee the aesthetic quality of House music. The producer-rejected growling source remains vetoed, and the new gate remains **opt-in with default generation unchanged**. A wider independent multi-seed production-batch evaluation and reference-calibrated source/articulation scoring are required before promoting this to the standard one-shot creator. No intermediate human audition is requested.
