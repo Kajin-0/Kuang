@@ -233,6 +233,11 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
         onset_fault=bool(onset_baseline_gate["hard_flags"])
         if onset_fault:
             baseline_hard.add("bass_native_onset_deficit")
+    baseline_fullmix_pocket = None
+    if bass_onset_rescue and onset_fault:
+        from .house_groove_pocket import evaluate_pocket
+        baseline_fullmix_pocket = evaluate_pocket(
+            audition_source, baseline_crop, section="Groove")
     rescued_bass = False
     # Only genuine hard technical faults authorize expensive alternative
     # native renders. A passing baseline cannot benefit from sound-choice
@@ -299,6 +304,24 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
             onset_candidate_gate=block_severe_native_source_faults(onset_candidate)
             if onset_candidate_gate["hard_flags"]:
                 candidate_hard.update(onset_candidate_gate["hard_flags"])
+        fullmix_repair = None
+        if bass_onset_rescue and role=="bass" and onset_fault:
+            # A replacement must fix the *real complete mix*, not only the
+            # isolated bass note's first 40 ms. This is a causal same-MIDI
+            # evaluation: same Groove, kick, instruments, FX, and host duration.
+            from .house_groove_pocket import evaluate_pocket
+            from .house_bass_fullmix_repair_v1 import review_fullmix_bass_rescue
+            alt_pocket = evaluate_pocket(
+                short_alt, folder/"mix.wav", section="Groove")
+            fullmix_repair = review_fullmix_bass_rescue(
+                baseline_fullmix_pocket, alt_pocket,
+                source_sha256=entry["source_sha256"],
+                source_onset_gate=onset_baseline_gate,
+                candidate_onset_gate=onset_candidate_gate,
+                candidate_fit=fit,
+                native_roundtrip_verified=True)
+            if not fullmix_repair["technical_replacement_eligible"]:
+                candidate_hard.add(fullmix_repair["status"])
         # Purely technical fallback. If both are sound, retain the independently
         # auditioned initial winner. No uncalibrated "best groove" score.
         replace=bool(original_hard and not candidate_hard and
@@ -321,6 +344,7 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
             "candidate_context":fit,
             "native_note_onset_gate":onset_candidate_gate,
             "native_note_onset_evidence":onset_candidate,
+            "native_fullmix_bass_repair":fullmix_repair,
             "review_flags":flags,
             "status":("TECHNICAL_BASS_ONSET_RESCUE" if replace and rescued_bass else
                       "TECHNICAL_RESCUE") if replace else
@@ -413,6 +437,7 @@ def choose_sources(project, assignments, shortlist, adapter, defaults,
               "bass_onset_rescue_requested":bass_onset_rescue,
               "bass_onset_baseline":onset_baseline,
               "bass_onset_baseline_gate":onset_baseline_gate,
+              "bass_onset_baseline_fullmix_pocket":baseline_fullmix_pocket,
               "bass_onset_rescued":rescued_bass,
               "comparisons":observations,
               "source_policy":"initial independently vetted palette retained unless an alternative resolves a measured hard fault",
