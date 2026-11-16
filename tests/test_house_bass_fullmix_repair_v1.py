@@ -145,7 +145,41 @@ class NativeBassFullmixRepairTests(unittest.TestCase):
         self.assertEqual(result["status"],"REJECT_KICK_NEAR_ENERGY_COLLAPSE")
         self.assertFalse(result["technical_replacement_eligible"])
 
-    def test_inconsistent_pocket_ratio_and_actual_powers_rejected(self):
+    def test_native_reconstructed_seed41_early_bass_timing_stays_rejected(self):
+        # A controlled 16-bar source-locked native reconstruction:
+        # 120-tick anticipation improves sub but worsens the bass body band.
+        # These are measured WAV receipts, not synthetic reward targets.
+        path=Path(__file__).parent/"fixtures"/"house_deep_E41_native_timing_counterexample_20261116.json"
+        data=json.loads(path.read_text())
+        self.assertEqual(data["source_seed"],41)
+        self.assertGreater(data["moved_note_count"],0)
+        self.assertTrue(data["source_preservation_verified"])
+        actual=data["candidates"]
+        baseline=actual["A_initial_Biow"]
+        self.assertTrue(baseline["original_hard_faults"])
+        for name in ("B_gentle_original_timing","C_gentle_61ms_early"):
+            with self.subTest(candidate=name):
+                row=actual[name]
+                self.assertFalse(row["original_hard_faults"])
+                self.assertEqual(row["stem_fit_warnings"],[])
+                self.assertEqual(row["meter"]["clipped_samples"],0)
+                self.assertLessEqual(row["meter"]["true_peak_dbtp"],-1)
+                outcome=review_fullmix_bass_rescue(
+                    baseline["pocket"],row["pocket"],
+                    source_sha256=row["source_sha256"],
+                    source_onset_gate={"hard_flags":baseline["original_hard_faults"]},
+                    candidate_onset_gate={"hard_flags":[]},
+                    candidate_fit={"warnings":row["stem_fit_warnings"]},
+                    native_roundtrip_verified=True)
+                self.assertEqual(outcome["status"],row["expected_review"])
+                self.assertFalse(outcome["technical_replacement_eligible"])
+        body_b=actual["B_gentle_original_timing"]["pocket"]["bands"][1][
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db"]
+        body_c=actual["C_gentle_61ms_early"]["pocket"]["bands"][1][
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db"]
+        self.assertGreater(body_c,body_b)
+
+
         changed=pocket(12,6)
         changed["bands"][0]["offbeat_mean_power"]*=4
         with self.assertRaisesRegex(ValidationError, "inconsistent native"):
