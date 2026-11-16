@@ -88,3 +88,17 @@ The rejected Biow+Strings complete native mix was +24.496 dB (25–90 Hz) / +16.
 Full evidence JSON (private VPS): `/home/User/Kuang/.local/source-policy-native-auto-rescue-minimal-Fsharp-20261115/native-auto-rescue-final-evidence.json`. The complete source receipt records baseline hard fault, candidate cleared faults, chosen source identity and native roundtrip status. **92 focused and related regression tests passed** on the VPS, followed by a clean code commit `d9079f7` pushed to the draft experimental branch. No mainline/default change.
 
 **Next acceptance gate:** broader multi-key/style checks of the source policy and native onset rescue; verify that a soft bass with legitimate slow attack is not incorrectly rejected across deep-house contexts. Improve bass source diversity and harmonic translation using professionally grounded references and hard stop conditions before full-song output. Do not ask the user to listen to intermediate samples; provide only a consolidated result near final-quality acceptance.
+
+## Cross-style onset sanity: shared Biow Bass 2 failure fingerprint
+
+After the successful minimal F♯ native automatic rescue, the same isolated MIDI-onset analyzer was applied to previous independent deep E and jackin G native kick/bass stems. The results are **descriptive, not subjective sound verdicts**:
+
+| Source and style | Bass attack 25–90Hz vs kick attack | Bass attack 90–250Hz vs kick attack | Joint severe onset gate |
+|---|---:|---:|---|
+| Biow Bass 2, deep E | −26.593 dB | −49.388 dB | Flagged |
+| Biow Bass 2, jackin G | −24.362 dB | −45.703 dB | Flagged |
+| gentle pluck bass, minimal F♯ | −1.198 dB | −10.386 dB | No hard fault |
+
+The two independent examples with Biow both have a severely attenuated first 40ms bass note onset relative to their kicks. This agrees with the failed minimal Biow source and suggests a repeatable attack-envelope/source issue, but **not that every slower-attack bass patch is universally bad**. Style and role intent matter; the gate remains explicitly opt-in and requires actual verified alternative rendering. A source without a safe verified candidate fails closed rather than silently switching or claiming good music.
+
+Private cross-style JSON evidence: `/home/User/Kuang/.local/source-policy-native-one-shot-minimal-Fsharp-diagnostics-20261115/cross-style-onset-sanity.json`.
