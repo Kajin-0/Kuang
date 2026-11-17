@@ -14,6 +14,7 @@ from pathlib import Path
 
 from kuang import midi
 from kuang.gestures import crop
+from kuang.house_v3_space import house_v3_space
 from kuang.house_mix_roles import _host_adapter
 from kuang.house_source_policy import source_exclusion
 from kuang.loudness import measure
@@ -43,6 +44,8 @@ def make_scene(source, reference, style):
     if style=="A_dry":
         graph_contract(p)
         return p
+    if style=="B_room_plate":
+        return house_v3_space(p)
     templates={t.id:t for t in reference.tracks}
     by={t.id:t for t in p.tracks}
     # Only dry, source-preserving upper roles are fed to shared wet returns.

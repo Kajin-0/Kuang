@@ -47,3 +47,15 @@ On **three frozen source-locked styles**, test real native 100%-wet short-room/d
 The exact machine-readable baseline is private, preserved at:
 `/home/User/Kuang/.local/house-v3-reference-fingerprint-20261116/report.json`.
 No private user-approved music, third-party presets, or drum sample bytes are committed. This report and the executable CLI/tests are versioned with the repository. Reproduction uses the existing, separately installed NumPy/SoundFile and libebur128 packages; no downloads were needed.
+
+## P0b: per-bar and sliding 8-bar energy measurement (external review correction)
+
+A review identified selection bias in measuring only the **first eight bars** of a section. The reusable CLI now calculates **every complete musical bar's unweighted stereo RMS** plus the RMS of every consecutive eight-bar interval advanced by one bar. An eight-bar minimum overlapping a breakdown is identified as a **cross-boundary interval** when it includes Build or Groove bars. These data are not labeled LUFS; 8-bar excerpts remain independently metered for gated integrated LUFS, and a per-bar waveform RMS dip must not be misreported as a 3–6 LU dip.
+
+Fresh re-analysis of the exact same frozen eleven WAVs:
+
+- **Phase44:** deepest individual Breakdown bar is zero-based bar **61** at **−39.795 dBFS RMS**. The lowest eight-bar interval overlapping the Breakdown starts at bar **60** and is **−5.018 dB RMS** relative to the mean-power eight-bar Groove benchmark; it crosses into **Rebuild**. The fixed within-Breakdown window remains **−1.875 dB RMS** relative to the originally selected Groove. The former is a separate rolling analysis and not a new claim about LUFS.
+- **Kuang straight #01:** deepest overlapping interval **−7.140 dB RMS**, crosses boundary; **jackin #02** **−0.589 dB**, wholly within Breakdown; **minimal #08** **+0.978 dB**, crosses boundary and is *louder* than the reference Groove. This variation confirms that blanket section-level gain offsets are inappropriate.
+- The frozen source references, section mappings, and previously published P0 results remain unchanged. The additional bar and rolling data are saved separately at `/home/User/Kuang/.local/house-v3-reference-fingerprint-sliding-20261116/report.json`.
+
+The next P2 section-arc study should use both fixed named passages and bar-wise/rolling profiles to distinguish dramatic local withdrawal from whole-section loudness.

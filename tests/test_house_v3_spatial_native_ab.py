@@ -6,6 +6,7 @@ from kuang.schema import Track, Effect, state_hash, ValidationError
 from kuang.song import rules_plan
 from kuang.house_template import template
 from tools.house_v3_spatial_native_ab import make_scene, SCENES
+from kuang.house_v3_space import house_v3_space,ROOM,PLATE,SPECS
 
 
 def source():
@@ -48,6 +49,24 @@ class SpatialNativeSymbolicTests(unittest.TestCase):
                         self.assertEqual(a.sends,b.sends)
                 self.assertFalse(any(t.sends for t in candidate.tracks
                     if t.id in ("track-kick","track-bass")))
+
+    def test_opt_in_independent_of_phase44_and_exact_vetted_effects(self):
+        p=source()
+        r=reference(p)
+        # Production recipe must not open any other project or require a
+        # reference passed in. Symbolic proof compares actual prior scene.
+        from_reference=make_scene(p,r,"C_room_plate_echo")
+        new=house_v3_space(p)
+        self.assertEqual(new.tracks[-2].effects[0].parameters,ROOM)
+        self.assertEqual(new.tracks[-1].effects[0].parameters,PLATE)
+        self.assertEqual(len(new.tracks),len(p.tracks)+2)
+        self.assertEqual(midi.export_bytes(p),midi.export_bytes(new))
+        self.assertTrue(all(spec in new.parameters for spec in SPECS))
+        with self.assertRaises(ValidationError):
+            house_v3_space(new)
+        with self.assertRaises(ValidationError):
+            house_v3_space(p,strength="unknown")
+        self.assertTrue(any(x.id=="house-v3-room" for x in from_reference.tracks))
 
     def test_invalid_scene_fails(self):
         p=source()

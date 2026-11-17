@@ -58,3 +58,16 @@ The original source and all generated private A/B/C audio/session data remain on
 `/home/User/Kuang/.local/house-v3-spatial-AB-20261116/`.
 
 Implementation: `tools/house_v3_spatial_native_ab.py`. This is a separate opt-in experiment; legacy source generation and default routing remain unchanged.
+
+## P1b: runtime-independent library recipe and native reproducibility
+
+External review correctly noted the experimental builder loaded **private Phase44** to copy its effect settings, preventing the routing scene from being a general Kuang library recipe. A new opt-in, pure canonical transform in **`kuang/house_v3_space.py`**, `house_v3_space(project)`, serializes **exactly** the previously measured soundcraft built-in room and plate effect settings, required canonical parameter specifications, bus topology, unchanged four-floor kick/bass tracks, and explicit chord/pad sends. It **does not read any file** or import the producer's private Phase44 project. It fails closed for unknown settings, schema/spec collisions, missing chord source, or repeated application. No effect or send is added to the bass or kick. The caller selects whether to use the recipe; no existing creation default changes.
+
+A fresh **real native SoundCraft export/save/reopen/render** of the jackin #03 B room/plate variant using the library transform was verified against the existing native private trial. Every audio track, bus, insert, send, fader and instrument field matched the prior canonical construction. Their WAVs were **byte-identical**, SHA256:
+
+`6631993ec41fe00260e109349e6cfa0684aabc8573671d23c6de055e2a981bbb`
+
+The rechecked eight-bar 2–8kHz side/mid = **−18.3075 dB** and 20–120Hz mono retention = **1.000000**. This proves deterministic audio parity of the new *library* recipe in the tested native environment. It does not mean the scene has been evaluated musically or that it is approved as a universal default. Other two styles retain the prior independently verified A/B SoundCraft results, and the isolated chord/pad transient/tail check remains open.
+
+Private reproducibility receipt:
+`/home/User/Kuang/.local/house-v3-library-recipe-native-recheck-20261116/verification.json`.

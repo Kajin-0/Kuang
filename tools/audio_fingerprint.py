@@ -159,6 +159,99 @@ def analyze_window(path, start, end, *, loudness_library=None):
     }
 
 
+
+def bar_energy_profile(path, project):
+    """Full song bar-wise PCM power and overlapping eight-bar RMS profile.
+
+    Scan every complete bar with constant zero-based musical boundaries.
+    Eight-bar windows advance one bar and may cross a section transition.
+    This is RMS power, NOT a sliding ITU loudness measurement.
+    """
+    import numpy as np
+    import soundfile as sf
+    rate=48000
+    bar_seconds=4*60/project.tempo_bpm
+    per_bar=[]
+    with sf.SoundFile(str(path)) as wav:
+        if (wav.channels,wav.samplerate,wav.subtype)!=(2,rate,"PCM_24"):
+            raise ValidationError("bar envelope requires native 48kHz stereo PCM24")
+        for index in range(project.bars):
+            first=round(index*bar_seconds*rate)
+            last=round((index+1)*bar_seconds*rate)
+            if not 0<=first<last<=len(wav):
+                raise ValidationError("reference WAV shorter than canonical song bars")
+            wav.seek(first)
+            audio=wav.read(last-first,dtype="float64",always_2d=True)
+            if len(audio)!=last-first or not np.isfinite(audio).all():
+                raise ValidationError("invalid bar PCM")
+            power=float(np.mean(audio*audio))
+            per_bar.append(power)
+    sections=project.sections
+    names=[]
+    for i,power in enumerate(per_bar):
+        sec=next((s.name for s in sections if s.start<=i*BAR<s.start+s.length),None)
+        if sec is None:
+            raise ValidationError("bar does not belong to a canonical section")
+        names.append({"bar_zero_based":i,"section":sec,"rms_dbfs":power_db(power)})
+    windows=[]
+    for start in range(len(per_bar)-7):
+        avg=sum(per_bar[start:start+8])/8
+        windows.append({"start_bar_zero_based":start,
+                        "end_bar_zero_based_exclusive":start+8,
+                        "rms_dbfs":power_db(avg)})
+    return {"bar_rms":names,"sliding_eight_bar_rms":windows,
+            "method":"every canonical bar sample-aligned stereo mean-square; consecutive 8 bars every 1-bar hop; not LUFS"}
+
+
+def section_energy_extrema(energy, sections, *, reference):
+    """Compare local breakdown and cross-boundary eight-bar minima to groove.
+
+    A cross-boundary window is reported as such rather than mislabelled
+    as an entirely inside-breakdown window.
+    """
+    mapping=WINDOWS[reference]
+    byname={s.name:s for s in sections}
+    groove=byname[mapping["Groove"][0]]
+    br=byname[mapping["Breakdown"][0]]
+    rows=energy["sliding_eight_bar_rms"]
+    groove_start=groove.start//BAR
+    groove_rows=[v for v in rows if groove_start<=v["start_bar_zero_based"]
+                 and v["end_bar_zero_based_exclusive"]<=
+                     (groove.start+groove.length)//BAR]
+    if not groove_rows:
+        raise ValidationError("no eight-bar groove reference")
+    reference_power=sum(10**(v["rms_dbfs"]/10) for v in groove_rows)/len(groove_rows)
+    reference_db=power_db(reference_power)
+    br_start=br.start//BAR
+    br_end=(br.start+br.length)//BAR
+    # Include windows that overlap the Breakdown, but never claim that
+    # they lie fully inside it if they cross a musical section boundary.
+    overlaps=[v for v in rows if v["start_bar_zero_based"]<br_end
+              and v["end_bar_zero_based_exclusive"]>br_start]
+    inside=[v for v in overlaps if v["start_bar_zero_based"]>=br_start
+            and v["end_bar_zero_based_exclusive"]<=br_end]
+    local=[p for p in energy["bar_rms"] if br_start<=p["bar_zero_based"]<br_end]
+    if not overlaps or not local:
+        raise ValidationError("missing breakdown musical bars")
+    deepest=min(overlaps,key=lambda v:v["rms_dbfs"])
+    deepest_inside=min(inside,key=lambda v:v["rms_dbfs"]) if inside else None
+    deepest_bar=min(local,key=lambda x:x["rms_dbfs"])
+    return {
+       "groove_baseline_8bar_rms_dbfs":reference_db,
+       "breakdown_deepest_one_bar":deepest_bar,
+       "breakdown_deepest_eight_bar_overlapping":{
+          **deepest,
+          "crosses_section_boundary":not (
+             deepest["start_bar_zero_based"]>=br_start and
+             deepest["end_bar_zero_based_exclusive"]<=br_end),
+          "relative_to_groove_db":round(deepest["rms_dbfs"]-reference_db,3)},
+       "breakdown_deepest_eight_bar_inside":{
+          **deepest_inside,
+          "relative_to_groove_db":round(deepest_inside["rms_dbfs"]-reference_db,3)
+       } if deepest_inside else None,
+       "interpretation":"RMS only; per-bar K-weighted loudness and auditory contrast not inferred"
+    }
+
 def fingerprint(path, project_path, *, reference, label, loudness_library=None):
     import soundfile as sf
     project=load(project_path)
@@ -179,6 +272,10 @@ def fingerprint(path, project_path, *, reference, label, loudness_library=None):
             **analyze_window(path,region["start_seconds"],region["end_seconds"],
                              loudness_library=loudness_library)
         }
+    bar_energy=bar_energy_profile(path,project)
+    result["bar_profile"]=bar_energy
+    result["section_energy_extrema"]=section_energy_extrema(
+        bar_energy,project.sections,reference=reference)
     for metric,key in (("drop_minus_groove_rms_db","rms_dbfs"),
                        ("breakdown_minus_groove_rms_db","rms_dbfs"),
                        ("drop_minus_groove_shortterm_lufs","short_region_integrated_lufs"),
