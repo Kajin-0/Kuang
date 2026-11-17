@@ -135,3 +135,27 @@ The bounded recipe: Groove B withdraws existing hats during the final beat of ev
 
 ---
 
+
+
+### P2 native excerpt crop repair and reproducible SoundCraft A/B — November 17, 2026
+
+The last attempt to natively compare the new drum scene on frozen jackin #03 was blocked by the native host's intentional requirement that *every MIDI channel must have sounding notes*. Cropping Main Drop left silent optional roles, and the first attempted cleanup forgot automation lanes aimed at their effect instances. Neither attempt produced a successful native-render comparison.
+
+That harness defect is now addressed in the **reusable, tested** `kuang/house_native_excerpt.py` helper: use Kuang's canonical `gestures.crop`, delete silent MIDI roles, filter automation against **retained track IDs and retained effect IDs**, remove orphan locks, revalidate, run `production_host.graph_contract`, check active kick and bass, and prove the frozen parent project hash is unchanged. Explicit crop receipts distinguish DSP reset from a continuous full-song bounce. New `tests/test_house_native_excerpt.py` covers deep/minimal/jackin crops and compares actual protected-role MIDI events between opt-in drum scenes and original.
+
+The new `tools/house_v3_drum_native_ab.py` is an **opt-in native SoundCraft runner**, not a successful completed render. On the authorized workstation/VPS with existing private audio assets, run from the Kuang workspace:
+
+```sh
+python -m tools.house_v3_drum_native_ab \
+  --source .local/ten-song-v1-03-jackin-20261115 \
+  --out .local/house-v3-drum-main-drop-native-20261117 \
+  --soundcraft /home/User/kuang-eval/soundcraft-0.11.0/soundcraft-0.11.0-linux-x86_64/bin/soundcraft-cli \
+  --library .local/producer/libebur128.so
+```
+
+The runner refuses overwrite, verifies each canonical session after save/reopen, retains unchanged private source inventory, proves kick/bass/chord/snare event signatures match A/B, requires hat MIDI to differ, requires native WAV checksums to differ, checks peak/clips and compares relative LUFS. It stores complete A and B recordings separately, plus a finite audit summary. It does **not** label music as listener-approved or enable `house-v3` automatically.
+
+**Status:** the earlier committed P2 symbolic regression CI passed. The new crop helper, test and A/B runner were published to the experimental branch; their fresh CI status must be checked separately. The actual native A/B still requires authorized VPS access, which is unavailable in this conversation because Desktop Commander reached its monthly usage limit. The next engineer/agent should *run that exact tool first* before new arrangement complexity, then continue only if native validation and groove-preservation checks pass. No intermediate producer listening request is required.
+
+---
+
