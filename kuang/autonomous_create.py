@@ -242,7 +242,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
            timbre_source_review=False, contextual_pad_rescue=False,
            pad_level_calibration=False, groove_body_review=False,
            groove_body_audition=False, phrase_development_v1=False,
-           context_palette_v2=False, predrop_tension_v1=False,
+           drum_scenes_v1=False, context_palette_v2=False, predrop_tension_v1=False,
             phrase_stable_chords_v2=False, native_bass_onset_rescue=False):
     if private is not True: raise ValidationError('explicit --private-third-party-presets is required')
     if bars not in (16,32): raise ValidationError('bars must be 16 or 32')
@@ -258,6 +258,9 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
     if (type(phrase_development_v1) is not bool or
             (phrase_development_v1 and (not groove_template or full_song_bars is None))):
         raise ValidationError('--phrase-development-v1 requires --groove-template and --full-song-bars')
+    if (type(drum_scenes_v1) is not bool or
+            (drum_scenes_v1 and (not groove_template or full_song_bars is None))):
+        raise ValidationError('--drum-scenes-v1 requires --groove-template and --full-song-bars')
     if (type(predrop_tension_v1) is not bool or
             (predrop_tension_v1 and (not groove_template or full_song_bars is None))):
         raise ValidationError("--predrop-tension-v1 requires full-song groove-template")
@@ -377,7 +380,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             if full_length and not contextual_shortlist:
                 project,arrangement_receipt = arrange_full_song(project,bars=full_length,
                                                                profile=gp,seed=seed,
-                                                               phrase_development_v1=phrase_development_v1)
+                                                               phrase_development_v1=phrase_development_v1,
+                                                               drum_scenes_v1=drum_scenes_v1)
             if sample_pack is not None:
                 project,sound_assets,drum_evidence = prepare_kit(project,sample_pack,
                                                stage/'drum-assets',gp,drum_variant,
@@ -436,7 +440,8 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
         if full_length and contextual_shortlist:
             project,arrangement_receipt=arrange_full_song(project,bars=full_length,
                                                          profile=gp,seed=seed,
-                                                         phrase_development_v1=phrase_development_v1)
+                                                         phrase_development_v1=phrase_development_v1,
+                                                               drum_scenes_v1=drum_scenes_v1)
             duration=project.length/project.ppq*60/project.tempo_bpm
         predrop_receipt=None
         if predrop_tension_v1:
@@ -540,6 +545,7 @@ def create(prompt,catalog,plugin,soundcraft,out_dir,*,seed=17,bars=16,private=Fa
             'groove_body_review_requested':groove_body_review,
             'groove_body_audition_requested':groove_body_audition,
             'phrase_development_v1_requested':phrase_development_v1,
+            'drum_scenes_v1_requested':drum_scenes_v1,
             **({'phrase_stable_chords_v2_evidence':'groove-evidence.json'} if phrase_stable_chords_v2 else {}),
             'predrop_tension_v1_requested':predrop_tension_v1,
             'predrop_tension_v1_evidence':'predrop-tension-v1-evidence.json' if predrop_receipt else None,
@@ -625,6 +631,8 @@ def main(argv=None):
                         help='opt-in profile-conditioned one/two-beat pre-drop drum withdrawal; no master gain lift')
     parser.add_argument('--phrase-development-v1',action='store_true',
                         help='opt-in paired Groove/Drop eight-bar phrase development in full-house arranger')
+    parser.add_argument('--drum-scenes-v1',action='store_true',
+                        help='opt-in section-specific top drum phrasing and build fill; unchanged kick/bass/chords')
     parser.add_argument('--phrase-stable-chords-v2',action='store_true',
                         help='experimental four-bar chord rhythm coherence; preserves bass, chord pitches, and source assets')
     parser.add_argument('--full-song-bars',type=int,choices=(96,112,128,160),
@@ -649,6 +657,7 @@ def main(argv=None):
                       groove_body_review=args.groove_body_review,
                       groove_body_audition=args.groove_body_audition,
                       phrase_development_v1=args.phrase_development_v1,
+                      drum_scenes_v1=args.drum_scenes_v1,
                       predrop_tension_v1=args.predrop_tension_v1,
                       context_palette_v2=args.context_palette_v2,
                       phrase_stable_chords_v2=args.phrase_stable_chords_v2,
