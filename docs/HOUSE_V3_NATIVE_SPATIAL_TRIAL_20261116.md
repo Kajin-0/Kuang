@@ -85,3 +85,23 @@ For each original chord note onset, measure stereo squared-amplitude energy duri
 This is a limited objective indication that the shared return extends space without materially increasing the direct chord attack in this jackin context. It is **not** evidence that the wet tail is psychoacoustically unmasked or that stabs remain subjectively clear in every song. Do not turn the recipe on by default on this result. The deep and minimal styles still require similar isolated pathway checks before role-aware send values are tuned.
 
 Private evidence: `/home/User/Kuang/.local/house-v3-chord-attack-tail-probe-20261116/evidence.json`.
+
+## P1d: deep/minimal native chord-source and kick+bass control
+
+Two further **native source-locked** 8-bar A/B comparisons were rendered using the frozen deep #06 and minimal #07 songs. Per candidate: chord-only and kick+bass-only stereo PCM24/48kHz SoundCraft stems with unchanged Vital MIDI/patches, no other instruments; original bus/send FX preserved; actual canonical export/save/reopen passed. The kick+bass stems are **sample-identical** in dry versus room/plate, confirming these shared effects never touched the rhythm source. Musical preference has not been evaluated.
+
+A source-independent test measures the direct chord attack (0–100ms) and late chord tail (250–500ms). Only onset windows without a second chord attack within the next 500ms qualify.
+
+| Source | Qualified chord windows | Attack energy B–A | Tail energy B–A | 2–8kHz chord power versus kick+bass (A → B) |
+|---|---:|---:|---:|---:|
+| Deep #06 | 15 | **+0.072 dB** | **+6.980 dB** | +34.463 → +35.209 dB |
+| Minimal #07 | 16 | **+0.496 dB** | **+0.711 dB** | −1.177 → −0.132 dB |
+| Jackin #03 (earlier separate test) | 16 | **+0.093 dB** | **+1.241 dB** | Not measured against native kick+bass |
+
+The apparent deep-house **+34 dB** presence ratio is a narrow **2–8kHz spectral power** ratio of separately isolated stems, **not** integrated musical loudness or reliable perceptual audibility: the deep kick+bass source has comparatively weak upper harmonics, so this ratio becomes large. It must not be turned into a fixed target or interpreted as proof of overly loud chords.
+
+**Decision:** source-specific spatial treatment is required. Room/plate barely changes chord attacks in all three songs, but its much larger deep-house tail increase is a potential articulation/smear risk even while fullmix upper-band stereo width looks better. Do **not** promote the shared send gains as a global default. Do not infer that an intentionally spacious deep chord tail is inherently bad; assess with an additional source-aware native conditional gate.
+
+`kuang/house_v3_space_review.py` defines provisional, **non-release** objective review flags for >4dB chord-tail increase, >2dB chord-attack increase, or very low 2–8kHz chord/kickbass power. These are diagnostics rather than perceptual labels and never auto-promote a global send scene. The control requires >=8 onset windows, locked MIDI and identical dry/wet kick+bass stems. The high-tail deep source is flagged while the restrained minimal source is not. The producer-rejected growl preset remains excluded and no production default changed.
+
+Private exact native evidence and stems: `/home/User/Kuang/.local/house-v3-chord-presence-crossstyle-20261116/`. Neither files nor third-party presets were uploaded. Next bounded trial: specifically reduce **deep-house plate send** while preserving chord attack and high-band stereo, then compare tail energy and mono/peak safety before selecting style-aware send gains.
