@@ -119,3 +119,19 @@ Any approved technique must be tested on at least one independent genre/key/song
 Structured intent -> native source fingerprints (register, onset envelope, note-off release, band/stereo energy) -> role-compatible source shortlist -> actual mix and section evidence -> bounded typed change proposals with explicit expected audible outcome -> safe real-native excerpt render -> reject null/unsafe interventions -> gain-matched producer listening -> full-song recheck -> separate mastered release.
 
 Every proposed production operation should carry `why_this_source`, `musical_role`, `target_section`, `observable_hypothesis`, `changed_fields`, `source_hash`, `safety_checks`, `human_verdict`. No autonomous "better" label can be inferred from lower overlap or louder LUFS alone.
+
+
+### P2 opt-in drum section-scene implementation — November 17, 2026
+
+The existing 128-bar phrase-development arranger still cloned principal Groove A hats and snare throughout Main Drop even when bass/chord phrases changed. The new **opt-in** source-preserving `kuang/house_drum_scenes_v1.py` layer acts on the assembled full-house MIDI arrangement after existing phrase development. It does not modify original kick/bass/harmony tracks, their mixer/FX/automation, source samples, Vital presets, or the default arranger.
+
+The bounded recipe: Groove B withdraws existing hats during the final beat of every second 4-bar phrase; Build uses two short pickups from the **already-selected snare voice** in its last bar; Main Drop adds sparse late-bar hat pickups and bounded accents, using its existing hat instrument and pitch. Section records explicitly count added, removed and accented notes. The recipe is exposed as `--drum-scenes-v1` for full-length groove-template one-prompt creation and rejects duplicate application. No independent melody is added.
+
+**Test evidence:** The focused local `tests.test_house_full_arranger` suite passed **12/12** on the authorized VPS immediately before desktop-tool quota exhaustion, including a three-seed/four-style matrix, source immutability, locked kick/bass/harmony, valid MIDI and deterministic non-default behavior. Independent quick checks on four styles showed identical Groove A/Main Drop **hat-bar fraction falling from 1.00 to 0.75**, while kick remained **1.00**, bass/chord phrases were unchanged, and the build's two snare pickups were inserted. This measures *structural contrast*, not production quality or listener preference. Newly published GitHub CI must independently confirm the committed copy.
+
+**Native gate still open:** A controlled SoundCraft eight-bar Main Drop test was attempted on frozen jackin #03, but its test-harness crop retained silent optional MIDI tracks, then orphaned automation targets after removing them; native graph validation correctly refused those attempts before rendering any candidate. A corrected version of the harness was prepared locally, but Remote Desktop Commander reached its monthly access limit before it could run. **Do not claim native audio success or promote the drum-scenes default.** The private experiment and failed attempts remain on the authorized VPS under `.local/house-v3-drum-scenes-native-20261117/`. Once runtime access resumes, retest the cropped excerpt using a proper owner/automation filter, compare native A/B WAV hashes, kick/bass stem invariance, clipped samples, true peak and short-term loudness, then proceed to multi-song arrangement scenes only if that test passes.
+
+**Stop gate:** No additional fill or percussion complexity until actual audio demonstrates a changed, non-clipping Main Drop without damaging kick/bass groove. This is the first concrete opt-in P2 drum-scene implementation, not the complete House-v3 P2 arrangement system.
+
+---
+
