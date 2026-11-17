@@ -1,0 +1,183 @@
+{
+  "articulation_intervention": "one existing bass note onset shifted -120 ticks / ~61ms, repeated across Groove and Drop; no velocity, pitch, duration, source or other role changes",
+  "candidates": {
+    "A_initial_Biow": {
+      "expected_review": null,
+      "meter": {
+        "clipped_samples": 0,
+        "integrated_lufs": -33.01871806485682,
+        "true_peak_dbtp": -13.866229872081151
+      },
+      "original_hard_faults": [
+        "bass_onset_attack_severely_masked_by_kick"
+      ],
+      "pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 10.241,
+            "near_mean_power": 4847.216025,
+            "offbeat_mean_power": 458.553027
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 8.928,
+            "near_mean_power": 2420.381003,
+            "offbeat_mean_power": 309.827212
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "source_sha256": "042caba52110a6952cf4c777908ba1a5c78edcc3eee76b68ccaf0001d9db6efa",
+      "stem_fit_warnings": []
+    },
+    "B_gentle_original_timing": {
+      "expected_review": "REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR",
+      "meter": {
+        "clipped_samples": 0,
+        "integrated_lufs": -33.056518020203555,
+        "true_peak_dbtp": -13.866229872081151
+      },
+      "original_hard_faults": [],
+      "pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 6.731,
+            "near_mean_power": 4615.57806,
+            "offbeat_mean_power": 979.77655
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 7.978,
+            "near_mean_power": 2415.581534,
+            "offbeat_mean_power": 384.801063
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "source_sha256": "fc85e6bda9d349d165b1ebe140536d2a1b06277b87fdd28fc56d9f6f5273b72e",
+      "stem_fit_warnings": []
+    },
+    "C_gentle_61ms_early": {
+      "expected_review": "REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR",
+      "meter": {
+        "clipped_samples": 0,
+        "integrated_lufs": -33.05553912999478,
+        "true_peak_dbtp": -13.866229872081151
+      },
+      "original_hard_faults": [],
+      "pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 5.396,
+            "near_mean_power": 4615.370682,
+            "offbeat_mean_power": 1332.3689
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 8.47,
+            "near_mean_power": 2415.505707,
+            "offbeat_mean_power": 343.596532
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "source_sha256": "fc85e6bda9d349d165b1ebe140536d2a1b06277b87fdd28fc56d9f6f5273b72e",
+      "stem_fit_warnings": []
+    }
+  },
+  "case": "reconstructed_deep_E_minor_seed41",
+  "moved_note_count": 24,
+  "native_audio_wav_location": "private_vps_only",
+  "quality_judgment": "NOT_EVALUATED",
+  "reconstructed_original_midi_and_sample_policy": true,
+  "source_preservation_verified": true,
+  "source_scenario": "MIDI reconstructed from pinned engine and identical selected private patch SHA256; not identical failed-song calibrated native mix",
+  "source_seed": 41
+}

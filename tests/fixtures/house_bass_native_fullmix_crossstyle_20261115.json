@@ -1,0 +1,489 @@
+{
+  "cases": {
+    "deep_E": {
+      "baseline_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 9.508,
+            "near_mean_power": 38031.390727,
+            "offbeat_mean_power": 4259.321781
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 7.407,
+            "near_mean_power": 19293.088382,
+            "offbeat_mean_power": 3505.233396
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "candidate_fit": {
+        "warnings": []
+      },
+      "candidate_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": true,
+        "hard_flags": [],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "candidate_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 6.77,
+            "near_mean_power": 36584.038604,
+            "offbeat_mean_power": 7697.153076
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 6.197,
+            "near_mean_power": 18817.702287,
+            "offbeat_mean_power": 4517.091694
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "expected_status": "TECHNICAL_REPAIR_ELIGIBLE",
+      "replacement_name": "gentle pluck bass",
+      "source_name": "Biow Bass 2",
+      "source_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": false,
+        "hard_flags": [
+          "bass_onset_attack_severely_masked_by_kick"
+        ],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "source_sha256": "fc85e6bda9d349d165b1ebe140536d2a1b06277b87fdd28fc56d9f6f5273b72e",
+      "type": "verified_native_source_swap"
+    },
+    "deep_E_gain_only_negative": {
+      "baseline_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 9.508,
+            "near_mean_power": 38031.390727,
+            "offbeat_mean_power": 4259.321781
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 7.407,
+            "near_mean_power": 19293.088382,
+            "offbeat_mean_power": 3505.233396
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "candidate_fit": {
+        "warnings": []
+      },
+      "candidate_onset_gate": null,
+      "candidate_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 9.001,
+            "near_mean_power": 39770.932114,
+            "offbeat_mean_power": 5005.210438
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 7.29,
+            "near_mean_power": 19717.065756,
+            "offbeat_mean_power": 3679.781037
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 123.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "expected_status": "REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR",
+      "important": "candidate onset clear is deliberately ASSUMED in the isolated spectral counterfactual; it was not measured for gain-only trial. This negative cannot be presented as end-to-end source swap.",
+      "provenance": "true native WAVs, bass gain+3 dB, no preset replacement",
+      "source_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": false,
+        "hard_flags": [
+          "bass_onset_attack_severely_masked_by_kick"
+        ],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "source_sha256": "fc85e6bda9d349d165b1ebe140536d2a1b06277b87fdd28fc56d9f6f5273b72e",
+      "type": "verified_native_gain_only_negative_control"
+    },
+    "jackin_G": {
+      "baseline_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 12.176,
+            "near_mean_power": 42621.474617,
+            "offbeat_mean_power": 2582.306738
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 9.057,
+            "near_mean_power": 7024.34122,
+            "offbeat_mean_power": 872.837281
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 127.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "candidate_fit": {
+        "warnings": []
+      },
+      "candidate_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": true,
+        "hard_flags": [],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "candidate_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 10.751,
+            "near_mean_power": 39650.345546,
+            "offbeat_mean_power": 3335.718918
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 4.496,
+            "near_mean_power": 6477.243668,
+            "offbeat_mean_power": 2300.356679
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 127.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "expected_status": "TECHNICAL_REPAIR_ELIGIBLE",
+      "replacement_name": "gentle pluck bass",
+      "source_name": "Biow Bass 2",
+      "source_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": false,
+        "hard_flags": [
+          "bass_onset_attack_severely_masked_by_kick"
+        ],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "source_sha256": "fc85e6bda9d349d165b1ebe140536d2a1b06277b87fdd28fc56d9f6f5273b72e",
+      "type": "verified_native_source_swap"
+    },
+    "minimal_Fsharp": {
+      "baseline_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 24.494,
+            "near_mean_power": 3145.071224,
+            "offbeat_mean_power": 11.175575
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 18.507,
+            "near_mean_power": 675.76159,
+            "offbeat_mean_power": 9.530627
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 122,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "candidate_fit": {
+        "warnings": []
+      },
+      "candidate_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": true,
+        "hard_flags": [],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "candidate_pocket": {
+        "analysis": "full-mix beat-aligned mono band power, not kick/bass isolated stems",
+        "bands": [
+          {
+            "hz": [
+              25.0,
+              90.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 12.064,
+            "near_mean_power": 24663.76119,
+            "offbeat_mean_power": 1533.352551
+          },
+          {
+            "hz": [
+              90.0,
+              250.0
+            ],
+            "kick_near_0_100ms_vs_offbeat_200_300ms_db": 6.458,
+            "near_mean_power": 4544.906312,
+            "offbeat_mean_power": 1027.477833
+          }
+        ],
+        "kick_onsets_used": 16,
+        "limitations": [
+          "Kick/bass share the measured full mix; cannot assign energy to either role.",
+          "Full mix may include chord notes and effects in the measured bands.",
+          "FFT window and playback section influence measured ratios.",
+          "Same ratios can represent different musical feel; use human listening."
+        ],
+        "perceptual_quality": "NOT_EVALUATED",
+        "reference_policy": "No fixed Phase44 or Suno target. Compare equivalent song sections.",
+        "section": "Groove",
+        "tempo_bpm": 122.0,
+        "version": "house-fullmix-groove-pocket-v1",
+        "windows_ms": [
+          [
+            0,
+            100
+          ],
+          [
+            200,
+            300
+          ]
+        ]
+      },
+      "expected_status": "TECHNICAL_REPAIR_ELIGIBLE",
+      "replacement_name": "gentle pluck bass",
+      "source_name": "Biow Bass 2",
+      "source_onset_gate": {
+        "articulation_intent": "driving",
+        "automatic_preset_promotion": false,
+        "eligible_for_more_context_review": false,
+        "hard_flags": [
+          "bass_onset_attack_severely_masked_by_kick"
+        ],
+        "musical_winner": null,
+        "requires_fullmix_context_review": false,
+        "review_flags": [],
+        "version": "house-bass-native-note-onset-audit-v1"
+      },
+      "source_sha256": "fc85e6bda9d349d165b1ebe140536d2a1b06277b87fdd28fc56d9f6f5273b72e",
+      "type": "verified_native_autonomous_one_prompt_rescue"
+    }
+  },
+  "fixture_kind": "REAL_NATIVE_AUDIO_MEASURED_POCKETS_NOT_AUDIO_ASSETS",
+  "independent_verified_native_swaps": 2,
+  "native_one_prompt_baseline": 1,
+  "native_source_contexts": 3,
+  "negative_control_count": 1,
+  "privacy": "only numerical generated features and source hash; private WAV/presets remain VPS"
+}

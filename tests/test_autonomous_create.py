@@ -47,6 +47,18 @@ class AutonomousCreateTests(unittest.TestCase):
                     self.call(private=True,**flags)
             picker.assert_not_called()
 
+    def test_native_bass_onset_rescue_requires_explicit_context(self):
+        with patch.object(ac,"select_palette") as picker:
+            for options in (
+                {"native_bass_onset_rescue":True},
+                {"native_bass_onset_rescue":"yes"},
+                {"groove_template":True,"native_bass_onset_rescue":True},
+            ):
+                with self.subTest(options=options),self.assertRaisesRegex(
+                        ValidationError,"native-bass-onset-rescue requires"):
+                    self.call(private=True,**options)
+            picker.assert_not_called()
+
     def test_predrop_tension_requires_full_native_groove_form(self):
         with patch.object(ac,"select_palette") as palette:
             for kwargs in (

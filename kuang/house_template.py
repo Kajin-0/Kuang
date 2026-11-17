@@ -156,7 +156,8 @@ def _bass_groove_identity(profile: str, seed: int, bar: int):
 
 def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
              harmony_profile: str = "extended", impact_pocket: bool = False,
-             harmony_interlock: bool = True, groove_identity_v2: bool = False):
+             harmony_interlock: bool = True, groove_identity_v2: bool = False,
+              phrase_stable_chords_v2: bool = False):
     """Build a separate production; preserve established sketch/refined behavior."""
     spec = validate_spec(spec)
     if spec.genre != "house" or spec.arrangement != "song":
@@ -165,7 +166,9 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         raise ValidationError("groove-template requires kick, snare, hats, bass and harmony")
     if (profile not in PROFILES or type(include_pad) is not bool or
         type(impact_pocket) is not bool or type(harmony_interlock) is not bool or
-        type(groove_identity_v2) is not bool or (groove_identity_v2 and not impact_pocket)):
+        type(groove_identity_v2) is not bool or (groove_identity_v2 and not impact_pocket) or
+        type(phrase_stable_chords_v2) is not bool or
+        (phrase_stable_chords_v2 and (not impact_pocket or not harmony_interlock))):
         raise ValidationError("invalid groove profile, pad or impact option")
 
     # Explicitly omit the failed/future melody engine, rather than merely muting it.
@@ -341,6 +344,14 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
     harmonic_evidence = apply_harmony(p, spec, harmony_profile)
     interlock_evidence = (apply_interlock(p, profile, spec.seed)
                           if impact_pocket and harmony_interlock else None)
+    phrase_receipt = None
+    if phrase_stable_chords_v2:
+        from .house_phrase_coherence_v2 import regularize_chord_phrases
+        p, phrase_receipt = regularize_chord_phrases(p, profile=profile, seed=spec.seed)
+        # The regularizer returns a deep-copied canonical project. Rebind the
+        # role view to that actual output before measuring groove onsets; the
+        # original dictionary still points at the pre-candidate objects.
+        tracks = {t.id.removeprefix("track-"): t for t in p.tracks}
 
     # Machine-checkable G1 structural gates, **not** a listening approval.
     groove = p.sections[1]
@@ -379,6 +390,16 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         role: [(onset - groove.start) for onset in events]
         for role, events in onset_by_role.items()
     }
+    # Harmony is intentionally not a member of the template's hard-gated
+    # drum/bass ROLES. Report it separately only in the opt-in candidate.
+    # Measure final canonical p, never the stale pre-deepcopy track objects.
+    phrase_harmony_events = None
+    if phrase_receipt is not None:
+        chords = next(t for t in p.tracks if t.id == "track-harmony")
+        phrase_harmony_events = sorted(
+            c.start + n.start - groove.start
+            for c in chords.clips for n in c.notes
+            if groove.start <= c.start + n.start < groove.start + groove.length)
     receipt = {
         "version": VERSION, "selected_profile": profile,
         "groove_impact_pocket": impact_pocket,
@@ -394,6 +415,9 @@ def template(spec: SongSpec, *, profile: str, include_pad: bool = True,
         "full_groove_onsets": groove_events,
         "melody_roles": [], "harmony": harmonic_evidence,
         "harmony_interlock": interlock_evidence, "limitations": LIMITATIONS,
+        **({"harmony_phrase_v2": phrase_receipt,
+            "harmony_phrase_v2_groove_note_onsets": phrase_harmony_events}
+           if phrase_receipt is not None else {}),
         "song_spec": asdict(spec),
     }
     return p, receipt

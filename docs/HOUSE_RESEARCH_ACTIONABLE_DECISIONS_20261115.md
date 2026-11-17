@@ -2,6 +2,32 @@
 
 Review date: 2026-11-15. Source supplied by user: `deep-research-report.md`, *Professional House Music Production: Technical Research Review* (185 lines). This document is a **distilled actionable interpretation**, not a reproduction of the entire third-party research report and not evidence that all claims in it have been independently validated.
 
+## Priority reset: high-impact House production before more bass micro-optimization
+
+**Decision:** The user's supplied independent architecture review is directionally supported by the frozen ten-song native audit. Stop prioritizing marginal bass note-onset, fader, and tiny-parameter changes while full-song role presence, stereo space, energy arc and master are deficient. Keep the producer's rejected-growling-preset veto absolute. This review is a design critique, **not** an independent listening certification.
+
+**Measured baseline:** The ten full songs have Main Drop vs Groove A median **+0.007 dB RMS**, Breakdown vs Groove A **−1.053 dB RMS**, whole-song side/mid **−27.34 dB**, and unmastered integrated loudness **−28.16 to −23.02 LUFS**. The 3-seed independent opt-in source-rescue batch completed only **1/3** productions. Compare Phase44 and Kuang in *matching music windows*; do not equate premaster with mastered LUFS or whole-track side/mid with groove-only side/mid. Claude's numerical chord-presence and register claims require independent same-method confirmation.
+
+**Architecture correction:** `production_host.py` already implements auxiliary buses, post-fader sends and send automation; `master_bus.py` implements a terminal stereo bus; `house_master_preview.py` has peak-safe gain and restrained compression candidates. The deficiency is the lack of a high-quality **default usable House production recipe** connecting these capabilities. Avoid unnecessary new host abstractions.
+
+### Ordered roadmap and measurable stop gates
+
+**P0 — Reference fingerprint, no new DSP yet.** Compose the existing section/RMS, loudness, spectral and stereo analyzers into one reproducible CLI. On the **ten frozen native songs and Phase44**, report identical 4/8-bar windows for Groove, Breakdown and Main Drop: short-term LUFS plus RMS, 25–250Hz power, side/mid **by band**, mono fold-down below ~120Hz, role-stem 1–4kHz chord/pad audibility *when stems are verified*, true peak and crest. Keep premaster/master separate. ChordChord export comparison is worthwhile once a controlled same-prompt audio sample exists; it is a **product/workflow comparator**, not an assumed professionally mastered quality reference.
+
+**P1 — High-effect native space and presence scene.** On **three existing frozen songs**, retain original kick, bass, MIDI, chord timing and source choices and test genuinely audible native shared-room/plate and chord echo/width scenes, rather than only very quiet −19/−15dB sends. Measure dry/wet levels, chord presence, stereo side/mid per band, onset smear and sub mono compatibility. No blind sub widening. **Stop after at most three qualified scene pairs** if none has demonstrably better signal behavior or if masking/phase loss dominates. No global default until cross-style evidence.
+
+**P2 — Measured section energy and multiple forms.** The existing eight-section arranger is a baseline, not an adequate energy arc. Develop independent intro/build/break/drop/outro role scenes, pre-drop withdrawal where stylistically justified, actual hat/percussion/fill changes, and 2–3 arrangement grammars. Aim for *meaningful* breakdown withdrawal and a measurable drop step, subject to style and matched native short-term loudness. Do not treat a fixed LU target as a musical law.
+
+**P3 — Premaster and master as separate verified artifacts.** Extend existing terminal bus and safe preview DSP to source-aware mix/master decisions; retain both, measure true peak, gated LUFS, crest/PLR, short-term dynamics and mono compatibility. Phase44 is a quality reference, not an EQ curve or universal LUFS preset. Loudness alone never certifies quality.
+
+**P4 — Qualification and consolidation.** Release candidate remains opt-in `house-v3`, leaving legacy untouched. Use a fixed independent batch of at least 15 complete songs across multiple House styles/keys/seeds and report **all** attempts, failures, mix metrics, source diversity and section arcs. Keep corrupted project/asset violations, rejected-source identities, clipping and unsafe audio as hard failures; produce a **flagged draft** instead of no audio for unproven musical preference thresholds. Proposed exit criteria: at least **90% technically complete** and **80% acceptable in a separately calibrated consolidated listening review**. The producer should not be asked to judge intermediate variants.
+
+**Bass subproject is parked unless a reference-calibrated mix demonstrates a dominant failure.** Preserve its strict safety checks, negative examples, native receipts and validated source rejection. No further arbitrary millisecond, fader or note-length sweeps to optimize a narrow ratio. Avoid another standalone document for every small change; update this roadmap and one scoped release report.
+
+**Immediate next task:** run the common fingerprint on the ten frozen full tracks plus Phase44, then choose the largest demonstrated production gap for a bounded native 3-song A/B. Do not enable new defaults merely because software tests pass.
+
+---
+
 ## Product objective and most recent listening context
 
 Kuang is a local-first, one-prompt, native-editable house producer. The desired workflow is deterministic musical scaffold -> standard production -> context-aware producer analysis and reversible candidate adjustment -> genuine mix/master verification. First-pass sound quality must substantially exceed the user's perceived quality of ChordChord and approach the user-approved, painstakingly developed Phase44 sound **without requiring 45 manual phases**.
@@ -93,3 +119,43 @@ Any approved technique must be tested on at least one independent genre/key/song
 Structured intent -> native source fingerprints (register, onset envelope, note-off release, band/stereo energy) -> role-compatible source shortlist -> actual mix and section evidence -> bounded typed change proposals with explicit expected audible outcome -> safe real-native excerpt render -> reject null/unsafe interventions -> gain-matched producer listening -> full-song recheck -> separate mastered release.
 
 Every proposed production operation should carry `why_this_source`, `musical_role`, `target_section`, `observable_hypothesis`, `changed_fields`, `source_hash`, `safety_checks`, `human_verdict`. No autonomous "better" label can be inferred from lower overlap or louder LUFS alone.
+
+
+### P2 opt-in drum section-scene implementation — November 17, 2026
+
+The existing 128-bar phrase-development arranger still cloned principal Groove A hats and snare throughout Main Drop even when bass/chord phrases changed. The new **opt-in** source-preserving `kuang/house_drum_scenes_v1.py` layer acts on the assembled full-house MIDI arrangement after existing phrase development. It does not modify original kick/bass/harmony tracks, their mixer/FX/automation, source samples, Vital presets, or the default arranger.
+
+The bounded recipe: Groove B withdraws existing hats during the final beat of every second 4-bar phrase; Build uses two short pickups from the **already-selected snare voice** in its last bar; Main Drop adds sparse late-bar hat pickups and bounded accents, using its existing hat instrument and pitch. Section records explicitly count added, removed and accented notes. The recipe is exposed as `--drum-scenes-v1` for full-length groove-template one-prompt creation and rejects duplicate application. No independent melody is added.
+
+**Test evidence:** The focused local `tests.test_house_full_arranger` suite passed **12/12** on the authorized VPS immediately before desktop-tool quota exhaustion, including a three-seed/four-style matrix, source immutability, locked kick/bass/harmony, valid MIDI and deterministic non-default behavior. Independent quick checks on four styles showed identical Groove A/Main Drop **hat-bar fraction falling from 1.00 to 0.75**, while kick remained **1.00**, bass/chord phrases were unchanged, and the build's two snare pickups were inserted. This measures *structural contrast*, not production quality or listener preference. Newly published GitHub CI must independently confirm the committed copy.
+
+**Native gate still open:** A controlled SoundCraft eight-bar Main Drop test was attempted on frozen jackin #03, but its test-harness crop retained silent optional MIDI tracks, then orphaned automation targets after removing them; native graph validation correctly refused those attempts before rendering any candidate. A corrected version of the harness was prepared locally, but Remote Desktop Commander reached its monthly access limit before it could run. **Do not claim native audio success or promote the drum-scenes default.** The private experiment and failed attempts remain on the authorized VPS under `.local/house-v3-drum-scenes-native-20261117/`. Once runtime access resumes, retest the cropped excerpt using a proper owner/automation filter, compare native A/B WAV hashes, kick/bass stem invariance, clipped samples, true peak and short-term loudness, then proceed to multi-song arrangement scenes only if that test passes.
+
+**Stop gate:** No additional fill or percussion complexity until actual audio demonstrates a changed, non-clipping Main Drop without damaging kick/bass groove. This is the first concrete opt-in P2 drum-scene implementation, not the complete House-v3 P2 arrangement system.
+
+---
+
+
+
+### P2 native excerpt crop repair and reproducible SoundCraft A/B — November 17, 2026
+
+The last attempt to natively compare the new drum scene on frozen jackin #03 was blocked by the native host's intentional requirement that *every MIDI channel must have sounding notes*. Cropping Main Drop left silent optional roles, and the first attempted cleanup forgot automation lanes aimed at their effect instances. Neither attempt produced a successful native-render comparison.
+
+That harness defect is now addressed in the **reusable, tested** `kuang/house_native_excerpt.py` helper: use Kuang's canonical `gestures.crop`, delete silent MIDI roles, filter automation against **retained track IDs and retained effect IDs**, remove orphan locks, revalidate, run `production_host.graph_contract`, check active kick and bass, and prove the frozen parent project hash is unchanged. Explicit crop receipts distinguish DSP reset from a continuous full-song bounce. New `tests/test_house_native_excerpt.py` covers deep/minimal/jackin crops and compares actual protected-role MIDI events between opt-in drum scenes and original.
+
+The new `tools/house_v3_drum_native_ab.py` is an **opt-in native SoundCraft runner**, not a successful completed render. On the authorized workstation/VPS with existing private audio assets, run from the Kuang workspace:
+
+```sh
+python -m tools.house_v3_drum_native_ab \
+  --source .local/ten-song-v1-03-jackin-20261115 \
+  --out .local/house-v3-drum-main-drop-native-20261117 \
+  --soundcraft /home/User/kuang-eval/soundcraft-0.11.0/soundcraft-0.11.0-linux-x86_64/bin/soundcraft-cli \
+  --library .local/producer/libebur128.so
+```
+
+The runner refuses overwrite, verifies each canonical session after save/reopen, retains unchanged private source inventory, proves kick/bass/chord/snare event signatures match A/B, requires hat MIDI to differ, requires native WAV checksums to differ, checks peak/clips and compares relative LUFS. It stores complete A and B recordings separately, plus a finite audit summary. It does **not** label music as listener-approved or enable `house-v3` automatically.
+
+**Status:** the earlier committed P2 symbolic regression CI passed. The new crop helper, test and A/B runner were published to the experimental branch; their fresh CI status must be checked separately. The actual native A/B still requires authorized VPS access, which is unavailable in this conversation because Desktop Commander reached its monthly usage limit. The next engineer/agent should *run that exact tool first* before new arrangement complexity, then continue only if native validation and groove-preservation checks pass. No intermediate producer listening request is required.
+
+---
+

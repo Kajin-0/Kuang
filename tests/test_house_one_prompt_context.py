@@ -53,6 +53,26 @@ class OnePromptContextTests(unittest.TestCase):
                     selector.assert_not_called()
                 self.assertFalse((self.root/"out").exists())
 
+    def test_rejected_bass_repair_keeps_sanitized_measured_deltas(self):
+        from kuang.house_one_prompt_context import _bass_failure_summary
+        result=_bass_failure_summary([{
+            "role":"bass","alternative_name":"/private/path/to/preset.vital",
+            "native_fullmix_bass_repair":{
+                "status":"REJECT_NO_MEANINGFUL_FULLMIX_OFFBEAT_REPAIR",
+                "relative_offbeat_gain_db":[.45,-.1],
+                "absolute_offbeat_energy_gain_db":[.3,0.],
+                "near_kick_energy_change_db":[-.2,-.4]},
+            "native_note_onset_gate":{"hard_flags":[]}}])
+        self.assertIn("relative=+0.450/-0.100",result)
+        self.assertIn("absolute=+0.300/+0.000",result)
+        self.assertIn("near_kick=-0.200/-0.400",result)
+        self.assertNotIn("private",result)
+        self.assertNotIn("preset",result)
+        self.assertEqual(_bass_failure_summary([]),"NO_VERIFIED_CANDIDATE")
+        untrusted=_bass_failure_summary([{
+            "role":"bass","status":"/tmp/private.vital"}])
+        self.assertEqual(untrusted,"UNKNOWN")
+
     def test_no_pad_source_review_skips_without_auto_adding_pad(self):
         from kuang.house_timbre_suitability import source_names
         # Source review remains purely opt-in; no new song role is introduced.

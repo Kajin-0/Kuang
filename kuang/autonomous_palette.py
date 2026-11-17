@@ -24,6 +24,7 @@ import wave
 from pathlib import Path
 
 from .schema import ValidationError, strict_json
+from .house_source_policy import source_exclusion, bass_timbre_observation, pad_timbre_observation
 from .song import SongSpec, check_prompt, validate_spec
 
 ROLES = ('chord', 'pad', 'bass')
@@ -450,6 +451,8 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
             type(row) is dict and row.get('sha256') == preferred_bass_source_sha and
             row.get('compatibility') == 'version_candidate' for row in rows):
         raise ValidationError('approved bass source missing or unsupported in private catalog')
+    if preferred_bass_source_sha and source_exclusion('bass', preferred_bass_source_sha):
+        raise ValidationError('explicitly rejected source cannot be requested as preferred bass')
     sources = _catalog_sources(catalog_data)
     destination = Path(out_dir).expanduser()
     if destination.is_symlink() or destination.exists():
@@ -495,6 +498,13 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
                 entry = {'role': role, 'path': row.get('path'), 'catalog_sha256': row.get('sha256'),
                          'catalog_size': row.get('size'), 'catalog_version': row.get('synth_version'),
                          'semantic_score': semantic, 'status': 'rejected'}
+                # Hard-block producer-rejected sources BEFORE costly runtime
+                # auditions; do not let a high isolated-feature score revive one.
+                denied = source_exclusion(role, row.get('sha256')) if type(row.get('sha256')) is str and SHA.fullmatch(row['sha256']) else None
+                if denied:
+                    entry['reason'] = 'producer-source-policy:' + denied
+                    decisions.append(entry)
+                    continue
                 try:
                     parts = _relative_parts(row.get('path'))
                     if parts[0] not in sources:
@@ -516,6 +526,22 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
                     features = result.get('features')
                     _validate_runtime_features(features)
                     proxy = score_features(role, features)
+                    source_policy = (bass_timbre_observation(features) if role == 'bass'
+                                     else pad_timbre_observation(features) if role == 'pad'
+                                     else None)
+                    if source_policy and source_policy.get('low_dominant_wide_source_review'):
+                        # Do not promote a low-dominant, side-heavy bass patch
+                        # on isolated audition metrics alone. Requires native
+                        # low-frequency mono validation before future use.
+                        entry['source_policy'] = source_policy
+                        entry['reason'] = 'low_dominant_wide_bass_requires_native_mono_review'
+                        decisions.append(entry)
+                        continue
+                    if source_policy and source_policy.get('low_heavy_pad_review'):
+                        entry['source_policy'] = source_policy
+                        entry['reason'] = 'low_heavy_pad_requires_native_bass_masking_review'
+                        decisions.append(entry)
+                        continue
                     preview = work / 'preview.wav'
                     preview_hash, preview_data = _validate_preview(preview)
                     dest = stage / 'previews' / f'{role}-{attempts:02d}.wav'
@@ -523,7 +549,8 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
                         published.write(preview_data)
                     entry.update({'status': 'accepted', 'runtime_verified': renderer is None,
                                   'runtime': result.get('runtime', {}), 'features': features,
-                                  'quality_proxy': proxy, 'combined_score': round(.35 * semantic + .65 * proxy['score'], 6),
+                                  'quality_proxy': proxy, 'source_policy': source_policy,
+                                  'combined_score': round(.35 * semantic + .65 * proxy['score'], 6),
                                   'preview': str(dest.relative_to(stage)), 'preview_sha256': preview_hash})
                     accepted[role].append(entry)
                 except (ValidationError, OSError, ValueError, TypeError, KeyError, OverflowError) as exc:
@@ -574,6 +601,7 @@ def select_palette(prompt, catalog, plugin, out_dir, *, seed=17, per_role=3, max
                      'catalog_sha256': catalog_sha256, 'catalog_path': str(catalog), 'library_root': str(library),
                      'preset_root': str(preset_root), 'plugin': info,
                      'usage': 'Private local source references only; not an external_synth binding or a rendered song.',
+                     'source_policy_version': 'house-source-producer-policy-v1',
                      'quality': 'heuristic proxy; human listening and subjective quality unverified'}
         decision = {'version': 'autonomous-palette-decision-1', 'prompt': prompt, 'seed': seed,
                     'intent': intent, 'catalog_sha256': catalog_sha256, 'library_root': str(library),

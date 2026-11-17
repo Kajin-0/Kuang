@@ -217,7 +217,7 @@ def _developed_source(section, role, block):
 
 
 def arrange_full_song(source, *, bars=128, profile=None, seed=17,
-                      phrase_development_v1=False):
+                      phrase_development_v1=False, drum_scenes_v1=False):
     """Build eight configurable sections using eight-bar core cells.
 
     No original user reference song is used; source can be ANY supported
@@ -225,6 +225,8 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17,
     """
     if type(phrase_development_v1) is not bool:
         raise ValidationError("phrase development opt-in must be an explicit boolean")
+    if type(drum_scenes_v1) is not bool:
+        raise ValidationError("drum scene development must be explicitly opt-in")
     validate(source)
     if bars not in FORMS or type(bars) is not int:
         raise ValidationError("full-song bars must be 96,112,128,160")
@@ -383,6 +385,10 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17,
     result.metadata["arrangement_seed"]=str(seed)
     result.metadata["arrangement_profile"]=profile
     validate(result)
+    scene_evidence=None
+    if drum_scenes_v1:
+        from .house_drum_scenes_v1 import apply_drum_scenes
+        result,scene_evidence=apply_drum_scenes(result,seed=seed)
     evidence={
         "version":VERSION,"source_bars":source.bars,"output_bars":bars,
         "tempo_bpm":source.tempo_bpm,"key_tonic":source.key_tonic,
@@ -401,6 +407,10 @@ def arrange_full_song(source, *, bars=128, profile=None, seed=17,
             "Role entrances, fades and filters are deliberately formulaic and fully editable.",
             "Native rendering, source compatibility, mastering and subjective acceptance are separate gates.",
         ]}
+    if scene_evidence is not None:
+        evidence["drum_scenes"]=scene_evidence
+        evidence["output_canonical_sha256"]=state_hash(result)
+        evidence["output_midi_sha256"]=hashlib.sha256(midi.export_bytes(result)).hexdigest()
     if phrase_development_v1:
         # The original output keeps its receipt and metadata byte-stable.
         # New receipts explicitly label intentional motif borrowing.
