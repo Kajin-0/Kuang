@@ -40,9 +40,11 @@ ROUTING={
 }
 
 
-def house_v3_space(project, *, strength="reference"):
+def house_v3_space(project, *, strength="reference", scene="room_plate"):
     if strength!="reference":
         raise ValidationError("only native-vetted reference strength supported")
+    if scene not in ("room_plate", "room_only"):
+        raise ValidationError("unverified shared-space scene")
     source=deepcopy(project)
     graph_contract(source)
     if any(t.id in ("house-v3-room","house-v3-plate") for t in source.tracks):
@@ -60,6 +62,8 @@ def house_v3_space(project, *, strength="reference"):
     if "track-harmony" not in by:
         raise ValidationError("missing chord role for native shared space")
     for name,settings,plugin in bus_specs:
+        if scene=="room_only" and name=="plate":
+            continue
         bid="house-v3-"+name
         bus=Track(bid,"House-v3 shared "+name,"bus",None,
             {"mixer.gain_db":6.020599913279624,
@@ -72,6 +76,7 @@ def house_v3_space(project, *, strength="reference"):
                 by[tid].sends.append(Send("house-v3-"+name+"-"+tid,
                                          bid,db,0.,"post_fader"))
     source.metadata["house_v3_space_scene"]=VERSION
+    source.metadata["house_v3_space_variant"]=scene
     validate(source)
     graph_contract(source)
     if midi.export_bytes(source)!=midi.export_bytes(project):

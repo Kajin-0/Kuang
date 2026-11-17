@@ -1,5 +1,5 @@
 import unittest
-from kuang.house_v3_space_review import review_chord_space
+from kuang.house_v3_space_review import review_chord_space, recommend_spatial_scene
 from kuang.schema import ValidationError
 
 class ChordSceneReviewTests(unittest.TestCase):
@@ -18,6 +18,23 @@ class ChordSceneReviewTests(unittest.TestCase):
         report=review_chord_space(self.data(.496,.711,-1.177,-.132))
         self.assertEqual(report["warnings"],[])
         self.assertIsNone(report["automatic_musical_winner"])
+    def test_native_deep_source_prefers_room_only_as_technical_candidate(self):
+        high_tail=review_chord_space(self.data(.072,6.98,34.463,35.209))
+        room={"canonical_roundtrip":True,"width_2k_8k_db":-12.1167,
+              "mono_retention_sub_20_120":1.0,
+              "chord_tail_vs_dry_db":3.805,"chord_attack_vs_dry_db":.032,
+              "true_peak_dbtp":-5.875,"clipped_samples":0}
+        r=recommend_spatial_scene(high_tail,room,dry_width_2k_8k_db=-18.315)
+        self.assertEqual(r["status"],"TECHNICAL_ROOM_ONLY_CANDIDATE")
+        self.assertFalse(r["production_default_change"])
+        room["chord_tail_vs_dry_db"]=4.9
+        rejected=recommend_spatial_scene(high_tail,room,
+                                         dry_width_2k_8k_db=-18.315)
+        self.assertEqual(rejected["status"],"REVIEW_SOURCE_SPACE_UNRESOLVED")
+        with self.assertRaises(ValidationError):
+            recommend_spatial_scene(review_chord_space(self.data(.1,1.,-2.,-1.)),
+                                    room,dry_width_2k_8k_db=-18.315)
+
     def test_missing_provenance_and_untrusted_metric_fail(self):
         data=self.data(.2,2.,-2.,-1.)
         data["kick_bass_stem_byte_exact"]=False

@@ -68,6 +68,17 @@ class SpatialNativeSymbolicTests(unittest.TestCase):
             house_v3_space(p,strength="unknown")
         self.assertTrue(any(x.id=="house-v3-room" for x in from_reference.tracks))
 
+    def test_room_only_produces_one_native_aux_bus_without_touching_bass(self):
+        p=source()
+        q=house_v3_space(p,scene="room_only")
+        self.assertEqual([t.id for t in q.tracks if t.kind=="bus"],
+                         ["house-v3-room"])
+        self.assertEqual(midi.export_bytes(p),midi.export_bytes(q))
+        self.assertEqual(q.metadata["house_v3_space_variant"],"room_only")
+        self.assertFalse(next(t for t in q.tracks if t.id=="track-bass").sends)
+        with self.assertRaises(ValidationError):
+            house_v3_space(p,scene="plate_super_loud")
+
     def test_invalid_scene_fails(self):
         p=source()
         with self.assertRaises(ValidationError):

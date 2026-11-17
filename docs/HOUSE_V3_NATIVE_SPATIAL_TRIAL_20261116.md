@@ -121,3 +121,13 @@ To check whether the large **+6.980 dB** chord-tail increase in deep-house sourc
 All experiments retained the substantial upper-band spatial benefit and effectively unchanged chord attack, but **technical width and true-peak success do not establish perceptual clarity**. Keep room/plate opt-in, retain source-aware tail warnings, do not introduce a deep-house global plate-send default, and avoid changing provisional thresholds merely to approve this particular source. A future meaningful test should separate direct source sustain from room return before authoring individualized routing decisions.
 
 Private native evidence and audio: `/home/User/Kuang/.local/house-v3-deep-plate-trim-20261116/` and `/home/User/Kuang/.local/house-v3-deep-plate-trim-12db-20261116/`. Source projects, Phase44 master, and original A/B/C renders were not overwritten. No intermediate listener approval requested.
+
+## P1f: causal separation of room and plate, source-aware optional room-only
+
+On frozen deep-house source #06, individually muting each return bus in a separate native SoundCraft render isolated the chord source's measured 250–500ms late-tail response. All original MIDI, patches, drum/kick/bass and source tracks remained fixed. The room-only source delivered +0.032dB attack and +3.805dB tail against dry; plate-only delivered +0.041dB attack and +5.527dB tail; both together delivered +0.072dB attack and +6.980dB tail.
+
+The independent room-only *fullmix* native render retained +6.198dB upper (2–8kHz) side/mid improvement versus dry (−12.1167dB vs −18.315dB), full 20–120Hz mono retention 1.000, true peak −5.875dBTP and zero clipped samples. Real native export/save/reopen succeeded.
+
+The library now exposes an explicitly opt-in room_only scene in house_v3_space. A source-aware technical reviewer only considers this alternative when the original combined room+plate source showed excessive measured tail and the independent native room-only result verifies at least +3dB upper-band spatial improvement, at most +4dB tail, at most +2dB attack change, at least 0.995 sub mono retention, no clipping and <=−1dBTP. This decision is strictly a source-context *technical* choice, never proof of preferred music or an automatic global deep-house rule. No normal production defaults changed.
+
+Evidence preserved on the VPS in .local/house-v3-room-plate-causal-20261117/result.json and .local/house-v3-deep-room-only-fullmix-20261117/evidence.json. This closes the bounded return attribution question; development should move to P2 full-song drum/section development rather than continue wet-send parameter sweeps.
