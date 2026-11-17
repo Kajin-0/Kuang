@@ -71,3 +71,17 @@ The rechecked eight-bar 2–8kHz side/mid = **−18.3075 dB** and 20–120Hz mon
 
 Private reproducibility receipt:
 `/home/User/Kuang/.local/house-v3-library-recipe-native-recheck-20261116/verification.json`.
+
+## P1c: native isolated chord attack-versus-tail control
+
+The external review reasonably asked whether new stereo space would obscure the rhythmic stabs. Rather than request an intermediate human audition (against the producer's instruction), one causal native **chord-only path** test was performed on jackin #03. The A dry and B room+plate variants were each re-exported from their already validated canonical scene with **every non-chord MIDI track muted**; built-in bus sends and exact chord Vital preset/notes/FX remained native editable. Both original full-song reference artifacts were untouched. Native save/reopen passed for both.
+
+For each original chord note onset, measure stereo squared-amplitude energy during **0–100ms attack** and **250–500ms tail**. Include a note only if no later chord onset occurs inside its tail interval; **16 independent usable onsets** out of 80 actual MIDI note-onset timestamps met that criterion (other overlapping notes excluded). All source note timing is preserved.
+
+- Isolated B vs dry A, **attack 0–100ms energy change: +0.093 dB**.
+- Isolated B vs dry A, **tail 250–500ms energy change: +1.241 dB**.
+- B true peak remained below digital clipping; native session identity passed.
+
+This is a limited objective indication that the shared return extends space without materially increasing the direct chord attack in this jackin context. It is **not** evidence that the wet tail is psychoacoustically unmasked or that stabs remain subjectively clear in every song. Do not turn the recipe on by default on this result. The deep and minimal styles still require similar isolated pathway checks before role-aware send values are tuned.
+
+Private evidence: `/home/User/Kuang/.local/house-v3-chord-attack-tail-probe-20261116/evidence.json`.
