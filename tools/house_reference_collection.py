@@ -11,8 +11,14 @@ import hashlib
 import json
 import math
 import statistics
+import sys
 import wave
 from pathlib import Path
+
+# python3 tools/house_reference_collection.py must work from a clean checkout.
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from kuang.audio import analyze_wav
 from kuang.loudness import measure
