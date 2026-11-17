@@ -199,3 +199,52 @@ class FullHouseFormTests(unittest.TestCase):
             parse_long_form("house 96 bars",requested=128)
         with self.assertRaises(ValidationError):
             parse_long_form("house 128 bars around 4 minutes",bpm=126)
+
+
+class DrumSceneDevelopmentTests(unittest.TestCase):
+    """Independent seed/style technical proof, no subjective score claims."""
+
+    def test_style_seed_matrix_preserves_kick_bass_harmony_and_diversifies_hats(self):
+        from kuang.house_gates import evaluate
+        for style in ("straight","deep","jackin","minimal"):
+            for seed in (17,41,217):
+                with self.subTest(style=style,seed=seed):
+                    spec,_=rules_plan(f"{style} house C minor 32 bars 126 bpm",seed)
+                    short,_=template(spec,profile=style,impact_pocket=True,
+                                     groove_identity_v2=True)
+                    original=dumps(short)
+                    baseline,_=arrange_full_song(
+                        short,bars=128,seed=seed,phrase_development_v1=True)
+                    variant,receipt=arrange_full_song(
+                        short,bars=128,seed=seed,phrase_development_v1=True,
+                        drum_scenes_v1=True)
+                    self.assertEqual(dumps(short),original)
+                    validate(variant)
+                    self.assertTrue(receipt["technical_gates"]["four_on_floor_groove_a"])
+                    self.assertTrue(receipt["drum_scenes"]["protected_kick_bass_chords"])
+                    self.assertGreater(sum(x["added"]+x["removed"]
+                                           for x in receipt["drum_scenes"]["changes"]),0)
+                    for name in ("kick","bass","harmony"):
+                        a=next(t for t in baseline.tracks if t.id=="track-"+name)
+                        b=next(t for t in variant.tracks if t.id=="track-"+name)
+                        self.assertEqual(a,b)
+                    a=evaluate(baseline,expected_no_lead_arp=True)
+                    b=evaluate(variant,expected_no_lead_arp=True)
+                    self.assertEqual(b["hard_failures"],[])
+                    self.assertEqual(a["diagnostics"]["D02_core_groove_drop_equal_fraction"]["hats"],1.)
+                    self.assertLess(b["diagnostics"]["D02_core_groove_drop_equal_fraction"]["hats"],1.)
+                    self.assertEqual(b["diagnostics"]["D02_core_groove_drop_equal_fraction"]["kick"],1.)
+                    self.assertEqual(b["diagnostics"]["D02_core_groove_drop_equal_fraction"]["snare"],1.)
+
+    def test_optin_default_unchanged_and_idempotency_gate(self):
+        from kuang.house_drum_scenes_v1 import apply_drum_scenes
+        s=source()
+        a,_=arrange_full_song(s,bars=128,seed=17)
+        b,_=arrange_full_song(s,bars=128,seed=17,drum_scenes_v1=False)
+        self.assertEqual(dumps(a),dumps(b))
+        c,_=apply_drum_scenes(a,seed=17)
+        self.assertNotEqual(export_bytes(a),export_bytes(c))
+        with self.assertRaises(ValidationError):
+            apply_drum_scenes(c,seed=17)
+        with self.assertRaises(ValidationError):
+            arrange_full_song(s,bars=128,drum_scenes_v1="yes")
