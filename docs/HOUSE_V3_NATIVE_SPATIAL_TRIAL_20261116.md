@@ -105,3 +105,19 @@ The apparent deep-house **+34 dB** presence ratio is a narrow **2–8kHz spectra
 `kuang/house_v3_space_review.py` defines provisional, **non-release** objective review flags for >4dB chord-tail increase, >2dB chord-attack increase, or very low 2–8kHz chord/kickbass power. These are diagnostics rather than perceptual labels and never auto-promote a global send scene. The control requires >=8 onset windows, locked MIDI and identical dry/wet kick+bass stems. The high-tail deep source is flagged while the restrained minimal source is not. The producer-rejected growl preset remains excluded and no production default changed.
 
 Private exact native evidence and stems: `/home/User/Kuang/.local/house-v3-chord-presence-crossstyle-20261116/`. Neither files nor third-party presets were uploaded. Next bounded trial: specifically reduce **deep-house plate send** while preserving chord attack and high-band stereo, then compare tail energy and mono/peak safety before selecting style-aware send gains.
+
+## P1e: bounded deep-house plate-trim intervention and stop decision
+
+To check whether the large **+6.980 dB** chord-tail increase in deep-house source #06 could be controlled without losing stereo width, two additional source-locked real native SoundCraft trials were rendered. They used the B room/plate project as-is except for the chord's plate post-fader send. The room send remained **−6 dB**, the chord source/notes/FX were fixed, and kick/bass were not routed into the effects. Both experiments rendered the complete 8-bar native mix plus a separate chord-only native stem, passed canonical export/save/reopen, had zero clipped samples, true peak under −1 dBTP, and preserved 20–120 Hz mono retention at 1.000.
+
+| Deep #06 native variant | Plate chord send | 2–8 kHz fullmix side/mid | Stereo gain vs A dry (−18.315 dB) | Chord onset 0–100ms vs dry | Chord tail 250–500ms vs dry | Preliminary tail gate (≤+4dB) |
+|---|---:|---:|---:|---:|---:|---|
+| Baseline B room/plate | −10 dB | −10.136 dB | +8.179 dB | +0.072 dB | +6.980 dB | Review |
+| D, 6dB plate trim | −16 dB | −11.499 dB | +6.816 dB | +0.043 dB | +4.870 dB | **Not met** |
+| E, 12dB plate trim | −22 dB | −11.944 dB | +6.371 dB | +0.035 dB | +4.113 dB | **Not met** |
+
+**Decision:** stop plate-send level sweeps. A 12 dB send reduction did not bring tail buildup below the provisional +4dB review boundary; the additional 6dB cut improved tail by only 0.757dB. The unchanged shared room return and/or the original chord source's sustained timbre may contribute to the remaining tail. That is a hypothesis, **not isolated causal proof**: the individual room-return and native original patch-release signals were not independently measured here. This negative result rules out simple plate-send trimming as a complete solution for this case.
+
+All experiments retained the substantial upper-band spatial benefit and effectively unchanged chord attack, but **technical width and true-peak success do not establish perceptual clarity**. Keep room/plate opt-in, retain source-aware tail warnings, do not introduce a deep-house global plate-send default, and avoid changing provisional thresholds merely to approve this particular source. A future meaningful test should separate direct source sustain from room return before authoring individualized routing decisions.
+
+Private native evidence and audio: `/home/User/Kuang/.local/house-v3-deep-plate-trim-20261116/` and `/home/User/Kuang/.local/house-v3-deep-plate-trim-12db-20261116/`. Source projects, Phase44 master, and original A/B/C renders were not overwritten. No intermediate listener approval requested.
